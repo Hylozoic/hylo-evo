@@ -7,6 +7,14 @@ export default () => {
     id
     aboutVideoUri
     accessibility
+    agreements {
+      items {
+        id
+        description
+        order
+        title
+      }
+    }
     avatarUrl
     bannerUrl
     customViews {
@@ -39,6 +47,7 @@ export default () => {
     name
     purpose
     settings {
+      agreementsLastUpdatedAt
       allowGroupInvites
       askGroupToGroupJoinQuestions
       askJoinQuestions
@@ -102,6 +111,7 @@ export default () => {
         slug
         visibility
         settings {
+          agreementsLastUpdatedAt
           allowGroupInvites
           askGroupToGroupJoinQuestions
           askJoinQuestions
@@ -223,6 +233,7 @@ export default () => {
         slug
         visibility
         settings {
+          agreementsLastUpdatedAt
           allowGroupInvites
           askGroupToGroupJoinQuestions
           askJoinQuestions

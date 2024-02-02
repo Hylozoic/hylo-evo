@@ -99,9 +99,11 @@ export default gql`
         id
       }
       settings {
-       sendEmail
-       sendPushNotifications
-       showJoinForm
+        agreementsAcceptedAt
+        joinQuestionsAnsweredAt
+        sendEmail
+        sendPushNotifications
+        showJoinForm
       }
       group {
         id

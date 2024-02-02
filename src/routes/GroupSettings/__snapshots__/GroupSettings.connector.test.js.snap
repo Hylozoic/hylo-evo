@@ -13,6 +13,7 @@ Object {
   "fetchPending": undefined,
   "group": Object {
     "activeProjects": Array [],
+    "agreements": Array [],
     "announcements": Array [],
     "customViews": Array [],
     "groupToGroupJoinQuestions": Array [],
@@ -79,6 +80,14 @@ Object {
           type
           slug
           visibility
+          agreements {
+            items {
+              id
+              description
+              order
+              title
+            }
+          }
           childGroups (first: 100) {
             items {
               id
@@ -192,6 +201,14 @@ Object {
     "query": "mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          agreements {
+            items {
+              id
+              description
+              order
+              title
+            }
+          }
           customViews {
             items {
               id
@@ -276,6 +293,7 @@ Object {
   "fetchPending": undefined,
   "group": Object {
     "activeProjects": Array [],
+    "agreements": Array [],
     "announcements": Array [],
     "customViews": Array [],
     "groupToGroupJoinQuestions": Array [],

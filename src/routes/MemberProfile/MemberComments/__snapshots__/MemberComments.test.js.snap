@@ -9,7 +9,7 @@ exports[`MemberComments renders the same as the last snapshot 1`] = `
     <Connect(CommentCard)
       comment={
         Object {
-          "createdAt": "Sat Apr 15 2017 16:27:55 GMT+1200 (NZST)",
+          "createdAt": "2021-05-12T15:00:00.000Z",
           "creator": Object {
             "id": "46816",
           },
@@ -32,7 +32,7 @@ exports[`MemberComments renders the same as the last snapshot 1`] = `
     <Connect(CommentCard)
       comment={
         Object {
-          "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)",
+          "createdAt": "2021-06-12T15:00:00.000Z",
           "creator": Object {
             "id": "46816",
           },

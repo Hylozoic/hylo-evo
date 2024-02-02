@@ -1,6 +1,7 @@
+import update from 'immutability-helper'
+import { get, getOr, filter, reject, pick } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import { get, getOr, filter, reject, pick, clone } from 'lodash/fp'
 import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 export const MODULE_NAME = 'AttachmentManager'
@@ -8,7 +9,7 @@ export const LOAD_ATTACHMENTS = `${MODULE_NAME}/LOAD_ATTACHMENTS`
 export const SET_ATTACHMENTS = `${MODULE_NAME}/SET_ATTACHMENTS`
 export const ADD_ATTACHMENT = `${MODULE_NAME}/ADD_ATTACHMENT`
 export const REMOVE_ATTACHMENT = `${MODULE_NAME}/REMOVE_ATTACHMENT`
-export const SWITCH_ATTACHMENTS = `${MODULE_NAME}/SWITCH_ATTACHMENTS`
+export const MOVE_ATTACHMENT = `${MODULE_NAME}/MOVE_ATTACHMENT`
 export const ID_FOR_NEW = 'new'
 
 // -- LOCAL STORE --
@@ -50,9 +51,9 @@ export function removeAttachment (type, id, attachment) {
   }
 }
 
-export function switchAttachments (type, id, attachmentType, position1, position2) {
+export function moveAttachment (type, id, attachmentType, position1, position2) {
   return {
-    type: SWITCH_ATTACHMENTS,
+    type: MOVE_ATTACHMENT,
     payload: {
       attachmentKey: makeAttachmentKey(type, id),
       attachmentType,
@@ -142,19 +143,18 @@ export default function reducer (state = defaultState, action) {
         ...state,
         [attachmentKey]: reject(attachment, attachmentsForKey)
       }
-    case SWITCH_ATTACHMENTS:
+    case MOVE_ATTACHMENT: {
       const { position1, position2 } = payload
       const forAttachmentType = filter({ attachmentType }, attachmentsForKey)
-      const forAttachmentTypeCopy = clone(forAttachmentType)
-      forAttachmentType[position1] = forAttachmentTypeCopy[position2]
-      forAttachmentType[position2] = forAttachmentTypeCopy[position1]
-      return {
-        ...state,
-        [attachmentKey]: [
-          ...forAttachmentType,
-          ...reject({ attachmentType }, attachmentsForKey)
-        ]
-      }
+      return update(state, {
+        [attachmentKey]: {
+          $splice: [
+            [position1, 1],
+            [position2, 0, forAttachmentType[position1]]
+          ]
+        }
+      })
+    }
     default:
       return state
   }

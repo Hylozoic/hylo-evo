@@ -61,7 +61,7 @@ a {
   }
 }
 
-/* 
+/*
 NOTE: There is an issue of an underline appearing under some
 links in mobile, but I've only see it happen in mobile/non-hover
 devices. We don't apparently globally turn-off the browser default
@@ -77,7 +77,7 @@ outside the media query, but leaving it at this for now.
 */
 @media (hover: none) {
   a {
-    text-decoration: none !important; 
+    text-decoration: none !important;
   }
 }
 
@@ -129,9 +129,9 @@ h2,
 h3,
 .hdr-minor {
   @include font-regular;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 0;
-  line-height: 18px;
+  line-height: 20px;
   color: $color-rhino;
 }
 

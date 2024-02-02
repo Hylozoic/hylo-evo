@@ -61,18 +61,6 @@ exports[`AttachmentManager store reducer when SWITCH_ATTACHMENTS switches two at
 Object {
   "post-new": Array [
     Object {
-      "attachmentType": "image",
-      "url": "a.png",
-    },
-    Object {
-      "attachmentType": "image",
-      "url": "c.png",
-    },
-    Object {
-      "attachmentType": "image",
-      "url": "b.png",
-    },
-    Object {
       "attachmentType": "file",
       "url": "a.pdf",
     },
@@ -83,6 +71,18 @@ Object {
     Object {
       "attachmentType": "file",
       "url": "c.pdf",
+    },
+    Object {
+      "attachmentType": "image",
+      "url": "a.png",
+    },
+    Object {
+      "attachmentType": "image",
+      "url": "b.png",
+    },
+    Object {
+      "attachmentType": "image",
+      "url": "c.png",
     },
   ],
 }

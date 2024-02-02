@@ -21,7 +21,7 @@ const minDefaultProps = {
   loadAttachments: () => {},
   addAttachment: () => {},
   removeAttachment: () => {},
-  switchAttachments: () => {},
+  moveAttachment: () => {},
   clearAttachments: () => {},
   setAttachments: () => {}
 }
@@ -150,7 +150,7 @@ describe('ImageManager', () => {
       attachments: imageAttachments,
       addAttachment: () => {},
       removeAttachment: () => {},
-      switchAttachments: () => {}
+      moveAttachment: () => {}
     }
     const wrapper = shallow(<ImageManager {...props} />)
     expect(wrapper).toMatchSnapshot()

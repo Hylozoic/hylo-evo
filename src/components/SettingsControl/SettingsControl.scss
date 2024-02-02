@@ -28,8 +28,8 @@
   }
 }
 
-input::placeholder {
-  color: $color-rhino-30;
+input::placeholder, textarea.control-input::placeholder {
+  color: $color-rhino-80;
 }
 
 textarea.control-input {

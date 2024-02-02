@@ -4,7 +4,7 @@ import {
   clearAttachments,
   addAttachment,
   removeAttachment,
-  switchAttachments,
+  moveAttachment,
   getAttachments,
   getAttachmentsFromObject,
   getUploadAttachmentPending
@@ -21,7 +21,7 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = {
   addAttachment,
   removeAttachment,
-  switchAttachments,
+  moveAttachment,
   setAttachments,
   clearAttachments
 }
@@ -29,12 +29,12 @@ export const mapDispatchToProps = {
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { type, id, attachmentType } = ownProps
   const { attachmentsFromObject } = stateProps
-  const { switchAttachments, setAttachments, clearAttachments } = dispatchProps
+  const { moveAttachment, setAttachments, clearAttachments } = dispatchProps
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    switchImages: (position1, position2) => switchAttachments(type, id, 'image', position1, position2),
+    switchImages: (position1, position2) => moveAttachment(type, id, 'image', position1, position2),
     loadAttachments: () => setAttachments(type, id, attachmentType, attachmentsFromObject),
     clearAttachments: () => clearAttachments(type, id, attachmentType)
   }

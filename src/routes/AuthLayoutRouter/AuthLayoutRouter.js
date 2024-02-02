@@ -355,10 +355,14 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+              <Route path={`/:context(groups)/:groupSlug/:view(stream)/${GROUP_DETAIL_MATCH}`} component={Stream} />
               <Route path={`/:context(groups)/:groupSlug/:view(explore)/${GROUP_DETAIL_MATCH}`} exact component={LandingPage} />
               <Route path={`/:context(groups)/:groupSlug/:view(explore)/${OPTIONAL_POST_MATCH}`} component={LandingPage} />
+              <Route path={`/:context(groups)/:groupSlug/:view(projects)/${GROUP_DETAIL_MATCH}`} component={Stream} />
               <Route path={`/:context(groups)/:groupSlug/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+              <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${GROUP_DETAIL_MATCH}`} component={Stream} />
               <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${OPTIONAL_POST_MATCH}`} component={Stream} />
+              <Route path={`/:context(groups)/:groupSlug/:view(events)/${GROUP_DETAIL_MATCH}`} component={Events} />
               <Route path={`/:context(groups)/:groupSlug/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
               <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
               <Route path='/:context(groups)/:groupSlug/:view(members)/create' component={Members} />
@@ -367,6 +371,7 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={ChatRoom} />
               <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
+              <Route path={`/:context(groups)/:groupSlug/${GROUP_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
               <Route path='/:context(groups)/:groupSlug' component={returnDefaultRouteForGroup(currentGroup)} />
               <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
@@ -406,8 +411,9 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(all|public)/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(events|explore|map|projects|stream)/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${POST_DETAIL_MATCH}`} component={PostDetail} />
+              <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(groups)/:groupSlug/:view(explore|map|groups)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
+              <Route path={`/:context(groups)/:groupSlug/:view(events|explore|groups|map|projects|stream)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />

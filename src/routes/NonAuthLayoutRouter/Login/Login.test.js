@@ -13,6 +13,7 @@ jest.mock('react-i18next', () => ({
     }
   }
 }))
+
 it('renders correctly', () => {
   render(
     <Login location={{ search: '' }} />

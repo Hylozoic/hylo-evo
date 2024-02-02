@@ -138,6 +138,7 @@ Group.fields = {
     as: 'activeProjects',
     relatedName: 'activeProjectGroups'
   }),
+  agreements: many('Agreement'),
   announcements: many({
     to: 'Post',
     as: 'announcements',

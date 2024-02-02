@@ -1,6 +1,7 @@
 import { ORM } from 'redux-orm'
 import './Model.extension'
 import Activity from './Activity'
+import Agreement from './Agreement'
 import Attachment from './Attachment'
 import Collection, { CollectionPost } from './Collection'
 import Comment from './Comment'
@@ -10,11 +11,11 @@ import Group, { GroupRelationship, GroupModerator, GroupJoinQuestion, GroupPrere
 import GroupRelationshipInvite, { GroupToGroupJoinRequestQuestionAnswer } from './GroupRelationshipInvite'
 import GroupTopic from './GroupTopic'
 import Invitation from './Invitation'
-import JoinRequest, { JoinRequestQuestionAnswer, Question } from './JoinRequest'
+import JoinRequest, { GroupJoinQuestionAnswer, Question } from './JoinRequest'
 import LinkPreview from './LinkPreview'
 import Location from './Location'
 import Me, { MySkillsToLearn } from './Me'
-import Membership from './Membership'
+import Membership, { MembershipAgreement } from './Membership'
 import Message from './Message'
 import MessageThread from './MessageThread'
 import Notification from './Notification'
@@ -32,6 +33,7 @@ export const orm = new ORM({ stateSelector: state => state.orm })
 
 orm.register(
   Activity,
+  Agreement,
   Attachment,
   Collection,
   CollectionPost,
@@ -40,6 +42,7 @@ orm.register(
   EventInvitation,
   Group,
   GroupJoinQuestion,
+  GroupJoinQuestionAnswer,
   GroupModerator,
   GroupPrerequisite,
   GroupRelationship,
@@ -49,11 +52,11 @@ orm.register(
   GroupTopic,
   Invitation,
   JoinRequest,
-  JoinRequestQuestionAnswer,
   LinkPreview,
   Location,
   Me,
   Membership,
+  MembershipAgreement,
   Message,
   MessageThread,
   MySkillsToLearn,
