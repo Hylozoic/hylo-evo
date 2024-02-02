@@ -162,7 +162,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -403,7 +403,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -689,7 +689,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -848,7 +848,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -1035,7 +1035,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -1222,7 +1222,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -1409,7 +1409,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -1611,7 +1611,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       <input
         data-stylename="titleInput"
         disabled={true}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -1771,7 +1771,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       <input
         data-stylename="titleInput"
         disabled={true}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -1931,7 +1931,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -2091,7 +2091,7 @@ exports[`PostEditor renders contribution button 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"
@@ -2336,7 +2336,7 @@ exports[`PostEditor renders with min props 1`] = `
       <input
         data-stylename="titleInput"
         disabled={false}
-        maxLength={50}
+        maxLength={80}
         onChange={[Function]}
         placeholder="Add a title"
         type="text"

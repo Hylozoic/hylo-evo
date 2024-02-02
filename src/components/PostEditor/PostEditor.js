@@ -28,7 +28,7 @@ import { MAX_POST_TOPICS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
 import Tooltip from 'components/Tooltip'
 
-export const MAX_TITLE_LENGTH = 50
+export const MAX_TITLE_LENGTH = 80
 
 class PostEditor extends React.Component {
   static propTypes = {
@@ -249,7 +249,7 @@ class PostEditor extends React.Component {
 
   handleTitleChange = (event) => {
     const title = event.target.value
-    title.length >= MAX_TITLE_LENGTH
+    title.length > MAX_TITLE_LENGTH
       ? this.setState({ titleLengthError: true })
       : this.setState({ titleLengthError: false })
     if (title !== this.state.post.title) {
