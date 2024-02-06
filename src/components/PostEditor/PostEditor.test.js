@@ -137,9 +137,8 @@ describe('PostEditor', () => {
       setIsDirty: jest.fn()
     }
 
-    // KMT: these next two blocks look the same?
     test('form in editing mode', () => {
-      const wrapper = shallow(<PostEditor {...props} />)
+      const wrapper = shallow(<PostEditor {...props} editing />)
       expect(wrapper).toMatchSnapshot()
     })
 
