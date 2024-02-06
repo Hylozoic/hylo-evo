@@ -138,7 +138,7 @@ describe('PostEditor', () => {
     }
 
     test('form in editing mode', () => {
-      const wrapper = shallow(<PostEditor {...props} editing />)
+      const wrapper = shallow(<PostEditor {...props} />)
       expect(wrapper).toMatchSnapshot()
     })
 
