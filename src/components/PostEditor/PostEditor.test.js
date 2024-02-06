@@ -172,17 +172,19 @@ describe('PostEditor', () => {
       expect(setIsDirty).toHaveBeenCalled()
     })
 
+    // NB: MAX_TITLE_LENGTH triggers the error (warning) to the user that they hit the max
     test('tests for valid title length', () => {
       const wrapper = shallow(<PostEditor {...props} />)
       const titleElement = wrapper.find('input').first()
-      titleElement.simulate('change', { target: { value: 'x'.repeat(MAX_TITLE_LENGTH) } })
+      titleElement.simulate('change', { target: { value: 'x'.repeat(MAX_TITLE_LENGTH - 1) } })
       expect(wrapper.state().titleLengthError).toBeFalsy()
     })
 
+    // NB: MAX_TITLE_LENGTH triggers the error (warning) to the user that they hit the max
     test('tests for invalid title length', () => {
       const wrapper = shallow(<PostEditor {...props} />)
       const titleElement = wrapper.find('input').first()
-      titleElement.simulate('change', { target: { value: 'x'.repeat(MAX_TITLE_LENGTH + 1) } })
+      titleElement.simulate('change', { target: { value: 'x'.repeat(MAX_TITLE_LENGTH) } })
       expect(wrapper.state().titleLengthError).toBeTruthy()
     })
   })
