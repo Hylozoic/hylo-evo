@@ -26,11 +26,18 @@ describe('PostEditor', () => {
 
   it('renders announcement option with admin in props', () => {
     const props = {
-      ...baseProps
-      // KMT: where is admin?
+      id: 1,
+      addImage: () => {},
+      showImagePreviews: true,
+      valid: true,
+      loading: false,
+      submitButtonLabel: 'Save',
+      canModerate: true,
+      save: () => {}
     }
-    const wrapper = shallow(<PostEditor {...props} />)
+    const wrapper = shallow(<ActionsBar {...props} />)
     expect(wrapper).toMatchSnapshot()
+    expect(wrapper.find('span[data-tip="Send Announcement"]')).toHaveLength(1)
   })
 
   describe('for a new post', () => {

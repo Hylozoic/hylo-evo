@@ -1879,161 +1879,74 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
 
 exports[`PostEditor renders announcement option with admin in props 1`] = `
 <div
-  data-stylename="wrapper"
+  data-stylename="actionsBar"
 >
   <div
-    data-stylename="header"
+    data-stylename="actions"
   >
-    <div
-      data-stylename="initial"
+    <Connect(UploadAttachmentButton)
+      allowMultiple={true}
+      attachmentType="image"
+      id={1}
+      onSuccess={[Function]}
+      type="post"
     >
-      <div>
-        <Button
-          borderRadius="5px"
-          className=""
-          color=""
-          disabled={false}
-          key="discussion"
-          label={
-            <span
-              data-stylename="initial-prompt"
-            >
-              <span>
-                discussion
-              </span>
-               
-              <Icon
-                data-stylename="icon icon-discussion"
-                name="ArrowDown"
-              />
-            </span>
-          }
-          noDefaultStyles={true}
-          onClick={[Function]}
-        />
-      </div>
-    </div>
+      <Icon
+        data-stylename="action-icon"
+        name="AddImage"
+      />
+    </Connect(UploadAttachmentButton)>
+    <Connect(UploadAttachmentButton)
+      allowMultiple={true}
+      attachmentType="file"
+      id={1}
+      onSuccess={[Function]}
+      type="post"
+    >
+      <Icon
+        data-stylename="action-icon"
+        name="Paperclip"
+      />
+    </Connect(UploadAttachmentButton)>
+    <span
+      data-for="announcement-tt"
+      data-tip="Send Announcement"
+    >
+      <Icon
+        data-stylename="action-icon"
+        name="Announcement"
+        onClick={[Function]}
+      />
+      <ReactTooltip
+        clickable={false}
+        delayShow={550}
+        effect="solid"
+        id="announcement-tt"
+        insecure={true}
+        resizeHide={true}
+        wrapper="div"
+      />
+    </span>
   </div>
-  <div
-    data-stylename="body"
-  >
-    <div
-      data-stylename="body-column"
-    >
-      <RoundImage
-        data-stylename="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-stylename="body-column"
-    >
-      <input
-        data-stylename="titleInput"
-        disabled={false}
-        maxLength={80}
-        onChange={[Function]}
-        placeholder="Add a title"
-        type="text"
-        value=""
-      />
-      <ForwardRef(HyloEditor)
-        contentHTML=""
-        data-stylename="editor"
-        onAddLink={[Function]}
-        onAddTopic={[Function]}
-        onUpdate={[Function]}
-        placeholder="Add a description"
-        readOnly={false}
-        showMenu={true}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    attachmentType="image"
-    showAddButton={true}
-    showLabel={true}
-    showLoading={true}
-    type="post"
+  <Button
+    color="green"
+    data-stylename="postButton"
+    dataFor="submit-tt"
+    dataTip=""
+    disabled={false}
+    label="Save"
+    onClick={[Function]}
   />
-  <Connect(AttachmentManager)
-    attachmentType="file"
-    showAddButton={true}
-    showLabel={true}
-    showLoading={true}
-    type="post"
+  <Tooltip
+    delay={150}
+    id="submit-tt"
+    offset={
+      Object {
+        "top": 0,
+      }
+    }
+    position="bottom"
   />
-  <div
-    data-stylename="footer"
-  >
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label"
-      >
-        Topics
-      </div>
-      <div
-        data-stylename="footerSection-topics"
-      >
-        <Connect(TopicSelector)
-          forGroups={Array []}
-          onChange={[Function]}
-        />
-      </div>
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label"
-      >
-        Post in
-      </div>
-      <div
-        data-stylename="footerSection-groups"
-      >
-        <GroupsSelector
-          onChange={[Function]}
-          options={Array []}
-          readOnly={false}
-          selected={Array []}
-          t={[Function]}
-        />
-      </div>
-    </div>
-    <PublicToggle
-      isPublic={false}
-      t={[Function]}
-      togglePublic={[Function]}
-    />
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label alignedLabel"
-      >
-        Location
-      </div>
-      <Connect(LocationInput)
-        onChange={[Function]}
-        placeholder="Where is your {{type}} located?"
-        saveLocationToDB={true}
-      />
-    </div>
-    <ActionsBar
-      canModerate={true}
-      groupCount={0}
-      groups={Array []}
-      loading={false}
-      save={[Function]}
-      submitButtonLabel="Post"
-      t={[Function]}
-      toggleAnnouncementModal={[Function]}
-      valid={false}
-    />
-  </div>
 </div>
 `;
 
