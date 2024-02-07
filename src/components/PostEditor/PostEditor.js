@@ -28,7 +28,7 @@ import { MAX_POST_TOPICS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
 import Tooltip from 'components/Tooltip'
 
-export const MAX_TITLE_LENGTH = 50
+export const MAX_TITLE_LENGTH = 80
 
 class PostEditor extends React.Component {
   static propTypes = {

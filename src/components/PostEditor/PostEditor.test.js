@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react'
 import { shallow } from 'enzyme'
-import PostEditor, { ActionsBar } from './PostEditor'
+import PostEditor, { MAX_TITLE_LENGTH, ActionsBar } from './PostEditor'
 
 jest.mock('lodash/debounce', () => fn => {
   fn.cancel = jest.fn()
@@ -26,10 +26,18 @@ describe('PostEditor', () => {
 
   it('renders announcement option with admin in props', () => {
     const props = {
-      ...baseProps
+      id: 1,
+      addImage: () => {},
+      showImagePreviews: true,
+      valid: true,
+      loading: false,
+      submitButtonLabel: 'Save',
+      canModerate: true,
+      save: () => {}
     }
-    const wrapper = shallow(<PostEditor {...props} />)
+    const wrapper = shallow(<ActionsBar {...props} />)
     expect(wrapper).toMatchSnapshot()
+    expect(wrapper.find('span[data-tip="Send Announcement"]')).toHaveLength(1)
   })
 
   describe('for a new post', () => {
@@ -170,6 +178,22 @@ describe('PostEditor', () => {
       titleElement.simulate('change', { target: { value: 'new value' } })
       expect(setIsDirty).toHaveBeenCalled()
     })
+
+    // NB: MAX_TITLE_LENGTH triggers the error (warning) to the user that they hit the max
+    test('tests for valid title length', () => {
+      const wrapper = shallow(<PostEditor {...props} />)
+      const titleElement = wrapper.find('input').first()
+      titleElement.simulate('change', { target: { value: 'x'.repeat(MAX_TITLE_LENGTH - 1) } })
+      expect(wrapper.state().titleLengthError).toBeFalsy()
+    })
+
+    // NB: MAX_TITLE_LENGTH triggers the error (warning) to the user that they hit the max
+    test('tests for invalid title length', () => {
+      const wrapper = shallow(<PostEditor {...props} />)
+      const titleElement = wrapper.find('input').first()
+      titleElement.simulate('change', { target: { value: 'x'.repeat(MAX_TITLE_LENGTH) } })
+      expect(wrapper.state().titleLengthError).toBeTruthy()
+    })
   })
 
   it('post is defaulted while loading editor', () => {
@@ -209,13 +233,79 @@ describe('PostEditor', () => {
       expect(testInstance.isValid(props.post, {})).toBeTruthy()
     })
 
-    it('is invalid when required values are missing', () => {
+    it('is valid when title is max langth', () => {
       const props = {
         ...baseProps,
         post: {
-          title: 'valid title',
-          groups: [],
-          type: 'Request'
+          type: 'request',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ]
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeTruthy()
+    })
+  })
+
+  describe('invalid', () => {
+    it('is invalid when title is missing', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'request',
+          title: '',
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ]
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when groups is missing', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          title: 'is a valid title',
+          type: 'Request',
+          groups: []
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when type is missing', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          title: 'is a valid title',
+          type: '',
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ]
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when title is too long', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          title: 'X'.repeat(MAX_TITLE_LENGTH + 1),
+          type: 'Request',
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ]
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
