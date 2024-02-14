@@ -5,7 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-- changed post title length from 50 to 80
+
+## [5.7.1] - 2024-02-14
+
+## Changed
+- Maximum post title length increased from 50 characters to 80 characters
+
+### Fixed
+- Stuck on Jump In modal when trying to join a group that doesn't have join questions set
 
 ## [5.7.0] - 2024-02-05
 
