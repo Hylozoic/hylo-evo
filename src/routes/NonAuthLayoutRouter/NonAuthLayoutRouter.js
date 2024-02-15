@@ -9,6 +9,7 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import setReturnToPath from 'store/actions/setReturnToPath'
 import { getAuthenticated } from 'store/selectors/getAuthState'
 import particlesjsConfig from './particlesjsConfig'
+import LocaleDropdown from 'routes/AuthLayoutRouter/components/TopNav/LocaleDropdown/LocaleDropdown'
 import Button from 'components/Button'
 import HyloCookieConsent from 'components/HyloCookieConsent'
 import JoinGroup from 'routes/JoinGroup'
@@ -20,6 +21,7 @@ import OAuthConsent from 'routes/OAuth/Consent'
 import OAuthLogin from 'routes/OAuth/Login'
 
 import './NonAuthLayoutRouter.scss'
+import { localeLocalStorageSync, localeToFlagEmoji } from 'util/locale'
 
 const particlesStyle = {
   position: 'fixed',
@@ -40,6 +42,8 @@ export default function NonAuthLayoutRouter (props) {
     ? returnToNavigationState.pathname + returnToNavigationState.search
     : returnToPathFromQueryString
   const thisApplicationText = t('this application')
+  const locale = localeLocalStorageSync()
+  const localeDisplay = localeToFlagEmoji(locale)
 
   useEffect(() => {
     if (returnToPath && returnToPath !== '/') {
@@ -55,6 +59,7 @@ export default function NonAuthLayoutRouter (props) {
     }
   }, [dispatch, setReturnToPath, returnToPath])
 
+
   return (
     <Div100vh styleName='nonAuthContainer'>
       <Helmet>
@@ -69,6 +74,7 @@ export default function NonAuthLayoutRouter (props) {
           <a href='/'>
             <img styleName='logo' src='/assets/hylo.svg' alt={t('Hylo logo')} />
           </a>
+          <LocaleDropdown renderToggleChildren={<span styleName='locale'>{t('Locale')}: {locale} {localeDisplay}</span>} />
         </div>
         <div styleName='signupRow'>
           <Switch>
@@ -159,7 +165,7 @@ export default function NonAuthLayoutRouter (props) {
             component={() => (
               <div styleName='below-container'>
                 <Link tabIndex={-1} to='/signup'>
-                  {t('Not a member of Hylo?')} <Button styleName='signupButton' color='green-white-green-border'>{t('Sign Up')}</Button>
+                  {t('Not a member of Hylo?')} <Button styleName='signupButton' color='green-white-green-border'>{t('Sign Up')}</Button> 
                 </Link>
               </div>
             )}
