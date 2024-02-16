@@ -66,7 +66,7 @@ exports[`Notification renders correctly with a comment mention notification 1`] 
     <div
       data-stylename="date"
     >
-      27 years ago
+      28 years ago
     </div>
   </div>
 </li>
@@ -138,7 +138,7 @@ exports[`Notification renders correctly with a comment notification 1`] = `
     <div
       data-stylename="date"
     >
-      27 years ago
+      28 years ago
     </div>
   </div>
 </li>
@@ -206,7 +206,7 @@ exports[`Notification renders correctly with a donation to notification 1`] = `
     <div
       data-stylename="date"
     >
-      27 years ago
+      28 years ago
     </div>
   </div>
 </li>
@@ -274,7 +274,7 @@ exports[`Notification renders correctly with a donation to notification 2`] = `
     <div
       data-stylename="date"
     >
-      27 years ago
+      28 years ago
     </div>
   </div>
 </li>
@@ -340,7 +340,7 @@ exports[`Notification renders correctly with a join request notification 1`] = `
     <div
       data-stylename="date"
     >
-      27 years ago
+      28 years ago
     </div>
   </div>
 </li>
@@ -406,7 +406,7 @@ exports[`Notification renders correctly with a mention notification 1`] = `
     <div
       data-stylename="date"
     >
-      27 years ago
+      28 years ago
     </div>
   </div>
 </li>
@@ -437,6 +437,9 @@ exports[`Notification renders correctly with a tag notification 1`] = `
               "id": 3,
               "name": "Arthur Fonzarelli",
             },
+            "group": Object {
+              "name": "Foomunity",
+            },
             "meta": Object {
               "reasons": Array [
                 "tag: request",
@@ -462,6 +465,9 @@ exports[`Notification renders correctly with a tag notification 1`] = `
               "id": 3,
               "name": "Arthur Fonzarelli",
             },
+            "group": Object {
+              "name": "Foomunity",
+            },
             "meta": Object {
               "reasons": Array [
                 "tag: request",
@@ -480,7 +486,7 @@ exports[`Notification renders correctly with a tag notification 1`] = `
     <div
       data-stylename="date"
     >
-      27 years ago
+      28 years ago
     </div>
   </div>
 </li>
@@ -546,7 +552,7 @@ exports[`Notification renders correctly with an approved join request notificati
     <div
       data-stylename="date"
     >
-      27 years ago
+      28 years ago
     </div>
   </div>
 </li>
@@ -794,9 +800,12 @@ exports[`NotificationHeader renders correctly with a tag notification 1`] = `
 >
   New Post in 
    
+  Foomunity
+   
   <span
     data-stylename="bold"
   >
+    #
     request
   </span>
 </div>
@@ -852,6 +861,9 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
                 "id": 3,
                 "name": "Arthur Fonzarelli",
               },
+              "group": Object {
+                "name": "Foomunity",
+              },
               "meta": Object {
                 "reasons": Array [
                   "tag: request",
@@ -903,6 +915,9 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
                 "avatarUrl": "baz.png",
                 "id": 3,
                 "name": "Arthur Fonzarelli",
+              },
+              "group": Object {
+                "name": "Foomunity",
               },
               "meta": Object {
                 "reasons": Array [

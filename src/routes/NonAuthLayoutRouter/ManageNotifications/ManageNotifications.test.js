@@ -26,7 +26,7 @@ jest.mock('hooks/useRouter', () => () => {
 
 jest.mock('store/middleware/apiMiddleware', () => (req) => {
   return store => next => action => {
-    return Promise.resolve({ ...action, payload: Promise.resolve({ commentNotifications: 'email', dmNotifications: 'push', digestFrequency: 'daily', allGroupNotifications: 'both' }) })
+    return Promise.resolve({ ...action, payload: Promise.resolve({ commentNotifications: 'email', dmNotifications: 'push', postNofications: 'important', digestFrequency: 'daily', allGroupNotifications: 'both' }) })
   }
 })
 

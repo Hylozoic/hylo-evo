@@ -424,7 +424,8 @@ describe('on UPDATE_USER_SETTINGS_PENDING', () => {
         tagline: 'new tagline',
         settings: {
           digestFrequency: 'daily',
-          commentNotifications: 'email'
+          commentNotifications: 'email',
+          postNotifications: 'important'
         }
       }
     }
@@ -439,7 +440,8 @@ describe('on UPDATE_USER_SETTINGS_PENDING', () => {
     expect(me.settings).toEqual({
       digestFrequency: 'daily',
       dmNotifications: 'both',
-      commentNotifications: 'email'
+      commentNotifications: 'email',
+      postNotifications: 'important'
     })
   })
 })

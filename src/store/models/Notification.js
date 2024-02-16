@@ -20,6 +20,7 @@ export const ACTION_JOIN_REQUEST = 'joinRequest'
 export const ACTION_MENTION = 'mention'
 export const ACTION_NEW_COMMENT = 'newComment'
 export const ACTION_TAG = 'tag'
+export const ACTION_NEW_POST = 'newPost'
 
 export function urlForNotification ({ activity: { action, post, comment, group, meta: { reasons }, otherGroup } }) {
   const groupSlug = get('slug', group) ||
@@ -56,10 +57,13 @@ export function urlForNotification ({ activity: { action, post, comment, group, 
       return postUrl(post.id, { groupSlug })
     case ACTION_NEW_COMMENT:
       return postCommentUrl({ postId: post.id, commentId: comment.id, groupSlug })
-    case ACTION_TAG:
+    case ACTION_TAG: {
       const tagReason = find(r => r.startsWith('tag: '), reasons)
       const topicName = tagReason.split(': ')[1]
       return postUrl(post.id, { groupSlug, topicName })
+    }
+    case ACTION_NEW_POST:
+      return postUrl(post.id, { groupSlug })
   }
 }
 
