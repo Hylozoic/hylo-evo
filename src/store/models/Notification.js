@@ -39,8 +39,6 @@ export function urlForNotification ({ activity: { action, post, comment, group, 
       return postUrl(post.id, { groupSlug })
     case ACTION_APPROVED_JOIN_REQUEST:
       return groupUrl(groupSlug)
-    case ACTION_COMMENT_MENTION:
-      return postCommentUrl({ postId: post.id, commentId: comment.id, groupSlug })
     case ACTION_EVENT_INVITATION:
       return postUrl(post.id, { groupSlug })
     case ACTION_GROUP_CHILD_GROUP_INVITE:
@@ -53,17 +51,25 @@ export function urlForNotification ({ activity: { action, post, comment, group, 
       return groupUrl(groupSlug)
     case ACTION_JOIN_REQUEST:
       return groupUrl(groupSlug, 'settings/requests')
-    case ACTION_MENTION:
-      return postUrl(post.id, { groupSlug })
     case ACTION_NEW_COMMENT:
+    case ACTION_COMMENT_MENTION:
       return postCommentUrl({ postId: post.id, commentId: comment.id, groupSlug })
+    case ACTION_NEW_POST:
+    case ACTION_MENTION: {
+      let topicName
+      if (post.type === 'chat') {
+        // If the mention is in a chat room, go to the chat room
+        const tagReason = find(r => r.startsWith('tag: '), reasons)
+        topicName = tagReason.split(': ')[1]
+      }
+      return postUrl(post.id, { groupSlug, topicName })
+    }
     case ACTION_TAG: {
+      // Put this one first so clicking on a chat notification always goes to that chat room, even if there was also a mention in the same post
       const tagReason = find(r => r.startsWith('tag: '), reasons)
       const topicName = tagReason.split(': ')[1]
       return postUrl(post.id, { groupSlug, topicName })
     }
-    case ACTION_NEW_POST:
-      return postUrl(post.id, { groupSlug })
   }
 }
 
