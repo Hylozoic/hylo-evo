@@ -59,7 +59,6 @@ export default function NonAuthLayoutRouter (props) {
     }
   }, [dispatch, setReturnToPath, returnToPath])
 
-
   return (
     <Div100vh styleName='nonAuthContainer'>
       <Helmet>
@@ -165,7 +164,7 @@ export default function NonAuthLayoutRouter (props) {
             component={() => (
               <div styleName='below-container'>
                 <Link tabIndex={-1} to='/signup'>
-                  {t('Not a member of Hylo?')} <Button styleName='signupButton' color='green-white-green-border'>{t('Sign Up')}</Button> 
+                  {t('Not a member of Hylo?')} <Button styleName='signupButton' color='green-white-green-border'>{t('Sign Up')}</Button>
                 </Link>
               </div>
             )}
