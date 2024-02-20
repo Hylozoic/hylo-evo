@@ -19,6 +19,7 @@ export default function login (email, password) {
                 digestFrequency
                 dmNotifications
                 commentNotifications
+                postNotifications
                 signupInProgress
                 streamChildPosts
                 streamViewMode

@@ -56,6 +56,7 @@ const tagNotification = {
     action: ACTION_TAG,
     post: { title: 'I have so many things I need!' },
     meta: { reasons: ['tag: request'] },
+    group: { name: 'Foomunity' },
     unread: true
   },
   createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))

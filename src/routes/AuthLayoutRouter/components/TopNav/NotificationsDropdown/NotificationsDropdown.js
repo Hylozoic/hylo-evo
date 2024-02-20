@@ -14,6 +14,7 @@ import {
   ACTION_JOIN_REQUEST,
   ACTION_APPROVED_JOIN_REQUEST,
   ACTION_MENTION,
+  ACTION_NEW_POST,
   ACTION_COMMENT_MENTION,
   ACTION_ANNOUNCEMENT,
   ACTION_DONATION_TO,
@@ -167,7 +168,7 @@ export function Notification ({ notification, onClick }) {
 
 export function NotificationHeader ({ notification }) {
   const { t } = useTranslation()
-  const { activity: { action, actor, post, meta: { reasons } } } = notification
+  const { activity: { action, actor, group, post, meta: { reasons } } } = notification
   switch (action) {
     case ACTION_NEW_COMMENT: {
       const postSummary = post.title && post.title.length > 0 ? post.title : truncateHTML(post.details)
@@ -182,10 +183,16 @@ export function NotificationHeader ({ notification }) {
       const tag = tagReason.split(': ')[1]
       return (
         <div styleName='header'>
-          {t('New Post in ')} <span styleName='bold'>{tag}</span>
+          {t('New Post in ')} {group.name} <span styleName='bold'>#{tag}</span>
         </div>
       )
     }
+    case ACTION_NEW_POST:
+      return (
+        <div styleName='header'>
+          <span styleName='bold'>{t('New Post in ')} {group.name}</span>
+        </div>
+      )
     case ACTION_JOIN_REQUEST:
       return (
         <div styleName='header'>
@@ -294,6 +301,7 @@ export function NotificationBody ({ notification }) {
       )
     case ACTION_TAG:
     case ACTION_MENTION:
+    case ACTION_NEW_POST:
       return (
         <div styleName='body'>
           <span styleName='bold'>{firstName(actor)}</span>{' '}{t('wrote:')}{' '}"{postSummary}"

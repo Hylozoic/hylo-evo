@@ -27,7 +27,8 @@ describe('NotificationSettingsTab', () => {
     settings: {
       digestFrequency: 'daily',
       dmNotifications: 'none',
-      commentNotifications: 'email'
+      commentNotifications: 'email',
+      postNotifications: 'important'
     }
   }
 
@@ -44,7 +45,7 @@ describe('NotificationSettingsTab', () => {
       ...currentUser,
       hasDevice: false
     }} />)
-    expect(wrapper.find('Select').at(1).prop('options')).toHaveLength(2)
+    expect(wrapper.find('Select').at(1).prop('options')).toHaveLength(3)
   })
 
   it("does the right thing with 'both' if user doesn't have device", () => {
@@ -57,7 +58,7 @@ describe('NotificationSettingsTab', () => {
       hasDevice: false
     }} />)
 
-    expect(wrapper.find('Select').at(1).prop('selected')).toEqual('email')
+    expect(wrapper.find('Select').at(2).prop('selected')).toEqual('email')
   })
 
   describe('updateMessageSettings', () => {
