@@ -3,6 +3,8 @@
   "description": "Hylo Frontend",
   "version": "5.7.2",
   "private": true,
+  "license": "Apache-2.0",
+  "author": "Hylo <hello@hylo.com>",
   "engines": {
     "node": "16.13.2",
     "yarn": "^1.2.0"
