@@ -15,6 +15,9 @@ export function handleNotificationActions (session, action) {
       if (meta.resetCount) {
         const me = Me.first()
         me && me.update({ newNotificationCount: 0 })
+        if (window.electron) {
+          window.electron.setBadgeCount(0)
+        }
       }
       break
 

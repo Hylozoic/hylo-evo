@@ -184,7 +184,7 @@ export default function ChatPost ({
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
 
-  const badges = (group.id && creator.groupRoles.filter(role => role.groupId === group.id)) || []
+  const badges = (group.id && creator.groupRoles?.filter(role => role.groupId === group.id)) || []
   const creatorIsModerator = creator.moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
 
   return (
