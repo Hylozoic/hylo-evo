@@ -1,5 +1,7 @@
 import { attr, fk, Model } from 'redux-orm'
 import { find, get } from 'lodash/fp'
+import { t as translate } from 'i18next'
+import { TextHelpers } from 'hylo-shared'
 import {
   postCommentUrl,
   postUrl,
@@ -70,6 +72,102 @@ export function urlForNotification ({ activity: { action, post, comment, group, 
       const topicName = tagReason.split(': ')[1]
       return postUrl(post.id, { groupSlug, topicName })
     }
+  }
+}
+
+const NOTIFICATION_TEXT_MAX = 76
+export const truncateHTML = html => TextHelpers.presentHTMLToText(html, { truncate: NOTIFICATION_TEXT_MAX })
+
+export function titleForNotification (notification, trans) {
+  // XXX: Need the imported option for the electron notifications in SocketListener.store to work, but doesn't actually have the translations available
+  // TODO: perhaps notification text and translations should happen on the server, or in the electron app itself. should move notification transltions to hylo-shared?
+  const t = trans || translate
+
+  const { activity: { action, actor, post, group, meta: { reasons } } } = notification
+
+  const postSummary = post ? (post.title && post.title.length > 0 ? post.title : truncateHTML(post.details)) : null
+  const name = actor.name
+
+  switch (action) {
+    case ACTION_NEW_COMMENT:
+      return t('New comment on "<strong>{{postSummary}}</strong>"', { postSummary })
+    case ACTION_TAG: {
+      const tagReason = find(r => r.startsWith('tag: '), reasons)
+      const tag = tagReason.split(': ')[1]
+      return t('New post in <strong>{{name}}</strong>', { name: '#' + tag })
+    }
+    case ACTION_NEW_POST:
+      return t('New post in <strong>{{name}}</strong>', { name: group.name })
+    case ACTION_JOIN_REQUEST:
+      return t('New Join Request')
+    case ACTION_APPROVED_JOIN_REQUEST:
+      return t('Join Request Approved')
+    case ACTION_MENTION:
+      return t('<strong>{{name}}</strong> mentioned you', { name })
+    case ACTION_COMMENT_MENTION:
+      return t('<strong>{{name}}</strong> mentioned you in a comment on <strong{{postSummary}}</strong>', { name, postSummary })
+    case ACTION_ANNOUNCEMENT:
+      return t('New announcement in <strong>{{groupName}}</strong>', { groupName: group.name })
+    case ACTION_DONATION_TO:
+      return t('<strong>You</strong> contributed to a project')
+    case ACTION_DONATION_FROM:
+      return t('<strong>{{name}}</strong> contributed to your project', { name })
+    case ACTION_EVENT_INVITATION:
+      return t('<strong>{{name}}</strong> invited you to an event', { name })
+    case ACTION_GROUP_CHILD_GROUP_INVITE:
+      return t('Your group has been invited')
+    case ACTION_GROUP_CHILD_GROUP_INVITE_ACCEPTED:
+      return t('New Group Joined')
+    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST:
+      return t('Group Requesting to Join')
+    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED:
+      return t('New Group Joined')
+    default:
+      return null
+  }
+}
+
+export function bodyForNotification (notification, trans) {
+  // XXX: Need the imported option for the electron notifications in SocketListener.store to work, but doesn't actually have the translations available
+  // TODO: perhaps notification text and translations should happen on the server, or in the electron app itself
+  const t = trans || translate
+
+  const { activity: { action, actor, post, comment, group, otherGroup, contributionAmount } } = notification
+
+  const postSummary = post ? (post.title && post.title.length > 0 ? post.title : truncateHTML(post.details)) : null
+  const name = actor.name
+
+  switch (action) {
+    case ACTION_COMMENT_MENTION:
+    case ACTION_NEW_COMMENT: {
+      const text = truncateHTML(comment.text)
+      return t('<strong>{{name}}</strong> wrote: "{{text}}"', { name, text })
+    }
+    case ACTION_TAG:
+    case ACTION_NEW_POST:
+    case ACTION_ANNOUNCEMENT:
+    case ACTION_MENTION: {
+      return t('<strong>{{name}}</strong> wrote: "{{text}}"', { name, text: postSummary })
+    }
+    case ACTION_JOIN_REQUEST:
+      return t('<strong>{{name}}</strong> asked to join {{groupName}}', { name, groupName: group.name })
+    case ACTION_APPROVED_JOIN_REQUEST:
+      return t('<strong>{{name}}</strong> approved your request to join {{groupName}}', { name, groupName: group.name })
+    case ACTION_DONATION_TO:
+      return t('<strong>{{name}}</strong> contributed {{amount}} to "{{postSummary}}"', { name: 'You', amount: contributionAmount / 100, postSummary })
+    case ACTION_DONATION_FROM:
+      return t('<strong>{{name}}</strong> contributed {{amount}} to "{{postSummary}}""', { name, amount: contributionAmount / 100, postSummary })
+    case ACTION_EVENT_INVITATION:
+      return t('<strong>{{name}}</strong> invited you to: "{{postSummary}}"', { name, postSummary })
+    case ACTION_GROUP_CHILD_GROUP_INVITE:
+      return t('<strong>{{groupName}}</strong> has invited <strong>{{name}}</strong> to join it', { groupName: group.name, name: otherGroup.name })
+    case ACTION_GROUP_CHILD_GROUP_INVITE_ACCEPTED:
+    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED:
+      return t('<strong>{{groupName}}</strong> has joined <strong>{{otherGroupName}}</strong>', { groupName: group.name, otherGroupName: otherGroup.name })
+    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST:
+      return t('<strong>{{groupName}}</strong> has requested to join <strong>{{otherGroupName}}</strong>', { groupName: group.name, otherGroupName: otherGroup.name })
+    default:
+      return null
   }
 }
 
