@@ -58,6 +58,7 @@ export default gql`
       digestFrequency
       dmNotifications
       commentNotifications
+      postNotifications
       locale
       mapBaseLayer
       signupInProgress

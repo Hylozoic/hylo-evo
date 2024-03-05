@@ -1,8 +1,10 @@
 {
   "name": "hylo-evo",
   "description": "Hylo Frontend",
-  "version": "5.6.2",
+  "version": "5.7.3",
   "private": true,
+  "license": "Apache-2.0",
+  "author": "Hylo <hello@hylo.com>",
   "engines": {
     "node": "16.13.2",
     "yarn": "^1.2.0"

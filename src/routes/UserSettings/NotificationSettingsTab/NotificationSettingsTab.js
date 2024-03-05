@@ -110,6 +110,20 @@ class NotificationSettingsTab extends Component {
           </div>
         </div>
         <div styleName='global-setting'>
+          <div styleName='prompt'>{t('Would you like to receive a notification for each new post in your groups?')}
+          </div>
+          <div styleName='setting-select'>
+            <Select
+              onChange={updateSetting('postNotifications')}
+              selected={settings.postNotifications}
+              options={[
+                { id: 'none', label: t('No Posts') },
+                { id: 'important', label: t('Important Posts (Announcements & Mentions)') },
+                { id: 'all', label: t('Every Post') }
+              ]} />
+          </div>
+        </div>
+        <div styleName='global-setting'>
           <div styleName='prompt'>
             {t('How would you like to receive notifications about')}&nbsp;
             {t('new comments on posts you\'re following?')}

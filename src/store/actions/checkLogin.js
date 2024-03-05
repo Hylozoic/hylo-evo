@@ -19,6 +19,7 @@ export default function checkLogin () {
               digestFrequency
               dmNotifications
               commentNotifications
+              postNotifications
               signupInProgress
               streamChildPosts
               streamViewMode

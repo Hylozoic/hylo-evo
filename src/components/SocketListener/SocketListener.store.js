@@ -1,3 +1,6 @@
+import { TextHelpers } from 'hylo-shared'
+import { bodyForNotification, titleForNotification } from 'store/models/Notification'
+
 const MODULE_NAME = 'SocketListener'
 export const RECEIVE_MESSAGE = `${MODULE_NAME}/RECEIVE_MESSAGE`
 export const RECEIVE_COMMENT = `${MODULE_NAME}/RECEIVE_COMMENT`
@@ -82,7 +85,7 @@ export function ormSessionReducer (session, { meta, type, payload }) {
   let currentUser
 
   switch (type) {
-    case RECEIVE_MESSAGE:
+    case RECEIVE_MESSAGE: {
       const id = payload.data.message.messageThread
       if (!MessageThread.idExists(id)) {
         MessageThread.create({
@@ -94,8 +97,9 @@ export function ormSessionReducer (session, { meta, type, payload }) {
       }
       MessageThread.withId(id).newMessageReceived(meta.bumpUnreadCount)
       break
+    }
 
-    case RECEIVE_POST:
+    case RECEIVE_POST: {
       currentUser = Me.first()
       const { post } = payload.data
       if (currentUser && post.creatorId !== currentUser.id) {
@@ -114,12 +118,22 @@ export function ormSessionReducer (session, { meta, type, payload }) {
           !m.person && m.group === post.groupId).first())
       }
       break
+    }
 
-    case RECEIVE_NOTIFICATION:
+    case RECEIVE_NOTIFICATION: {
       currentUser = Me.first()
       currentUser.update({
         newNotificationCount: currentUser.newNotificationCount + 1
       })
+
+      if (window.electron) {
+        const notification = payload.data.notification
+        window.electron.setBadgeCount(currentUser.newNotificationCount)
+        const title = TextHelpers.presentHTMLToText(titleForNotification(notification))
+        const body = TextHelpers.presentHTMLToText(bodyForNotification(notification))
+        window.electron.showNotification(title, body)
+      }
       break
+    }
   }
 }

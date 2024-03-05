@@ -190,6 +190,7 @@ export default function ChatPost ({
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
 
   const badges = combineRoles({ person: creator, groupId: group.id })
+
   const creatorIsModerator = creator.moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
 
   return (

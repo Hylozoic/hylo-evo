@@ -6,6 +6,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.7.3] - 2024-03-04
+
+## Added
+- Notifications displayed on desktop when Hylo is run through the new Electron based Desktop app! Only tested on a mac so far. Dock badge count also updated as notifications come in or are read.
+
+## [5.7.2] - 2024-02-20
+
+## Added
+- New setting to receive a notification for every post in your groups. This is set to only receive "important" post notifications by default, which includes Announcement posts, and posts you are mentioned in. You can change the setting to All posts or None in the Notifications settings page. Also improved the text of various notifications.
+- Internationalization/language support of the Signup/Login page
+
+## [5.7.1] - 2024-02-14
+
+## Changed
+- Maximum post title length increased from 50 characters to 80 characters
+
+### Fixed
+- Stuck on Jump In modal when trying to join a group that doesn't have join questions set
+
+## [5.7.0] - 2024-02-05
+
+### Added
+- Group Agreements: Groups can now have agreements that members must agree to when joining the group. Each agreement has a title and description, and newly joining members must agree to them before they are let in. If agreements change then the member will be asked to agree to the newly changed agreeements.
+- You can now require Join Questions for Groups that are set to Accessibility = Closed or Open, no longer just for Restricted groups. Join questions are asked after someone joins the group and before they are let in.
+- About Us panel now accessible on every view of the group, not just the Explore page
+
+### Changed
+- When inviting someone to a group that has Join Questions new members are now asked to answer the join questions before being let in to the group even when invited by join link or email address.
+
 ## [5.6.2] - 2023-11-27
 
 ### Added

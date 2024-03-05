@@ -19,6 +19,7 @@ export default function updateUserSettings (changes) {
               digestFrequency
               dmNotifications
               commentNotifications
+              postNotifications
               signupInProgress
               streamChildPosts
               streamViewMode

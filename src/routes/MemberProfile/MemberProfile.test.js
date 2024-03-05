@@ -1,9 +1,9 @@
-import { mount, shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 import React from 'react'
 import orm from 'store/models'
 import { graphql } from 'msw'
 import mockGraphqlServer from 'util/testing/mockGraphqlServer'
-import { AllTheProviders, render, screen, waitForElementToBeRemoved } from 'util/testing/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import denormalized from './MemberProfile.test.json'
 import MemberProfile from './MemberProfile.js'
 

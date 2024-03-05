@@ -56,6 +56,7 @@ export function verifyEmail (email, code, token) {
                 digestFrequency
                 dmNotifications
                 commentNotifications
+                postNotifications
                 locale
                 signupInProgress
                 streamChildPosts
@@ -107,6 +108,7 @@ export function register (name, password) {
                 digestFrequency
                 dmNotifications
                 commentNotifications
+                postNotifications
                 signupInProgress
                 locale
                 streamChildPosts

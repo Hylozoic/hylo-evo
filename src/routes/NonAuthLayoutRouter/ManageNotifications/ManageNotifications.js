@@ -23,7 +23,7 @@ export default function ManageNotifications (props) {
   const [settings, setSettings] = useState({ allGroupNotifications: 'keep' })
   const [unsubscribeAll, setUnsubscribeAll] = useState(false)
 
-  const { commentNotifications, dmNotifications, digestFrequency, allGroupNotifications } = settings
+  const { commentNotifications, dmNotifications, digestFrequency, postNotifications, allGroupNotifications } = settings
 
   useEffect(() => {
     dispatch(fetchNotificationSettings(token)).then((data) => setSettings(data.payload))
@@ -34,7 +34,7 @@ export default function ManageNotifications (props) {
   }
 
   const submit = () => {
-    dispatch(updateNotificationSettings(token, unsubscribeAll, digestFrequency, dmNotifications, commentNotifications, allGroupNotifications))
+    dispatch(updateNotificationSettings(token, unsubscribeAll, digestFrequency, dmNotifications, commentNotifications, postNotifications, allGroupNotifications))
   }
 
   const notificationOptions = [
@@ -65,6 +65,19 @@ export default function ManageNotifications (props) {
                   { id: 'never', label: t('Never') }
                 ]}
                 selected={unsubscribeAll ? 'never' : digestFrequency}
+              />
+            </div>
+            <div styleName='setting-wrapper'>
+              <label styleName='setting-explanation'>{t('Send notifications for each new post in your group?')}</label>
+              <Select
+                disabled={unsubscribeAll}
+                onChange={updateSetting('postNotifications')}
+                options={[
+                  { id: 'none', label: t('No Posts') },
+                  { id: 'important', label: t('Announcements & Mentions only') },
+                  { id: 'all', label: t('Every Post') }
+                ]}
+                selected={unsubscribeAll ? 'none' : postNotifications}
               />
             </div>
             <div styleName='setting-wrapper'>

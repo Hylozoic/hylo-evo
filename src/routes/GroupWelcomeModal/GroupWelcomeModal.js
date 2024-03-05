@@ -100,7 +100,7 @@ export default function GroupWelcomeModal (props) {
       group.id,
       { joinQuestionsAnsweredAt: new Date(), showJoinForm: false },
       true,
-      questionAnswers.map(q => ({ questionId: q.questionId, answer: q.answer }))
+      questionAnswers ? questionAnswers.map(q => ({ questionId: q.questionId, answer: q.answer })) : []
     ))
     return null
   }
