@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.7.3] - 2024-03-04
+
+## Added
+- Notifications displayed on desktop when Hylo is run through the new Electron based Desktop app! Only tested on a mac so far. Dock badge count also updated as notifications come in or are read.
+
 ## [5.7.2] - 2024-02-20
 
 ## Added
