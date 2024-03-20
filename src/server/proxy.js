@@ -40,7 +40,7 @@ export function transformPathname (pathname) {
   // the folder of the same name, unless it's the IOS_SITE_ASSOCIATION_FILE
   // which is needed for site verification for iOS app deep linking.
   if (pathname === `/${IOS_SITE_ASSOCIATION_FILE}`) {
-    pathname += `.json`
+    pathname += '.json'
   } else if (!pathname.match(/\.\w{2,4}$/)) {
     pathname += '/index.html'
   }
@@ -81,7 +81,7 @@ export function handlePage (req, res) {
   console.log(`[proxy] ${pathname} -> ${newUrl} ${cachedValue ? '☺' : '↑'}`)
 
   const sendCachedData = data => {
-    var mimeType = mime.getType(newUrl)
+    const mimeType = mime.getType(newUrl)
     res.set('Content-Type', mimeType)
     res.set('Content-Encoding', 'gzip')
     streamifier.createReadStream(data).pipe(res)
@@ -103,9 +103,14 @@ export const handleStaticPages = server => {
   })
 
   server.use((req, res, next) => {
-    // the static site must keep its images, CSS, etc. under the /static path so that,
-    // or the root directory, so we know to proxy them.
-    if (!req.originalUrl.startsWith('/static') && !/^\/[^/]+\.(js|css)$/.test(req.originalUrl)) return next()
+    // Gatsby keeps its images, under the /static path, page data under /page-data
+    // and css + js at the root directory. Proxy those URLs to the static site
+    if (!req.originalUrl.startsWith('/static') &&
+        !req.originalUrl.startsWith('/page-data') &&
+        !/^\/[^/]+\.(js|css)$/.test(req.originalUrl)
+    ) {
+      return next()
+    }
     return handlePage(req, res)
   })
 }
