@@ -10,9 +10,15 @@ const cache = LRU(50)
 // flag-shared
 const staticPages = [
   '',
+  '/about',
+  '/agreements',
+  '/participate',
+  '/terms',
+  '/privacy',
+  '/murmurations.json',
+  // old ones below, can be removed when new site goes live
   '/help',
   '/help/markdown',
-  '/about',
   '/about/careers',
   '/about/contact',
   '/about/team',
@@ -21,10 +27,7 @@ const staticPages = [
   '/subscribe',
   '/styleguide',
   '/team',
-  '/terms',
-  '/terms/privacy',
-  '/newapp',
-  '/murmurations.json'
+  '/newapp'
 ]
 
 export const IOS_SITE_ASSOCIATION_FILE = 'apple-app-site-association'
