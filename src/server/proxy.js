@@ -105,7 +105,7 @@ export const handleStaticPages = server => {
   server.use((req, res, next) => {
     // the static site must keep its images, CSS, etc. under the /static path so that,
     // or the root directory, so we know to proxy them.
-    if (!req.originalUrl.startsWith('/static') && !/^\/.+\.(js|css)$/.test(req.originalUrl)) return next()
+    if (!req.originalUrl.startsWith('/static') && !/^\/[^/]+\.(js|css)$/.test(req.originalUrl)) return next()
     return handlePage(req, res)
   })
 }
