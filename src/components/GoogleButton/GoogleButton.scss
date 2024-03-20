@@ -10,14 +10,16 @@
   white-space: nowrap;
   padding: 0 15px 0 10px;
   transition: all .25s ease;
-  width: 240px;
+  width: 260px;
+  justify-content: center;
 
   img {
     border: 0px;
-    height: 40px;
+    height: 30px;
     position: relative;
-    top: -8px;
-    left: -8px;
+    top: 0px;
+    left: 0px;
+    border-radius: 30px;
   }
   &:hover,
   &:focus {
@@ -27,8 +29,8 @@
 }
 .google-icon {
   background-color: white;
-  height: 24px;
+  height: 30px;
   border-radius: 24px;
-  width: 24px;
+  width: 30px;
   margin-right: 12px;
 }

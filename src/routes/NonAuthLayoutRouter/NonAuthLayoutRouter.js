@@ -71,7 +71,7 @@ export default function NonAuthLayoutRouter (props) {
         </div>
         <div styleName='topRow'>
           <a href='/'>
-            <img styleName='logo' src='/assets/hylo.svg' alt={t('Hylo logo')} />
+            <img styleName='logo' src='/assets/hylo-logo-white-horizontal.svg' alt={t('Hylo logo')} />
           </a>
           <LocaleDropdown renderToggleChildren={<span styleName='locale'>{t('Locale')}: {locale} {localeDisplay}</span>} />
         </div>
