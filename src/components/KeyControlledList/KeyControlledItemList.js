@@ -54,7 +54,7 @@ class KeyControlledItemList extends React.Component {
       : item => <li className={theme.item} key={item.id || 'blank'}>
         <a onClick={event => this.change(item, event)}>
           <div>
-            <span>{item.name}</span>
+            <span>{item.name || item.title}</span>
           </div>
           {tagType && tagType === 'groups' && <div styleName='keyListMemberCount'><div><Icon name='Members' styleName='keyListPrivacyIcon' /> {item.memberCount} {this.props.t('Member', { count: item.memberCount })}</div><div><Icon name={accessibilityIcon(item.accessibility)} styleName='keyListPrivacyIcon' /> <Icon name={visibilityIcon(item.visibility)} styleName='keyListPrivacyIcon' /></div></div>}
         </a>

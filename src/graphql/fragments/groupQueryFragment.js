@@ -199,11 +199,35 @@ export default () => {
         avatarUrl
         lastActiveAt
         name
+        commonRoles {
+          items {
+            id
+            name
+            description
+            emoji
+            responsibilities {
+              items {
+                id
+                title
+                description
+              }
+            }
+          }
+        }
         groupRoles {
-          name
-          emoji
-          active
-          groupId
+          items {
+            name
+            emoji
+            active
+            groupId
+            responsibilities {
+              items {
+                id
+                title
+                description
+              }
+            }
+          }
         }
       }
     }

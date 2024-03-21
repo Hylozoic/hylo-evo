@@ -199,7 +199,7 @@ class GroupSettingsTab extends Component {
           }))}
         />
         <p styleName='general.detailText'>{t('Note: as a moderator you will always see the exact location displayed')}</p>
-
+        {/* TODO RESP: location checks for moderator status... need to verify that has been shifted */}
         <br />
 
         <SettingsControl

@@ -158,6 +158,7 @@ export default function Widget (props) {
 
   return (
     <div styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
+      {/* TODO: ADMIN RESP? Add something for RESP here */}
       {isModerator || (isVisible && widgetItems) ? <div styleName='header'>
         <h3>{(isModerator && WIDGETS[name].moderatorTitle) || WIDGETS[name].title}</h3>
         {isModerator && <div styleName='more'>

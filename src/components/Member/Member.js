@@ -7,6 +7,9 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import SkillLabel from 'components/SkillLabel'
 import './Member.scss'
+import { RESP_REMOVE_MEMBERS } from 'store/constants'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
+import { combineRoles } from 'store/models/Person'
 
 const { object, string, shape } = PropTypes
 
@@ -23,19 +26,20 @@ class Member extends React.Component {
     const {
       className,
       group,
-      member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships, groupRoles },
+      member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships },
       goToPerson,
       canModerate,
       removeMember,
+      currentUser,
       t
     } = this.props
 
-    const badges = (group.id && groupRoles?.filter(role => role.groupId === group.id)) || []
+    const badges = combineRoles({ person: this.props.member, groupId: group.id })
     const creatorIsModerator = moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
-
+    const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
     return (
       <div styleName='member' className={className}>
-        {canModerate &&
+        {(canModerate || responsibilities.includes(RESP_REMOVE_MEMBERS)) &&
           <Dropdown
             styleName='dropdown'
             toggleChildren={<Icon name='More' />}
@@ -46,11 +50,12 @@ class Member extends React.Component {
           <div styleName='name'>{name}</div>
           <div styleName='location'>{location}</div>
           <div styleName='badgeRow'>
+            {/* TODO RESP: can be removed once mods are ported to managers */}
             {creatorIsModerator && (
               <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} id={id} />
             )}
             {badges.map(badge => (
-              <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
+              <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities} id={id} />
             ))}
           </div>
           {skills && <div styleName='skills'>

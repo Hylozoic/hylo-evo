@@ -3,6 +3,12 @@
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
   "canModerate": false,
+  "currentUser": SessionBoundModel {
+    "_fields": Object {
+      "id": "1",
+    },
+    "id": "1",
+  },
   "group": null,
   "leaders": Array [],
   "members": Array [],

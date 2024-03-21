@@ -70,11 +70,33 @@ posts: viewPosts(
     name
     avatarUrl
     groupRoles {
-      name
-      emoji
-      active
-      groupId
+      items {
+         name
+         emoji
+         active
+         groupId
+         responsibilities {
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
     }
+    commonRoles{
+      items {
+         name
+         emoji
+         responsibilities {
+           items {
+              id
+              title
+              description
+            }
+          }
+       }
+     }
     moderatedGroupMemberships {
       groupId
     }
@@ -298,11 +320,33 @@ posts(
     name
     avatarUrl
     groupRoles {
-      name
-      emoji
-      active
-      groupId
+      items {
+         name
+         emoji
+         active
+         groupId
+         responsibilities {
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
     }
+    commonRoles{
+      items {
+         name
+         emoji
+         responsibilities {
+           items {
+              id
+              title
+              description
+            }
+          }
+       }
+     }
     moderatedGroupMemberships {
       groupId
     }

@@ -9,6 +9,7 @@ exports[`GroupSidebar renders correctly 1`] = `
     t={[Function]}
   />
   <SettingsLink
+    canModerate={false}
     group={
       Object {
         "description": "the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, ",
@@ -20,6 +21,7 @@ exports[`GroupSidebar renders correctly 1`] = `
     }
   />
   <MemberSection
+    canModerate={false}
     memberCount={56}
     members={
       Array [

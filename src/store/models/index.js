@@ -28,6 +28,7 @@ import Skill from './Skill'
 import Topic from './Topic'
 import Vote from './Vote'
 import Widget from './Widget'
+import CommonRole from './CommonRole.'
 
 export const orm = new ORM({ stateSelector: state => state.orm })
 
@@ -38,6 +39,7 @@ orm.register(
   Collection,
   CollectionPost,
   Comment,
+  CommonRole,
   CustomView,
   EventInvitation,
   Group,

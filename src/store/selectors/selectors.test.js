@@ -120,7 +120,7 @@ describe('getCanModerate', () => {
   it('returns true when user can moderate', () => {
     const me = session.Me.first()
     const group = session.Group.create({ id: 1 })
-    session.Membership.create({ id: 1, group: group.id, hasModeratorRole: true, person: me.id })
+    session.Membership.create({ id: 1, group: group.id, hasModeratorRole: true, person: me.id, commonRoles: { items: [] }, groupRoles: { items: [] } })
     const state = { orm: session.state }
     const props = { group }
     expect(getCanModerate(state, props)).toEqual(true)

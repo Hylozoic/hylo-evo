@@ -28,6 +28,9 @@ import { bgImageStyle } from 'util/index'
 import isWebView from 'util/webView'
 import { personUrl } from 'util/navigation'
 import styles from './ChatPost.scss'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
+import { RESP_MANAGE_CONTENT } from 'store/constants'
+import { combineRoles } from 'store/models/Person'
 
 export default function ChatPost ({
   canModerate,
@@ -45,6 +48,7 @@ export default function ChatPost ({
   const ref = useRef()
   const editorRef = useRef()
   const isPressDevice = !window.matchMedia('(hover: hover) and (pointer: fine)').matches
+  const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
 
   const [editing, setEditing] = useState(false)
   const [isVideo, setIsVideo] = useState()
@@ -178,13 +182,15 @@ export default function ChatPost ({
     { icon: 'Edit', label: 'Edit', onClick: (isCreator && !isLongPress) ? editPost : null },
     { icon: 'Flag', label: 'Flag', onClick: !isCreator ? () => { setFlaggingVisible(true) } : null },
     { icon: 'Trash', label: 'Delete', onClick: isCreator ? deletePostWithConfirm : null, red: true },
-    { icon: 'Trash', label: 'Remove From Group', onClick: !isCreator && canModerate ? removePostWithConfirm : null, red: true }
+    { icon: 'Trash', label: 'Remove From Group', onClick: !isCreator && (canModerate || responsibilities.includes(RESP_MANAGE_CONTENT)) ? removePostWithConfirm : null, red: true }
   ])
+
   const myEmojis = myReactions ? myReactions.map((reaction) => reaction.emojiFull) : []
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
 
-  const badges = (group.id && creator.groupRoles?.filter(role => role.groupId === group.id)) || []
+  const badges = combineRoles({ person: creator, groupId: group.id })
+
   const creatorIsModerator = creator.moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
 
   return (
@@ -228,11 +234,12 @@ export default function ChatPost ({
               <Avatar avatarUrl={creator.avatarUrl} className={styles.avatar} />
               <div styleName='name'>{creator.name}</div>
               <div styleName='badgeRow'>
+                {/* TODO RESP: can be removed once mods are ported to managers */}
                 {creatorIsModerator && (
                   <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={id} />
                 )}
                 {badges.map(badge => (
-                  <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
+                  <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities} id={id} />
                 ))}
               </div>
             </div>

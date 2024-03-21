@@ -10,6 +10,7 @@ import {
   addGroupRole,
   addRoleToMember,
   fetchMembersForGroupRole,
+  fetchMembersForCommonRole,
   removeRoleFromMember,
   updateGroupRole
 } from '../../../store/actions/roles'
@@ -43,6 +44,7 @@ export function mapDispatchToProps (dispatch, props) {
     clearModeratorSuggestions: () => dispatch(clearModeratorSuggestions()),
     fetchModeratorSuggestions: autocomplete => dispatch(fetchModeratorSuggestions(groupId, autocomplete)),
     fetchMembersForGroupRole: params => dispatch(fetchMembersForGroupRole({ ...params, id: groupId })),
+    fetchMembersForCommonRole: params => dispatch(fetchMembersForCommonRole({ ...params, id: groupId })),
     removeModerator: (id, isRemoveFromGroup) => dispatch(removeModerator(id, groupId, isRemoveFromGroup)),
     removeRoleFromMember: params => dispatch(removeRoleFromMember({ ...params, groupId })),
     updateGroupRole: params => dispatch(updateGroupRole(params))

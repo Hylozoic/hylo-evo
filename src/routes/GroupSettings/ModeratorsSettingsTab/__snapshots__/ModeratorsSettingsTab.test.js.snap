@@ -195,6 +195,16 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
   </SettingsSection>
   <SettingsSection>
     <h3>
+      Common Roles & Badges
+    </h3>
+    <div
+      data-stylename="styles.help-text"
+    >
+      Use common roles or badges for the group
+    </div>
+  </SettingsSection>
+  <SettingsSection>
+    <h3>
       Other Roles & Badges
     </h3>
     <div

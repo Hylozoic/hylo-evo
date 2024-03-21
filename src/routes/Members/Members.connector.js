@@ -17,6 +17,7 @@ export function mapStateToProps (state, props) {
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
   const search = getQuerystringParam('q', state, props)
   const canModerate = group && getMe(state, props).canModerate(group)
+  const currentUser = getMe(state, props)
   const extraProps = {
     ...props,
     slug,
@@ -29,6 +30,7 @@ export function mapStateToProps (state, props) {
     sortBy,
     search,
     canModerate,
+    currentUser,
     group,
     members: getMembers(state, extraProps),
     hasMore: getHasMoreMembers(state, extraProps),

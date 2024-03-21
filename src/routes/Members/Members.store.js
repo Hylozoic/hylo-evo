@@ -22,10 +22,34 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
         location
         tagline
         groupRoles {
-          name
-          emoji
-          active
-          groupId
+          items {
+             name
+             emoji
+             active
+             groupId
+             responsibilities {
+              items {
+                id
+                title
+                description
+              }
+            }
+           }
+         }
+        commonRoles {
+          items {
+            id
+            name
+            description
+            emoji
+            responsibilities {
+              items {
+                id
+                title
+                description
+              }
+            }
+          }
         }
         moderatedGroupMemberships {
           groupId
