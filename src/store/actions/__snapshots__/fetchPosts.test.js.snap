@@ -126,7 +126,6 @@ posts: viewPosts(
     region
   }
   peopleReactedTotal
-  myVote
   myReactions {
     emojiFull
     id
@@ -354,7 +353,6 @@ posts(
     region
   }
   peopleReactedTotal
-  myVote
   myReactions {
     emojiFull
     id

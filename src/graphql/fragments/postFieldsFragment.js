@@ -125,7 +125,6 @@ const postFieldsFragment = withComments => `
     region
   }
   peopleReactedTotal
-  myVote
   myReactions {
     emojiFull
     id

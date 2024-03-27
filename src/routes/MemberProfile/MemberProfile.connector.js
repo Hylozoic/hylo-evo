@@ -12,7 +12,7 @@ import {
   FETCH_RECENT_ACTIVITY,
   FETCH_MEMBER_POSTS,
   FETCH_MEMBER_COMMENTS,
-  FETCH_MEMBER_VOTES,
+  FETCH_MEMBER_VOTES, // TODO REACTIONS: switch this to reactions
   getPresentedPerson
 } from './MemberProfile.store'
 
@@ -28,7 +28,7 @@ export function mapStateToProps (state, props) {
     FETCH_RECENT_ACTIVITY,
     FETCH_MEMBER_POSTS,
     FETCH_MEMBER_COMMENTS,
-    FETCH_MEMBER_VOTES
+    FETCH_MEMBER_VOTES // TODO REACTIONS: switch this to reactions
   ], state)
   const personLoading = isPendingFor(fetchPerson, state)
   const groupSlug = getRouteParam('groupSlug', state, props)

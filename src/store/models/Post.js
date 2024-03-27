@@ -72,7 +72,6 @@ Post.fields = {
   donationsLink: attr(),
   projectManagementLink: attr(),
   peopleReactedTotal: attr(),
-  myVote: attr(),
   timezone: attr(),
   topics: many('Topic'),
   isPublic: attr()

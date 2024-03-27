@@ -158,5 +158,3 @@ export const VIEW_ANNOUNCEMENTS = 'announcements'
 export const VIEW_INTERACTIONS = 'interactions'
 export const VIEW_MENTIONS = 'mentions'
 export const VIEW_POSTS = 'posts'
-export const VOTE_ON_POST = 'VOTE_ON_POST'
-export const VOTE_ON_POST_PENDING = VOTE_ON_POST + _PENDING

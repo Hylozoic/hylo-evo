@@ -192,33 +192,6 @@ div .post-row:nth-child(1) {
   margin-bottom:0;
 }
 
-.vote-button {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 1px solid rgba(37, 195, 159, .3);
-  background: $color-white;
-  border-radius: 3px;
-  font-size: 12px;
-}
-
-.vote-icon {
-  display: block;
-  margin: 0 0 -4px 0;
-  color: $color-caribbean-green;
-  font-size: 18px;
-}
-
-// button state when upvote is active
-.vote-button.voted {
-  background: $color-caribbean-green;
-
-  color: $color-white !important;
-  .vote-icon {
-    color: $color-white;
-  }
-}
-
 .topic {
   color: $color-caribbean-green;
   margin-right: 10px;
