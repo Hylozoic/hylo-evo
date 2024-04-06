@@ -304,6 +304,11 @@ exports[`matches announcement snapshot 3`] = `
                 "onClick": [Function],
               },
               Object {
+                "icon": "Duplicate",
+                "label": "Duplicate",
+                "onClick": [Function],
+              },
+              Object {
                 "icon": "Trash",
                 "label": "Delete",
                 "onClick": [Function],
@@ -560,6 +565,11 @@ exports[`matches snapshot 3`] = `
               Object {
                 "icon": "Copy",
                 "label": "Copy Link",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "Duplicate",
+                "label": "Duplicate",
                 "onClick": [Function],
               },
               Object {
