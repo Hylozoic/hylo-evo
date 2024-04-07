@@ -102,7 +102,7 @@ class PostEditor extends React.Component {
       post: currentPost,
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       detailPlaceholder: this.detailPlaceholderForPostType(currentPost.type),
-      valid: editing === true, // if we're editing, than it's already valid upon entry.
+      valid: editing === true || !!currentPost.title, // valid upon entry if editing or duplicating
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
       showPostTypeMenu: false,
