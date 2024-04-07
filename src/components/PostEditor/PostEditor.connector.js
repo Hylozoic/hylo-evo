@@ -33,6 +33,7 @@ import {
   getLinkPreview,
   setAnnouncement
 } from './PostEditor.store'
+import { MAX_TITLE_LENGTH } from './PostEditor'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
@@ -44,6 +45,7 @@ export function mapStateToProps (state, props) {
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
   const uploadAttachmentPending = getUploadAttachmentPending(state)
+  const fromPostId = getQuerystringParam('fromPostId', null, props)
   const editingPostId = getRouteParam('postId', state, props)
   const uploadFileAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
@@ -54,6 +56,9 @@ export function mapStateToProps (state, props) {
   if (getRouteParam('action', null, props) === 'edit') {
     post = props.post || presentPost(getPost(state, props))
     editing = !!post || loading
+  } else if (fromPostId) {
+    post = props.post || presentPost(getPost(state, props))
+    post.title = `Copy of ${post.title.slice(0, MAX_TITLE_LENGTH - 8)}`
   }
   const imageAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const fileAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })

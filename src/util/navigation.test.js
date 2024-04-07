@@ -1,7 +1,9 @@
 import {
   removePostFromUrl,
   postUrl,
-  gotoExternalUrl
+  gotoExternalUrl,
+  editPostUrl,
+  duplicatePostUrl
 } from './navigation'
 
 describe('postUrl', () => {
@@ -57,6 +59,20 @@ describe('removePostFromUrl', () => {
   it('should remove default Post route', () => {
     const result = removePostFromUrl('/groups/somegroup/post/1234')
     expect(result).toEqual('/groups/somegroup')
+  })
+})
+
+describe('editPostUrl', () => {
+  it('should return edit action URL with postId', () => {
+    const result = editPostUrl('1234', { context: 'groups', groupSlug: 'test' })
+    expect(result).toEqual('/groups/test/post/1234/edit')
+  })
+})
+
+describe('duplicatePostUrl', () => {
+  it('should return create action URL with postId query param fromPostId', () => {
+    const result = duplicatePostUrl('1234', { context: 'groups', groupSlug: 'test' })
+    expect(result).toEqual('/groups/test/create/post?fromPostId=1234')
   })
 })
 
