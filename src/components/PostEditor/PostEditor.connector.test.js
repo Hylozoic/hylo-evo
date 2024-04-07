@@ -171,4 +171,29 @@ describe('mergeProps', () => {
     expect(dispatchProps.goToUrl).toHaveBeenCalled()
     expect(dispatchProps.goToUrl.mock.calls).toMatchSnapshot()
   })
+
+  it('goToPost redirects with the same stream params', () => {
+    const stateProps = {
+      groupSlug: 'theslug'
+    }
+    const dispatchProps = {
+      goToUrl: postPath => { return postPath }
+    }
+    const ownProps = {
+      location: {
+        search: '?s=created&t=discussion&search=hylo'
+      }
+    }
+    const action = {
+      payload: {
+        data: {
+          createPost: {
+            id: 123
+          }
+        }
+      }
+    }
+    const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
+    expect(mergedProps.goToPost(action)).toEqual('/all/post/123?s=created&t=discussion&search=hylo')
+  })
 })

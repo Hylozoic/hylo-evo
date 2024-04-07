@@ -130,9 +130,9 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction)
     // * The single letter params are used in the Stream and elsewhere
-    // and translate as follow: `s`(ort), `t`(ab), `q`(uery/search)
+    // and translate as follow: `s`(ort), `t`(ab), `q`(uery aliased as `search`)
     // The remaining whitelisted params are for the map view.
-    const querystringWhitelist = ['s', 't', 'q', 'zoom', 'center', 'lat', 'lng']
+    const querystringWhitelist = ['s', 't', 'q', 'search', 'zoom', 'center', 'lat', 'lng']
     const querystringParams = ownProps?.location && getQuerystringParam(querystringWhitelist, null, ownProps)
     const postPath = postUrl(id, ownProps?.match?.params, querystringParams)
 
