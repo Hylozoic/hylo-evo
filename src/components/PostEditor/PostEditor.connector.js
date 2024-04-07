@@ -57,7 +57,7 @@ export function mapStateToProps (state, props) {
     post = props.post || presentPost(getPost(state, props))
     editing = !!post || loading
   } else if (fromPostId) {
-    post = presentPost(getPost(state, props))
+    post = props.post || presentPost(getPost(state, props))
     post.title = `Copy of ${post.title.slice(0, MAX_TITLE_LENGTH - 8)}`
   }
   const imageAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })

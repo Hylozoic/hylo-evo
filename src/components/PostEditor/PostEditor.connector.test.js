@@ -1,6 +1,5 @@
 import { mapStateToProps, mapDispatchToProps, mergeProps } from './PostEditor.connector'
 import orm from 'store/models'
-import { Model } from 'redux-orm'
 import { CREATE_POST } from 'store/constants'
 import { MAX_TITLE_LENGTH } from './PostEditor'
 
@@ -122,34 +121,10 @@ describe('mapStateToProps', () => {
       ...requiredProps,
       match: { params: {} },
       location: { search: '?fromPostId=3' },
-      groupOptions: []
+      groupOptions: [],
+      post: { title: 'x'.repeat(MAX_TITLE_LENGTH - 1) }
     }
-    const title = 'x'.repeat(MAX_TITLE_LENGTH - 1)
-    const expectedTitle = `Copy of ${title.slice(0, MAX_TITLE_LENGTH - 8)}`
-    Model.withId = jest.fn(() => {
-      return {
-        ref: { title },
-        postMemberships: { toRefArray: () => [] },
-        commenters: { toModelArray: () => [] },
-        groups: { toModelArray: () => [] },
-        attachments: {
-          orderBy: () => {
-            return {
-              toModelArray: () => [],
-              filter: () => {
-                return {
-                  toRefArray: () => [],
-                  toModelArray: () => []
-                }
-              }
-            }
-          }
-        },
-        topics: { toModelArray: () => { return { map: () => [] } } },
-        members: { toModelArray: () => { return { map: () => [] } } },
-        eventInvitations: { toModelArray: () => { return { map: () => [] } } }
-      }
-    })
+    const expectedTitle = `Copy of ${props.post.title.slice(0, MAX_TITLE_LENGTH - 8)}`
 
     const { post } = mapStateToProps(state, props)
     expect(post.title).toBe(expectedTitle)
