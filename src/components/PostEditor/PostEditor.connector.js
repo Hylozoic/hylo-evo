@@ -46,7 +46,7 @@ export function mapStateToProps (state, props) {
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
   const uploadAttachmentPending = getUploadAttachmentPending(state)
   const fromPostId = getQuerystringParam('fromPostId', null, props)
-  const editingPostId = getRouteParam('postId', state, props) || fromPostId
+  const editingPostId = getRouteParam('postId', state, props)
   const uploadFileAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
@@ -57,7 +57,7 @@ export function mapStateToProps (state, props) {
     post = props.post || presentPost(getPost(state, props))
     editing = !!post || loading
   } else if (fromPostId) {
-    post = props.post || presentPost(getPost(state, props))
+    post = presentPost(getPost(state, props))
     post.title = `Copy of ${post.title.slice(0, MAX_TITLE_LENGTH - 8)}`
   }
   const imageAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
