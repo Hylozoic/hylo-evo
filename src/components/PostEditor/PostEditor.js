@@ -106,7 +106,7 @@ class PostEditor extends React.Component {
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
       showPostTypeMenu: false,
-      titleLengthError: false,
+      titleLengthError: currentPost.title?.length >= MAX_TITLE_LENGTH,
       dateError: false,
       allowAddTopic: true
     }
