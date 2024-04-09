@@ -292,14 +292,16 @@ $wrapperBorderRadius: 8px;
 }
 
 .title-error {
-  color: white;
-  background-color: $color-amaranth;
-  float: right;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  color: black;
+  background-color: $color-yellow-orange;
+  width: 100%;
+  position: relative;
+  top: -15px;
+  padding-top: 0px;
+  padding-bottom: 2px;
   padding-right: 10px;
   padding-left: 10px;
-  border-radius: 10px;
+  border-radius: 7px;
 }
 
 .accept-contributions-help {
