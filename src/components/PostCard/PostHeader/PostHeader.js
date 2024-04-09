@@ -80,7 +80,7 @@ class PostHeader extends PureComponent {
     const dropdownItems = filter([
       { icon: 'Pin', label: pinned ? t('Unpin') : t('Pin'), onClick: pinPost },
       { icon: 'Edit', label: t('Edit'), onClick: editPost },
-      { icon: 'Copy', label: t('Copy Link'), onClick: copyLink },
+      { icon: 'CopyLink', label: t('Copy Link'), onClick: copyLink },
       { icon: 'Flag', label: t('Flag'), onClick: this.flagPostFunc() },
       { icon: 'Duplicate', label: t('Duplicate'), onClick: duplicatePost },
       { icon: 'Trash', label: t('Delete'), onClick: deletePost ? () => deletePost(t('Are you sure you want to delete this post?')) : undefined, red: true },
