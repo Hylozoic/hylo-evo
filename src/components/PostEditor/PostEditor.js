@@ -728,11 +728,6 @@ class PostEditor extends React.Component {
             togglePublic={this.togglePublic}
             isPublic={!!post.isPublic}
           />
-          {canHaveTimes && dateError && (
-            <span styleName='title-error'>
-              {t('End Time must be after Start Time')}
-            </span>
-          )}
           {canHaveTimes && (
             <div styleName='footerSection'>
               <div styleName='footerSection-label'>{t('Timeframe')}</div>
@@ -750,6 +745,11 @@ class PostEditor extends React.Component {
                 />
               </div>
             </div>
+          )}
+          {canHaveTimes && dateError && (
+            <span styleName='datepicker-error'>
+              {t('End Time must be after Start Time')}
+            </span>
           )}
           {hasLocation && (
             <div styleName='footerSection'>

@@ -291,6 +291,18 @@ $wrapperBorderRadius: 8px;
   display: none;
 }
 
+.datepicker-error {
+  color: white;
+  background-color: $color-amaranth;
+  width: 100%;
+  margin-left: 10px;
+  padding-top: 0px;
+  padding-bottom: 2px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 7px;
+}
+
 .title-error {
   color: black;
   background-color: $color-yellow-orange;
