@@ -51,6 +51,7 @@ class PostHeader extends PureComponent {
       constrained,
       editPost,
       deletePost,
+      duplicatePost,
       removePost,
       pinPost,
       highlightProps,
@@ -81,6 +82,7 @@ class PostHeader extends PureComponent {
       { icon: 'Edit', label: t('Edit'), onClick: editPost },
       { icon: 'Copy', label: t('Copy Link'), onClick: copyLink },
       { icon: 'Flag', label: t('Flag'), onClick: this.flagPostFunc() },
+      { icon: 'Duplicate', label: t('Duplicate'), onClick: duplicatePost },
       { icon: 'Trash', label: t('Delete'), onClick: deletePost ? () => deletePost(t('Are you sure you want to delete this post?')) : undefined, red: true },
       { icon: 'Trash', label: t('Remove From Group'), onClick: removePost, red: true }
     ], item => isFunction(item.onClick))

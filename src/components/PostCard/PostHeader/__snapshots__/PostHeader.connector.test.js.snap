@@ -50,6 +50,7 @@ Array [
 exports[`mapDispatchToProps maps the action generators 1`] = `
 Object {
   "deletePost": [Function],
+  "duplicatePost": [Function],
   "editPost": [Function],
   "fulfillPost": [Function],
   "pinPost": [Function],
@@ -94,6 +95,17 @@ Array [
   ],
   Array [
     Object {
+      "payload": Object {
+        "args": Array [
+          "/groups/mygroup/create/post?fromPostId=10",
+        ],
+        "method": "push",
+      },
+      "type": "@@router/CALL_HISTORY_METHOD",
+    },
+  ],
+  Array [
+    Object {
       "graphql": Object {
         "query": "mutation ($postId: ID, $groupId: ID) {
         pinPost(postId: $postId, groupId: $groupId) {
@@ -111,6 +123,17 @@ Array [
         "postId": 2,
       },
       "type": "PostHeader/PIN_POST",
+    },
+  ],
+  Array [
+    Object {
+      "payload": Object {
+        "args": Array [
+          "/groups/mygroup/create/post?fromPostId=10",
+        ],
+        "method": "push",
+      },
+      "type": "@@router/CALL_HISTORY_METHOD",
     },
   ],
 ]

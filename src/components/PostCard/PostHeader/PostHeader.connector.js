@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { removePostFromUrl, editPostUrl, postUrl } from 'util/navigation'
+import { removePostFromUrl, editPostUrl, duplicatePostUrl, postUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
 import deletePost from 'store/actions/deletePost'
 import removePost from 'store/actions/removePost'
@@ -38,6 +38,9 @@ export function mapDispatchToProps (dispatch, props) {
     editPost: postId => props.editPost
       ? props.editPost(postId)
       : dispatch(push(editPostUrl(postId, props.routeParams))),
+    duplicatePost: postId => props.duplicatePost
+      ? props.duplicatePost(postId)
+      : dispatch(push(duplicatePostUrl(postId, props.routeParams))),
     deletePost: (postId, groupId, text) => props.deletePost
       ? props.deletePost(postId)
       : deletePostWithConfirm(postId, groupId, text),
@@ -59,7 +62,7 @@ export function mapDispatchToProps (dispatch, props) {
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser, group } = stateProps
   const { id, creator } = ownProps
-  const { deletePost, editPost, fulfillPost, unfulfillPost, removePost, pinPost } = dispatchProps
+  const { deletePost, editPost, duplicatePost, fulfillPost, unfulfillPost, removePost, pinPost } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
   const canModerate = currentUser && currentUser.canModerate(group)
@@ -70,6 +73,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     deletePost: isCreator ? (text) => deletePost(id, group ? group.id : null, text) : undefined,
     editPost: canEdit ? () => editPost(id) : undefined,
+    duplicatePost: () => duplicatePost(id),
     fulfillPost: isCreator ? () => fulfillPost(id) : undefined,
     unfulfillPost: isCreator ? () => unfulfillPost(id) : undefined,
     canFlag: !isCreator,

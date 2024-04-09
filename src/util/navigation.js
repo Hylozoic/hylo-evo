@@ -114,6 +114,10 @@ export function editPostUrl (id, opts = {}, querystringParams = {}) {
   return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
 }
 
+export function duplicatePostUrl (id, opts = {}) {
+  return createPostUrl(opts, { fromPostId: id })
+}
+
 export function postCommentUrl ({ postId, commentId, ...opts }, querystringParams = {}) {
   return `${postUrl(postId, opts, querystringParams)}/comments/${commentId}`
 }
