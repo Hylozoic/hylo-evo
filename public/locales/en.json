@@ -705,7 +705,7 @@
   "This will only be sent as an Announcement to the groups where you are a Moderator. For other groups it will be shared as a regular Post.": "This will only be sent as an Announcement to the groups where you are a Moderator. For other groups it will be shared as a regular Post.",
   "Timeframe": "Timeframe",
   "Title": "Title",
-  "Title can't have more than {{maxTitleLength}} characters": "Title can't have more than {{maxTitleLength}} characters",
+  "Title limited to {{maxTitleLength}} characters": "Title limited to {{maxTitleLength}} characters",
   "To": "To",
   "To accept financial contributions for this project, you have\n                  to connect a Stripe account. Go to": "To accept financial contributions for this project, you have\n                  to connect a Stripe account. Go to",
   "To follow the tour look for the pulsing beacons!": "To follow the tour look for the pulsing beacons!",

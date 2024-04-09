@@ -646,7 +646,7 @@ class PostEditor extends React.Component {
               maxLength={MAX_TITLE_LENGTH}
             />
             {titleLengthError && (
-              <span styleName='title-error'>{t('Title can\'t have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
+              <span styleName='title-error'>{t('Title limited to {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
             )}
             <HyloEditor
               styleName='editor'
