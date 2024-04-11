@@ -3,7 +3,8 @@ import {
   postUrl,
   gotoExternalUrl,
   editPostUrl,
-  duplicatePostUrl
+  duplicatePostUrl,
+  setQuerystringParam
 } from './navigation'
 
 describe('postUrl', () => {
@@ -84,5 +85,22 @@ describe('gotoExternalUrl', () => {
     gotoExternalUrl(testUrl)
     expect(window.open).toHaveBeenCalledWith(testUrl, null, 'noopener,noreferrer')
     window.open = jsDomWindowOpen
+  })
+})
+
+describe('setQuerystringParam', () => {
+  it('should add param while keeping search params', () => {
+    const actual = setQuerystringParam('t', 'whatsit', { search: '?q=wisywig' })
+    expect(actual).toEqual('q=wisywig&t=whatsit')
+  })
+
+  it('should replace param while keeping search params', () => {
+    const actual = setQuerystringParam('t', 'whatsit', { search: '?q=wisywig&t=whosit' })
+    expect(actual).toEqual('q=wisywig&t=whatsit')
+  })
+
+  it('take empty search and add param', () => {
+    const actual = setQuerystringParam('t', 'whatsit', {})
+    expect(actual).toEqual('t=whatsit')
   })
 })
