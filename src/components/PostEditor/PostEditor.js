@@ -27,7 +27,7 @@ import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import { MAX_POST_TOPICS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
 import Tooltip from 'components/Tooltip'
-import setQuerystringParam from 'store/selectors/setQuerystringParam'
+import { setQuerystringParam } from 'util/navigation'
 
 export const MAX_TITLE_LENGTH = 80
 

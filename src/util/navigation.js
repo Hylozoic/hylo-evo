@@ -167,6 +167,12 @@ export function topicUrl (topicName, opts) {
 
 // URL utility functions
 
+export function setQuerystringParam (key, value, location) {
+  const querystringParams = new URLSearchParams(location.search)
+  querystringParams.set(key, value)
+  return querystringParams.toString()
+}
+
 export function addQuerystringToPath (path, querystringParams) {
   // The weird query needed to ignore empty arrays but allow for boolean values and numbers
   querystringParams = omitBy(x => isEmpty(x) && x !== true && !isNumber(x), querystringParams)
