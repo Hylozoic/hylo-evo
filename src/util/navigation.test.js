@@ -4,8 +4,17 @@ import {
   gotoExternalUrl,
   editPostUrl,
   duplicatePostUrl,
-  setQuerystringParam
+  setQuerystringParam,
+  removeGroupFromUrl,
+  createUrl,
+  postCommentUrl,
+  messagePersonUrl,
+  isPublicPath,
+  isMapView,
+  isGroupsView,
+  origin
 } from './navigation'
+import { host } from 'config'
 
 describe('postUrl', () => {
   it('should default to displaying the all groups context', () => {
@@ -17,6 +26,12 @@ describe('postUrl', () => {
   it('should show a group context when group groupSlug is passed', () => {
     const expected = '/groups/awesome-team/post/123'
     const actual = postUrl('123', { context: 'groups', groupSlug: 'awesome-team' })
+    expect(actual).toEqual(expected)
+  })
+
+  it('should show the public group when public group groupSlug is passed', () => {
+    const expected = '/public/post/123'
+    const actual = postUrl('123', { groupSlug: 'public' })
     expect(actual).toEqual(expected)
   })
 
@@ -63,6 +78,13 @@ describe('removePostFromUrl', () => {
   })
 })
 
+describe('removeGroupFromUrl', () => {
+  it('should remove group/slug from groupDetail URL', () => {
+    const result = removeGroupFromUrl('/groups/test/group/test')
+    expect(result).toEqual('/groups/test')
+  })
+})
+
 describe('editPostUrl', () => {
   it('should return edit action URL with postId', () => {
     const result = editPostUrl('1234', { context: 'groups', groupSlug: 'test' })
@@ -102,5 +124,76 @@ describe('setQuerystringParam', () => {
   it('take empty search and add param', () => {
     const actual = setQuerystringParam('t', 'whatsit', {})
     expect(actual).toEqual('t=whatsit')
+  })
+})
+
+describe('origin with windows === undefined', () => {
+  const { window } = global
+  beforeAll(() => {
+    delete global.window
+  })
+
+  afterAll(() => {
+    global.window = window
+  })
+
+  it('returns host', () => {
+    const actual = origin()
+    expect(actual).toEqual(host)
+  })
+})
+
+describe('origin with windows !== undefined', () => {
+  it('returns window.location.origin', () => {
+    const actual = origin()
+    expect(actual).toEqual(window.location.origin)
+  })
+})
+
+describe('createUrl', () => {
+  it('returns correct location', () => {
+    const expected = '/my/create?lat=1.23456&lng=6.54321'
+    const actual = createUrl({ context: 'my' }, { lat: '1.23456', lng: '6.54321' })
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('postCommentUrl', () => {
+  it('returns correct path', () => {
+    const expected = '/all/post/123/comments/456'
+    const actual = postCommentUrl({ postId: '123', commentId: '456' })
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('messagePersonUrl', () => {
+  it('returns message thread path without participant search param', () => {
+    const expected = '/messages/456'
+    const actual = messagePersonUrl({ id: '123', messageThreadId: '456' })
+    expect(actual).toEqual(expected)
+  })
+
+  it('returns new messages path when no messageThreadId', () => {
+    const expected = '/messages/new?participants=123'
+    const actual = messagePersonUrl({ id: '123' })
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('is* functions', () => {
+  it('identifies map view (isMapView)', () => {
+    expect(isMapView('something/map/else')).toBe(true)
+    expect(isMapView('something/else')).toBe(false)
+  })
+
+  it('identifies group view (isGroupView', () => {
+    expect(isGroupsView('something/groups/else')).toBe(true)
+    expect(isGroupsView('something/else')).toBe(false)
+  })
+
+  it('identifies public path (isPublicPath', () => {
+    expect(isPublicPath('/public/something/else')).toBe(true)
+    expect(isPublicPath('something/public/else')).toBe(false)
+    expect(isPublicPath('something/else/public')).toBe(false)
   })
 })
