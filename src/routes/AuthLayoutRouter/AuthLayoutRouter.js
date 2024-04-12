@@ -260,7 +260,7 @@ export default function AuthLayoutRouter (props) {
                 `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
                 `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`,
                 `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`,
-                `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}`,
+                `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics|proposals)/${OPTIONAL_POST_MATCH}`,
                 `/:context(groups)/:groupSlug/:view(custom)/:customViewId/${OPTIONAL_POST_MATCH}`,
                 `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`,
                 `/:context(my)/:view(mentions|interactions|posts|announcements)/${OPTIONAL_POST_MATCH}`,
