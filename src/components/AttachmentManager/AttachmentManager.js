@@ -164,10 +164,9 @@ export function ImagePreview (props) {
   }
 
   return (
-    <div styleName='image-preview' ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      <div style={bgImageStyle(attachment.url)} styleName='image'>
-        <Icon name='Ex' styleName='remove-image' onClick={removeImage} />
-      </div>
+    <div styleName='image-preview' ref={setNodeRef} style={style}>
+      <Icon name='Ex' styleName='remove-image' onClick={removeImage} />
+      <div style={bgImageStyle(attachment.url)} styleName='image' {...listeners} {...attributes} />
     </div>
   )
 }

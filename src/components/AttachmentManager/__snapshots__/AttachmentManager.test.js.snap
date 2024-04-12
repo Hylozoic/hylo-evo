@@ -534,46 +534,44 @@ Object {
     id="root"
   >
     <div
-      aria-describedby=""
-      aria-disabled="false"
-      aria-pressed="true"
-      aria-roledescription="sortable"
       data-stylename="image-preview"
-      role="button"
-      tabindex="0"
     >
+      <span
+        class="icon-Ex"
+        data-stylename="icon"
+      />
       <div
+        aria-describedby=""
+        aria-disabled="false"
+        aria-pressed="true"
+        aria-roledescription="sortable"
         data-stylename="image"
+        role="button"
         style="background-image: url(https://nowhere/foo.zng);"
-      >
-        <span
-          class="icon-Ex"
-          data-stylename="icon"
-        />
-      </div>
+        tabindex="0"
+      />
     </div>
   </div>,
   "container": <div
     id="root"
   >
     <div
-      aria-describedby=""
-      aria-disabled="false"
-      aria-pressed="true"
-      aria-roledescription="sortable"
       data-stylename="image-preview"
-      role="button"
-      tabindex="0"
     >
+      <span
+        class="icon-Ex"
+        data-stylename="icon"
+      />
       <div
+        aria-describedby=""
+        aria-disabled="false"
+        aria-pressed="true"
+        aria-roledescription="sortable"
         data-stylename="image"
+        role="button"
         style="background-image: url(https://nowhere/foo.zng);"
-      >
-        <span
-          class="icon-Ex"
-          data-stylename="icon"
-        />
-      </div>
+        tabindex="0"
+      />
     </div>
   </div>,
   "debug": [Function],
