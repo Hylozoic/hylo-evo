@@ -1,0 +1,116 @@
+
+
+
+.casual {
+  border-color: $color-caribbean-green;
+  color: $color-caribbean-green;
+}
+
+.voting {
+  border-color: $color-caribbean-green;
+  color: $color-caribbean-green;
+}
+
+.completed {
+  border-color: $color-grey-keyline;
+  color: $color-grey-keyline;
+  cursor: default;
+}
+
+.selected {
+  background-color: $color-caribbean-green;
+  color: white;
+}
+
+.completed.selected {
+  background-color: $color-ultramarine;
+  color: white;
+  cursor: default;
+}
+
+.people {
+  white-space: nowrap;
+}
+
+.proposal-body-container{
+  border-style: dashed;
+  position: relative;
+  border-width: 1px;
+  border-radius: 10px;
+  display: flex;
+  margin: 8px;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  padding-top: 24px;
+}
+
+.proposal-status {
+ position: absolute;
+ top: -20px;
+ left: 12px;
+ padding: 6px;
+ background-color: white;
+}
+
+.proposal-timing {
+  position: absolute;
+  top: -20px;
+  right: 6px;
+  padding: 6px;
+ background-color: white;
+
+}
+
+.proposal-option{
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.discussion {
+  border-color: $color-grey-keyline;
+  color: $color-grey-keyline;
+  cursor: default;
+}
+
+.proposal-option-emoji{
+  font-size: 2em;
+}
+
+.proposal-option-text-container {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 10px;
+  font-size: 1.125em;
+}
+
+.proposal-option-vote{
+
+}
+
+.proposal-option-vote-count{
+  font-size: 0.75em;
+}
+
+.proposal-option-votes-container{
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 10px;
+}
+
+.proposal-option-text{
+
+}
+
+.proposal-option-vote-avatars{
+
+}

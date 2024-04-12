@@ -84,6 +84,10 @@ div .post-row:nth-child(1) {
     &.request span {
       color: $color-requests;
     }
+
+    &.proposal span{
+      color: $color-discussions;
+    }
   }
 
   .post-type.chat {
@@ -92,6 +96,11 @@ div .post-row:nth-child(1) {
   }
 
   .post-type.discussion {
+    border: 1px solid rgba(58, 160, 223, .25);
+    color: rgba(58, 160, 223, 1);
+  }
+
+  .post-type.proposal {
     border: 1px solid rgba(58, 160, 223, .25);
     color: rgba(58, 160, 223, 1);
   }

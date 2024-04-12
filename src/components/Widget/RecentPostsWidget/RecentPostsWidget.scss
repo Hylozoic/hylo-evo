@@ -140,6 +140,11 @@
   background: linear-gradient(180deg, #40A1DD 0%, #215778 100%);
 }
 
+.proposal {
+  background-color: $color-discussions;
+  background: linear-gradient(180deg, #40A1DD 0%, #215778 100%);
+}
+
 .event {
   background-color: $color-events;
   background: linear-gradient(180deg, #EB5757 0%, #A51C1C 100%);

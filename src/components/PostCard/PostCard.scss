@@ -83,6 +83,15 @@
   }
 }
 
+.constrained.proposal {
+  color: $color-picton-blue;
+  border-top: 5px solid $color-discussions-30;
+
+  &:hover {
+    border-top: 5px solid $color-discussions;
+  }
+}
+
 .constrained.event {
   color: $color-medium-purple;
   border-top: 5px solid $color-events-30;

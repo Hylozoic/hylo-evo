@@ -100,6 +100,11 @@
     background-color: white;
     background: radial-gradient(140% 200% at 50% 75%, rgba(255, 255, 255, 1) 0%, rgba(198, 244, 236, 1) 100%);
   }
+  &.proposal {
+    background-color: white;
+    background: radial-gradient(140% 200% at 50% 75%, rgba(255, 255, 255, 1) 0%, rgba(212, 237, 249, 1.0) 100%);
+
+  }
 
   .content-summary .grid-meta {
         background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 49.48%, #FFFFFF 100%);

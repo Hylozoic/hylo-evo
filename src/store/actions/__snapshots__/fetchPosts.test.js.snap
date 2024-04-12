@@ -81,6 +81,7 @@ posts: viewPosts(
   }
   createdAt
   updatedAt
+  isAnonymousVote
   isPublic
   fulfilledAt
   startTime
@@ -126,6 +127,31 @@ posts: viewPosts(
     region
   }
   peopleReactedTotal
+  proposalStatus
+  proposalType
+  quorum
+  proposalOptions {
+    total
+    hasMore
+    items {
+      id
+      text
+      emoji
+    }
+  }
+  proposalVotes {
+      total
+      hasMore
+      items {
+        id
+        optionId
+        user {
+          id
+          name
+          avatarUrl
+        }
+      }
+  }
   myReactions {
     emojiFull
     id
@@ -308,6 +334,7 @@ posts(
   }
   createdAt
   updatedAt
+  isAnonymousVote
   isPublic
   fulfilledAt
   startTime
@@ -353,6 +380,31 @@ posts(
     region
   }
   peopleReactedTotal
+  proposalStatus
+  proposalType
+  quorum
+  proposalOptions {
+    total
+    hasMore
+    items {
+      id
+      text
+      emoji
+    }
+  }
+  proposalVotes {
+      total
+      hasMore
+      items {
+        id
+        optionId
+        user {
+          id
+          name
+          avatarUrl
+        }
+      }
+  }
   myReactions {
     emojiFull
     id

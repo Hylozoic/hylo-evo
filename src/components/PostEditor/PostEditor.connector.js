@@ -68,6 +68,7 @@ export function mapStateToProps (state, props) {
   const postType = getQuerystringParam('newPostType', null, props)
   const isProject = postType === 'project' || get('type', post) === 'project'
   const isEvent = postType === 'event' || get('type', post) === 'event'
+  const isProposal = postType === 'proposal' || get('type', post) === 'proposal'
 
   return {
     announcementSelected,
@@ -83,6 +84,7 @@ export function mapStateToProps (state, props) {
     imageAttachments,
     isEvent,
     isProject,
+    isProposal,
     linkPreview,
     linkPreviewStatus,
     loading,

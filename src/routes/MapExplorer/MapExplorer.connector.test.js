@@ -58,7 +58,7 @@ describe('mapStateToProps', () => {
           id: 1,
           settings: {}
         }),
-        featureTypes: ['discussion', 'request', 'offer', 'resource', 'project', 'event', 'member', 'group'],
+        featureTypes: ['discussion', 'request', 'offer', 'resource', 'project', 'proposal', 'event', 'member', 'group'],
         fetchGroupParams: { boundingBox: undefined, context: 'groups', parentSlugs: ['foo'] },
         fetchMemberParams: { boundingBox: undefined, context: 'groups', slug: 'foo', sortBy: 'name' },
         fetchPostsParams: { boundingBox: undefined, childPostInclusion: 'yes', context: 'groups', groupSlugs: ['foo'], slug: 'foo' },
