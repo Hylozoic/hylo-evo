@@ -10,7 +10,10 @@ describe('mapStateToProps', () => {
       pending: {}
     }
     const props = {
-      match: {}
+      match: {},
+      location: {
+        search: ''
+      }
     }
     expect(mapStateToProps(state, props)).toMatchSnapshot()
   })

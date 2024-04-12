@@ -27,8 +27,8 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1)
 }
 
-// Input: /User/dan/app/build/static/js/main.82be8.js
-// Output: /static/js/main.js
+// Input: /User/dan/app/build/assets/js/main.82be8.js
+// Output: /assets/js/main.js
 function removeFileNameHash (fileName) {
   return fileName
     .replace(config.output.path, '')
