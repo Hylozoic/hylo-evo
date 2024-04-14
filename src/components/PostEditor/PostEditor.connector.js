@@ -47,8 +47,9 @@ export function mapStateToProps (state, props) {
   const uploadAttachmentPending = getUploadAttachmentPending(state)
   const fromPostId = getQuerystringParam('fromPostId', null, props)
   const editingPostId = getRouteParam('postId', state, props)
-  const uploadFileAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
-  const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
+  const attachmentPostId = (editingPostId || fromPostId)
+  const uploadFileAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: attachmentPostId, attachmentType: 'file' })
+  const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: attachmentPostId, attachmentType: 'image' })
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
   const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || postPending
   let post = null
@@ -60,8 +61,8 @@ export function mapStateToProps (state, props) {
     post = props.post || presentPost(getPost(state, props))
     post.title = `Copy of ${post.title.slice(0, MAX_TITLE_LENGTH - 8)}`
   }
-  const imageAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
-  const fileAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
+  const imageAttachments = getAttachments(state, { type: 'post', id: attachmentPostId, attachmentType: 'image' })
+  const fileAttachments = getAttachments(state, { type: 'post', id: attachmentPostId, attachmentType: 'file' })
   const showImages = !isEmpty(imageAttachments) || uploadImageAttachmentPending
   const showFiles = !isEmpty(fileAttachments) || uploadFileAttachmentPending
   const context = getRouteParam('context', null, props)
