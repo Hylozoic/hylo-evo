@@ -14,7 +14,7 @@ export const PROPOSAL_MULTIPLE_CHOICE = 'Multiple Choice'
 // proposal types
 export const PROPOSAL_TYPE_SINGLE = 'single'
 export const PROPOSAL_TYPE_MULTI_UNRESTRICTED = 'multi-unrestricted'
-export const PROPOSAL_TYPE_MAJORITY = 'majorirty'
+export const PROPOSAL_TYPE_MAJORITY = 'majority'
 export const PROPOSAL_TYPE_CONSENSUS = 'consensus'
 
 // proposal status

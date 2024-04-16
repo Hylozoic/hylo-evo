@@ -39,7 +39,6 @@ export default function CreateModalChooser ({ location }) {
         const postTypeUppercase = postType.charAt(0).toUpperCase() + postType.slice(1)
         let iconName = postTypeUppercase
         if (postType === 'request') iconName = 'Heart'
-        if (postType === 'proposal') iconName = 'Handshake'
 
         return (
           <Link to={createPostForPostTypePath} key={postType}>

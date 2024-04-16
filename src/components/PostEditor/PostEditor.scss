@@ -50,6 +50,7 @@ $wrapperBorderRadius: 8px;
 
 .icon {
   margin: 0 0 0 8px;
+  color: $color-discussions;
 }
 
 .icon {
@@ -496,6 +497,12 @@ $wrapperBorderRadius: 8px;
   .editor {
     font-size: 14px;
   }
+}
+
+.warning {
+  color: $color-amaranth;
+  border-color: $color-amaranth;
+  cursor: default;
 }
 
 @media screen and (max-width: 340px) {

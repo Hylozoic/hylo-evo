@@ -88,7 +88,6 @@ export default function PostBodyProposal ({
   }
 
   const handleVoteThrottled = throttle(200, handleVote)
-  console.log('proposalVotes in render', groups, calcNumberOfPossibleVoters(groups), isAnonymousVote)
 
   return (
     <div styleName={cx('proposal-body-container', { discussion: proposalStatus === PROPOSAL_STATUS_DISCUSSION, voting: proposalStatus === PROPOSAL_STATUS_VOTING, casual: proposalStatus === PROPOSAL_STATUS_CASUAL, completed: proposalStatus === PROPOSAL_STATUS_COMPLETED })}>

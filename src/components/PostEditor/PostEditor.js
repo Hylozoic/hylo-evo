@@ -27,7 +27,6 @@ import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import { MAX_POST_TOPICS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
 import Tooltip from 'components/Tooltip'
-import StrictProposalToggle from './StrictProposalToggle/StrictProposalToggle'
 import AnonymousVoteToggle from './AnonymousVoteToggle/AnonymousVoteToggle'
 import SliderInput from 'components/SliderInput/SliderInput'
 import Dropdown from 'components/Dropdown/Dropdown'
@@ -428,12 +427,12 @@ class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, groups, startTime, endTime, donationsLink, projectManagementLink } = Object.assign(
+    const { type, title, groups, startTime, endTime, donationsLink, projectManagementLink, proposalOptions } = Object.assign(
       {},
       this.state.post,
       postUpdates
     )
-    const { isEvent, isProject } = this.props
+    const { isEvent, isProject, isProposal } = this.props
 
     return !!(
       this.editorRef.current &&
@@ -444,7 +443,8 @@ class PostEditor extends React.Component {
       title.length <= MAX_TITLE_LENGTH &&
       (!isEvent || (endTime && startTime < endTime)) &&
       (!isProject || sanitizeURL(donationsLink) || !donationsLink) &&
-      (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink)
+      (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink) &&
+      (!isProposal || proposalOptions.length > 0)
     )
   }
 
@@ -511,6 +511,7 @@ class PostEditor extends React.Component {
       location,
       locationId
     })
+
     const postToSave = {
       id,
       acceptContributions,
@@ -589,15 +590,18 @@ class PostEditor extends React.Component {
         title: this.state.post.title.length > 0 ? this.state.post.title : templateData.form.title,
         quorum: templateData.form.quorum,
         proposalType: templateData.form.proposalType
-      }
+      },
+      valid: this.isValid({ proposalOptions: templateData.form.proposalOptions })
     })
   }
 
   handleAddOption = () => {
     const { post } = this.state
     const proposalOptions = post.proposalOptions || []
+    const newOptions = [...proposalOptions, { text: '', emoji: '', color: '' }]
     this.setState({
-      post: { ...post, proposalOptions: [...proposalOptions, { text: '', emoji: '', color: '' }] }
+      post: { ...post, proposalOptions: newOptions },
+      valid: this.isValid({ proposalOptions: newOptions })
     })
   }
 
@@ -720,7 +724,7 @@ class PostEditor extends React.Component {
               maxLength={MAX_TITLE_LENGTH}
             />
             {titleLengthError && (
-              <span styleName='title-error'>{t('Title can\'t have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
+              <span styleName='title-error'>{t('Title cant have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
             )}
             <HyloEditor
               styleName='editor'
@@ -874,14 +878,36 @@ class PostEditor extends React.Component {
                       }}
                       disabled={loading}
                     />
-                    <Icon name='Close' styleName='icon' onClick={() => {}} />
+                    <Icon
+                      name='Ex'
+                      styleName='icon'
+                      onClick={() => {
+                        proposalOptions.splice(index, 1)
+                        const newOptions = [...proposalOptions]
+                        this.setState({
+                          post: { ...post, proposalOptions: newOptions },
+                          valid: this.isValid({ proposalOptions: newOptions })
+                        })
+                      }}
+                    />
                   </div>
                 ))}
                 <div styleName='proposalOption' onClick={() => this.handleAddOption()}>
                   <Icon name='Plus' styleName='icon-plus' blue />
                   <span styleName='optionText'>{t('Add an option to vote on...')}</span>
                 </div>
-
+                {!isEqual(proposalOptions, this.props.post.proposalOptions?.items) && (
+                  <div styleName='proposalOption warning' onClick={() => this.handleAddOption()}>
+                    <Icon name='Hand' styleName='icon-plus' />
+                    <span styleName='optionText'>{t('If you save changes to options, all votes will be discarded')}</span>
+                  </div>
+                )}
+                {proposalOptions.length === 0 && (
+                  <div styleName='proposalOption warning' onClick={() => this.handleAddOption()}>
+                    <Icon name='Hand' styleName='icon-plus' />
+                    <span styleName='optionText'>{t('Proposals require at least one option')}</span>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -1051,7 +1077,15 @@ class PostEditor extends React.Component {
             valid={valid}
             loading={loading}
             submitButtonLabel={this.buttonLabel()}
-            save={() => this.save()}
+            save={() => {
+              if (isProposal && !isEqual(proposalOptions, this.props.post.proposalOptions?.items)) {
+                if (window.confirm(t('Changing proposal options will reset the votes. Are you sure you want to continue?'))) {
+                  this.save()
+                }
+              } else {
+                this.save()
+              }
+            }}
             setAnnouncement={setAnnouncement}
             announcementSelected={announcementSelected}
             canModerate={this.canModerate()}
