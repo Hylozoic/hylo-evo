@@ -537,7 +537,7 @@ export const getSortedFilteredPostsForDrawer = createSelector(
   getFilteredPostsForDrawer,
   sortBySelector,
   (posts, sortBy) => {
-    return posts.sort((a, b) => sortBy === 'votes' ? b.peopleReactedTotal - a.peopleReactedTotal // TODO PROPOSALS: check if this is still votes or if its reactions
+    return posts.sort((a, b) => sortBy === 'reactions' ? b.peopleReactedTotal - a.peopleReactedTotal
       : sortBy === 'updated' ? new Date(b.updatedAt) - new Date(a.updatedAt)
         : new Date(b.createdAt) - new Date(a.createdAt))
   }
