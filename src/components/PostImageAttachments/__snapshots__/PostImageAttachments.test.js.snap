@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a single image 1`] = `
+<div
+  data-stylename="images"
+>
+  <Slider
+    arrows={true}
+    dots={true}
+    infinite={true}
+    slidesToScroll={1}
+    slidesToShow={1}
+    speed={500}
+  >
+    <img
+      src="foo"
+    />
+  </Slider>
+</div>
+`;
+
+exports[`renders multiple images 1`] = `
+<div
+  data-stylename="images"
+>
+  <Slider
+    arrows={true}
+    dots={true}
+    infinite={true}
+    slidesToScroll={1}
+    slidesToShow={1}
+    speed={500}
+  >
+    <img
+      src="bar"
+    />
+    <img
+      src="baz"
+    />
+    <img
+      src="bonk"
+    />
+  </Slider>
+</div>
+`;

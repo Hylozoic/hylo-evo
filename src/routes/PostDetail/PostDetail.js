@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet'
 import { AnalyticsEvents, TextHelpers } from 'hylo-shared'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
-import CardImageAttachments from 'components/CardImageAttachments'
+import PostImageAttachments from 'components/PostImageAttachments'
 import {
   PostBody,
   PostFooter,
@@ -206,7 +206,7 @@ class PostDetail extends Component {
                 />
               </div>
             )}
-            <CardImageAttachments attachments={post.attachments} linked />
+            <PostImageAttachments attachments={post.attachments} linked />
             {isEvent && (
               <EventBody
                 styleName='body'
