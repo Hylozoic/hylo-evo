@@ -48,6 +48,7 @@ describe('PostEditor', () => {
       }
       const wrapper = shallow(<PostEditor {...props} />)
       expect(wrapper).toMatchSnapshot()
+      expect(wrapper.state().titleLengthError).toBe(false)
     })
 
     const renderForType = (type) => {
@@ -179,7 +180,6 @@ describe('PostEditor', () => {
       expect(setIsDirty).toHaveBeenCalled()
     })
 
-    // NB: MAX_TITLE_LENGTH triggers the error (warning) to the user that they hit the max
     test('tests for valid title length', () => {
       const wrapper = shallow(<PostEditor {...props} />)
       const titleElement = wrapper.find('input').first()
@@ -187,12 +187,23 @@ describe('PostEditor', () => {
       expect(wrapper.state().titleLengthError).toBeFalsy()
     })
 
-    // NB: MAX_TITLE_LENGTH triggers the error (warning) to the user that they hit the max
     test('tests for invalid title length', () => {
       const wrapper = shallow(<PostEditor {...props} />)
       const titleElement = wrapper.find('input').first()
       titleElement.simulate('change', { target: { value: 'x'.repeat(MAX_TITLE_LENGTH) } })
       expect(wrapper.state().titleLengthError).toBeTruthy()
+    })
+
+    test('tests titleLengthError initialized to true for title at max', () => {
+      props.post.title = 'x'.repeat(MAX_TITLE_LENGTH)
+      const wrapper = shallow(<PostEditor {...props} />)
+      expect(wrapper.state().titleLengthError).toBe(true)
+    })
+
+    test('tests titleLengthError initialized to false for title not at max', () => {
+      props.post.title = 'x'.repeat(MAX_TITLE_LENGTH - 1)
+      const wrapper = shallow(<PostEditor {...props} />)
+      expect(wrapper.state().titleLengthError).toBe(false)
     })
   })
 

@@ -22,14 +22,16 @@ import DatePicker from 'components/DatePicker'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
-import styles from './PostEditor.scss'
-import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
-import { MAX_POST_TOPICS } from 'util/constants'
-import { sanitizeURL } from 'util/url'
-import Tooltip from 'components/Tooltip'
 import AnonymousVoteToggle from './AnonymousVoteToggle/AnonymousVoteToggle'
 import SliderInput from 'components/SliderInput/SliderInput'
 import Dropdown from 'components/Dropdown/Dropdown'
+import styles from './PostEditor.scss'
+import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
+import { MAX_POST_TOPICS } from 'util/constants'
+import { setQuerystringParam } from 'util/navigation'
+import { sanitizeURL } from 'util/url'
+import Tooltip from 'components/Tooltip'
+
 
 const emojiOptions = ['', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟', '✅✅', '👍', '👎', '⁉️', '‼️', '❓', '❗', '🚫', '➡️', '🛑', '✅', '🛑🛑', '🌈', '🔴', '🔵', '🟤', '🟣', '🟢', '🟡', '🟠', '⚫', '⚪', '🤷🤷', '📆', '🤔', '❤️', '👏', '🎉', '🔥', '🤣', '😢', '😡', '🤷', '💃🕺', '⛔', '🙏', '👀', '🙌', '💯', '🔗', '🚀', '💃', '🕺', '💯',]
 export const MAX_TITLE_LENGTH = 80
@@ -115,7 +117,7 @@ class PostEditor extends React.Component {
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
       showPostTypeMenu: false,
-      titleLengthError: false,
+      titleLengthError: currentPost.title?.length >= MAX_TITLE_LENGTH,
       dateError: false,
       allowAddTopic: true
     }
@@ -179,7 +181,7 @@ class PostEditor extends React.Component {
     this.setIsDirty(true)
     changeQueryString({
       pathname: location.pathname,
-      search: `?newPostType=${type}`
+      search: setQuerystringParam('newPostType', type, location)
     })
 
     const showPostTypeMenu = this.state.showPostTypeMenu
@@ -724,7 +726,7 @@ class PostEditor extends React.Component {
               maxLength={MAX_TITLE_LENGTH}
             />
             {titleLengthError && (
-              <span styleName='title-error'>{t('Title cant have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
+              <span styleName='title-error'>{t('Title limited to {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
             )}
             <HyloEditor
               styleName='editor'
@@ -955,11 +957,6 @@ class PostEditor extends React.Component {
             togglePublic={this.togglePublic}
             isPublic={!!post.isPublic}
           />
-          {canHaveTimes && dateError && (
-            <span styleName='title-error'>
-              {t('End Time must be after Start Time')}
-            </span>
-          )}
           {canHaveTimes && (
             <div styleName='footerSection'>
               <div styleName='footerSection-label'>{isProposal ? t('Voting window') : t('Timeframe')}</div>
@@ -977,6 +974,11 @@ class PostEditor extends React.Component {
                 />
               </div>
             </div>
+          )}
+          {canHaveTimes && dateError && (
+            <span styleName='datepicker-error'>
+              {t('End Time must be after Start Time')}
+            </span>
           )}
           {hasLocation && (
             <div styleName='footerSection'>
