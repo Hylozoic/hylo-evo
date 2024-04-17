@@ -106,7 +106,7 @@ class PostEditor extends React.Component {
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
       showPostTypeMenu: false,
-      titleLengthError: false,
+      titleLengthError: currentPost.title?.length >= MAX_TITLE_LENGTH,
       dateError: false,
       allowAddTopic: true
     }
@@ -646,7 +646,7 @@ class PostEditor extends React.Component {
               maxLength={MAX_TITLE_LENGTH}
             />
             {titleLengthError && (
-              <span styleName='title-error'>{t('Title can\'t have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
+              <span styleName='title-error'>{t('Title limited to {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
             )}
             <HyloEditor
               styleName='editor'
@@ -728,11 +728,6 @@ class PostEditor extends React.Component {
             togglePublic={this.togglePublic}
             isPublic={!!post.isPublic}
           />
-          {canHaveTimes && dateError && (
-            <span styleName='title-error'>
-              {t('End Time must be after Start Time')}
-            </span>
-          )}
           {canHaveTimes && (
             <div styleName='footerSection'>
               <div styleName='footerSection-label'>{t('Timeframe')}</div>
@@ -750,6 +745,11 @@ class PostEditor extends React.Component {
                 />
               </div>
             </div>
+          )}
+          {canHaveTimes && dateError && (
+            <span styleName='datepicker-error'>
+              {t('End Time must be after Start Time')}
+            </span>
           )}
           {hasLocation && (
             <div styleName='footerSection'>
