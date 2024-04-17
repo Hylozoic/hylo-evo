@@ -27,6 +27,7 @@ import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import { MAX_POST_TOPICS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
 import Tooltip from 'components/Tooltip'
+import { setQuerystringParam } from 'util/navigation'
 
 export const MAX_TITLE_LENGTH = 80
 
@@ -169,7 +170,7 @@ class PostEditor extends React.Component {
     this.setIsDirty(true)
     changeQueryString({
       pathname: location.pathname,
-      search: `?newPostType=${type}`
+      search: setQuerystringParam('newPostType', type, location)
     })
 
     const showPostTypeMenu = this.state.showPostTypeMenu
