@@ -130,7 +130,6 @@
 }
 
 .responsibility-row {
-  border-bottom: 1px dashed rgba(225, 229, 233, 1.0);
   display: flex;
   align-items: center;
   min-height: 30px;
@@ -147,6 +146,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 30px;
+  width: 75%;
 
   .label {
     margin-bottom:0;
@@ -177,10 +177,25 @@
   padding-right: 10px;
   margin-bottom: 0;
   padding-bottom: 5px;
+  width: 100%;
 
   label {
     color: rgba(44, 64, 89, 0.6);
   }
+
+  input, textarea {
+    border: 1px solid rgba(224, 229, 233, 1.0);
+    padding: 5px 8px;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+  }
+
+  textarea {
+    height: 100px;
+    line-height: normal;
+  };
 }
 
 .action-container {
@@ -188,6 +203,7 @@
   top: 12px;
   right: 16px;
   display: flex;
+  flex-direction: column;
 }
 
 .action {
@@ -206,16 +222,6 @@
   &:hover {
     cursor: pointer;
   }
-}
-
-.settings-control input {
-  border: 1px solid rgba(224, 229, 233, 1.0);
-  padding: 5px 8px;
-  font-size: 16px;
-  line-height: 16px;
-  height: 40px;
-  line-height: 40px;
-  border-radius: 5px;
 }
 
 // Modal
@@ -265,17 +271,14 @@
   align-items: center;
 }
 
-.reverse-flex {
-  display: flex;
-  flex-flow: row-reverse;
-}
-
 .inactive {
   background-color: $color-ghost-30;
 }
 
 .description {
   color: $color-black-60;
-  font-size: 12px;
+  font-size: 14px;
   transition: all .25s ease;
+  margin-bottom: 5px;
+  display: inline-block;
 }

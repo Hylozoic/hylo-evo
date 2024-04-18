@@ -146,14 +146,14 @@ export function fetchMembersForGroupRole ({ id, roleId: groupRoleId }) {
   }
 }
 
-export function fetchMembersForCommonRole ({ id, roleId: groupCommonRoleId }) {
+export function fetchMembersForCommonRole ({ id, roleId: commonRoleId }) {
   return {
     type: FETCH_MEMBERS_FOR_GROUP_COMMON_ROLE,
     graphql: {
-      query: `query fetchMembersForCommonRole ($id: ID, $groupCommonRoleId: ID) {
+      query: `query fetchMembersForCommonRole ($id: ID, $commonRoleId: ID) {
         group (id: $id) {
           id
-          members (first: 50, groupCommonRoleId: $groupCommonRoleId) {
+          members (first: 50, commonRoleId: $commonRoleId) {
             hasMore
             items {
               id
@@ -179,7 +179,7 @@ export function fetchMembersForCommonRole ({ id, roleId: groupCommonRoleId }) {
         }
       }`,
       variables: {
-        id, groupCommonRoleId
+        id, commonRoleId
       }
     },
     meta: {

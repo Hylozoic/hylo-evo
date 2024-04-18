@@ -78,12 +78,6 @@ export function fetchGroupSettings (slug) {
               avatarUrl
             }
           }
-          commonRoles {
-            id
-            name
-            emoji
-            description
-          }
           customViews {
             items {
               id

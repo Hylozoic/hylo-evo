@@ -13,6 +13,7 @@ jest.mock('react-i18next', () => ({
 
 const minProps = {
   group: { id: 1 },
+  currentUser: { id: 1,memberships: [ { id: 1, groupId: 1, commonRoles: { items:[] } } ] },
   member: {},
   goToPerson: () => {}
 }
@@ -23,13 +24,13 @@ const renderComponent = (providedProps) => {
 }
 
 describe('Member Component', () => {
-  it('shows moderate button when a moderator', () => {
-    const wrapper = renderComponent({ member: { moderatedGroupMemberships: [], groupRoles: [{ name: 'role', emoji: '🏄' }], commonRoles: {items:[]} }, canModerate: true })
-    expect(wrapper.find('Dropdown')).toHaveLength(1)
+  it('shows moderate button when current user is a moderator', () => {
+    const view = renderComponent({ member: { memberships: [ { id: 1, groupId: 1, groupRoles: [{ name: 'role', emoji: '🏄' }], commonRoles: {items:[]} }, currentUser: { id: 1 })
+    expect(view.find('Dropdown')).toHaveLength(1)
   })
 
-  it('hides moderate button when not a moderator', () => {
-    const wrapper = renderComponent({ member: { moderatedGroupMemberships: [], groupRoles: [], commonRoles: {items:[]} }, canModerate: false })
-    expect(wrapper.find('Dropdown')).toHaveLength(0)
+  it('hides moderate button when current user is not a moderator', () => {
+    const view = renderComponent({ member: { moderatedGroupMemberships: [], groupRoles: [], commonRoles: {items:[]} }, canModerate: false })
+    expect(view.find('Dropdown')).toHaveLength(0)
   })
 })

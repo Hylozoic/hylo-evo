@@ -31,6 +31,7 @@ export default function GroupSettings ({
   addPostToCollection,
   canModerate,
   createCollection,
+  commonRoles,
   currentUser,
   deleteGroup,
   fetchCollectionPosts,
@@ -55,10 +56,10 @@ export default function GroupSettings ({
 
   const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group?.id }).map(r => r.title)
   if (!group) return <Loading />
-  if (!canModerate && responsibilities.length === 0) return <Redirect to={groupUrl(slug)} />
+  if (!responsibilities.includes(RESP_ADMINISTRATION) && !responsibilities.includes(RESP_ADD_MEMBERS)) return <Redirect to={groupUrl(slug)} />
   // TODO RESP: all uses here of canModerate can be removed once the database data-migration is run
   useEffect(() => {
-    if (!canModerate && !responsibilities.includes(RESP_ADMINISTRATION) && responsibilities.includes(RESP_ADD_MEMBERS)) push(groupUrl(slug, 'settings/invite'))
+    if (!responsibilities.includes(RESP_ADMINISTRATION) && responsibilities.includes(RESP_ADD_MEMBERS)) push(groupUrl(slug, 'settings/invite'))
   }, [])
 
   const overallSettings = {
@@ -90,7 +91,7 @@ export default function GroupSettings ({
   const rolesSettings = {
     name: t('Roles & Badges'),
     path: groupUrl(slug, 'settings/roles'),
-    component: <ModeratorsSettingsTab groupId={group.id} group={group} slug={group.slug} />
+    component: <ModeratorsSettingsTab groupId={group.id} group={group} slug={group.slug} commonRoles={commonRoles} />
   }
 
   const accessSettings = {
@@ -172,19 +173,19 @@ export default function GroupSettings ({
     <FullPageModal
       goToOnClose={groupUrl(slug)}
       content={compact([
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? overallSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? agreementSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? responsibilitiesSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? rolesSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? accessSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? customViewsSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? topicsSettings : null,
-        canModerate || responsibilities.includes(RESP_ADD_MEMBERS) ? inviteSettings : null,
-        canModerate || responsibilities.includes(RESP_ADD_MEMBERS) ? joinRequestSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? relatedGroupsSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? importSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? exportSettings : null,
-        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? deleteSettings : null
+        responsibilities.includes(RESP_ADMINISTRATION) ? overallSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? agreementSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? responsibilitiesSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? rolesSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? accessSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? customViewsSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? topicsSettings : null,
+        responsibilities.includes(RESP_ADD_MEMBERS) ? inviteSettings : null,
+        responsibilities.includes(RESP_ADD_MEMBERS) ? joinRequestSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? relatedGroupsSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? importSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? exportSettings : null,
+        responsibilities.includes(RESP_ADMINISTRATION) ? deleteSettings : null
       ])}
     />
   )

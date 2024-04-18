@@ -75,8 +75,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     fulfillPost: isCreator ? () => fulfillPost(id) : undefined,
     unfulfillPost: isCreator ? () => unfulfillPost(id) : undefined,
     canFlag: !isCreator,
-    pinPost: (canModerate || responsibilities.includes(RESP_MANAGE_CONTENT)) && group ? () => pinPost(id, group.id) : undefined,
-    removePost: !isCreator && (canModerate || responsibilities.includes(RESP_MANAGE_CONTENT)) ? () => removePost(id) : undefined,
+    pinPost: (responsibilities.includes(RESP_MANAGE_CONTENT)) && group ? () => pinPost(id, group.id) : undefined,
+    removePost: !isCreator && (responsibilities.includes(RESP_MANAGE_CONTENT)) ? () => removePost(id) : undefined,
     canEdit
   }
 }

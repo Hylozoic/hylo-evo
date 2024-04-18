@@ -26,20 +26,21 @@ class Member extends React.Component {
     const {
       className,
       group,
-      member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships },
+      member,
       goToPerson,
-      canModerate,
       removeMember,
       currentUser,
       t
     } = this.props
 
-    const badges = combineRoles({ person: this.props.member, groupId: group.id })
-    const creatorIsModerator = moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
-    const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
+    const { id, name, location, tagline, avatarUrl, skills } = member
+
+    console.log("this.props.member", this.props.member)
+    const roles = combineRoles({ person: member, groupId: group.id })
+    const currentUserResponsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
     return (
       <div styleName='member' className={className}>
-        {(canModerate || responsibilities.includes(RESP_REMOVE_MEMBERS)) &&
+        {(currentUserResponsibilities.includes(RESP_REMOVE_MEMBERS)) &&
           <Dropdown
             styleName='dropdown'
             toggleChildren={<Icon name='More' />}
@@ -50,12 +51,8 @@ class Member extends React.Component {
           <div styleName='name'>{name}</div>
           <div styleName='location'>{location}</div>
           <div styleName='badgeRow'>
-            {/* TODO RESP: can be removed once mods are ported to managers */}
-            {creatorIsModerator && (
-              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} id={id} />
-            )}
-            {badges.map(badge => (
-              <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities} id={id} />
+            {roles.map(role => (
+              <BadgeEmoji key={role.name} expanded {...role} responsibilities={role.responsibilities} id={id} />
             ))}
           </div>
           {skills && <div styleName='skills'>

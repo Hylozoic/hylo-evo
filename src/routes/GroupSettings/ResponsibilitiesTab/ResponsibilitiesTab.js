@@ -107,11 +107,11 @@ export default function ResponsibilitiesTab ({ group }) {
 
   return (
     <>
-      <h3>{t('Responsibilities and permissions')}</h3>
-      <h4>{t('Platform Responsibilities')}</h4>
-      <span styleName='styles.description'>{t('Managing a group comes with responsibilities. These are detailed below, and can be assigned to roles to share group stewardship across the group')}</span>
+      <h1>{t('Responsibilities and permissions')}</h1>
+      <h2>{t('Platform Responsibilities')}</h2>
+      <span styleName='styles.description'>{t('adminResponsibilitiesHelpText')}</span>
       <SettingsSection>
-        <div styleName='styles.help-text'>{t('Each of these responsibilities gives access to specific functionality related to the platform')}</div>
+        {/* <div styleName='styles.help-text'>{t('Each of these responsibilities gives access to specific functionality related to the platform')}</div> */}
         {responsibilities && responsibilities.map((role, i) => (
           <ResponsibilityRow
             group={group}
@@ -124,7 +124,7 @@ export default function ResponsibilitiesTab ({ group }) {
         ))}
       </SettingsSection>
       <h4>{t('Custom Responsibilities')}</h4>
-      <span styleName='styles.description'>{t('These can be used to denote group responsibilities that people hold outside of the platform. For example, committee-member, or works-on-budget')}</span>
+      <span styleName='styles.description'>{t('adminResponsibilitiesCustomHelpText')}</span>
       <SettingsSection>
         {responsibilities && responsibilities.map((role, i) => (
           <ResponsibilityRow
@@ -173,16 +173,17 @@ function ResponsibilityRow ({
   return (
     <div styleName={`styles.responsibility-container ${inactiveStyle}`}>
       <div styleName='styles.action-container'>
-        {draft && (<span onClick={onDelete} styleName='styles.action'><Icon name='Trash' /> {t('Delete')}</span>)}
+        {draft && (<span onClick={onDelete} styleName='styles.action'><Icon name='CircleEx' /> {t('Cancel')}</span>)}
+        {!draft && type !== 'system' && !changed && (<span styleName='styles.action' onClick={onServerDelete}><Icon name='Trash' /> {t('Delete')}</span>)}
+        {draft && <span styleName='styles.action' onClick={onSave}><Icon name='Plus' /> {t('Create')}</span>}
         {!draft && changed && (<span styleName='styles.action' onClick={onUpdate}><Icon name='Unlock' /> {t('Save')}</span>)}
         {!draft && changed && (<span styleName='styles.action' onClick={onReset}><Icon name='Back' /> {t('Revert')}</span>)}
-        {!draft && type !== 'system' && !changed && (<span styleName='styles.action' onClick={onServerDelete}><Icon name='CircleEx' /> {t('Delete')}</span>)}
       </div>
       {type === 'group' &&
         <div styleName='styles.responsibility-row'>
           <div styleName='styles.responsibility-stack'>
             <SettingsControl label='Title' controlClass={styles['settings-control']} onChange={onChange('title')} value={title} />
-            <SettingsControl label='Description' controlClass={styles['settings-control']} onChange={onChange('description')} value={description} />
+            <SettingsControl label='Description' controlClass={styles['settings-control']} onChange={onChange('description')} value={description} type='textarea' />
           </div>
         </div>}
       {type === 'system' &&
@@ -192,14 +193,6 @@ function ResponsibilityRow ({
             <span styleName='styles.description'>{description}</span>
           </div>
         </div>}
-      {
-        draft &&
-          (
-            <div styleName='styles.responsibility-row styles.reverse-flex'>
-              <div styleName='styles.create-button' onClick={onSave}>{t('Create')}</div>
-            </div>
-          )
-      }
     </div>
   )
 }

@@ -5,6 +5,7 @@ import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { getParentGroups } from 'store/selectors/getGroupRelationships'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getCanModerate from 'store/selectors/getCanModerate'
+import getCommonRoles from 'store/selectors/getCommonRoles'
 import getMe from 'store/selectors/getMe'
 import {
   FETCH_COLLECTION_POSTS,
@@ -27,9 +28,11 @@ export function mapStateToProps (state, props) {
   const canModerate = getCanModerate(state, { group })
   const currentUser = getMe(state)
   const parentGroups = group ? getParentGroups(state, { groupSlug: group.slug }) : []
+  const commonRoles = getCommonRoles(state)
 
   return {
     canModerate,
+    commonRoles,
     currentUser,
     fetchPending: state.pending[FETCH_GROUP_SETTINGS],
     fetchCollectionPostsPending: state.pending[FETCH_COLLECTION_POSTS],

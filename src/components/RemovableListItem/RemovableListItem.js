@@ -16,18 +16,18 @@ export default function RemovableListItem ({ item, removeItem, skipConfirm = fal
     }
   }
 
-  const avatar = <RoundImage url={item.avatarUrl || DEFAULT_AVATAR} medium square={square} size={size} styleName='avatar' />
+  const avatar = item.avatarUrl ? <RoundImage url={item.avatarUrl || DEFAULT_AVATAR} medium square={square} size={size} styleName='avatar' /> : null
   const title = item.name || item.title
 
-  return <div styleName='item'>
-    {url && <Link to={url}>
-      {avatar}
-    </Link>}
-    {!url && avatar}
+  return (
+    <div styleName='item'>
+      {url && <Link to={url}>{avatar}</Link>}
+      {!url && avatar}
 
-    {url && <Link to={url} styleName='name'>{title}</Link>}
-    {!url && <span>{title}</span>}
+      {url && <Link to={url} styleName='name'>{title}</Link>}
+      {!url && <span>{title}</span>}
 
-    {removeItem && <span onClick={remove} className='remove-button' styleName='remove-button'>{t('Remove')}</span>}
-  </div>
+      {removeItem && <span onClick={remove} className='remove-button' styleName='remove-button'>{t('Remove')}</span>}
+    </div>
+  )
 }

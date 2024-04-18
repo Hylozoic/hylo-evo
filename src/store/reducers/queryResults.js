@@ -137,6 +137,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
     // Chat posts only appear in the chat rooms, nowhere else
     if (type !== 'chat') {
       queriesToMatch.push(
+        // TODO: add types here
         { context: 'groups', slug: group.slug },
         { context: 'groups', slug: group.slug, activePostsOnly: false, childPostInclusion: 'no' },
         { context: 'groups', slug: group.slug, activePostsOnly: false, childPostInclusion: 'yes' },

@@ -14,6 +14,7 @@ import { localeLocalStorageSync } from 'util/locale'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import setReturnToPath from 'store/actions/setReturnToPath'
+import fetchCommonRoles from 'store/actions/fetchCommonRoles'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
 import getMe from 'store/selectors/getMe'
@@ -113,6 +114,7 @@ export default function AuthLayoutRouter (props) {
 
   useEffect(() => {
     (async function () {
+      await dispatch(fetchCommonRoles())
       await dispatch(fetchForCurrentUser())
       setCurrentUserLoading(false)
     })()
@@ -422,6 +424,7 @@ export default function AuthLayoutRouter (props) {
           </div>
           <SocketListener location={location} groupSlug={currentGroupSlug} />
           <SocketSubscriber type='group' id={get('slug', currentGroup)} />
+          {/* <SocketSubscriber type='user' id={currentUser.id} /> */}
         </div>
       </Div100vh>
     </IntercomProvider>

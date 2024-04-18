@@ -135,9 +135,9 @@ class PostHeader extends PureComponent {
               </Highlight>
               <div styleName='badgeRow'>
                 {/* TODO RESP: can be removed once mods are ported to managers */}
-                {creatorIsModerator && (
+                {/* {creatorIsModerator && (
                   <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={currentGroup?.moderatorDescriptor || 'Moderator'} id={id} />
-                )}
+                )} */}
                 {badges.map(badge => (
                   <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities} id={id} />
                 ))}

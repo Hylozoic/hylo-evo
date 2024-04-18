@@ -13,7 +13,7 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import AboutSection from './AboutSection'
 import './GroupSidebar.scss'
-import { RESP_ADD_MEMBERS } from 'store/constants'
+import { RESP_ADD_MEMBERS, RESP_ADMINISTRATION } from 'store/constants'
 import { combineRoles } from 'store/models/Person'
 
 class GroupSidebar extends Component {
@@ -36,7 +36,7 @@ class GroupSidebar extends Component {
     return (
       <div styleName='group-sidebar'>
         <AboutSection description={description} purpose={purpose} />
-        <SettingsLink canModerate={canModerate || responsibilities.length > 0} group={group} />
+        <SettingsLink canModerate={canModerate || responsibilities.includes(RESP_ADMINISTRATION)} group={group} />
         <MemberSection
           members={members}
           memberCount={memberCount}
@@ -101,6 +101,7 @@ export function GroupLeaderSection ({ descriptor, leaders, groupId, slug }) {
 export function GroupLeader ({ groupId, leader, slug }) {
   const { name, avatarUrl } = leader
   const badges = combineRoles({ person: leader, groupId })
+  console.log("badges = ", name, badges)
   return (
     <div styleName='leader'>
       <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />

@@ -8,6 +8,16 @@ PersonSkillsToLearn.fields = {
   skillToLearn: fk('Skill', 'personSkillsToLearn')
 }
 
+export class MembershipCommonRole extends Model { }
+MembershipCommonRole.modelName = 'MembershipCommonRole'
+MembershipCommonRole.fields = {
+  id: attr(),
+  commonRoleId: attr(),
+  groupId: attr(),
+  userId: attr(),
+  commonRole: fk('CommonRole', 'membershipCommonRoles')
+}
+
 class Person extends Model {
   toString () {
     return `Person: ${this.name}`
@@ -33,12 +43,13 @@ Person.fields = {
     to: 'Location',
     as: 'locationObject'
   }),
+  membershipCommonRoles: many('MembershipCommonRole'),
   skills: many({ to: 'Skill', as: 'skills', relatedName: 'peopleHaving' }),
   skillsToLearn: many({
     to: 'Skill',
     relatedName: 'peopleLearning',
     through: 'PersonSkillsToLearn',
-    throughFields: [ 'person', 'skillToLearn' ]
+    throughFields: ['person', 'skillToLearn']
   }),
   postsTotal: attr()
 }
@@ -55,8 +66,11 @@ export const PERSON_PROP_TYPES = {
 export const firstName = person => person.name.split(' ')[0]
 export const twitterUrl = twitterName => twitterName && `https://twitter.com/${twitterName}`
 export const combineRoles = ({ person, groupId }) => {
-  if (!person || !groupId || !Array.isArray(person.groupRoles.items)) return []
-  return person.commonRoles.items.concat(person.groupRoles.items.filter(role => role.groupId === groupId)) || []
+  const commonRoles = person.membershipCommonRoles?.toModelArray().filter(mcr => mcr.groupId === groupId).map(mcr => ({ ...mcr.commonRole.ref, common: true })) || []
+  // console.log("commonRoles", person.name, commonRoles)
+  // return person.groupRoles.items.filter(role => role.groupId === groupId)
+  //if (!person || !groupId || !Array.isArray(person.groupRoles.items)) return []
+  return commonRoles.concat(person.groupRoles.items.filter(role => role.groupId === groupId)) || []
 }
 
 export const AXOLOTL_ID = '13986'

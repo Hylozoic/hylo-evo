@@ -161,6 +161,7 @@ class ModeratorsSettingsTab extends Component {
 
   render () {
     const {
+      commonRoles,
       moderators,
       group = {},
       t
@@ -172,7 +173,7 @@ class ModeratorsSettingsTab extends Component {
       roles
     } = this.state
 
-    const { commonRoles = [] } = group
+    // const { commonRoles = [] } = group
 
     const unsavedRolePresent = roles.length > 0 ? roles[roles.length - 1]?.active === '' : false
     if (!moderators) return <Loading />
@@ -180,7 +181,7 @@ class ModeratorsSettingsTab extends Component {
     return (
       <>
         {/* TODO RESP: Remove this whole section once the moderators are ported to common-role-managers via data migration */}
-        <SettingsSection>
+        {/* <SettingsSection>
           <h3>
             {group?.moderatorDescriptorPlural || t('Moderators')}
             <div styleName='styles.help-text'>{t('Who has access to group settings and moderation powers')}</div>
@@ -199,10 +200,10 @@ class ModeratorsSettingsTab extends Component {
                 <CheckBox checked={isRemoveFromGroup} label={this.props.t('Remove from group as well')} onChange={value => this.setState({ isRemoveFromGroup: value })} />
               </div>
             </ModalDialog>}
-        </SettingsSection>
+        </SettingsSection> */}
         <SettingsSection>
-          <h3>{t('Common Roles & Badges')}</h3>
-          <div styleName='styles.help-text'>{t('Use common roles or badges for the group')}</div>
+          <h3>{t('Common Roles')}</h3>
+          <div styleName='styles.help-text'>{t('adminRolesHelpText')}</div>
           {commonRoles.map((role, i) => (
             <RoleRow
               {...this.props}
@@ -215,8 +216,8 @@ class ModeratorsSettingsTab extends Component {
           ))}
         </SettingsSection>
         <SettingsSection>
-          <h3>{t('Other Roles & Badges')}</h3>
-          <div styleName='styles.help-text'>{t('Create additional roles or badges for the group')}</div>
+          <h3>{t('Custom Roles & Badges')}</h3>
+          <div styleName='styles.help-text'>{t('Create additional roles or badges for your group')}</div>
           {roles.map((role, i) => (
             <RoleRow
               {...this.props}
@@ -398,7 +399,7 @@ function RoleRowUntranslated ({
         <EmojiPicker forReactions={false} emoji={emoji} handleReaction={onChange('emoji')} className={styles['emoji-picker']} />
         <div styleName='styles.role-stack'>
           <SettingsControl label='Name' controlClass={styles['settings-control']} onChange={onChange('name')} value={name} />
-          <SettingsControl label='Description' controlClass={styles['settings-control']} onChange={onChange('description')} value={description} />
+          <SettingsControl label='Description' controlClass={styles['settings-control']} onChange={onChange('description')} value={description} type='textarea' />
         </div>
       </div>
       {
@@ -673,6 +674,10 @@ export function RoleList ({ slug, fetchModeratorSuggestions, addRoleToMember, ra
   return (
     <div>
       <div>
+        <h4>Responsibilities</h4>
+        {isCommonRole && (
+          <div styleName='styles.help-text'>{t('Common roles cannot have their responsibilities edited')}</div>
+        )}
         {responsibilitiesForRole.map(r =>
           <RemovableListItem
             item={r}
@@ -689,10 +694,8 @@ export function RoleList ({ slug, fetchModeratorSuggestions, addRoleToMember, ra
           roleId={roleId}
           group={group}
         />)}
-      {isCommonRole && (
-        <div styleName='styles.help-text'>{t('Common roles cannot have their responsibilities edited')}</div>
-      )}
-      <div>
+      <div style={{ marginTop: '20px' }}>
+        <h4>Members</h4>
         {membersForRole.map(m =>
           <RemovableListItem
             item={m}

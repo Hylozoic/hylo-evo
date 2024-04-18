@@ -8,7 +8,8 @@ export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const members = group ? group.members.toModelArray().slice(0, 8) : []
   const leaders = group ? group.moderators.toModelArray() : []
-  const canModerate = getCanModerate(state, { group })
+  // console.log("leaders membershipcommonroles = ", leaders ? leaders[0]?.membershipCommonRoles?.toModelArray() : null)
+  const canModerate = getCanModerate(state, { group }) // TODO
   const currentUser = getMe(state)
 
   return {

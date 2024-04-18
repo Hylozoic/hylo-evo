@@ -150,6 +150,7 @@ Group.fields = {
     through: 'GroupRelationship',
     throughFields: ['childGroup', 'parentGroup']
   }),
+  commonRoles: many('CommonRole'),
   customViews: many('CustomView'),
   feedOrder: attr(),
   geoShape: attr(),
@@ -183,7 +184,7 @@ Group.fields = {
     to: 'Group',
     relatedName: 'antirequisiteGroups',
     through: 'GroupPrerequisite',
-    throughFields: [ 'prerequisiteGroup', 'forGroup' ]
+    throughFields: ['prerequisiteGroup', 'forGroup']
   }),
   purpose: attr(),
   settings: attr(),
