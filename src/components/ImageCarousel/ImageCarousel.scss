@@ -1,0 +1,14 @@
+.images {
+  :global(.slick-prev:before),
+  :global(.slick-next:before) {
+    text-shadow: 0px 0px 5px black;
+  }
+
+  :global(.slick-list) {
+    margin-bottom: 15px;
+  }
+
+  :global(.slick-dots) {
+    bottom: -20px;
+  }
+}

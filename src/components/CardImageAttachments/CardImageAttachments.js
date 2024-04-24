@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { filter, isEmpty } from 'lodash/fp'
-import { bgImageStyle } from 'util/index'
+import ModalDialog from 'components/ModalDialog'
+import ImageCarousel from 'components/ImageCarousel'
 import './CardImageAttachments.scss'
 
 export default function CardImageAttachments ({
   attachments,
-  linked,
   className
 }) {
   const imageAttachments = filter({ type: 'image' }, attachments)
@@ -18,18 +18,35 @@ export default function CardImageAttachments ({
 
   if (!firstImageUrl) return null
 
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => {
+    setModalVisible(!modalVisible)
+  }
+
+  const modalSettings = {
+    showCancelButton: false,
+    submitButtonText: 'Close',
+    showModalTitle: false,
+    closeModal: toggleModal,
+    style: { width: '100%', maxWidth: '1024px' }
+  }
+
   return (
-    <div className={className} styleName='image'>
-      {linked ? <a href={firstImageUrl} target='_blank' rel='noreferrer'><img src={firstImageUrl} /></a> : <img src={firstImageUrl} />}
-      <div styleName='others'>
-        <div styleName='others-inner'>
-          {!isEmpty(otherImageUrls) && otherImageUrls.map(url =>
-            <a href={url} styleName='other' target='_blank' rel='noreferrer' key={url}>
-              <div style={bgImageStyle(url)} />
-            </a>)}
+    <>
+      <div className={className} styleName='image'>
+        <img src={firstImageUrl} onClick={toggleModal} />
+        <div styleName='others'>
+          <div styleName='others-inner'>
+            {!isEmpty(otherImageUrls) && otherImageUrls.map(url =>
+              <img styleName='other' src={url} onClick={toggleModal} />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      {modalVisible && <ModalDialog {...modalSettings}>
+        <ImageCarousel attachments={imageAttachments} />
+      </ModalDialog>}
+    </>
   )
 }
 

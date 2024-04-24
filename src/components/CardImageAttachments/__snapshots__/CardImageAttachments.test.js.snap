@@ -1,66 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders a single image 1`] = `
-<div
-  data-stylename="image"
->
-  <img
-    src="foo"
-  />
+<Fragment>
   <div
-    data-stylename="others"
+    data-stylename="image"
   >
-    <div
-      data-stylename="others-inner"
+    <img
+      onClick={[Function]}
+      src="foo"
     />
+    <div
+      data-stylename="others"
+    >
+      <div
+        data-stylename="others-inner"
+      />
+    </div>
   </div>
-</div>
+</Fragment>
 `;
 
 exports[`renders multiple images 1`] = `
-<div
-  data-stylename="image"
->
-  <img
-    src="bar"
-  />
+<Fragment>
   <div
-    data-stylename="others"
+    data-stylename="image"
   >
+    <img
+      onClick={[Function]}
+      src="bar"
+    />
     <div
-      data-stylename="others-inner"
+      data-stylename="others"
     >
-      <a
-        data-stylename="other"
-        href="baz"
-        key="baz"
-        rel="noreferrer"
-        target="_blank"
+      <div
+        data-stylename="others-inner"
       >
-        <div
-          style={
-            Object {
-              "backgroundImage": "url(baz)",
-            }
-          }
+        <img
+          data-stylename="other"
+          onClick={[Function]}
+          src="baz"
         />
-      </a>
-      <a
-        data-stylename="other"
-        href="bonk"
-        key="bonk"
-        rel="noreferrer"
-        target="_blank"
-      >
-        <div
-          style={
-            Object {
-              "backgroundImage": "url(bonk)",
-            }
-          }
+        <img
+          data-stylename="other"
+          onClick={[Function]}
+          src="bonk"
         />
-      </a>
+      </div>
     </div>
   </div>
-</div>
+</Fragment>
 `;
