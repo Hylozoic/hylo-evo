@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Slider from 'react-slick'
-import { filter } from 'lodash/fp'
+import { filter, isEmpty } from 'lodash/fp'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -11,6 +11,7 @@ export default function ImageCarousel ({
   attachments
 }) {
   const imageAttachments = filter({ type: 'image' }, attachments)
+  if (isEmpty(imageAttachments)) return null
 
   const settings = {
     dots: true,
