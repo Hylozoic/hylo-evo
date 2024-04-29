@@ -8,30 +8,39 @@ import 'slick-carousel/slick/slick-theme.css'
 import './ImageCarousel.scss'
 
 export default function ImageCarousel ({
-  attachments
+  attachments,
+  initialSlide = 0
 }) {
   const imageAttachments = filter({ type: 'image' }, attachments)
   if (isEmpty(imageAttachments)) return null
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     arrows: true,
     slidesToScroll: 1,
-    adaptiveHeight: true
+    adaptiveHeight: true,
+    initialSlide: parseInt(initialSlide)
   }
 
   return (
     <div styleName='images'>
       <Slider {...settings}>
-        {imageAttachments.map(image => <img src={image.url} />)}
+        {imageAttachments.map((image, index) =>
+          <img
+            src={image.url}
+            alt={`Attached image ${index + 1}`}
+            key={index}
+            data-testid={`sc-img${index}`}
+          />
+        )}
       </Slider>
     </div>
   )
 }
 
 ImageCarousel.propTypes = {
-  imageAttachments: PropTypes.array.isRequired
+  attachments: PropTypes.array.isRequired
 }

@@ -18,8 +18,10 @@ export default function CardImageAttachments ({
 
   if (!firstImageUrl) return null
 
+  const [initialSlide, setInitialSlide] = useState(0)
   const [modalVisible, setModalVisible] = useState(false)
-  const toggleModal = () => {
+  const toggleModal = (e) => {
+    setInitialSlide(e?.target.dataset.index || 0)
     setModalVisible(!modalVisible)
   }
 
@@ -34,17 +36,29 @@ export default function CardImageAttachments ({
   return (
     <>
       <div className={className} styleName='image'>
-        <img src={firstImageUrl} onClick={toggleModal} />
+        <img
+          src={firstImageUrl}
+          alt={`Attached image 1`}
+          data-index={0}
+          onClick={toggleModal}
+        />
         <div styleName='others'>
           <div styleName='others-inner'>
-            {!isEmpty(otherImageUrls) && otherImageUrls.map(url =>
-              <img styleName='other' src={url} onClick={toggleModal} />
+            {!isEmpty(otherImageUrls) && otherImageUrls.map((url, index) =>
+              <img
+                styleName='other'
+                data-index={index + 1}
+                src={url}
+                alt={`Attached image ${index + 2}`}
+                key={index}
+                onClick={toggleModal}
+              />
             )}
           </div>
         </div>
       </div>
       {modalVisible && <ModalDialog {...modalSettings}>
-        <ImageCarousel attachments={imageAttachments} />
+        <ImageCarousel attachments={imageAttachments} initialSlide={initialSlide} />
       </ModalDialog>}
     </>
   )

@@ -6,6 +6,8 @@ exports[`renders a single image 1`] = `
     data-stylename="image"
   >
     <img
+      alt="Attached image 1"
+      data-index={0}
       onClick={[Function]}
       src="foo"
     />
@@ -26,6 +28,8 @@ exports[`renders multiple images 1`] = `
     data-stylename="image"
   >
     <img
+      alt="Attached image 1"
+      data-index={0}
       onClick={[Function]}
       src="bar"
     />
@@ -36,12 +40,18 @@ exports[`renders multiple images 1`] = `
         data-stylename="others-inner"
       >
         <img
+          alt="Attached image 2"
+          data-index={1}
           data-stylename="other"
+          key="0"
           onClick={[Function]}
           src="baz"
         />
         <img
+          alt="Attached image 3"
+          data-index={2}
           data-stylename="other"
+          key="1"
           onClick={[Function]}
           src="bonk"
         />

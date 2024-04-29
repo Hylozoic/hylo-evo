@@ -8,12 +8,16 @@ exports[`renders a single image 1`] = `
     adaptiveHeight={true}
     arrows={true}
     dots={true}
-    infinite={true}
+    infinite={false}
+    initialSlide={0}
     slidesToScroll={1}
     slidesToShow={1}
     speed={500}
   >
     <img
+      alt="Attached image 1"
+      data-testid="sc-img0"
+      key="0"
       src="foo"
     />
   </Slider>
@@ -28,18 +32,28 @@ exports[`renders multiple images 1`] = `
     adaptiveHeight={true}
     arrows={true}
     dots={true}
-    infinite={true}
+    infinite={false}
+    initialSlide={0}
     slidesToScroll={1}
     slidesToShow={1}
     speed={500}
   >
     <img
+      alt="Attached image 1"
+      data-testid="sc-img0"
+      key="0"
       src="bar"
     />
     <img
+      alt="Attached image 2"
+      data-testid="sc-img1"
+      key="1"
       src="baz"
     />
     <img
+      alt="Attached image 3"
+      data-testid="sc-img2"
+      key="2"
       src="bonk"
     />
   </Slider>
