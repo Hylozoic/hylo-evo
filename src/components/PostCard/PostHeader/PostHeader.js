@@ -87,7 +87,7 @@ class PostHeader extends PureComponent {
       { icon: 'Trash', label: t('Remove From Group'), onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
-    const typesWithTimes = ['offer', 'request', 'resource', 'project']
+    const typesWithTimes = ['offer', 'request', 'resource', 'project', 'proposal']
     const canHaveTimes = typesWithTimes.includes(type)
 
     const typesWithCompletion = ['offer', 'request', 'resource', 'project']

@@ -14,7 +14,6 @@ export const PROPOSAL_MULTIPLE_CHOICE = 'Multiple Choice'
 // proposal types
 export const PROPOSAL_TYPE_SINGLE = 'single'
 export const PROPOSAL_TYPE_MULTI_UNRESTRICTED = 'multi-unrestricted'
-export const PROPOSAL_TYPE_MAJORITY = 'majority'
 export const PROPOSAL_TYPE_CONSENSUS = 'consensus'
 
 // proposal status
@@ -22,7 +21,6 @@ export const PROPOSAL_STATUS_DISCUSSION = 'discussion'
 export const PROPOSAL_STATUS_VOTING = 'voting'
 export const PROPOSAL_STATUS_CASUAL = 'casual'
 export const PROPOSAL_STATUS_COMPLETED = 'completed'
-
 
 export class PostFollower extends Model {}
 PostFollower.modelName = 'PostFollower'

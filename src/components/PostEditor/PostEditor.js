@@ -6,7 +6,7 @@ import { withTranslation } from 'react-i18next'
 import { debounce, get, isEqual } from 'lodash/fp'
 import cx from 'classnames'
 import Moment from 'moment-timezone'
-import { POST_PROP_TYPES, POST_TYPES, PROPOSAL_ADVICE, PROPOSAL_CONSENSUS, PROPOSAL_CONSENT, PROPOSAL_GRADIENT, PROPOSAL_MULTIPLE_CHOICE, PROPOSAL_POLL_SINGLE, PROPOSAL_SCHEDULING, PROPOSAL_TEMPLATES, PROPOSAL_TYPE_MAJORITY, PROPOSAL_TYPE_MULTI_UNRESTRICTED, PROPOSAL_TYPE_SINGLE, PROPOSAL_YESNO } from 'store/models/Post'
+import { POST_PROP_TYPES, POST_TYPES, PROPOSAL_ADVICE, PROPOSAL_CONSENSUS, PROPOSAL_CONSENT, PROPOSAL_GRADIENT, PROPOSAL_MULTIPLE_CHOICE, PROPOSAL_POLL_SINGLE, PROPOSAL_SCHEDULING, PROPOSAL_TEMPLATES, PROPOSAL_TYPE_MULTI_UNRESTRICTED, PROPOSAL_TYPE_SINGLE, PROPOSAL_YESNO } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import Icon from 'components/Icon'
 import LocationInput from 'components/LocationInput'
@@ -928,8 +928,7 @@ class PostEditor extends React.Component {
                   }
                   items={[
                     { label: t('Single Vote per person'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_SINGLE) },
-                    { label: t('Multi-vote, unrestricted'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_MULTI_UNRESTRICTED) },
-                    { label: t('Majority'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_MAJORITY) }
+                    { label: t('Multi-vote, unrestricted'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_MULTI_UNRESTRICTED) }
                   ]}
                 />
               </div>

@@ -1,10 +1,10 @@
 import cx from 'classnames'
-import React, { useEffect, useState } from 'react'
+import React, { useMemo } from 'react'
 import { throttle } from 'lodash/fp'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
-import { PROPOSAL_STATUS_CASUAL, PROPOSAL_STATUS_COMPLETED, PROPOSAL_STATUS_DISCUSSION, PROPOSAL_STATUS_VOTING, PROPOSAL_TYPE_MAJORITY, PROPOSAL_TYPE_MULTI_UNRESTRICTED, PROPOSAL_TYPE_SINGLE } from 'store/models/Post'
+import { PROPOSAL_STATUS_CASUAL, PROPOSAL_STATUS_COMPLETED, PROPOSAL_STATUS_DISCUSSION, PROPOSAL_STATUS_VOTING, PROPOSAL_TYPE_MULTI_UNRESTRICTED, PROPOSAL_TYPE_SINGLE } from 'store/models/Post'
 import {
   addProposalVote,
   removeProposalVote,
@@ -29,6 +29,34 @@ const calcNumberOfPossibleVoters = (groups) => {
   }, 0)
 }
 
+const calcHighestVotedOptions = (votes) => {
+  const tally = {}
+
+  votes.forEach(vote => {
+    if (tally[vote.optionId]) {
+      tally[vote.optionId]++
+    } else {
+      tally[vote.optionId] = 1
+    }
+  })
+
+  let maxTally = 0
+  for (const optionId in tally) {
+    if (tally[optionId] > maxTally) {
+      maxTally = tally[optionId]
+    }
+  }
+
+  const highestVotedOptions = []
+  for (const optionId in tally) {
+    if (tally[optionId] === maxTally) {
+      highestVotedOptions.push(optionId)
+    }
+  }
+
+  return highestVotedOptions
+}
+
 const isVotingOpen = (proposalStatus) => proposalStatus === PROPOSAL_STATUS_VOTING || proposalStatus === PROPOSAL_STATUS_CASUAL
 
 export default function PostBodyProposal ({
@@ -46,29 +74,17 @@ export default function PostBodyProposal ({
 }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const proposalOptionsArray = (proposalOptions && proposalOptions.items) ? proposalOptions?.items : []
-  const proposalVotesArray = (proposalVotes && proposalVotes.items) ? proposalVotes?.items : []
+  const proposalOptionsArray = useMemo(() => proposalOptions?.items || [], [proposalOptions])
+  const proposalVotesArray = useMemo(() => proposalVotes?.items || [], [proposalVotes])
 
-  const [currentUserVotes, setCurrentUserVotes] = useState(proposalVotesArray.filter(vote => vote?.user?.id === currentUser.id))
-  const [currentUserVotesOptionIds, setCurrentUserVotesOptionIds] = useState(currentUserVotes.map(vote => vote.optionId))
-  const [proposalVoterCount, setProposalVoterCount] = useState(calcNumberOfVoters(proposalVotesArray))
-  const [numberOfPossibleVoters, setNumberOfPossibleVoters] = useState(calcNumberOfPossibleVoters(groups))
-
-  useEffect(() => {
-    setCurrentUserVotes(proposalVotesArray.filter(vote => vote?.user?.id === currentUser.id))
-    setProposalVoterCount(calcNumberOfVoters(proposalVotesArray))
-  }, [proposalVotesArray])
-
-  useEffect(() => {
-    setCurrentUserVotesOptionIds(currentUserVotes.map(vote => vote.optionId))
-  }, [currentUserVotes])
-
-  useEffect(() => {
-    setNumberOfPossibleVoters(calcNumberOfPossibleVoters(groups))
-  }, [groups])
+  const currentUserVotes = useMemo(() => proposalVotesArray.filter(vote => vote?.user?.id === currentUser.id), [proposalVotesArray, currentUser.id])
+  const currentUserVotesOptionIds = useMemo(() => currentUserVotes.map(vote => vote.optionId), [currentUserVotes])
+  const proposalVoterCount = useMemo(() => calcNumberOfVoters(proposalVotesArray), [proposalVotesArray])
+  const numberOfPossibleVoters = useMemo(() => calcNumberOfPossibleVoters(groups), [groups])
+  const highestVotedOptions = useMemo(() => calcHighestVotedOptions(proposalVotesArray, proposalOptionsArray), [proposalVotesArray, proposalOptionsArray])
 
   function handleVote (optionId) {
-    if (proposalType === PROPOSAL_TYPE_SINGLE || proposalType === PROPOSAL_TYPE_MAJORITY) {
+    if (proposalType === PROPOSAL_TYPE_SINGLE) {
       if (currentUserVotesOptionIds.includes(optionId)) {
         dispatch(removeProposalVote({ optionId, postId: id }))
       } else if (currentUserVotesOptionIds.length === 0) {
@@ -99,14 +115,15 @@ export default function PostBodyProposal ({
       </div>
       <div styleName={cx('proposal-timing')}>
         {!startTime && t('Open timeframe')}
-        {startTime && `${new Date(startTime).toLocaleDateString()} - ${new Date(endTime).toLocaleDateString()}`}
+        {startTime && proposalStatus !== PROPOSAL_STATUS_COMPLETED && `${new Date(startTime).toLocaleDateString()} - ${new Date(endTime).toLocaleDateString()}`}
+        {startTime && proposalStatus === PROPOSAL_STATUS_COMPLETED && `${new Date(endTime).toLocaleDateString()}`}
       </div>
       {proposalOptionsArray && proposalOptionsArray.map((option, i) => {
         const optionVotes = proposalVotesArray.filter(vote => vote.optionId === option.id)
         const voterNames = isAnonymousVote ? [] : optionVotes.map(vote => vote.user.name)
         const avatarUrls = optionVotes.map(vote => vote.user.avatarUrl)
         return (
-          <div key={`${option.id}+${currentUserVotesOptionIds.includes(option.id)}`} styleName={cx('proposal-option', { selected: currentUserVotesOptionIds.includes(option.id), completed: proposalStatus === PROPOSAL_STATUS_COMPLETED })} onClick={isVotingOpen(proposalStatus) ? () => handleVoteThrottled(option.id) : () => {}}>
+          <div key={`${option.id}+${currentUserVotesOptionIds.includes(option.id)}`} styleName={cx('proposal-option', { selected: currentUserVotesOptionIds.includes(option.id), completed: proposalStatus === PROPOSAL_STATUS_COMPLETED, highestVote: proposalStatus === PROPOSAL_STATUS_COMPLETED && highestVotedOptions.includes(option.id) })} onClick={isVotingOpen(proposalStatus) ? () => handleVoteThrottled(option.id) : () => {}}>
             <div styleName='proposal-option-text-container'>
               <div styleName='proposal-option-emoji'>
                 {option.emoji}
