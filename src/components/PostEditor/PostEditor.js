@@ -32,9 +32,21 @@ import { setQuerystringParam } from 'util/navigation'
 import { sanitizeURL } from 'util/url'
 import Tooltip from 'components/Tooltip'
 
-
 const emojiOptions = ['', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟', '✅✅', '👍', '👎', '⁉️', '‼️', '❓', '❗', '🚫', '➡️', '🛑', '✅', '🛑🛑', '🌈', '🔴', '🔵', '🟤', '🟣', '🟢', '🟡', '🟠', '⚫', '⚪', '🤷🤷', '📆', '🤔', '❤️', '👏', '🎉', '🔥', '🤣', '😢', '😡', '🤷', '💃🕺', '⛔', '🙏', '👀', '🙌', '💯', '🔗', '🚀', '💃', '🕺', '💯',]
 export const MAX_TITLE_LENGTH = 80
+
+function deepCompare (arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (!isEqual(arr1[i], arr2[i])) {
+      return false
+    }
+  }
+  return true
+}
 
 class PostEditor extends React.Component {
   static propTypes = {
@@ -898,7 +910,7 @@ class PostEditor extends React.Component {
                   <Icon name='Plus' styleName='icon-plus' blue />
                   <span styleName='optionText'>{t('Add an option to vote on...')}</span>
                 </div>
-                {!isEqual(proposalOptions, this.props.post.proposalOptions?.items) && (
+                {!deepCompare(proposalOptions, this.props.post.proposalOptions?.items) && (
                   <div styleName='proposalOption warning' onClick={() => this.handleAddOption()}>
                     <Icon name='Hand' styleName='icon-plus' />
                     <span styleName='optionText'>{t('If you save changes to options, all votes will be discarded')}</span>
@@ -1079,7 +1091,7 @@ class PostEditor extends React.Component {
             loading={loading}
             submitButtonLabel={this.buttonLabel()}
             save={() => {
-              if (isProposal && !isEqual(proposalOptions, this.props.post.proposalOptions?.items)) {
+              if (isProposal && !deepCompare(proposalOptions, this.props.post.proposalOptions?.items)) {
                 if (window.confirm(t('Changing proposal options will reset the votes. Are you sure you want to continue?'))) {
                   this.save()
                 }
