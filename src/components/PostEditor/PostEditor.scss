@@ -76,7 +76,7 @@ $wrapperBorderRadius: 8px;
     color: $color-events;
   }
   &-proposal {
-    color: $color-discussions;
+    color: $color-proposals;
   }
 }
 
@@ -139,8 +139,8 @@ $wrapperBorderRadius: 8px;
   }
   &-proposal {
     &.selectable:hover, &:active, &.active {
-      color: $color-discussions;
-      border: 1px solid $color-discussions-20;
+      color: $color-proposals;
+      border: 1px solid $color-proposals-20;
     }
   }
 }
