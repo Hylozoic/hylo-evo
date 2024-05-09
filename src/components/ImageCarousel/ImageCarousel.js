@@ -16,7 +16,7 @@ export default function ImageCarousel ({
 
   const settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 1,
     arrows: true,

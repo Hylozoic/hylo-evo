@@ -42,12 +42,13 @@ it('displays modal when image is clicked', async () => {
   expect(await screen.queryByAltText('Attached image 4')).not.toBeInTheDocument()
 
   userEvent.click(await screen.findByAltText('Attached image 2'))
-  expect(await screen.findByTestId('sc-img0')).toBeInTheDocument()
-  expect(await screen.findByTestId('sc-img1')).toBeInTheDocument()
-  expect(await screen.findByTestId('sc-img2')).toBeInTheDocument()
+  // slick clones these for infinite scrolling, the last one is double-cloned
+  expect((await screen.findAllByTestId('sc-img0')).length).toBe(2)
+  expect((await screen.findAllByTestId('sc-img1')).length).toBe(2)
+  expect((await screen.findAllByTestId('sc-img2')).length).toBe(3)
 
   // implementation dependent, but the only way to test that the active slide is image 2
-  expect((await screen.findByTestId('sc-img0')).parentNode.parentNode).toHaveAttribute('aria-hidden', 'true')
-  expect((await screen.findByTestId('sc-img1')).parentNode.parentNode).toHaveAttribute('aria-hidden', 'false')
-  expect((await screen.findByTestId('sc-img2')).parentNode.parentNode).toHaveAttribute('aria-hidden', 'true')
+  expect(((await screen.findAllByTestId('sc-img0'))[0]).parentNode.parentNode).toHaveAttribute('aria-hidden', 'true')
+  expect(((await screen.findAllByTestId('sc-img1'))[0]).parentNode.parentNode).toHaveAttribute('aria-hidden', 'false')
+  expect(((await screen.findAllByTestId('sc-img2'))[0]).parentNode.parentNode).toHaveAttribute('aria-hidden', 'true')
 })
