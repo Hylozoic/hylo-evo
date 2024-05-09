@@ -11,4 +11,13 @@
   :global(.slick-dots) {
     bottom: -20px;
   }
+  
+  :global(.slick-arrow) {
+    top: 25px;
+    transform: scale(1.5);
+  }
+
+  :global(.slick-next) {
+    right: 15px;
+  }
 }
