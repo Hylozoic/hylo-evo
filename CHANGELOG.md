@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.7.5] - 2024-03-18
+
+### Fixed
+- Hard to read bold text on Safari
+- A potential crash when posting a chat in topic based chat room
+
 ## [5.7.4] - 2024-03-16
 
 ### Added

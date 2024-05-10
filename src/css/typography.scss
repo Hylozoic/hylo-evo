@@ -42,6 +42,7 @@ ul, ol {
 
 strong {
   @include font-bold;
+  font-weight: 300;
 }
 
 // This should be applied / controlled here

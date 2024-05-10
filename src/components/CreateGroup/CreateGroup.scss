@@ -51,7 +51,6 @@
 
     input {
       font-size: 36px;
-      font-weight: bold;
       width: 100%;
       color: rgba(41, 64, 90, 1.00);
       border-bottom: 1px dashed rgba(192, 197, 205, 1.00);
@@ -158,7 +157,8 @@
 
     b {
       color: rgba(41, 64, 90, 1.00);
-      font-weight: bold;
+      font-family: "Circular Bold";
+      font-weight: 300;
       font-size: 18px;
     }
 
@@ -267,7 +267,6 @@
   .purposeHelp {
     background-color: rgba(128, 140, 155, 1.00);
     color: white;
-    font-weight: bold;
     width: 18px;
     height: 18px;
     border-radius: 18px;
@@ -334,7 +333,6 @@
     .parentGroupInfo {
       background-color: rgba(128, 140, 155, 1.00);
       color: white;
-      font-weight: bold;
       width: 18px;
       height: 18px;
       border-radius: 18px;
