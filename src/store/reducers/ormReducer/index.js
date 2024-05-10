@@ -41,7 +41,8 @@ import {
   UPDATE_THREAD_READ_TIME,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
   UPDATE_WIDGET,
-  USE_INVITATION
+  USE_INVITATION,
+  UPDATE_PROPOSAL_OUTCOME_PENDING
 } from 'store/constants'
 import {
   UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING,
@@ -621,6 +622,12 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
     case UPDATE_THREAD_READ_TIME: {
       MessageThread.withId(meta.id).markAsRead()
+      break
+    }
+
+    case UPDATE_PROPOSAL_OUTCOME_PENDING: {
+      post = Post.withId(meta.postId)
+      post.update({ proposalOutcome: meta.proposalOutcome })
       break
     }
 

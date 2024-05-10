@@ -279,6 +279,7 @@ posts: viewPosts(
   }
   peopleReactedTotal
   proposalStatus
+  proposalOutcome
   proposalType
   quorum
   proposalOptions {

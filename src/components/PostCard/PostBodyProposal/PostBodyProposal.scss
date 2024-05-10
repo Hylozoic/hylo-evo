@@ -62,6 +62,18 @@
 
 }
 
+.proposal-outcome {
+  padding: 6px;
+  background-color: #F2F2F2;
+  color: $color-ultramarine;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: fakeAlpha($color-ultramarine, 0.4);
+  border: 1px dashed rgba(213, 236, 250, 1);
+  border-radius: 5px;
+}
+
 .proposal-option{
   border-style: solid;
   border-width: 1px;

@@ -66,6 +66,7 @@ export default function PostBodyProposal ({
   proposalOptions,
   proposalVotes,
   isAnonymousVote,
+  proposalOutcome,
   startTime,
   quorum,
   endTime,
@@ -123,7 +124,7 @@ export default function PostBodyProposal ({
         const voterNames = isAnonymousVote ? [] : optionVotes.map(vote => vote.user.name)
         const avatarUrls = optionVotes.map(vote => vote.user.avatarUrl)
         return (
-          <div key={`${option.id}+${currentUserVotesOptionIds.includes(option.id)}`} styleName={cx('proposal-option', { selected: currentUserVotesOptionIds.includes(option.id), completed: proposalStatus === PROPOSAL_STATUS_COMPLETED, highestVote: proposalStatus === PROPOSAL_STATUS_COMPLETED && highestVotedOptions.includes(option.id) })} onClick={isVotingOpen(proposalStatus) ? () => handleVoteThrottled(option.id) : () => {}}>
+          <div key={`${option.id}+${currentUserVotesOptionIds.includes(option.id)}`} styleName={cx('proposal-option', { selected: currentUserVotesOptionIds.includes(option.id), completed: proposalStatus === PROPOSAL_STATUS_COMPLETED, highestVote: (proposalStatus === PROPOSAL_STATUS_COMPLETED || proposalOutcome) && highestVotedOptions.includes(option.id) })} onClick={isVotingOpen(proposalStatus) ? () => handleVoteThrottled(option.id) : () => {}}>
             <div styleName='proposal-option-text-container'>
               <div styleName='proposal-option-emoji'>
                 {option.emoji}
@@ -152,6 +153,7 @@ export default function PostBodyProposal ({
         id='voters-tt'
       />
       {quorum && <QuorumBar totalVoters={numberOfPossibleVoters} quorum={quorum} actualVoters={proposalVoterCount} proposalStatus={proposalStatus} />}
+      {proposalOutcome && <div styleName='proposal-outcome'>  {t('Outcome')}: {proposalOutcome}</div>}
     </div>
   )
 }
