@@ -1,5 +1,6 @@
 .image {
   position: relative;
+  cursor: pointer;
 
   img {
     width: 100%;
@@ -15,6 +16,7 @@
   overflow-x: auto;
   padding: 10px 0;
   padding-left: $space-2x;
+  cursor: pointer;
 }
 
 .others-inner {

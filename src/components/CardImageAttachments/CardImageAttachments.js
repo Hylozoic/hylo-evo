@@ -38,7 +38,7 @@ export default function CardImageAttachments ({
       <div className={className} styleName='image'>
         <img
           src={firstImageUrl}
-          alt={`Attached image 1`}
+          alt='Attached image 1'
           data-index={0}
           onClick={toggleModal}
         />
