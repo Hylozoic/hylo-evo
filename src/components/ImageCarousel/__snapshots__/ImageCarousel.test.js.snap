@@ -14,12 +14,15 @@ exports[`renders a single image 1`] = `
     slidesToShow={1}
     speed={500}
   >
-    <img
-      alt="Attached image 1"
+    <div
       data-testid="sc-img0"
       key="0"
-      src="foo"
-    />
+    >
+      <img
+        alt="Attached image 1"
+        src="foo"
+      />
+    </div>
   </Slider>
 </div>
 `;
@@ -38,24 +41,33 @@ exports[`renders multiple images 1`] = `
     slidesToShow={1}
     speed={500}
   >
-    <img
-      alt="Attached image 1"
+    <div
       data-testid="sc-img0"
       key="0"
-      src="bar"
-    />
-    <img
-      alt="Attached image 2"
+    >
+      <img
+        alt="Attached image 1"
+        src="bar"
+      />
+    </div>
+    <div
       data-testid="sc-img1"
       key="1"
-      src="baz"
-    />
-    <img
-      alt="Attached image 3"
+    >
+      <img
+        alt="Attached image 2"
+        src="baz"
+      />
+    </div>
+    <div
       data-testid="sc-img2"
       key="2"
-      src="bonk"
-    />
+    >
+      <img
+        alt="Attached image 3"
+        src="bonk"
+      />
+    </div>
   </Slider>
 </div>
 `;

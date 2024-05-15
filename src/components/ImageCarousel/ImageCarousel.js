@@ -5,7 +5,7 @@ import { filter, isEmpty } from 'lodash/fp'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import './ImageCarousel.scss'
+import styles from './ImageCarousel.scss'
 
 export default function ImageCarousel ({
   attachments,
@@ -29,12 +29,12 @@ export default function ImageCarousel ({
     <div styleName='images'>
       <Slider {...settings}>
         {imageAttachments.map((image, index) =>
-          <img
-            src={image.url}
-            alt={`Attached image ${index + 1}`}
-            key={index}
-            data-testid={`sc-img${index}`}
-          />
+          <div className={styles.imageWrapper} key={index} data-testid={`sc-img${index}`}>
+            <img
+              src={image.url}
+              alt={`Attached image ${index + 1}`}
+            />
+          </div>
         )}
       </Slider>
     </div>
