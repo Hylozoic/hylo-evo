@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a single image 1`] = `
+<div
+  data-stylename="images"
+>
+  <Slider
+    adaptiveHeight={true}
+    arrows={true}
+    dots={true}
+    infinite={true}
+    initialSlide={0}
+    slidesToScroll={1}
+    slidesToShow={1}
+    speed={500}
+  >
+    <div
+      data-testid="sc-img0"
+      key="0"
+    >
+      <img
+        alt="Attached image 1"
+        src="foo"
+      />
+    </div>
+  </Slider>
+</div>
+`;
+
+exports[`renders multiple images 1`] = `
+<div
+  data-stylename="images"
+>
+  <Slider
+    adaptiveHeight={true}
+    arrows={true}
+    dots={true}
+    infinite={true}
+    initialSlide={0}
+    slidesToScroll={1}
+    slidesToShow={1}
+    speed={500}
+  >
+    <div
+      data-testid="sc-img0"
+      key="0"
+    >
+      <img
+        alt="Attached image 1"
+        src="bar"
+      />
+    </div>
+    <div
+      data-testid="sc-img1"
+      key="1"
+    >
+      <img
+        alt="Attached image 2"
+        src="baz"
+      />
+    </div>
+    <div
+      data-testid="sc-img2"
+      key="2"
+    >
+      <img
+        alt="Attached image 3"
+        src="bonk"
+      />
+    </div>
+  </Slider>
+</div>
+`;
