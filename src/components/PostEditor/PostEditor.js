@@ -910,7 +910,7 @@ class PostEditor extends React.Component {
                   <Icon name='Plus' styleName='icon-plus' blue />
                   <span styleName='optionText'>{t('Add an option to vote on...')}</span>
                 </div>
-                {!deepCompare(proposalOptions, this.props.post.proposalOptions?.items) && (
+                {this.props.post && !deepCompare(proposalOptions, this.props.post.proposalOptions?.items) && (
                   <div styleName='proposalOption warning' onClick={() => this.handleAddOption()}>
                     <Icon name='Hand' styleName='icon-plus' />
                     <span styleName='optionText'>{t('If you save changes to options, all votes will be discarded')}</span>
@@ -1091,7 +1091,7 @@ class PostEditor extends React.Component {
             loading={loading}
             submitButtonLabel={this.buttonLabel()}
             save={() => {
-              if (isProposal && !deepCompare(proposalOptions, this.props.post.proposalOptions?.items)) {
+              if (isProposal && this.props.post && !deepCompare(proposalOptions, this.props.post.proposalOptions?.items)) {
                 if (window.confirm(t('Changing proposal options will reset the votes. Are you sure you want to continue?'))) {
                   this.save()
                 }
