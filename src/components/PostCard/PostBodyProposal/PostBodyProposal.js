@@ -70,6 +70,7 @@ export default function PostBodyProposal ({
   startTime,
   quorum,
   endTime,
+  fulfilledAt,
   groups,
   id
 }) {
@@ -83,6 +84,8 @@ export default function PostBodyProposal ({
   const proposalVoterCount = useMemo(() => calcNumberOfVoters(proposalVotesArray), [proposalVotesArray])
   const numberOfPossibleVoters = useMemo(() => calcNumberOfPossibleVoters(groups), [groups])
   const highestVotedOptions = useMemo(() => calcHighestVotedOptions(proposalVotesArray, proposalOptionsArray), [proposalVotesArray, proposalOptionsArray])
+
+  const votingComplete = proposalStatus === PROPOSAL_STATUS_COMPLETED || fulfilledAt
 
   function handleVote (optionId) {
     if (proposalType === PROPOSAL_TYPE_SINGLE) {
@@ -107,24 +110,24 @@ export default function PostBodyProposal ({
   const handleVoteThrottled = throttle(200, handleVote)
 
   return (
-    <div styleName={cx('proposal-body-container', { discussion: proposalStatus === PROPOSAL_STATUS_DISCUSSION, voting: proposalStatus === PROPOSAL_STATUS_VOTING, casual: proposalStatus === PROPOSAL_STATUS_CASUAL, completed: proposalStatus === PROPOSAL_STATUS_COMPLETED })}>
+    <div styleName={cx('proposal-body-container', { discussion: proposalStatus === PROPOSAL_STATUS_DISCUSSION, voting: proposalStatus === PROPOSAL_STATUS_VOTING, casual: proposalStatus === PROPOSAL_STATUS_CASUAL, completed: votingComplete })}>
       <div styleName={cx('proposal-status')}>
         {proposalStatus === PROPOSAL_STATUS_DISCUSSION && t('Discussion in progress')}
         {proposalStatus === PROPOSAL_STATUS_VOTING && t('Voting open')}
-        {proposalStatus === PROPOSAL_STATUS_COMPLETED && t('Voting ended')}
+        {votingComplete && t('Voting ended')}
         {proposalStatus === PROPOSAL_STATUS_CASUAL && t('Voting open')}
       </div>
       <div styleName={cx('proposal-timing')}>
         {!startTime && t('Open timeframe')}
         {startTime && proposalStatus !== PROPOSAL_STATUS_COMPLETED && `${new Date(startTime).toLocaleDateString()} - ${new Date(endTime).toLocaleDateString()}`}
-        {startTime && proposalStatus === PROPOSAL_STATUS_COMPLETED && `${new Date(endTime).toLocaleDateString()}`}
+        {startTime && votingComplete && `${new Date(endTime).toLocaleDateString()}`}
       </div>
       {proposalOptionsArray && proposalOptionsArray.map((option, i) => {
         const optionVotes = proposalVotesArray.filter(vote => vote.optionId === option.id)
         const voterNames = isAnonymousVote ? [] : optionVotes.map(vote => vote.user.name)
         const avatarUrls = optionVotes.map(vote => vote.user.avatarUrl)
         return (
-          <div key={`${option.id}+${currentUserVotesOptionIds.includes(option.id)}`} styleName={cx('proposal-option', { selected: currentUserVotesOptionIds.includes(option.id), completed: proposalStatus === PROPOSAL_STATUS_COMPLETED, highestVote: (proposalStatus === PROPOSAL_STATUS_COMPLETED || proposalOutcome) && highestVotedOptions.includes(option.id) })} onClick={isVotingOpen(proposalStatus) ? () => handleVoteThrottled(option.id) : () => {}}>
+          <div key={`${option.id}+${currentUserVotesOptionIds.includes(option.id)}`} styleName={cx('proposal-option', { selected: currentUserVotesOptionIds.includes(option.id), completed: votingComplete, highestVote: (votingComplete || proposalOutcome) && highestVotedOptions.includes(option.id) })} onClick={isVotingOpen(proposalStatus) && !votingComplete ? () => handleVoteThrottled(option.id) : () => {}}>
             <div styleName='proposal-option-text-container'>
               <div styleName='proposal-option-emoji'>
                 {option.emoji}
@@ -153,7 +156,7 @@ export default function PostBodyProposal ({
         id='voters-tt'
       />
       {quorum && <QuorumBar totalVoters={numberOfPossibleVoters} quorum={quorum} actualVoters={proposalVoterCount} proposalStatus={proposalStatus} />}
-      {proposalOutcome && <div styleName='proposal-outcome'>  {t('Outcome')}: {proposalOutcome}</div>}
+      {proposalOutcome && fulfilledAt && <div styleName='proposal-outcome'>  {t('Outcome')}: {proposalOutcome}</div>}
     </div>
   )
 }
