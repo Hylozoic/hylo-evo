@@ -251,7 +251,7 @@ export default function AuthLayoutRouter (props) {
             <Route
               path={[
                 // NOTE: These routes can likely be reduced to: [`(.*)/${OPTIONAL_POST_MATCH}`, `(.*)/${OPTIONAL_GROUP_MATCH}`, ...]`
-                `/:context(all|public)/:view(events|explore|map|projects|stream)/${OPTIONAL_POST_MATCH}`,
+                `/:context(all|public)/:view(events|explore|map|projects|stream|proposals)/${OPTIONAL_POST_MATCH}`,
                 `/:context(public)/:view(group)/${OPTIONAL_GROUP_MATCH}`,
                 `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`,
                 `/:context(all|public)/${OPTIONAL_POST_MATCH}`,
@@ -282,11 +282,11 @@ export default function AuthLayoutRouter (props) {
       <Route
         path={[
           '/:context(groups)/:groupSlug/:view(topics)/:topicName/create',
-          '/:context(groups)/:groupSlug/:view(map|events|projects)/create',
+          '/:context(groups)/:groupSlug/:view(map|events|projects|proposals)/create',
           '/:context(groups)/:groupSlug/create',
           '/:context(groups)/:groupSlug/(.*)/create',
           '/:context(public|all)/:view(topics)/:topicName/create',
-          '/:context(public|all|my)/:view(map|events|projects|mentions|interactions|posts|announcements)/create',
+          '/:context(public|all|my)/:view(map|events|projects|mentions|interactions|posts|announcements|proposals)/create',
           '/:context(public|all)/create',
           '/:context(public|all)/(.*)/create',
           `(.*)/${REQUIRED_EDIT_POST_MATCH}`
@@ -330,6 +330,7 @@ export default function AuthLayoutRouter (props) {
               {/* **** All and Public Routes **** */}
               <Route path={`/:context(all|public)/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
               <Route path={`/:context(all|public)/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+              <Route path={`/:context(all|public)/:view(proposals)/${OPTIONAL_POST_MATCH}`} component={Stream} />
               <Route path={`/:context(all|public)/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
               <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
@@ -356,6 +357,7 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
               <Route path={`/:context(groups)/:groupSlug/:view(stream)/${GROUP_DETAIL_MATCH}`} component={Stream} />
+              <Route path={`/:context(groups)/:groupSlug/:view(proposals)/${OPTIONAL_POST_MATCH}`} component={Stream} />
               <Route path={`/:context(groups)/:groupSlug/:view(explore)/${GROUP_DETAIL_MATCH}`} exact component={LandingPage} />
               <Route path={`/:context(groups)/:groupSlug/:view(explore)/${OPTIONAL_POST_MATCH}`} component={LandingPage} />
               <Route path={`/:context(groups)/:groupSlug/:view(projects)/${GROUP_DETAIL_MATCH}`} component={Stream} />

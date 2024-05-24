@@ -76,7 +76,12 @@ export function mapStateToProps (state, props) {
   const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
 
   const querystringParams = getQuerystringParam(['s', 't', 'v', 'c', 'search'], null, props)
-  const postTypeFilter = view === 'projects' ? 'project' : getQuerystringParam('t', state, props) || defaultPostType
+  const determinePostTypeFilter = () => {
+    if (view === 'projects') return 'project'
+    if (view === 'proposals') return 'proposal'
+    return getQuerystringParam('t', state, props) || defaultPostType
+  }
+  const postTypeFilter = determinePostTypeFilter()
   const search = getQuerystringParam('search', state, props)
   let sortBy = getQuerystringParam('s', state, props) || customViewSort || defaultSortBy
   // Only custom views can be sorted by manual order
