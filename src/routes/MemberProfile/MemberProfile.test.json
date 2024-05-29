@@ -93,7 +93,6 @@
         {
           "id": "3",
           "role": 1,
-          "hasModeratorRole": true,
           "group": {
             "id": "1836",
             "name": "Wombats",
@@ -102,6 +101,14 @@
         }
       ],
       "membershipsTotal": null,
+      "membershipCommonRoles": [
+        {
+          "id": 1,
+          "commonRoleId": 1,
+          "userId": "46816",
+          "groupId": "1836"
+        }
+      ],
       "posts": [
         {
           "id": "30003",

@@ -17,14 +17,11 @@ export function mapStateToProps (state, props) {
   const pending = state.pending[FETCH_GROUP_SETTINGS]
   const inviteLink = origin() + group.invitePath
   const pendingInvites = getPendingInvites(state, { groupId: group.id })
-  const currentUser = getMe(state, props)
-  const canModerate = currentUser && currentUser.canModerate(group)
 
   return {
     inviteLink,
     pending,
-    pendingInvites,
-    canModerate
+    pendingInvites
   }
 }
 

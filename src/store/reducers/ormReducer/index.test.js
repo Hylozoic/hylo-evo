@@ -540,23 +540,34 @@ describe('on CREATE_GROUP', () => {
   const session = orm.session(orm.getEmptyState())
   const group1 = session.Group.create({ id: 'c1' })
   const group2 = session.Group.create({ id: 'c2' })
-  const hasModeratorRole = true
-  const membership = session.Membership.create({ id: 'm1', group: group1.id, hasModeratorRole })
-  session.Membership.create({ id: 'm2', group: group2.id, hasModeratorRole })
+  const membership = session.Membership.create({ id: 'm1', group: group1.id })
+  session.CommonRole.create({ id: 1, name: 'Coordinator', responsibilities: [{ id: 1, name: 'Administration' }] })
+  session.Membership.create({ id: 'm2', group: group2.id })
   session.Me.create({
-    memberships: [membership.id]
+    id: 1,
+    memberships: [membership.id],
+    membershipCommonRoles: [{ commonRoleId: 1, groupId: group1.id, userId: 1, id: 1 }]
   })
   const action = {
     type: CREATE_GROUP,
     payload: {
       data: {
         createGroup: {
-          id: 'c2',
+          id: 'g2',
           memberships: {
             items: [
               {
-                id: 'm2',
-                hasModeratorRole: true
+                id: 'm2'
+              }
+            ]
+          },
+          membershipCommonRoles: {
+            items: [
+              {
+                id: 2,
+                groupId: 'g2',
+                commonRoleId: 1,
+                userId: 1
               }
             ]
           }
@@ -565,12 +576,12 @@ describe('on CREATE_GROUP', () => {
     }
   }
 
-  it('adds a membership to the currentUser with hasModeratorRole', () => {
+  it('adds a membership to the currentUser with Coordinator role', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
     const currentUser = newSession.Me.first()
     expect(currentUser.memberships.toModelArray().length).toEqual(2)
-    expect(currentUser.memberships.toRefArray()[0].hasModeratorRole).toEqual(true)
+    expect(currentUser.membershipCommonRoles.toRefArray()[0].commonRoleId).toEqual(1)
   })
 })
 

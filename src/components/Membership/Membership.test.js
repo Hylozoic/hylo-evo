@@ -21,9 +21,8 @@ describe('Membership', () => {
         id: '1',
         lastViewedAt: '2020-12-11T01:21:22.424Z',
         newPostCount: null,
-        hasModeratorRole: true,
         settings: {
-          'sendEmail': null,
+          sendEmail: null,
           sendPushNotifications: null
         },
         group: {

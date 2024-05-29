@@ -101,7 +101,6 @@ export function createGroup (data) {
           memberships {
             items {
               id
-              hasModeratorRole
               person {
                 id
               }
@@ -112,6 +111,14 @@ export function createGroup (data) {
                 showJoinForm
                 sendPushNotifications
               }
+            }
+          }
+          membershipCommonRoles {
+            items {
+              id
+              groupId
+              commonRoleId
+              userId
             }
           }
         }

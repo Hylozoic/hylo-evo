@@ -12,17 +12,23 @@ import {
   getGroup
 } from './PostHeader.store'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
+import getRolesForGroup from 'store/selectors/getRolesForGroup'
 
 export function mapStateToProps (state, props) {
   const group = getGroup(state, props)
   const url = postUrl(props.id, props.routeParams)
   const context = props.routeParams.context
+  const currentUser = getMe(state, props)
+  const roles = getRolesForGroup(state, { groupId: group?.id })
+  const responsibilities = getResponsibilitiesForGroup(state, { groupId: group?.id }).map(r => r.title)
 
   return {
     context,
-    currentUser: getMe(state, props),
+    currentUser,
     group,
-    postUrl: url
+    postUrl: url,
+    responsibilities,
+    roles
   }
 }
 
@@ -59,13 +65,11 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { currentUser, group } = stateProps
+  const { currentUser, group, responsibilities } = stateProps
   const { id, creator } = ownProps
   const { deletePost, editPost, fulfillPost, unfulfillPost, removePost, pinPost } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
-  const canModerate = currentUser && currentUser.canModerate(group) // TODO RESP: this should ultimately require no change to EVO once the linked node code has been changed
-  const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group?.id }).map(r => r.title)
   return {
     ...stateProps,
     ...dispatchProps,

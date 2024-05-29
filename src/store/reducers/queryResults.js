@@ -23,11 +23,6 @@ import {
   FETCH_COMMENTS,
   REMOVE_POST_PENDING
 } from 'store/constants'
-// import {
-//   FETCH_NETWORK_SETTINGS,
-//   FETCH_MODERATORS,
-//   FETCH_GROUPS
-// } from 'routes/NetworkSettings/NetworkSettings.store'
 import {
   CREATE_TOPIC
 } from 'components/CreateTopic/CreateTopic.store'

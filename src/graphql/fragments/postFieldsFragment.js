@@ -23,19 +23,14 @@ const CommentFieldsFragment = `
          }
        }
      }
-    commonRoles{
+    membershipCommonRoles {
       items {
-         name
-         emoji
-         responsibilities {
-           items {
-              id
-              title
-              description
-            }
-          }
-       }
-     }
+        id
+        commonRoleId
+        groupId
+        userId
+      }
+    }
     moderatedGroupMemberships {
       groupId
     }
@@ -76,11 +71,12 @@ const postFieldsFragment = withComments => `
     avatarUrl
     groupRoles {
       items {
-         name
-         emoji
-         active
-         groupId
-         responsibilities {
+        id
+        name
+        emoji
+        active
+        groupId
+        responsibilities {
           items {
             id
             title
@@ -89,19 +85,14 @@ const postFieldsFragment = withComments => `
         }
       }
     }
-    commonRoles{
+    membershipCommonRoles {
       items {
-         name
-         emoji
-         responsibilities {
-           items {
-              id
-              title
-              description
-            }
-          }
-       }
-     }
+        id
+        commonRoleId
+        groupId
+        userId
+      }
+    }
     moderatedGroupMemberships {
       groupId
     }

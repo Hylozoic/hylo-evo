@@ -11,7 +11,6 @@ import Member from 'components/Member'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
-import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 import { groupUrl } from 'util/navigation'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 
@@ -50,12 +49,10 @@ class Members extends Component {
 
   render () {
     const {
-      group, currentUser, memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember, t
+      group, currentUser, memberCount, members, sortBy, changeSort, search, slug, context, myResponsibilities, removeMember, t
     } = this.props
 
     const sortKeys = sortKeysFactory(context)
-
-    const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
 
     return (
       <div>
@@ -70,7 +67,7 @@ class Members extends Component {
               {t('{{memberCount}} Total Members', { memberCount })}
             </div>
           </div>
-          {(canModerate || responsibilities.includes(RESP_ADD_MEMBERS)) && <Link to={groupUrl(slug, 'settings/invite')}>
+          {myResponsibilities.includes(RESP_ADD_MEMBERS) && <Link to={groupUrl(slug, 'settings/invite')}>
             <Button
               styleName='invite'
               color='green-white-green-border'
@@ -101,7 +98,6 @@ class Members extends Component {
               {pair.map(m => <Member
                 group={group}
                 currentUser={currentUser}
-                canModerate={canModerate}
                 removeMember={removeMember}
                 member={m} key={m.id}
                 context={context}
@@ -110,8 +106,10 @@ class Members extends Component {
             </div>)}
           </div>
         </div>
-        <ScrollListener onBottom={this.fetchMore}
-          elementId={CENTER_COLUMN_ID} />
+        <ScrollListener
+          onBottom={this.fetchMore}
+          elementId={CENTER_COLUMN_ID}
+        />
       </div>
     )
   }
@@ -128,8 +126,7 @@ Members.propTypes = {
   })),
   hasMore: bool,
   changeSort: func,
-  changeSearch: func,
-  canModerate: bool
+  changeSearch: func
 }
 
 function SortLabel ({ text }) {

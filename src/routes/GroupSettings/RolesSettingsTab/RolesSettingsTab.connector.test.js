@@ -1,4 +1,4 @@
-import { mapStateToProps, mapDispatchToProps } from './ModeratorsSettingsTab.connector'
+import { mapStateToProps, mapDispatchToProps } from './RolesSettingsTab.connector'
 import orm from 'store/models'
 
 let state
@@ -57,9 +57,9 @@ describe('mapDispatchToProps', () => {
     }
 
     const dispatchProps = mapDispatchToProps(dispatch, props)
-    expect(dispatchProps.addModerator(10)).toMatchSnapshot()
-    expect(dispatchProps.removeModerator(10, true)).toMatchSnapshot()
-    expect(dispatchProps.fetchModeratorSuggestions('autocomplete')).toMatchSnapshot()
-    expect(dispatchProps.clearModeratorSuggestions()).toMatchSnapshot()
+    expect(dispatchProps.addGroupRole({ groupId: 1, role: { name: 'Cook' } })).toMatchSnapshot()
+    expect(dispatchProps.addRoleToMember({ personId: 1, roleId: 1, isCommonRole: true })).toMatchSnapshot()
+    expect(dispatchProps.fetchStewardSuggestions('autocomplete')).toMatchSnapshot()
+    expect(dispatchProps.clearStewardSuggestions()).toMatchSnapshot()
   })
 })

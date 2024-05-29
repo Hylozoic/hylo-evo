@@ -3,7 +3,7 @@ import cx from 'classnames'
 import Tooltip from 'components/Tooltip'
 import './badgeEmoji.scss'
 
-export default function Badge ({ emoji, expanded, className, common, border, onClick, isModerator, name, id, responsibilities = [] }) {
+export default function Badge ({ emoji, expanded, className, common, border, onClick, name, id, responsibilities = [] }) {
   if (!emoji) return null
   return (
     <>
@@ -11,7 +11,7 @@ export default function Badge ({ emoji, expanded, className, common, border, onC
         className={className} onClick={onClick}
         data-tip={responsibilities.length > 0 ? `${name}: ${responsibilities.map(r => r.title).join(', ')}` : name}
         data-for={`${id}-${name}-badge-tt`}
-        styleName={cx(expanded ? 'badge' : 'badge-collapsed', { border, isModerator: isModerator || common })}
+        styleName={cx(expanded ? 'badge' : 'badge-collapsed', { border, common })}
       >
         <span styleName={expanded ? 'badgeSymbol' : 'badgeSymbol-collapsed'}>{emoji}</span>
       </span>

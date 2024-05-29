@@ -65,7 +65,7 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
     case 'farm_map': {
       return group.locationObject && group.locationObject.center && posts
     }
-    case 'moderators': {
+    case 'stewards': {
       return [] // TODO: build out selector for this
     }
     case 'topics': {

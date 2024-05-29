@@ -57,7 +57,7 @@ Object {
   "location": Object {
     "search": "",
   },
-  "myModeratedGroups": Array [
+  "myAdminGroups": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
@@ -120,7 +120,7 @@ Object {
   "location": Object {
     "search": "",
   },
-  "myModeratedGroups": Array [
+  "myAdminGroups": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",

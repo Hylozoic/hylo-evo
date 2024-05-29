@@ -56,6 +56,7 @@ class UserGroupsTab extends Component {
             archive={this.leaveGroup}
             key={m.id}
             index={index}
+            rowStyle
           />)}
 
         <h2 styleName='subhead'>{t('Other Affiliations')}</h2>

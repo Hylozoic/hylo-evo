@@ -4,7 +4,6 @@ import presentGroup from 'store/presenters/presentGroup'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { getParentGroups } from 'store/selectors/getGroupRelationships'
 import getRouteParam from 'store/selectors/getRouteParam'
-import getCanModerate from 'store/selectors/getCanModerate'
 import getCommonRoles from 'store/selectors/getCommonRoles'
 import getMe from 'store/selectors/getMe'
 import {
@@ -25,13 +24,11 @@ import { fetchLocation } from 'components/LocationInput/LocationInput.store'
 export function mapStateToProps (state, props) {
   const slug = getRouteParam('groupSlug', state, props, false)
   const group = getGroupForCurrentRoute(state, props)
-  const canModerate = getCanModerate(state, { group })
   const currentUser = getMe(state)
   const parentGroups = group ? getParentGroups(state, { groupSlug: group.slug }) : []
   const commonRoles = getCommonRoles(state)
 
   return {
-    canModerate,
     commonRoles,
     currentUser,
     fetchPending: state.pending[FETCH_GROUP_SETTINGS],

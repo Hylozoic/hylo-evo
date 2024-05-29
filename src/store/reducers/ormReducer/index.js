@@ -2,7 +2,6 @@
 import * as sessionReducers from './sessionReducers'
 import {
   ACCEPT_GROUP_RELATIONSHIP_INVITE,
-  ADD_MODERATOR_PENDING,
   CANCEL_GROUP_RELATIONSHIP_INVITE,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
@@ -23,7 +22,6 @@ import {
   REACT_ON_POST_PENDING,
   REACT_ON_COMMENT_PENDING,
   REJECT_GROUP_RELATIONSHIP_INVITE,
-  REMOVE_MODERATOR_PENDING,
   REMOVE_REACT_ON_COMMENT_PENDING,
   REMOVE_REACT_ON_POST_PENDING,
   REMOVE_POST_PENDING,
@@ -123,12 +121,6 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
         GroupRelationshipInvite.withId(meta.id).delete()
         clearCacheFor(Group, childGroup.id)
       }
-      break
-    }
-
-    case ADD_MODERATOR_PENDING: {
-      person = Person.withId(meta.personId)
-      Group.withId(meta.groupId).updateAppending({ moderators: [person] })
       break
     }
 
@@ -384,15 +376,6 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
           })
         })
       }
-      break
-    }
-
-    case REMOVE_MODERATOR_PENDING: {
-      group = Group.withId(meta.groupId)
-      const moderators = group.moderators.filter(m =>
-        m.id !== meta.personId)
-        .toModelArray()
-      group.update({ moderators })
       break
     }
 

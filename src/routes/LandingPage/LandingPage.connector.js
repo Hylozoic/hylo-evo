@@ -3,21 +3,21 @@ import fetchPosts from 'store/actions/fetchPosts'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 import presentGroup from 'store/presenters/presentGroup'
 import presentPost from 'store/presenters/presentPost'
-import getCanModerate from 'store/selectors/getCanModerate'
+import hasResponsibilityForGroup from 'store/selectors/hasResponsibilityForGroup'
 import { getChildGroups } from 'store/selectors/getGroupRelationships'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import { getPosts } from 'store/selectors/getPosts'
 import getRouteParam from 'store/selectors/getRouteParam'
-import { RESP_ADMINISTRATION } from 'store/constants'
+import { RESP_ADMINISTRATION, RESP_MANAGE_CONTENT } from 'store/constants'
 
 export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', state, props)
   const fetchPostsParam = { slug: groupSlug, context: 'groups', sortBy: 'created' }
   const group = presentGroup(getGroupForCurrentRoute(state, props))
   const isAboutOpen = getRouteParam('detailGroupSlug', state, props)
-  const isModerator = getCanModerate(state, { group, additionalResponsibility: RESP_ADMINISTRATION }) // here?
+  const canEdit = hasResponsibilityForGroup(state, { groupId: group.id, responsibility: [RESP_ADMINISTRATION, RESP_MANAGE_CONTENT] })
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
   const routeParams = props.match.params
   const widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map' && w.context === 'landing')
@@ -33,7 +33,7 @@ export function mapStateToProps (state, props) {
     fetchPostsParam,
     group,
     isAboutOpen,
-    isModerator,
+    canEdit,
     posts,
     routeParams,
     widgets

@@ -52,7 +52,6 @@
   "memberships": [
     {
       "id": "3",
-      "hasModeratorRole": true,
       "person": "46816",
       "group": "1836"
     }

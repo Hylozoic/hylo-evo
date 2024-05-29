@@ -52,7 +52,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/responsibilities",
       },
       Object {
-        "component": <Memo(Connect(withI18nextTranslation(ModeratorsSettingsTab)))
+        "component": <Memo(Connect(withI18nextTranslation(RolesSettingsTab)))
           group={
             Object {
               "id": 1,

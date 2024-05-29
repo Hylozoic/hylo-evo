@@ -7,6 +7,7 @@ beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
   const group = session.Group.create({ id: '99', slug: 'foo', name: 'foo' })
   const group2 = session.Group.create({ id: '100', slug: 'bar', name: 'bar' })
+  const commonRoleCoordinator = session.CommonRole.create({ id: 1, name: 'Coordinator', responsibilities: [{ id: 1, name: 'Administration' }] })
 
   session.LinkPreview.create({
     id: 1
@@ -17,17 +18,24 @@ beforeAll(() => {
     memberships: [
       session.Membership.create({
         id: '345',
-        group: group.id,
-        hasModeratorRole: true,
-        commonRoles: { items: [] }
+        group: group.id
       }),
       session.Membership.create({
         id: '678',
         group: group2.id,
-        hasModeratorRole: false,
         commonRoles: { items: [] }
       })
-    ]
+    ],
+    membershipCommonRoles: {
+      items: [
+        {
+          id: 1,
+          groupId: group.id,
+          commonRoleId: commonRoleCoordinator.id,
+          userId: 1
+        }
+      ]
+    }
   })
 
   state = {
@@ -60,8 +68,8 @@ describe('mapStateToProps', () => {
     expect(mapStateToProps(state, props)).toMatchSnapshot()
   })
 
-  it('sets myModeratedGroups appropriately', () => {
-    expect(mapStateToProps(state, requiredProps).myModeratedGroups.length).toEqual(1)
+  it('sets myAdminGroups appropriately', () => {
+    expect(mapStateToProps(state, requiredProps).myAdminGroups.length).toEqual(1)
   })
 
   it('returns the right keys for a new post while pending', () => {

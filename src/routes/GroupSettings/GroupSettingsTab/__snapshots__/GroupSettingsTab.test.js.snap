@@ -131,12 +131,12 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   </p>
   <br />
   <SettingsControl
-    label="Word used to describe a group Moderator"
+    label="Word used to describe a group Steward"
     onChange={[Function]}
     value="Moderator"
   />
   <SettingsControl
-    label="Plural word used to describe group Moderators"
+    label="Plural word used to describe group Stewards"
     onChange={[Function]}
     value="Moderators"
   />

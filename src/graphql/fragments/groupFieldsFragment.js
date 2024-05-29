@@ -8,8 +8,8 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
   geoShape
   location
   memberCount
-  moderatorDescriptor
-  moderatorDescriptorPlural
+  stewardDescriptor
+  stewardDescriptorPlural
   name
   purpose
   settings {
@@ -95,24 +95,18 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
       avatarUrl
     }
   }
-  moderators {
+  stewards {
     items {
       id
       name
       avatarUrl
       groupRoles {
-       items {
+        items {
+          id
           name
           emoji
           active
           groupId
-          responsibilities {
-            items {
-              id
-              title
-              description
-            }
-          }
         }
       }
       membershipCommonRoles {
@@ -121,12 +115,6 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
           groupId
           userId
           roleId
-          commonRole {
-            id
-            name
-            description
-            emoji
-          }
         }
       }
     }

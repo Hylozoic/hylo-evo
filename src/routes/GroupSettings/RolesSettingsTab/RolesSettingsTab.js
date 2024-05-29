@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { Component, useEffect, useState } from 'react'
 import { withTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
-import Loading from 'components/Loading'
 import KeyControlledItemList from 'components/KeyControlledList/KeyControlledItemList'
 import RemovableListItem from 'components/RemovableListItem'
 import Icon from 'components/Icon'
@@ -12,10 +11,8 @@ import { getKeyCode, keyMap } from 'util/textInput'
 import { personUrl } from 'util/navigation'
 import SettingsControl from 'components/SettingsControl'
 import SettingsSection from '../SettingsSection'
-import ModalDialog from 'components/ModalDialog'
-import CheckBox from 'components/CheckBox'
 import EmojiPicker from 'components/EmojiPicker'
-import styles from './ModeratorsSettingsTab.scss' // eslint-disable-line no-unused-vars
+import styles from './RolesSettingsTab.scss' // eslint-disable-line no-unused-vars
 
 const { array, func, string, object, bool } = PropTypes
 
@@ -33,14 +30,11 @@ const validateRole = ({ name, emoji }) => {
   return true
 }
 
-class ModeratorsSettingsTab extends Component {
+class RolesSettingsTab extends Component {
   static propTypes = {
-    addModerator: func,
     addGroupRole: func,
     addRoleToMember: func,
     group: object,
-    moderators: array,
-    removeModerator: func,
     removeRoleFromMember: func,
     roles: array,
     slug: string,
@@ -63,7 +57,7 @@ class ModeratorsSettingsTab extends Component {
   }
 
   componentWillUnmount () {
-    this.props.clearModeratorSuggestions()
+    this.props.clearStewardSuggestions()
   }
 
   defaultEditState () {
@@ -78,10 +72,6 @@ class ModeratorsSettingsTab extends Component {
       error: null,
       modalVisible: false
     }
-  }
-
-  submitRemoveModerator = () => {
-    this.props.removeModerator(this.state.moderatorToRemove, this.state.isRemoveFromGroup)
   }
 
   handleAddRole = () => {
@@ -162,45 +152,18 @@ class ModeratorsSettingsTab extends Component {
   render () {
     const {
       commonRoles,
-      moderators,
       group = {},
       t
     } = this.props
 
     const {
-      modalVisible,
-      isRemoveFromGroup,
       roles
     } = this.state
 
-    // const { commonRoles = [] } = group
-
     const unsavedRolePresent = roles.length > 0 ? roles[roles.length - 1]?.active === '' : false
-    if (!moderators) return <Loading />
 
     return (
       <>
-        {/* TODO RESP: Remove this whole section once the moderators are ported to common-role-managers via data migration */}
-        {/* <SettingsSection>
-          <h3>
-            {group?.moderatorDescriptorPlural || t('Moderators')}
-            <div styleName='styles.help-text'>{t('Who has access to group settings and moderation powers')}</div>
-          </h3>
-          <ModeratorsList key='mList' {...this.props} removeItem={(id) => this.setState({ modalVisible: true, moderatorToRemove: id })} />
-          {modalVisible &&
-            <ModalDialog
-              key='remove-moderator-dialog'
-              closeModal={() => this.setState({ modalVisible: false })}
-              showModalTitle={false}
-              submitButtonAction={this.submitRemoveModerator}
-              submitButtonText={this.props.t('Remove')}
-            >
-              <div styleName='styles.content'>
-                <div styleName='styles.modal-text'>{this.props.t('Are you sure you wish to remove this moderator?')}</div>
-                <CheckBox checked={isRemoveFromGroup} label={this.props.t('Remove from group as well')} onChange={value => this.setState({ isRemoveFromGroup: value })} />
-              </div>
-            </ModalDialog>}
-        </SettingsSection> */}
         <SettingsSection>
           <h3>{t('Common Roles')}</h3>
           <div styleName='styles.help-text'>{t('adminRolesHelpText')}</div>
@@ -246,128 +209,15 @@ class ModeratorsSettingsTab extends Component {
   }
 }
 
-export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions }) {
-  return (
-    <div>
-      <div>
-        {moderators.map(m =>
-          <RemovableListItem
-            item={m}
-            url={personUrl(m.id, slug)}
-            skipConfirm
-            removeItem={removeItem}
-            key={m.id}
-          />)}
-      </div>
-      <AddModerator
-        fetchModeratorSuggestions={fetchModeratorSuggestions}
-        addModerator={addModerator}
-        moderatorSuggestions={moderatorSuggestions}
-        clearModeratorSuggestions={clearModeratorSuggestions}
-      />
-    </div>
-  )
-}
-
-class AddModeratorUntranslated extends Component {
-  static propTypes = {
-    addModerator: func,
-    fetchModeratorSuggestions: func
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      adding: false
-    }
-  }
-
-  render () {
-    const { fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions, t } = this.props
-
-    const { adding } = this.state
-
-    const toggle = () => {
-      this.setState({ adding: !adding })
-    }
-
-    const onInputChange = e => {
-      if (e.target.value.length === 0) return clearModeratorSuggestions()
-      return fetchModeratorSuggestions(e.target.value)
-    }
-
-    const onChoose = choice => {
-      addModerator(choice.id)
-      clearModeratorSuggestions()
-      toggle()
-    }
-
-    const chooseCurrentItem = () => {
-      if (!this.refs.list) return
-      return this.refs.list.handleKeys({
-        keyCode: keyMap.ENTER,
-        preventDefault: () => {}
-      })
-    }
-
-    const handleKeys = e => {
-      if (getKeyCode(e) === keyMap.ESC) {
-        toggle()
-        return clearModeratorSuggestions()
-      }
-      if (!this.refs.list) return
-      return this.refs.list.handleKeys(e)
-    }
-
-    const listWidth = { width: get('refs.input.clientWidth', this, 0) + 4 }
-
-    if (adding) {
-      return (
-        <div styleName='styles.adding'>
-          <div styleName='styles.help-text'>{t('Search here for members to grant moderator powers')}</div>
-          <div styleName='styles.input-row'>
-            <input
-              styleName='styles.input'
-              placeholder={t('Type...')}
-              type='text'
-              onChange={onInputChange}
-              onKeyDown={handleKeys}
-              ref='input'
-            />
-            <span styleName='styles.cancel-button' onClick={toggle}>{t('Cancel')}</span>
-            <span styleName='styles.add-button' onClick={chooseCurrentItem}>{t('Add')}</span>
-          </div>
-          {!isEmpty(moderatorSuggestions) && <div style={listWidth}>
-            <KeyControlledItemList
-              ref='list'
-              items={moderatorSuggestions}
-              onChange={onChoose}
-              theme={styles}
-            />
-          </div>}
-        </div>
-      )
-    } else {
-      return (
-        <div styleName='styles.add-new' id='add-new' onClick={toggle}>
-          + {t('Add New')}
-        </div>
-      )
-    }
-  }
-}
-
-export const AddModerator = withTranslation()(AddModeratorUntranslated)
-
 function RoleRowUntranslated ({
   active,
   addRoleToMember,
   changed,
   isCommonRole,
-  clearModeratorSuggestions,
+  clearStewardSuggestions,
   description,
   emoji,
-  fetchModeratorSuggestions,
+  fetchStewardSuggestions,
   fetchMembersForGroupRole,
   fetchMembersForCommonRole,
   group,
@@ -379,8 +229,7 @@ function RoleRowUntranslated ({
   onReset,
   onSave,
   onUpdate,
-  index,
-  rawSuggestions = [],
+  suggestions = [],
   removeRoleFromMember,
   t
 }) {
@@ -412,7 +261,7 @@ function RoleRowUntranslated ({
           : (active || isCommonRole) && (
             <SettingsSection>
               <RoleList
-                {...{ addRoleToMember, rawSuggestions, clearModeratorSuggestions, fetchMembersForGroupRole, fetchMembersForCommonRole, fetchModeratorSuggestions, removeRoleFromMember, active }}
+                {...{ addRoleToMember, suggestions, clearStewardSuggestions, fetchMembersForGroupRole, fetchMembersForCommonRole, fetchStewardSuggestions, removeRoleFromMember, active }}
                 key='grList'
                 group={group}
                 isCommonRole={isCommonRole}
@@ -609,7 +458,7 @@ class AddResponsibilityToRoleUntranslated extends Component {
 
 const AddResponsibilityToRole = withTranslation()(AddResponsibilityToRoleUntranslated)
 
-export function RoleList ({ slug, fetchModeratorSuggestions, addRoleToMember, rawSuggestions, clearModeratorSuggestions, roleId, fetchMembersForGroupRole, fetchMembersForCommonRole, removeRoleFromMember, group, isCommonRole, t }) {
+export function RoleList ({ slug, fetchStewardSuggestions, addRoleToMember, suggestions, clearStewardSuggestions, roleId, fetchMembersForGroupRole, fetchMembersForCommonRole, removeRoleFromMember, group, isCommonRole, t }) {
   const [membersForRole, setMembersForRole] = useState([])
   const [responsibilitiesForRole, setResponsibilitiesForRole] = useState([])
   const [availableResponsibilities, setAvailableResponsibilities] = useState([])
@@ -634,7 +483,7 @@ export function RoleList ({ slug, fetchModeratorSuggestions, addRoleToMember, ra
 
   const memberRoleIds = membersForRole.map(mr => mr.id)
 
-  const memberSuggestions = rawSuggestions.filter(person => !includes(person.id, memberRoleIds))
+  const memberSuggestions = suggestions.filter(person => !includes(person.id, memberRoleIds))
 
   const groupRoleResponsibilityTitles = responsibilitiesForRole.map(rfr => rfr.title)
   // TODO: dubious. Need to ensure the above returns responsibilityIds and then change the below off title
@@ -705,10 +554,10 @@ export function RoleList ({ slug, fetchModeratorSuggestions, addRoleToMember, ra
           />)}
       </div>
       <AddMemberToRole
-        fetchSuggestions={fetchModeratorSuggestions}
+        fetchSuggestions={fetchStewardSuggestions}
         addRoleToMember={addRoleToMember}
         memberSuggestions={memberSuggestions}
-        clearSuggestions={clearModeratorSuggestions}
+        clearSuggestions={clearStewardSuggestions}
         updateLocalMembersForRole={updateLocalMembersForRole}
         roleId={roleId}
         isCommonRole={isCommonRole}
@@ -717,4 +566,4 @@ export function RoleList ({ slug, fetchModeratorSuggestions, addRoleToMember, ra
   )
 }
 
-export default withTranslation()(ModeratorsSettingsTab)
+export default withTranslation()(RolesSettingsTab)

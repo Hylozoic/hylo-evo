@@ -3,7 +3,7 @@ import getMe from './getMe'
 import getGroupTopicForCurrentRoute from './getGroupTopicForCurrentRoute'
 import getTopicForCurrentRoute from './getTopicForCurrentRoute'
 import getMyMemberships from './getMyMemberships'
-import getCanModerate from './getCanModerate'
+import hasResponsibilityForGroup from './hasResponsibilityForGroup'
 
 describe('getMe', () => {
   it('returns Me', () => {
@@ -110,25 +110,26 @@ describe('getTopicForCurrentRoute', () => {
   })
 })
 
-describe('getCanModerate', () => {
+describe('hasResponsibilityForGroup', () => {
   const session = orm.session(orm.getEmptyState())
   beforeEach(() => {
     session.Me.create({
       id: '1'
     })
+    session.CommonRole.create({ id: 1, title: 'Coordinator', responsibilities: { items: [{ id: 1, title: 'Administration' }, { id: 2, title: 'Manage Content' }] } })
   })
   it('returns true when user can moderate', () => {
     const me = session.Me.first()
     const group = session.Group.create({ id: 1 })
-    session.Membership.create({ id: 1, group: group.id, hasModeratorRole: true, person: me.id, commonRoles: { items: [] }, groupRoles: { items: [] } })
+    session.Membership.create({ id: 1, group: group.id, person: me.id, commonRoles: { items: [{ id: 1 }] }, groupRoles: { items: [] } })
     const state = { orm: session.state }
-    const props = { group }
-    expect(getCanModerate(state, props)).toEqual(true)
+    const props = { group, responsibility: 'Manage Content' }
+    expect(hasResponsibilityForGroup(state, props)).toEqual(true)
   })
   it('returns false when user cannot moderate', () => {
     const group = session.Group.create({ id: 2 })
     const state = { orm: session.state }
     const props = { group }
-    expect(getCanModerate(state, props)).toBeFalsy()
+    expect(hasResponsibilityForGroup(state, props)).toBeFalsy()
   })
 })

@@ -11,6 +11,7 @@ import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import hasResponsibilityForGroup from 'store/selectors/hasResponsibilityForGroup'
 import { fetchLocation, ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import {
   CREATE_POST,
@@ -40,7 +41,7 @@ export function mapStateToProps (state, props) {
   const currentGroup = getGroupForCurrentRoute(state, props)
   const groupOptions = props.groupOptions ||
     (currentUser && currentUser.memberships.toModelArray().map((m) => m.group).sort((a, b) => a.name.localeCompare(b.name)))
-  const myModeratedGroups = (currentUser && groupOptions.filter(c => currentUser.canModerate(c, RESP_ADMINISTRATION)))
+  const myAdminGroups = (currentUser && groupOptions.filter(g => hasResponsibilityForGroup(state, { person: currentUser, groupId: g.id, responsibility: RESP_ADMINISTRATION })))
   // TODO RESP: verify this works as expected
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
@@ -89,7 +90,7 @@ export function mapStateToProps (state, props) {
     linkPreviewStatus,
     loading,
     location,
-    myModeratedGroups,
+    myAdminGroups,
     post,
     postPending,
     postType,

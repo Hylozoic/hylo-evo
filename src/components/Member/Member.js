@@ -6,10 +6,9 @@ import BadgeEmoji from 'components/BadgeEmoji'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import SkillLabel from 'components/SkillLabel'
-import './Member.scss'
 import { RESP_REMOVE_MEMBERS } from 'store/constants'
-import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
-import { combineRoles } from 'store/models/Person'
+
+import './Member.scss'
 
 const { object, string, shape } = PropTypes
 
@@ -29,15 +28,13 @@ class Member extends React.Component {
       member,
       goToPerson,
       removeMember,
-      currentUser,
+      currentUserResponsibilities,
+      roles,
       t
     } = this.props
 
     const { id, name, location, tagline, avatarUrl, skills } = member
 
-    console.log("this.props.member", this.props.member)
-    const roles = combineRoles({ person: member, groupId: group.id })
-    const currentUserResponsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
     return (
       <div styleName='member' className={className}>
         {(currentUserResponsibilities.includes(RESP_REMOVE_MEMBERS)) &&
@@ -52,7 +49,7 @@ class Member extends React.Component {
           <div styleName='location'>{location}</div>
           <div styleName='badgeRow'>
             {roles.map(role => (
-              <BadgeEmoji key={role.name} expanded {...role} responsibilities={role.responsibilities} id={id} />
+              <BadgeEmoji key={role.id + role.common} expanded {...role} responsibilities={role.responsibilities} id={id} />
             ))}
           </div>
           {skills && <div styleName='skills'>

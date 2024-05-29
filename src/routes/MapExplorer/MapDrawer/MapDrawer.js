@@ -195,7 +195,6 @@ function MapDrawer (props) {
         : currentTab === localizedTabNames.members ? <div styleName='contentWrapper'>
           <div styleName='contentListContainer' id='contentList'>
             {members.map(m => <Member
-              canModerate={false}
               className={cx({ [styles.contentCard]: true, [styles.member]: true })}
               member={m}
               key={m.id}

@@ -16,8 +16,8 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const group = getGroupForCurrentRoute(state, props)
   const isCreator = currentUser && (comment.creator.id === currentUser.id)
-  const responsibilities = group && getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
-  const canModerate = currentUser && (currentUser.canModerate(group) || responsibilities.includes(RESP_MANAGE_CONTENT))
+  const responsibilities = group && getResponsibilitiesForGroup(state, { person: currentUser, groupId: group.id }).map(r => r.title)
+  const canModerate = currentUser && responsibilities && responsibilities.includes(RESP_MANAGE_CONTENT)
 
   return {
     canModerate,

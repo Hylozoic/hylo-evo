@@ -75,11 +75,11 @@ export const LOCATION_PRECISION = {
   region: 'Display only nearest city and dont show on the map'
 }
 
-export class GroupModerator extends Model { }
-GroupModerator.modelName = 'GroupModerator'
-GroupModerator.fields = {
-  group: fk('Group', 'groupmoderators'),
-  moderator: fk('Person', 'groupmoderators')
+export class GroupSteward extends Model { }
+GroupSteward.modelName = 'GroupSteward'
+GroupSteward.fields = {
+  group: fk('Group', 'groupstewards'),
+  steward: fk('Person', 'groupstewards')
 }
 
 export class GroupJoinQuestion extends Model { }
@@ -164,14 +164,14 @@ Group.fields = {
   }),
   members: many('Person'),
   memberCount: attr(),
-  moderators: many({
+  stewards: many({
     to: 'Person',
-    relatedName: 'moderatedGroups',
-    through: 'GroupModerator',
-    throughFields: ['group', 'moderator']
+    relatedName: 'stewardedGroups',
+    through: 'GroupSteward',
+    throughFields: ['group', 'steward']
   }),
-  moderatorDescriptor: attr(),
-  moderatorDescriptorPlural: attr(),
+  stewardDescriptor: attr(),
+  stewardDescriptorPlural: attr(),
   name: attr(),
   openOffersAndRequests: many({
     to: 'Post',

@@ -1,11 +1,8 @@
 import { connect } from 'react-redux'
 import {
-  fetchModeratorSuggestions,
-  clearModeratorSuggestions,
-  getModerators,
-  addModerator,
-  removeModerator
-} from './ModeratorsSettingsTab.store'
+  fetchStewardSuggestions,
+  clearStewardSuggestions
+} from './RolesSettingsTab.store'
 import {
   addGroupRole,
   addRoleToMember,
@@ -15,22 +12,13 @@ import {
   updateGroupRole
 } from '../../../store/actions/roles'
 import getPerson from 'store/selectors/getPerson'
-import { includes } from 'lodash/fp'
 
 export function mapStateToProps (state, props) {
-  const moderators = getModerators(state, props)
-  const moderatorIds = moderators.map(m => m.id)
-  const moderatorSuggestions = state.ModeratorsSettings
-    .filter(personId => !includes(personId, moderatorIds))
-    .map(personId => getPerson(state, { personId }))
-
-  const rawSuggestions = state.ModeratorsSettings
+  const suggestions = state.RoleSettings
     .map(personId => getPerson(state, { personId }))
 
   return {
-    moderators,
-    moderatorSuggestions,
-    rawSuggestions
+    suggestions
   }
 }
 
@@ -38,14 +26,12 @@ export function mapDispatchToProps (dispatch, props) {
   const { groupId } = props
 
   return {
-    addModerator: id => dispatch(addModerator(id, groupId)),
     addGroupRole: params => dispatch(addGroupRole(params)),
     addRoleToMember: params => dispatch(addRoleToMember({ ...params, groupId })),
-    clearModeratorSuggestions: () => dispatch(clearModeratorSuggestions()),
-    fetchModeratorSuggestions: autocomplete => dispatch(fetchModeratorSuggestions(groupId, autocomplete)),
+    clearStewardSuggestions: () => dispatch(clearStewardSuggestions()),
+    fetchStewardSuggestions: autocomplete => dispatch(fetchStewardSuggestions(groupId, autocomplete)),
     fetchMembersForGroupRole: params => dispatch(fetchMembersForGroupRole({ ...params, id: groupId })),
     fetchMembersForCommonRole: params => dispatch(fetchMembersForCommonRole({ ...params, id: groupId })),
-    removeModerator: (id, isRemoveFromGroup) => dispatch(removeModerator(id, groupId, isRemoveFromGroup)),
     removeRoleFromMember: params => dispatch(removeRoleFromMember({ ...params, groupId })),
     updateGroupRole: params => dispatch(updateGroupRole(params))
   }

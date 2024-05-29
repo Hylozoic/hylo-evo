@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { postUrl } from 'util/navigation'
 import blockUser from 'store/actions/blockUser'
+import getRolesForGroup from 'store/selectors/getRolesForGroup'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
@@ -37,6 +38,7 @@ export function mapStateToProps (state, props) {
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
   }
+  const roles = getRolesForGroup(state, { person, groupId: group?.id })
 
   return {
     routeParams,
@@ -45,6 +47,7 @@ export function mapStateToProps (state, props) {
     contentLoading,
     group,
     person,
+    roles,
     currentUser: getMe(state),
     previousLocation: getPreviousLocation(state)
   }

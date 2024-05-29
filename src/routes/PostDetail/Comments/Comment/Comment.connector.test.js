@@ -16,15 +16,15 @@ describe('mapStateToProps', () => {
       const session = orm.session(orm.getEmptyState())
       const group = session.Group.create({ id: '99', slug: 'foo' })
       session.Group.create({ id: '88', slug: 'bar' })
+      session.CommonRole.create({ id: 2, title: 'Moderator', responsibilities: { items: [{ id: 2, title: 'Manage Content' }] } })
 
       session.Me.create({
         id: '1',
         memberships: [session.Membership.create({
           id: '345',
-          group: group.id,
-          hasModeratorRole: true,
-          commonRoles: { items: [] }
-        })]
+          group: group.id
+        })],
+        membershipCommonRoles: [{ commonRoleId: 2, groupId: group.id, userId: 1, id: 2 }]
       })
 
       const meUser = session.Person.create({ id: '1' })
@@ -59,9 +59,7 @@ describe('mapStateToProps', () => {
         id: '1',
         memberships: [session.Membership.create({
           id: '345',
-          group: group.id,
-          hasModeratorRole: false,
-          commonRoles: { items: [] }
+          group: group.id
         })]
       })
       const meUser = session.Person.create({ id: '1' })

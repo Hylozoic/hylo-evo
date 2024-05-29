@@ -26,3 +26,9 @@ CommonRole.fields = {
   name: attr(),
   //responsibilities: many('Responsibility')
 }
+
+CommonRole.Roles = {
+  Coordinator: 1,
+  Moderator: 2,
+  Host: 3
+}

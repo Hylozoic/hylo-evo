@@ -11,7 +11,6 @@ import {
 } from 'store/models/Group'
 import { toggleDrawer as toggleDrawerAction } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 import getMyGroups from 'store/selectors/getMyGroups'
-import getCanModerate from 'store/selectors/getCanModerate'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -30,9 +29,8 @@ export default function Drawer (props) {
   const currentUser = useSelector(getMe)
   const dispatch = useDispatch()
   const groups = useSelector(getMyGroups)
-  const canModerate = useSelector(state => props.group && getCanModerate(state, props))
   const { group, className } = props
-  const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group?.id }).map(r => r.title)
+  const responsibilities = useSelector(state => getResponsibilitiesForGroup(state, { person: currentUser, groupId: group?.id })).map(r => r.title)
   const defaultContexts = [
     {
       id: PUBLIC_CONTEXT_ID,
@@ -99,7 +97,7 @@ export default function Drawer (props) {
             <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
           </div>
           <Logo group={group} />
-          {(canModerate || (responsibilities.length !== 0 && !responsibilities.includes(RESP_MANAGE_CONTENT))) && (
+          {responsibilities.length !== 0 && !responsibilities.includes(RESP_MANAGE_CONTENT) && (
             <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
               <Icon name='Settings' styleName='s.settingsIcon' /> {t('Group Settings')}
             </Link>

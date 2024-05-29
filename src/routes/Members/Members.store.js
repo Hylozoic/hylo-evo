@@ -23,25 +23,11 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
         tagline
         groupRoles {
           items {
-             name
-             emoji
-             active
-             groupId
-             responsibilities {
-              items {
-                id
-                title
-                description
-              }
-            }
-           }
-         }
-        commonRoles {
-          items {
             id
             name
-            description
             emoji
+            active
+            groupId
             responsibilities {
               items {
                 id
@@ -49,6 +35,14 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
                 description
               }
             }
+          }
+        }
+        membershipCommonRoles {
+          items {
+            id
+            commonRoleId
+            groupId
+            userId
           }
         }
         moderatedGroupMemberships {
@@ -117,7 +111,8 @@ export const getMembers = makeQueryResultsModelSelector(
   'Person',
   person => ({
     ...person.ref,
-    skills: person.skills.toModelArray()
+    skills: person.skills.toModelArray(),
+    membershipCommonRoles: person.membershipCommonRoles.toModelArray()
   })
 )
 

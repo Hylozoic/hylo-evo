@@ -16,7 +16,6 @@ import PostCompletion from '../PostCompletion'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import './PostHeader.scss'
-import { combineRoles } from 'store/models/Person'
 
 class PostHeader extends PureComponent {
   static defaultProps = {
@@ -38,7 +37,6 @@ class PostHeader extends PureComponent {
       createdAt,
       detailHasImage,
       expanded,
-      groups,
       type,
       id,
       startTime,
@@ -59,6 +57,7 @@ class PostHeader extends PureComponent {
       fulfillPost,
       unfulfillPost,
       postUrl,
+      roles,
       t
     } = this.props
 
@@ -119,10 +118,6 @@ class PostHeader extends PureComponent {
     }
 
     const showNormal = ((canBeCompleted && canEdit && expanded) && (topics?.length > 0 || (canHaveTimes && timeWindow.length > 0))) || false
-    const currentGroup = groups.find(group => group.slug === routeParams.groupSlug)
-    const currentGroupId = currentGroup && currentGroup.id
-    const badges = combineRoles({ person: creator, groupId: currentGroupId })
-    const creatorIsModerator = creator.moderatedGroupMemberships?.find(moderatedMembership => moderatedMembership.groupId === currentGroupId)
 
     return (
       <div styleName={cx('header', { constrained }, { detailHasImage })} className={className}>
@@ -134,12 +129,8 @@ class PostHeader extends PureComponent {
                 <Link to={creatorUrl} styleName='userName' data-tip={creator.tagline} data-for='announcement-tt'>{creator.name}</Link>
               </Highlight>
               <div styleName='badgeRow'>
-                {/* TODO RESP: can be removed once mods are ported to managers */}
-                {/* {creatorIsModerator && (
-                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={currentGroup?.moderatorDescriptor || 'Moderator'} id={id} />
-                )} */}
-                {badges.map(badge => (
-                  <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities} id={id} />
+                {roles.map(role => (
+                  <BadgeEmoji key={role.id + role.common} expanded {...role} responsibilities={role.responsibilities} id={id} />
                 ))}
               </div>
               <div styleName='timestampRow'>

@@ -44,7 +44,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         <Badge
           emoji="🛡️"
           expanded={true}
-          isModerator={true}
+          common={true}
           key="mod"
           name="Moderator"
         />
@@ -400,7 +400,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         toggleChildren={
           <span>
             Overview
-             
+
             <Icon
               data-stylename="content-dropdown-icon"
               name="ArrowDown"

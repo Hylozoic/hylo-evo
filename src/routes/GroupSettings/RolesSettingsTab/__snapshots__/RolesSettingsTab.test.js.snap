@@ -70,7 +70,7 @@ exports[`AddModerator renders correctly, and transitions from not adding to addi
   id="add-new"
   onClick={[Function]}
 >
-  + 
+  +
   Add New
 </div>
 `;
@@ -160,7 +160,7 @@ exports[`ModeratorsList renders correctly 1`] = `
 </div>
 `;
 
-exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModerator 1`] = `
+exports[`RolesSettingsTab renders a list of RemovableListItems and AddModerator 1`] = `
 <Fragment>
   <SettingsSection>
     <h3>
@@ -229,4 +229,4 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
 </Fragment>
 `;
 
-exports[`ModeratorsSettingsTab renders loading if no moderators 1`] = `<Loading />`;
+exports[`RolesSettingsTab renders loading if no moderators 1`] = `<Loading />`;

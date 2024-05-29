@@ -91,6 +91,7 @@ export default gql`
     }
     groupRoles {
       items {
+        id
         name
         emoji
         active
@@ -110,7 +111,6 @@ export default gql`
       id
       lastViewedAt
       newPostCount
-      hasModeratorRole
       person {
         id
       }
@@ -121,33 +121,26 @@ export default gql`
         sendPushNotifications
         showJoinForm
       }
-      commonRoles {
-        items {
-          id
-          name
-          description
-          emoji
-          responsibilities {
-            items {
-              id
-              title
-              description
-            }
-          }
-        }
-      }
       group {
         id
         avatarUrl
         bannerUrl
         name
         memberCount
-        moderatorDescriptor
-        moderatorDescriptorPlural
+        stewardDescriptor
+        stewardDescriptorPlural
         settings {
           showSuggestedSkills
         }
         slug
+      }
+    }
+    membershipCommonRoles {
+      items {
+        id
+        commonRoleId
+        groupId
+        userId
       }
     }
     skills {

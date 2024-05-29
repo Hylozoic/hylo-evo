@@ -119,19 +119,20 @@ export function fetchMembersForGroupRole ({ id, roleId: groupRoleId }) {
               avatarUrl
               groupRoles {
                 items {
-                   name
-                   emoji
-                   active
-                   groupId
-                   responsibilities {
+                  id
+                  name
+                  emoji
+                  active
+                  groupId
+                  responsibilities {
                     items {
                       id
                       title
                       description
                     }
-                   }
-                 }
-               }
+                  }
+                }
+              }
             }
           }
         }

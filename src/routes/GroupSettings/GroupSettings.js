@@ -1,6 +1,8 @@
 import { get, compact } from 'lodash/fp'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { Redirect } from 'react-router'
 import AgreementsTab from './AgreementsTab'
 import CustomViewsTab from './CustomViewsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
@@ -8,7 +10,7 @@ import GroupSettingsTab from './GroupSettingsTab'
 import ImportExportSettingsTab from './ImportExportSettingsTab'
 import InviteSettingsTab from './InviteSettingsTab'
 import MembershipRequestsTab from './MembershipRequestsTab'
-import ModeratorsSettingsTab from './ModeratorsSettingsTab'
+import RolesSettingsTab from './RolesSettingsTab'
 import PrivacySettingsTab from './PrivacySettingsTab'
 import RelatedGroupsTab from './RelatedGroupsTab'
 import ResponsibilitiesTab from './ResponsibilitiesTab'
@@ -17,7 +19,6 @@ import ExportDataTab from './ExportDataTab'
 import Loading from 'components/Loading'
 import FullPageModal from 'routes/FullPageModal'
 import { push } from 'connected-react-router'
-import { Redirect } from 'react-router'
 import { groupUrl } from 'util/navigation'
 import { RESP_ADD_MEMBERS, RESP_ADMINISTRATION } from 'store/constants'
 
@@ -29,7 +30,6 @@ import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForG
 // confirm accurate rendering and function in the related mobile area.
 export default function GroupSettings ({
   addPostToCollection,
-  canModerate,
   createCollection,
   commonRoles,
   currentUser,
@@ -54,10 +54,9 @@ export default function GroupSettings ({
     group && fetchGroupSettings()
   }, [slug])
 
-  const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group?.id }).map(r => r.title)
+  const responsibilities = useSelector(state => getResponsibilitiesForGroup(state, { person: currentUser, groupId: group?.id })).map(r => r.title)
   if (!group) return <Loading />
   if (!responsibilities.includes(RESP_ADMINISTRATION) && !responsibilities.includes(RESP_ADD_MEMBERS)) return <Redirect to={groupUrl(slug)} />
-  // TODO RESP: all uses here of canModerate can be removed once the database data-migration is run
   useEffect(() => {
     if (!responsibilities.includes(RESP_ADMINISTRATION) && responsibilities.includes(RESP_ADD_MEMBERS)) push(groupUrl(slug, 'settings/invite'))
   }, [])
@@ -91,7 +90,7 @@ export default function GroupSettings ({
   const rolesSettings = {
     name: t('Roles & Badges'),
     path: groupUrl(slug, 'settings/roles'),
-    component: <ModeratorsSettingsTab groupId={group.id} group={group} slug={group.slug} commonRoles={commonRoles} />
+    component: <RolesSettingsTab groupId={group.id} group={group} slug={group.slug} commonRoles={commonRoles} />
   }
 
   const accessSettings = {

@@ -1,24 +1,20 @@
 import { connect } from 'react-redux'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
-import getCanModerate from 'store/selectors/getCanModerate'
-import getMe from 'store/selectors/getMe'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 
 export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const members = group ? group.members.toModelArray().slice(0, 8) : []
-  const leaders = group ? group.moderators.toModelArray() : []
-  // console.log("leaders membershipcommonroles = ", leaders ? leaders[0]?.membershipCommonRoles?.toModelArray() : null)
-  const canModerate = getCanModerate(state, { group }) // TODO
-  const currentUser = getMe(state)
+  const stewards = group ? group.stewards.toModelArray() : []
+  const myResponsibilities = getResponsibilitiesForGroup(state, { groupId: group.id }).map(r => r.title)
 
   return {
     group: group ? group.ref : null,
     members,
-    leaders,
-    slug: getRouteParam('groupSlug', state, props),
-    canModerate,
-    currentUser
+    myResponsibilities,
+    stewards,
+    slug: getRouteParam('groupSlug', state, props)
   }
 }
 

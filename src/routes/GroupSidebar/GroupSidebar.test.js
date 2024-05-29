@@ -38,11 +38,13 @@ const group = {
     'the description, which is long enough to add a "Read More" button, '
 }
 
+const responsibilities = ['RESP_ADD_MEMBERS', 'RESP_ADMINISTRATION', 'RESP_REMOVE_MEMBERS']
+
 describe('GroupSidebar', () => {
   const members = [{ id: 1 }, { id: 2 }, { id: 3 }]
   const leaders = [{ id: 4 }, { id: 5 }, { id: 6 }]
   const memberCount = 56
-  const currentUser = { canModerate: () => true, memberships: {toRefArray: () => [{commonRoles: { items: [] }}]}} 
+  const currentUser = { memberships: { toRefArray: () => [{ commonRoles: { items: [] } }] } }
 
   it('renders correctly', () => {
     const wrapper = shallow(
@@ -50,7 +52,9 @@ describe('GroupSidebar', () => {
         group={{ ...group, memberCount }}
         currentUser={currentUser}
         members={members}
-        leaders={leaders} />)
+        leaders={leaders}
+        responsibilities={responsibilities}
+      />)
     expect(wrapper).toMatchSnapshot()
   })
 })
@@ -77,27 +81,28 @@ describe('MemberSection', () => {
 
   it("Doesn't show total if it's < 1", () => {
     const wrapper = shallow(<MemberSection
-      slug={'foo'}
+      slug='foo'
       members={members}
       memberCount={n}
-      canModerate />)
+      responsibilities={responsibilities}
+    />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it("Formats total correctly if it's > 999", () => {
     const wrapper = shallow(<MemberSection
-      slug={'foo'}
+      slug='foo'
       members={members}
       memberCount={5600} />)
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('Shows invite link if canModerate is true', () => {
+  it('Shows invite link if has responsibility ADD_MEMBERS is true', () => {
     const wrapper = shallow(<MemberSection
-      slug={'foo'}
+      slug='foo'
       members={members}
       memberCount={5600}
-      canModerate />)
+      responsibilities={responsibilities} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
@@ -118,7 +123,6 @@ describe('GroupLeader', () => {
       id: 1,
       name: 'Jon Smith',
       avatarUrl: 'foo.png',
-      canModerate: () => true,
       commonRoles: { items: [] },
       groupRoles: { items: [] }
     }
