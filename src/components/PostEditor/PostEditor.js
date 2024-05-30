@@ -817,6 +817,10 @@ class PostEditor extends React.Component {
               />
             </div>
           </div>
+          <PublicToggle
+            togglePublic={this.togglePublic}
+            isPublic={!!post.isPublic}
+          />
           {isProposal && proposalOptions.length === 0 && (
             <div styleName='footerSection'>
               <div styleName='footerSection-label'>{t('Proposal template')}</div>
@@ -970,10 +974,6 @@ class PostEditor extends React.Component {
               toggleStrictProposal={this.toggleStrictProposal}
             />
           )} */}
-          <PublicToggle
-            togglePublic={this.togglePublic}
-            isPublic={!!post.isPublic}
-          />
           {canHaveTimes && (
             <div styleName='footerSection'>
               <div styleName='footerSection-label'>{isProposal ? t('Voting window') : t('Timeframe')}</div>
