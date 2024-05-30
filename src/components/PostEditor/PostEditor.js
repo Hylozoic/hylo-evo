@@ -31,8 +31,9 @@ import { MAX_POST_TOPICS } from 'util/constants'
 import { setQuerystringParam } from 'util/navigation'
 import { sanitizeURL } from 'util/url'
 import Tooltip from 'components/Tooltip'
+import generateTempID from 'util/generateTempId'
 
-const emojiOptions = ['', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟', '✅✅', '👍', '👎', '⁉️', '‼️', '❓', '❗', '🚫', '➡️', '🛑', '✅', '🛑🛑', '🌈', '🔴', '🔵', '🟤', '🟣', '🟢', '🟡', '🟠', '⚫', '⚪', '🤷🤷', '📆', '🤔', '❤️', '👏', '🎉', '🔥', '🤣', '😢', '😡', '🤷', '💃🕺', '⛔', '🙏', '👀', '🙌', '💯', '🔗', '🚀', '💃', '🕺', '💯',]
+const emojiOptions = ['', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟', '✅✅', '👍', '👎', '⁉️', '‼️', '❓', '❗', '🚫', '➡️', '🛑', '✅', '🛑🛑', '🌈', '🔴', '🔵', '🟤', '🟣', '🟢', '🟡', '🟠', '⚫', '⚪', '🤷🤷', '📆', '🤔', '❤️', '👏', '🎉', '🔥', '🤣', '😢', '😡', '🤷', '💃🕺', '⛔', '🙏', '👀', '🙌', '💯', '🔗', '🚀', '💃', '🕺', '🫶💯']
 export const MAX_TITLE_LENGTH = 80
 
 function deepCompare (arr1, arr2) {
@@ -600,7 +601,7 @@ class PostEditor extends React.Component {
     this.setState({
       post: {
         ...this.state.post,
-        proposalOptions: templateData.form.proposalOptions,
+        proposalOptions: templateData.form.proposalOptions.map(option => { return { ...option, tempId: generateTempID() } }),
         title: this.state.post.title.length > 0 ? this.state.post.title : templateData.form.title,
         quorum: templateData.form.quorum,
         proposalType: templateData.form.proposalType
@@ -612,7 +613,7 @@ class PostEditor extends React.Component {
   handleAddOption = () => {
     const { post } = this.state
     const proposalOptions = post.proposalOptions || []
-    const newOptions = [...proposalOptions, { text: '', emoji: '', color: '' }]
+    const newOptions = [...proposalOptions, { text: '', emoji: '', color: '', tempId: generateTempID() }]
     this.setState({
       post: { ...post, proposalOptions: newOptions },
       valid: this.isValid({ proposalOptions: newOptions })
@@ -896,8 +897,13 @@ class PostEditor extends React.Component {
                       name='Ex'
                       styleName='icon'
                       onClick={() => {
-                        proposalOptions.splice(index, 1)
-                        const newOptions = [...proposalOptions]
+                        const newOptions = proposalOptions.filter(element => {
+                          if (option.id) return element.id !== option.id
+                          return element.tempId !== option.tempId
+                        })
+
+                        console.log(proposalOptions, option, 'ahahahadd')
+
                         this.setState({
                           post: { ...post, proposalOptions: newOptions },
                           valid: this.isValid({ proposalOptions: newOptions })
@@ -1123,7 +1129,6 @@ export function ActionsBar ({
   valid,
   loading,
   submitButtonLabel,
-  submitButtonTooltip,
   save,
   setAnnouncement,
   announcementSelected,
