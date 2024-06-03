@@ -950,7 +950,7 @@ class PostEditor extends React.Component {
                   }
                   items={[
                     { label: t('Single Vote per person'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_SINGLE) },
-                    { label: t('Multi-vote, unrestricted'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_MULTI_UNRESTRICTED) }
+                    { label: t('Multiple votes allowed'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_MULTI_UNRESTRICTED) }
                   ]}
                 />
               </div>
