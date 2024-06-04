@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.7.6] - 2024-06-04
+
+### Added
+- Post images now open in a carousel, instead of in a separate window
+
 ## [5.7.5] - 2024-03-18
 
 ### Fixed
