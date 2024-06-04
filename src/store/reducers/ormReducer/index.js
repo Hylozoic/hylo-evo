@@ -2,6 +2,7 @@
 import * as sessionReducers from './sessionReducers'
 import {
   ACCEPT_GROUP_RELATIONSHIP_INVITE,
+  ADD_PROPOSAL_VOTE_PENDING,
   CANCEL_GROUP_RELATIONSHIP_INVITE,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
@@ -25,9 +26,11 @@ import {
   REMOVE_REACT_ON_COMMENT_PENDING,
   REMOVE_REACT_ON_POST_PENDING,
   REMOVE_POST_PENDING,
+  REMOVE_PROPOSAL_VOTE_PENDING,
   REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
   RESET_NEW_POST_COUNT_PENDING,
   RESPOND_TO_EVENT_PENDING,
+  SWAP_PROPOSAL_VOTE_PENDING,
   TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_COMMENT_PENDING,
   UPDATE_GROUP_TOPIC_PENDING,
@@ -36,7 +39,8 @@ import {
   UPDATE_THREAD_READ_TIME,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
   UPDATE_WIDGET,
-  USE_INVITATION
+  USE_INVITATION,
+  UPDATE_PROPOSAL_OUTCOME_PENDING
 } from 'store/constants'
 import {
   UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING,
@@ -121,6 +125,17 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
         GroupRelationshipInvite.withId(meta.id).delete()
         clearCacheFor(Group, childGroup.id)
       }
+      break
+    }
+
+    case ADD_PROPOSAL_VOTE_PENDING: {
+      me = Me.first()
+      const optionId = meta.optionId
+      const postId = meta.postId
+      post = session.Post.withId(postId)
+
+      const optimisticUpdate = { proposalVotes: { ...post.proposalVotes, items: [...post.proposalVotes.items, { postId, optionId, user: me }] } }
+      post.update(optimisticUpdate)
       break
     }
 
@@ -415,6 +430,20 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
+    case REMOVE_PROPOSAL_VOTE_PENDING: {
+      me = Me.first()
+      const userId = me.id
+      const optionId = meta.optionId
+      const postId = meta.postId
+      post = session.Post.withId(postId)
+      const voteIndex = post.proposalVotes.items.findIndex(vote => vote?.user?.id === userId && vote.optionId === optionId)
+      const newProposalVotes = [...post.proposalVotes.items]
+      newProposalVotes.splice(voteIndex, 1)
+      const proposalVotes = { ...post.proposalVotes, items: newProposalVotes }
+      post.update({ proposalVotes })
+      break
+    }
+
     case REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP: {
       const newGroupRelationship = payload.data.requestToAddGroupToParent.groupRelationship
       if (newGroupRelationship) {
@@ -444,6 +473,21 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
     case RESPOND_TO_EVENT_PENDING: {
       const event = Post.withId(meta.id)
       event.update({ myEventResponse: meta.response })
+      break
+    }
+
+    case SWAP_PROPOSAL_VOTE_PENDING: {
+      me = Me.first()
+      const userId = me.id
+      const addOptionId = meta.addOptionId
+      const removeOptionId = meta.removeOptionId
+      const postId = meta.postId
+      post = session.Post.withId(postId)
+      const voteIndex = post.proposalVotes.items.findIndex(vote => vote.user.id === userId && vote.optionId === removeOptionId)
+      const newProposalVotes = [...post.proposalVotes.items]
+      newProposalVotes[voteIndex] = { postId, optionId: addOptionId, user: me }
+      const proposalVotes = { ...post.proposalVotes, items: newProposalVotes }
+      post.update({ proposalVotes })
       break
     }
 
@@ -561,6 +605,12 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
     case UPDATE_THREAD_READ_TIME: {
       MessageThread.withId(meta.id).markAsRead()
+      break
+    }
+
+    case UPDATE_PROPOSAL_OUTCOME_PENDING: {
+      post = Post.withId(meta.postId)
+      post.update({ proposalOutcome: meta.proposalOutcome })
       break
     }
 

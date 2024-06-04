@@ -10,7 +10,8 @@ export default function PostCompletion ({ type, startTime, endTime, isFulfilled,
     request: t('Is this request still needed?'),
     offer: t('Is this offer still available?'),
     resource: t('Is this resource still available?'),
-    project: t('Is this project still active?')
+    project: t('Is this project still active?'),
+    proposal: t('Is this proposal complete?')
   }
 
   const messages = {
@@ -29,6 +30,10 @@ export default function PostCompletion ({ type, startTime, endTime, isFulfilled,
     project: [
       { label: t('Active'), value: false },
       { label: t('Completed'), value: true }
+    ],
+    proposal: [
+      { label: t('No'), value: false },
+      { label: t('Yes, I am ready to summarize'), value: true }
     ]
   }
   const label = messages[type].find(choice => choice.value === !!isFulfilled).label

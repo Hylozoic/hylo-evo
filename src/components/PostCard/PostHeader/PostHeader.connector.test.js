@@ -38,10 +38,12 @@ describe('mapDispatchToProps', () => {
     expect(dispatchProps).toMatchSnapshot()
     dispatchProps.removePost(10)
     dispatchProps.editPost(10)
-    expect(dispatch).toHaveBeenCalledTimes(2)
+    dispatchProps.duplicatePost(10)
+    expect(dispatch).toHaveBeenCalledTimes(3)
 
     dispatchProps.deletePost(1)
     dispatchProps.pinPost(2, 3)
+    dispatchProps.duplicatePost(10)
     expect(dispatch.mock.calls).toMatchSnapshot()
   })
 
@@ -80,6 +82,7 @@ describe('mergeProps', () => {
   const dispatchProps = {
     removePost: jest.fn(),
     deletePost: jest.fn(),
+    duplicatePost: jest.fn(),
     editPost: jest.fn(),
     pinPost: jest.fn()
   }
@@ -87,6 +90,7 @@ describe('mergeProps', () => {
   beforeEach(() => {
     dispatchProps.removePost.mockReset()
     dispatchProps.editPost.mockReset()
+    dispatchProps.duplicatePost.mockReset()
     dispatchProps.deletePost.mockReset()
     dispatchProps.pinPost.mockReset()
   })
@@ -157,7 +161,7 @@ describe('mergeProps', () => {
   })
 
   describe('as non-moderator', () => {
-    it("can delete own posts, can't pin posts", () => {
+    it("can delete and edit own posts, can duplicate any posts, can't pin posts", () => {
       const session = orm.session(orm.getEmptyState())
       const group = session.Group.create({ id: 33, slug: 'mygroup' })
       session.Me.create({
@@ -175,19 +179,26 @@ describe('mergeProps', () => {
       const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 20 } }
       const stateProps = mapStateToProps(state, ownProps)
 
-      const { deletePost, removePost, editPost, pinPost } = mergeProps(stateProps, dispatchProps, ownProps)
+      const { deletePost, removePost, editPost, duplicatePost, pinPost } = mergeProps(stateProps, dispatchProps, ownProps)
 
       expect(editPost).toBeTruthy()
       expect(deletePost).toBeTruthy()
       expect(removePost).toBeFalsy()
       expect(pinPost).toBeFalsy()
+      expect(duplicatePost).toBeTruthy()
 
       deletePost('lettuce')
       expect(dispatchProps.deletePost).toHaveBeenCalledWith(20, 33, 'lettuce')
+
+      editPost('lettuce')
+      expect(dispatchProps.editPost).toHaveBeenCalledWith(20)
+
+      duplicatePost('lettuce')
+      expect(dispatchProps.duplicatePost).toHaveBeenCalledWith(20)
     })
   })
 
-  it('cannot delete or remove posts if not creator or moderator', () => {
+  it('cannot delete, edit, or remove posts if not creator or moderator but can duplicate posts', () => {
     const session = orm.session(orm.getEmptyState())
     const group = session.Group.create({ id: 33, slug: 'mygroup' })
     session.Me.create({
@@ -205,10 +216,11 @@ describe('mergeProps', () => {
     const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 33 } }
     const stateProps = mapStateToProps(state, ownProps)
 
-    const { deletePost, removePost, editPost } = mergeProps(stateProps, dispatchProps, ownProps)
+    const { deletePost, removePost, editPost, duplicatePost } = mergeProps(stateProps, dispatchProps, ownProps)
 
     expect(deletePost).toBeFalsy()
     expect(removePost).toBeFalsy()
     expect(editPost).toBeFalsy()
+    expect(duplicatePost).toBeTruthy()
   })
 })

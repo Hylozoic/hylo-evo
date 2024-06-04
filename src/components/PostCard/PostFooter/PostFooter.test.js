@@ -31,19 +31,7 @@ describe('PostFooter', () => {
       peopleReactedTotal={3}
       myReactions={[]}
       postReactions={[]}
-      myVote />)
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('enables tooltip when myvote is false', () => {
-    const wrapper = shallow(<PostFooter
-      commenters={commenters}
-      commentersTotal={4}
-      currentUser={commenters[1]}
-      peopleReactedTotal={3}
-      myReactions={[]}
-      postReactions={[]}
-      myVote={false} />)
+    />)
     expect(wrapper).toMatchSnapshot()
   })
 

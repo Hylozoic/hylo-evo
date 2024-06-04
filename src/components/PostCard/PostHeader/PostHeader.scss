@@ -16,6 +16,40 @@
   border-radius: 5px 5px 0 0;
 }
 
+.outcomeInput {
+  composes: hdr-subheadline from 'css/typography.scss';
+  // margin-bottom: $space-2x;
+  padding-left: 12;
+  height: $space-9x;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  &:disabled {
+    color: $color-rhino-80;
+  }
+  &::placeholder {
+    color: $color-rhino-30;
+  }
+}
+
+.outcomeContainer {
+  background-color: #F2F2F2;
+  color: $color-regent;
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 8px;
+  padding: 10px;
+  background: rgba(213, 236, 250, .3);
+  border: 1px dashed rgba(213, 236, 250, 1);
+  border-radius: 5px;
+
+  // div { line-height: 29px; }
+}
+
 .detailHasImage .subheader {
   position: absolute;
   z-index: 11;

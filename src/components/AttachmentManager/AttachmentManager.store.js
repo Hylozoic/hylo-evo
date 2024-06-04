@@ -141,7 +141,7 @@ export default function reducer (state = defaultState, action) {
     case REMOVE_ATTACHMENT:
       return {
         ...state,
-        [attachmentKey]: reject(attachment, attachmentsForKey)
+        [attachmentKey]: reject({ url: attachment.url }, attachmentsForKey)
       }
     case MOVE_ATTACHMENT: {
       const { position1, position2 } = payload

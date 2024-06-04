@@ -1,15 +1,12 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import { FULFILL_POST, UNFULFILL_POST, UNFULFILL_POST_PENDING, FULFILL_POST_PENDING, UPDATE_PROPOSAL_OUTCOME } from 'store/constants'
 
 export const MODULE_NAME = 'PostHeader'
 
 // Constants
 export const PIN_POST = `${MODULE_NAME}/PIN_POST`
 export const PIN_POST_PENDING = `${PIN_POST}_PENDING`
-export const FULFILL_POST = `${MODULE_NAME}/FULFILL_POST`
-export const FULFILL_POST_PENDING = `${MODULE_NAME}/FULFILL_POST_PENDING`
-export const UNFULFILL_POST = `${MODULE_NAME}/UNFULFILL_POST`
-export const UNFULFILL_POST_PENDING = `${MODULE_NAME}/UNFULFILL_POST_PENDING`
 
 export function pinPost (postId, groupId) {
   return {
@@ -69,6 +66,28 @@ export function unfulfillPost (postId) {
     meta: {
       optimistic: true,
       postId
+    }
+  }
+}
+
+export function updateProposalOutcome (postId, proposalOutcome) {
+  return {
+    type: UPDATE_PROPOSAL_OUTCOME,
+    graphql: {
+      query: `mutation ($postId: ID, $proposalOutcome: String) {
+        updateProposalOutcome (postId: $postId, proposalOutcome: $proposalOutcome) {
+          success
+        }
+      }`,
+      variables: {
+        postId,
+        proposalOutcome
+      }
+    },
+    meta: {
+      optimistic: true,
+      postId,
+      proposalOutcome
     }
   }
 }

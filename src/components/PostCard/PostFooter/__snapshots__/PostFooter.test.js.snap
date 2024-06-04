@@ -1,44 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PostFooter enables tooltip when myvote is false 1`] = `
-<div
-  data-stylename="footer"
->
-  <PeopleInfo
-    excludePersonId="2"
-    people={
-      Array [
-        Object {
-          "avatarUrl": "",
-          "id": "1",
-          "name": "Joe Smith",
-        },
-        Object {
-          "avatarUrl": "",
-          "id": "2",
-          "name": "Sue Jones",
-        },
-        Object {
-          "avatarUrl": "",
-          "id": "3",
-          "name": "Scary Terry",
-        },
-        Object {
-          "avatarUrl": "",
-          "id": "4",
-          "name": "John Larkin",
-        },
-      ]
-    }
-    peopleTotal={4}
-  />
-  <Tooltip
-    delay={550}
-    id="postfooter-tt-undefined"
-  />
-</div>
-`;
-
 exports[`PostFooter matches the latest snapshot 1`] = `
 <div
   data-stylename="footer"

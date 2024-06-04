@@ -93,6 +93,7 @@ const postFieldsFragment = withComments => `
   }
   createdAt
   updatedAt
+  isAnonymousVote
   isPublic
   fulfilledAt
   startTime
@@ -154,7 +155,32 @@ const postFieldsFragment = withComments => `
     region
   }
   peopleReactedTotal
-  myVote
+  proposalStatus
+  proposalOutcome
+  proposalType
+  quorum
+  proposalOptions {
+    total
+    hasMore
+    items {
+      id
+      text
+      emoji
+    }
+  }
+  proposalVotes {
+      total
+      hasMore
+      items {
+        id
+        optionId
+        user {
+          id
+          name
+          avatarUrl
+        }
+      }
+  }
   myReactions {
     emojiFull
     id

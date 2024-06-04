@@ -25,6 +25,7 @@ export default function CreateModalChooser ({ location }) {
   t('offer')
   t('resource')
   t('project')
+  t('proposal')
   t('event')
   t('Talk about whats important with others')
 

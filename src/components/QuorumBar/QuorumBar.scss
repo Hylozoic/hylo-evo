@@ -1,0 +1,68 @@
+.vote-progress-container {
+  position: relative;
+  height: 13px;
+  width: 100%; 
+  background-color: $color-cloud-grey;
+  border-radius: 5px;
+}
+
+.voters-bar {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.total-voters-bar {
+  position: absolute;
+  height: 100%;
+  z-index: 1;
+  border-radius: 5px;
+  background-color: $color-cloud-grey;
+}
+
+.actual-voters {
+  position: absolute;
+  height: 100%;
+  z-index: 3;
+  border-radius: 5px;
+  background-color: $color-ultramarine;
+}
+
+.quorum-bar {
+  position: absolute;
+  border-radius: 5px;
+  height: 100%;
+  z-index: 2;
+  background-color: $color-regent;
+  ;
+}
+
+.quorum-text {
+  position: absolute;
+  text-transform: uppercase;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 8px;
+  color: white;
+  font-size: 12px;
+  width: 200px;
+}
+
+.quorum-number {
+  position: absolute;
+  text-transform: uppercase;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -56px;
+  color: $color-regent;
+  font-size: 12px;
+}
+
+.big-quorum{
+  right: 10px;
+  color: white;
+}
+
+.quorum-reached{
+  color: $color-ultramarine;
+}

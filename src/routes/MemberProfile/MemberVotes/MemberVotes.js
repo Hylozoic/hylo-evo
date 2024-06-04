@@ -3,13 +3,13 @@ import Loading from 'components/Loading'
 import PostCard from 'components/PostCard'
 import './MemberVotes.scss'
 
-export default class MemberVotes extends React.Component {
+export default class MemberVotes extends React.Component { // TODO REACTIONS: switch this to reactions
   static defaultProps = {
     routeParams: {}
   }
 
   componentDidMount () {
-    this.props.fetchMemberVotes()
+    this.props.fetchMemberVotes() // TODO REACTIONS: switch this to reactions
   }
 
   itemSelected = selectedItemId => selectedItemId === this.props.routeParams.postId

@@ -22,6 +22,7 @@ export default function Navigation (props) {
     explorePath,
     membersPath,
     projectsPath,
+    proposalPath,
     eventsPath,
     group = {},
     groupId,
@@ -120,6 +121,11 @@ export default function Navigation (props) {
       label: t('Members'),
       icon: 'People',
       to: membersPath
+    },
+    proposalPath && {
+      label: t('Governance'),
+      icon: 'Proposal',
+      to: proposalPath
     },
     (hasRelatedGroups || isPublic) && groupsPath && {
       label: isPublic ? t('Group Explorer') : t('Groups'),

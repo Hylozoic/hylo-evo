@@ -19,7 +19,6 @@ describe('PostDetail', () => {
     const routeParams = {
       slug: 'foo'
     }
-    const myVote = true
 
     const post = {
       id: '91',
@@ -28,7 +27,6 @@ describe('PostDetail', () => {
       tags,
       details,
       peopleReactedTotal,
-      myVote,
       members: [],
       groups: [{ id: '109 ' }]
     }
