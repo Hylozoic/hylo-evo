@@ -546,7 +546,9 @@ class PostEditor extends React.Component {
       locationId: actualLocationId,
       memberIds,
       projectManagementLink: sanitizeURL(projectManagementLink),
-      proposalOptions,
+      proposalOptions: proposalOptions.map(({ color, emoji, text, id }) => {
+        return { color, text, emoji, id }
+      }),
       proposalType,
       quorum,
       sendAnnouncement: announcementSelected,
