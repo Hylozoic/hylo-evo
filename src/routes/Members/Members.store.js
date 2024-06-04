@@ -45,9 +45,6 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
             userId
           }
         }
-        moderatedGroupMemberships {
-          groupId
-        }
         skills {
           hasMore
           items {

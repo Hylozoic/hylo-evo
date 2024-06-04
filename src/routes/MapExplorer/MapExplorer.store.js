@@ -133,9 +133,6 @@ const membersFragment = `
           lng
         }
       }
-      moderatedGroupMemberships {
-        groupId
-      }
       skills {
         hasMore
         items {

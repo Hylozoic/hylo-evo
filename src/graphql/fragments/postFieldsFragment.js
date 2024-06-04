@@ -31,9 +31,6 @@ const CommentFieldsFragment = `
         userId
       }
     }
-    moderatedGroupMemberships {
-      groupId
-    }
   }
   attachments {
     id
@@ -92,9 +89,6 @@ const postFieldsFragment = withComments => `
         groupId
         userId
       }
-    }
-    moderatedGroupMemberships {
-      groupId
     }
   }
   createdAt
