@@ -1,6 +1,7 @@
 import React from 'react'
 import PostTitle from '../PostTitle'
 import PostDetails from '../PostDetails'
+import PostBodyProposal from '../PostBodyProposal'
 import EmojiRow from 'components/EmojiRow'
 import cx from 'classnames'
 import './PostBody.scss'
@@ -36,6 +37,7 @@ export default function PostBody (props) {
           onClick={onClick}
         />
       </div>
+      {post.type === 'proposal' && <PostBodyProposal {...post} currentUser={currentUser} />}
       <div styleName='reactions'>
         <EmojiRow
           post={post}

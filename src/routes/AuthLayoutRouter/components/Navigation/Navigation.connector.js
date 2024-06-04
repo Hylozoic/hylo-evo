@@ -46,6 +46,7 @@ export function mapStateToProps (state, props) {
     mapPath: viewUrl('map', routeParams),
     membersPath: !isAllOrPublicPath && viewUrl('members', routeParams),
     projectsPath: viewUrl('projects', routeParams),
+    proposalPath: viewUrl('proposals', routeParams),
     rootPath,
     routeParams
   }

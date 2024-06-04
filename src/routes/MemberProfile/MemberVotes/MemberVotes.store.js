@@ -5,7 +5,7 @@ import presentPost from 'store/presenters/presentPost'
 import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 import { FETCH_MEMBER_VOTES } from '../MemberProfile.store'
 
-export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery) {
+export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery) { // TODO REACTIONS: switch this to reactions
   const query = providedQuery ||
   `query MemberVotes ($id: ID, $order: String, $limit: Int) {
     person (id: $id) {
@@ -25,7 +25,7 @@ export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery)
     }
   }`
   return {
-    type: FETCH_MEMBER_VOTES,
+    type: FETCH_MEMBER_VOTES, // TODO REACTIONS: switch this to reactions
     graphql: {
       query,
       variables: { id, limit, order }
@@ -34,7 +34,7 @@ export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery)
   }
 }
 
-export const getMemberVotes = ormCreateSelector(
+export const getMemberVotes = ormCreateSelector( // TODO REACTIONS: switch this to reactions
   orm,
   (_, { routeParams }) => routeParams,
   ({ Vote }, { personId }) => {

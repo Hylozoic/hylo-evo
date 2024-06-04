@@ -6,7 +6,7 @@ import { withTranslation } from 'react-i18next'
 import { debounce, get, isEqual } from 'lodash/fp'
 import cx from 'classnames'
 import Moment from 'moment-timezone'
-import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
+import { POST_PROP_TYPES, POST_TYPES, PROPOSAL_ADVICE, PROPOSAL_CONSENSUS, PROPOSAL_CONSENT, PROPOSAL_GRADIENT, PROPOSAL_MULTIPLE_CHOICE, PROPOSAL_POLL_SINGLE, PROPOSAL_SCHEDULING, PROPOSAL_TEMPLATES, PROPOSAL_TYPE_MULTI_UNRESTRICTED, PROPOSAL_TYPE_SINGLE, PROPOSAL_YESNO } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import Icon from 'components/Icon'
 import LocationInput from 'components/LocationInput'
@@ -22,14 +22,32 @@ import DatePicker from 'components/DatePicker'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
+import AnonymousVoteToggle from './AnonymousVoteToggle/AnonymousVoteToggle'
+import SliderInput from 'components/SliderInput/SliderInput'
+import Dropdown from 'components/Dropdown/Dropdown'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import { MAX_POST_TOPICS } from 'util/constants'
+import { setQuerystringParam } from 'util/navigation'
 import { sanitizeURL } from 'util/url'
 import Tooltip from 'components/Tooltip'
-import { setQuerystringParam } from 'util/navigation'
+import generateTempID from 'util/generateTempId'
 
+const emojiOptions = ['', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟', '✅✅', '👍', '👎', '⁉️', '‼️', '❓', '❗', '🚫', '➡️', '🛑', '✅', '🛑🛑', '🌈', '🔴', '🔵', '🟤', '🟣', '🟢', '🟡', '🟠', '⚫', '⚪', '🤷🤷', '📆', '🤔', '❤️', '👏', '🎉', '🔥', '🤣', '😢', '😡', '🤷', '💃🕺', '⛔', '🙏', '👀', '🙌', '💯', '🔗', '🚀', '💃', '🕺', '🫶💯']
 export const MAX_TITLE_LENGTH = 80
+
+function deepCompare (arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (!isEqual(arr1[i], arr2[i])) {
+      return false
+    }
+  }
+  return true
+}
 
 class PostEditor extends React.Component {
   static propTypes = {
@@ -87,16 +105,21 @@ class PostEditor extends React.Component {
           : PostEditor.defaultProps.post.groups,
         topics: topic ? [topic] : [],
         acceptContributions: false,
-        isPublic: context === 'public'
+        isPublic: context === 'public',
+        isAnonymousVote: false,
+        isStrictProposal: false,
+        proposalOptions: [],
+        proposalType: PROPOSAL_TYPE_SINGLE
       }
     )
     const currentPost = post
       ? {
-        ...post,
-        locationId: post.locationObject ? post.locationObject.id : null,
-        startTime: Moment(post.startTime),
-        endTime: Moment(post.endTime)
-      }
+          ...post,
+          locationId: post.locationObject ? post.locationObject.id : null,
+          startTime: Moment(post.startTime),
+          endTime: Moment(post.endTime),
+          proposalOptions: post.proposalOptions?.items || []
+        }
       : defaultPostWithGroupsAndTopic
 
     return {
@@ -124,6 +147,7 @@ class PostEditor extends React.Component {
     t('Let people know about available resources')
     t('Create a project that people can help with')
     t('Invite people to your event')
+    t('Suggest a proposal for others to vote on')
 
     this.state = this.buildStateFromProps(props)
     this.titleInputRef = React.createRef()
@@ -192,6 +216,7 @@ class PostEditor extends React.Component {
       resource: t('Add a title'),
       project: t('Add a title'),
       event: t('Add a title'),
+      proposal: t('Add a title'),
       default: t('Add a title')
     }
 
@@ -210,6 +235,7 @@ class PostEditor extends React.Component {
       resource: t('Add a description'),
       project: t('Add a description'),
       event: t('Add a description'),
+      proposal: t('Add a description'),
       default: t('Add a description')
     }
     return (
@@ -389,6 +415,20 @@ class PostEditor extends React.Component {
     })
   }
 
+  toggleAnonymousVote = () => {
+    const { isAnonymousVote } = this.state.post
+    this.setState({
+      post: { ...this.state.post, isAnonymousVote: !isAnonymousVote }
+    })
+  }
+
+  toggleStrictProposal = () => {
+    const { isStrictProposal } = this.state.post
+    this.setState({
+      post: { ...this.state.post, isStrictProposal: !isStrictProposal }
+    })
+  }
+
   handleUpdateProjectMembers = (members) => {
     this.setState({
       post: { ...this.state.post, members }
@@ -402,12 +442,12 @@ class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, groups, startTime, endTime, donationsLink, projectManagementLink } = Object.assign(
+    const { type, title, groups, startTime, endTime, donationsLink, projectManagementLink, proposalOptions } = Object.assign(
       {},
       this.state.post,
       postUpdates
     )
-    const { isEvent, isProject } = this.props
+    const { isEvent, isProject, isProposal } = this.props
 
     return !!(
       this.editorRef.current &&
@@ -418,7 +458,8 @@ class PostEditor extends React.Component {
       title.length <= MAX_TITLE_LENGTH &&
       (!isEvent || (endTime && startTime < endTime)) &&
       (!isProject || sanitizeURL(donationsLink) || !donationsLink) &&
-      (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink)
+      (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink) &&
+      (!isProposal || proposalOptions.length > 0)
     )
   }
 
@@ -453,12 +494,17 @@ class PostEditor extends React.Component {
       eventInvitations,
       groups,
       id,
+      isAnonymousVote,
       isPublic,
+      isStrictProposal,
       linkPreview,
       linkPreviewFeatured,
       locationId,
       members,
       projectManagementLink,
+      proposalOptions,
+      proposalType,
+      quorum,
       startTime,
       timezone,
       title,
@@ -480,6 +526,7 @@ class PostEditor extends React.Component {
       location,
       locationId
     })
+
     const postToSave = {
       id,
       acceptContributions,
@@ -490,13 +537,20 @@ class PostEditor extends React.Component {
       fileUrls,
       groups,
       imageUrls,
+      isAnonymousVote,
       isPublic,
+      isStrictProposal,
       linkPreview,
       linkPreviewFeatured,
       location,
       locationId: actualLocationId,
       memberIds,
       projectManagementLink: sanitizeURL(projectManagementLink),
+      proposalOptions: proposalOptions.map(({ color, emoji, text, id }) => {
+        return { color, text, emoji, id }
+      }),
+      proposalType,
+      quorum,
       sendAnnouncement: announcementSelected,
       startTime,
       timezone,
@@ -529,6 +583,42 @@ class PostEditor extends React.Component {
     this.setState({
       ...this.state,
       showPostTypeMenu: !showPostTypeMenu
+    })
+  }
+
+  handleSetQuorum = (quorum) => {
+    this.setState({
+      post: { ...this.state.post, quorum }
+    })
+  }
+
+  handleSetProposalType = (proposalType) => {
+    this.setState({
+      post: { ...this.state.post, proposalType }
+    })
+  }
+
+  handleUseTemplate = (template) => {
+    const templateData = PROPOSAL_TEMPLATES[template]
+    this.setState({
+      post: {
+        ...this.state.post,
+        proposalOptions: templateData.form.proposalOptions.map(option => { return { ...option, tempId: generateTempID() } }),
+        title: this.state.post.title.length > 0 ? this.state.post.title : templateData.form.title,
+        quorum: templateData.form.quorum,
+        proposalType: templateData.form.proposalType
+      },
+      valid: this.isValid({ proposalOptions: templateData.form.proposalOptions })
+    })
+  }
+
+  handleAddOption = () => {
+    const { post } = this.state
+    const proposalOptions = post.proposalOptions || []
+    const newOptions = [...proposalOptions, { text: '', emoji: '', color: '', tempId: generateTempID() }]
+    this.setState({
+      post: { ...post, proposalOptions: newOptions },
+      valid: this.isValid({ proposalOptions: newOptions })
     })
   }
 
@@ -569,7 +659,9 @@ class PostEditor extends React.Component {
       startTime,
       endTime,
       donationsLink,
-      projectManagementLink
+      projectManagementLink,
+      proposalOptions,
+      proposalType
     } = post
     const {
       currentGroup,
@@ -581,6 +673,7 @@ class PostEditor extends React.Component {
       myModeratedGroups,
       isProject,
       isEvent,
+      isProposal,
       showFiles,
       showImages,
       addAttachment,
@@ -595,7 +688,8 @@ class PostEditor extends React.Component {
       'offer',
       'request',
       'resource',
-      'project'
+      'project',
+      'proposal'
     ].includes(type)
     const canHaveTimes = type !== 'discussion'
     const location = post.location || this.props.selectedLocation
@@ -729,9 +823,162 @@ class PostEditor extends React.Component {
             togglePublic={this.togglePublic}
             isPublic={!!post.isPublic}
           />
+          {isProposal && proposalOptions.length === 0 && (
+            <div styleName='footerSection'>
+              <div styleName='footerSection-label'>{t('Proposal template')}</div>
+
+              <div styleName='inputContainer'>
+                <Dropdown
+                  styleName='dropdown'
+                  toggleChildren={
+                    <span styleName='dropdown-label'>
+                      {t('Select pre-set')}
+                      <Icon name='ArrowDown' blue />
+                    </span>
+                  }
+                  items={[
+                    { label: t(PROPOSAL_YESNO), onClick: () => this.handleUseTemplate(PROPOSAL_YESNO) },
+                    { label: t(PROPOSAL_POLL_SINGLE), onClick: () => this.handleUseTemplate(PROPOSAL_POLL_SINGLE) },
+                    { label: t(PROPOSAL_ADVICE), onClick: () => this.handleUseTemplate(PROPOSAL_ADVICE) },
+                    { label: t(PROPOSAL_CONSENT), onClick: () => this.handleUseTemplate(PROPOSAL_CONSENT) },
+                    { label: t(PROPOSAL_CONSENSUS), onClick: () => this.handleUseTemplate(PROPOSAL_CONSENSUS) },
+                    { label: t(PROPOSAL_SCHEDULING), onClick: () => this.handleUseTemplate(PROPOSAL_SCHEDULING) },
+                    { label: t(PROPOSAL_MULTIPLE_CHOICE), onClick: () => this.handleUseTemplate(PROPOSAL_MULTIPLE_CHOICE) },
+                    { label: t(PROPOSAL_GRADIENT), onClick: () => this.handleUseTemplate(PROPOSAL_GRADIENT) }
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+          {isProposal && proposalOptions && (
+            <div styleName='footerSection'>
+              <div styleName='footerSection-label'>{t('Proposal options')}</div>
+
+              <div styleName='optionsContainer'>
+                {proposalOptions.map((option, index) => (
+                  <div styleName='proposalOption' key={index}>
+                    {/* emojiPicker dropdown */}
+                    <Dropdown
+                      styleName='option-dropdown'
+                      toggleChildren={
+                        <span styleName='option-dropdown-label dropdown-label'>
+                          {option.emoji || t('Emoji')}
+                          <Icon name='ArrowDown' blue styleName={'option-dropdown-icon'} />
+                        </span>
+                      }
+                    >
+                      <div styleName='emoji-grid'>
+                        {emojiOptions.map((emoji, i) => (
+                          <div
+                            key={i}
+                            styleName='emoji-option'
+                            onClick={() => {
+                              const newOptions = [...proposalOptions]
+                              newOptions[index].emoji = emoji
+                              this.setState({
+                                post: { ...post, proposalOptions: newOptions }
+                              })
+                            }}
+                          >
+                            {emoji}
+                          </div>
+                        ))}
+                      </div>
+                    </Dropdown>
+                    <input
+                      type='text'
+                      styleName='optionTextInput'
+                      placeholder={t('Describe option')}
+                      value={option.text}
+                      onChange={(evt) => {
+                        const newOptions = [...proposalOptions]
+                        newOptions[index].text = evt.target.value
+                        this.setState({
+                          post: { ...post, proposalOptions: newOptions }
+                        })
+                      }}
+                      disabled={loading}
+                    />
+                    <Icon
+                      name='Ex'
+                      styleName='icon'
+                      onClick={() => {
+                        const newOptions = proposalOptions.filter(element => {
+                          if (option.id) return element.id !== option.id
+                          return element.tempId !== option.tempId
+                        })
+
+                        console.log(proposalOptions, option, 'ahahahadd')
+
+                        this.setState({
+                          post: { ...post, proposalOptions: newOptions },
+                          valid: this.isValid({ proposalOptions: newOptions })
+                        })
+                      }}
+                    />
+                  </div>
+                ))}
+                <div styleName='proposalOption' onClick={() => this.handleAddOption()}>
+                  <Icon name='Plus' styleName='icon-plus' blue />
+                  <span styleName='optionText'>{t('Add an option to vote on...')}</span>
+                </div>
+                {this.props.post && !deepCompare(proposalOptions, this.props.post.proposalOptions?.items) && (
+                  <div styleName='proposalOption warning' onClick={() => this.handleAddOption()}>
+                    <Icon name='Hand' styleName='icon-plus' />
+                    <span styleName='optionText'>{t('If you save changes to options, all votes will be discarded')}</span>
+                  </div>
+                )}
+                {proposalOptions.length === 0 && (
+                  <div styleName='proposalOption warning' onClick={() => this.handleAddOption()}>
+                    <Icon name='Hand' styleName='icon-plus' />
+                    <span styleName='optionText'>{t('Proposals require at least one option')}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {isProposal && (
+            <div styleName='footerSection'>
+              <div styleName='footerSection-label'>{t('Proposal type')}</div>
+
+              <div styleName='inputContainer'>
+                <Dropdown
+                  styleName='dropdown'
+                  toggleChildren={
+                    <span styleName='dropdown-label'>
+                      {proposalType ? t(`${proposalType}`) : t('Select pre-set')}
+                      <Icon name='ArrowDown' blue />
+                    </span>
+                  }
+                  items={[
+                    { label: t('Single Vote per person'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_SINGLE) },
+                    { label: t('Multiple votes allowed'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_MULTI_UNRESTRICTED) }
+                  ]}
+                />
+              </div>
+            </div>
+          )}
+          {isProposal && (
+            <div styleName='footerSection'>
+              <div styleName='footerSection-label'>{t('Quorum')}</div>
+              <SliderInput percentage={post.quorum} setPercentage={this.handleSetQuorum} />
+            </div>
+          )}
+          {isProposal && (
+            <AnonymousVoteToggle
+              isAnonymousVote={!!post.isAnonymousVote}
+              toggleAnonymousVote={this.toggleAnonymousVote}
+            />
+          )}
+          {/* {isProposal && (
+            <StrictProposalToggle
+              isStrictProposal={!!post.isStrictProposal}
+              toggleStrictProposal={this.toggleStrictProposal}
+            />
+          )} */}
           {canHaveTimes && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Timeframe')}</div>
+              <div styleName='footerSection-label'>{isProposal ? t('Voting window') : t('Timeframe')}</div>
               <div styleName='datePickerModule'>
                 <DatePicker
                   value={startTime}
@@ -851,7 +1098,15 @@ class PostEditor extends React.Component {
             valid={valid}
             loading={loading}
             submitButtonLabel={this.buttonLabel()}
-            save={() => this.save()}
+            save={() => {
+              if (isProposal && this.props.post && !deepCompare(proposalOptions, this.props.post.proposalOptions?.items)) {
+                if (window.confirm(t('Changing proposal options will reset the votes. Are you sure you want to continue?'))) {
+                  this.save()
+                }
+              } else {
+                this.save()
+              }
+            }}
             setAnnouncement={setAnnouncement}
             announcementSelected={announcementSelected}
             canModerate={this.canModerate()}
@@ -876,7 +1131,6 @@ export function ActionsBar ({
   valid,
   loading,
   submitButtonLabel,
-  submitButtonTooltip,
   save,
   setAnnouncement,
   announcementSelected,

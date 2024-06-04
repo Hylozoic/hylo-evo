@@ -83,6 +83,15 @@
   }
 }
 
+.constrained.proposal {
+  color: $color-persimmon;
+  border-top: 5px solid $color-proposals-30;
+
+  &:hover {
+    border-top: 5px solid $color-proposals;
+  }
+}
+
 .constrained.event {
   color: $color-medium-purple;
   border-top: 5px solid $color-events-30;
@@ -120,7 +129,7 @@
 }
 
 .constrained.request {
-  color: $color-persimmon;
+  color: $color-caribbean-green;
   border-top: 5px solid $color-requests-30;
 
   &:hover {

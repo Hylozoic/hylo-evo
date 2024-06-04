@@ -8,7 +8,8 @@ import {
   unfulfillPost,
   fulfillPost,
   pinPost,
-  getGroup
+  getGroup,
+  updateProposalOutcome
 } from './PostHeader.store'
 
 export function mapStateToProps (state, props) {
@@ -55,14 +56,15 @@ export function mapDispatchToProps (dispatch, props) {
       : dispatch(removePost(postId, groupSlug)),
     pinPost: (postId, groupId) => props.pinPost
       ? props.pinPost(postId)
-      : dispatch(pinPost(postId, groupId))
+      : dispatch(pinPost(postId, groupId)),
+    updateProposalOutcome: (postId, proposalOutcome) => dispatch(updateProposalOutcome(postId, proposalOutcome))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser, group } = stateProps
   const { id, creator } = ownProps
-  const { deletePost, editPost, duplicatePost, fulfillPost, unfulfillPost, removePost, pinPost } = dispatchProps
+  const { deletePost, editPost, duplicatePost, fulfillPost, unfulfillPost, removePost, pinPost, updateProposalOutcome } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
   const canModerate = currentUser && currentUser.canModerate(group)
@@ -79,6 +81,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     canFlag: !isCreator,
     pinPost: canModerate && group ? () => pinPost(id, group.id) : undefined,
     removePost: !isCreator && canModerate ? () => removePost(id) : undefined,
+    updateProposalOutcome: isCreator ? (proposalOutcome) => updateProposalOutcome(id, proposalOutcome) : undefined,
     canEdit
   }
 }

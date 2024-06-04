@@ -133,7 +133,7 @@ class PostClusterLayer extends CompositeLayer {
               .map(f => f.properties)
 
             const sprite = ['event', 'member', 'offer', 'request', 'resource', 'project', 'discussion'].reduce((result, type) => {
-              return features.find(feature => feature.type === type) ? result.concat(type + 's') : result
+              return features.find(feature => feature.type === type || (type === 'discussion' && feature.type === 'proposal')) ? result.concat(type + 's') : result
             }, [])
 
             if (sprite.length === 1) {
