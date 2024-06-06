@@ -14,7 +14,7 @@ export const PROPOSAL_MULTIPLE_CHOICE = 'Multiple Choice'
 // proposal types
 export const PROPOSAL_TYPE_SINGLE = 'single'
 export const PROPOSAL_TYPE_MULTI_UNRESTRICTED = 'multi-unrestricted'
-export const PROPOSAL_TYPE_CONSENSUS = 'consensus'
+// export const PROPOSAL_TYPE_CONSENSUS = 'consensus'
 
 // proposal status
 export const PROPOSAL_STATUS_DISCUSSION = 'discussion'
@@ -289,7 +289,7 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_CONSENSUS,
+      proposalType: PROPOSAL_TYPE_SINGLE,
       title: 'Consensus: ',
       quorum: 90
     },
