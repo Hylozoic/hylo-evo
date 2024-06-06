@@ -108,7 +108,6 @@ export default function PostBodyProposal ({
   }
 
   const handleVoteThrottled = throttle(200, handleVote)
-
   return (
     <div styleName={cx('proposal-body-container', { discussion: proposalStatus === PROPOSAL_STATUS_DISCUSSION, voting: proposalStatus === PROPOSAL_STATUS_VOTING, casual: proposalStatus === PROPOSAL_STATUS_CASUAL, completed: votingComplete })}>
       <div styleName={cx('proposal-status')}>
@@ -137,9 +136,10 @@ export default function PostBodyProposal ({
               </div>
             </div>
             <div styleName='proposal-option-votes-container' data-tip={voterNames.join('\n')} data-for='voters-tt'>
-              <div styleName='proposal-option-vote-count'>
-                {optionVotes.length}
-              </div>
+              {!isAnonymousVote &&
+                <div styleName='proposal-option-vote-count'>
+                  {optionVotes.length}
+                </div>}
               {!isAnonymousVote &&
                 <div styleName='proposal-option-vote-avatars'>
                   <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} inline styleName='people' blue />
