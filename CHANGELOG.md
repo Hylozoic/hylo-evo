@@ -6,20 +6,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.7.6] - 2024-06-04
+
+### Added
+- Post images now open in a carousel, instead of in a separate window
+
+## [5.7.5] - 2024-03-18
+
+### Fixed
+- Hard to read bold text on Safari
+- A potential crash when posting a chat in topic based chat room
+
+## [5.7.4] - 2024-03-16
+
+### Added
+- New post menu item to duplicate a post
+
+### Changed
+- Improved error messages in post editor
+
+### Fixed
+- Deleting images from a post
+
 ## [5.7.3] - 2024-03-04
 
-## Added
+### Added
 - Notifications displayed on desktop when Hylo is run through the new Electron based Desktop app! Only tested on a mac so far. Dock badge count also updated as notifications come in or are read.
 
 ## [5.7.2] - 2024-02-20
 
-## Added
+### Added
 - New setting to receive a notification for every post in your groups. This is set to only receive "important" post notifications by default, which includes Announcement posts, and posts you are mentioned in. You can change the setting to All posts or None in the Notifications settings page. Also improved the text of various notifications.
 - Internationalization/language support of the Signup/Login page
 
 ## [5.7.1] - 2024-02-14
 
-## Changed
+### Changed
 - Maximum post title length increased from 50 characters to 80 characters
 
 ### Fixed

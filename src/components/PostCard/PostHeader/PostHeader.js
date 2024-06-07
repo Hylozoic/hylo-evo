@@ -16,6 +16,7 @@ import PostCompletion from '../PostCompletion'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import './PostHeader.scss'
+import { PROPOSAL_STATUS_CASUAL, PROPOSAL_STATUS_COMPLETED } from 'store/models/Post'
 
 class PostHeader extends PureComponent {
   static defaultProps = {
@@ -43,6 +44,8 @@ class PostHeader extends PureComponent {
       hasImage,
       endTime,
       fulfilledAt,
+      proposalOutcome,
+      proposalStatus,
       pinned,
       topics,
       close,
@@ -50,12 +53,14 @@ class PostHeader extends PureComponent {
       constrained,
       editPost,
       deletePost,
+      duplicatePost,
       removePost,
       pinPost,
       highlightProps,
       announcement,
       fulfillPost,
       unfulfillPost,
+      updateProposalOutcome,
       postUrl,
       roles,
       t
@@ -79,17 +84,18 @@ class PostHeader extends PureComponent {
     const dropdownItems = filter([
       { icon: 'Pin', label: pinned ? t('Unpin') : t('Pin'), onClick: pinPost },
       { icon: 'Edit', label: t('Edit'), onClick: editPost },
-      { icon: 'Copy', label: t('Copy Link'), onClick: copyLink },
+      { icon: 'CopyLink', label: t('Copy Link'), onClick: copyLink },
       { icon: 'Flag', label: t('Flag'), onClick: this.flagPostFunc() },
+      { icon: 'Duplicate', label: t('Duplicate'), onClick: duplicatePost },
       { icon: 'Trash', label: t('Delete'), onClick: deletePost ? () => deletePost(t('Are you sure you want to delete this post?')) : undefined, red: true },
       { icon: 'Trash', label: t('Remove From Group'), onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
-    const typesWithTimes = ['offer', 'request', 'resource', 'project']
+    const typesWithTimes = ['offer', 'request', 'resource', 'project', 'proposal']
     const canHaveTimes = typesWithTimes.includes(type)
 
-    const typesWithCompletion = ['offer', 'request', 'resource', 'project']
-    const canBeCompleted = typesWithCompletion.includes(type)
+    const typesWithCompletion = ['offer', 'request', 'resource', 'project', 'proposal']
+    const canBeCompleted = typesWithCompletion.includes(type) && (!proposalStatus || proposalStatus === PROPOSAL_STATUS_COMPLETED || proposalStatus === PROPOSAL_STATUS_CASUAL)
 
     // If it was completed/fulfilled before it ended, then use that as the end datetime
     const actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
@@ -179,6 +185,20 @@ class PostHeader extends PureComponent {
             unfulfillPost={unfulfillPost}
           />
         )}
+        {
+          canEdit && expanded && fulfilledAt && type === 'proposal' && (
+            <div styleName='outcomeContainer'>
+              <input
+                type='text'
+                styleName='outcomeInput'
+                placeholder='Summarize the outcome'
+                value={proposalOutcome || ''}
+                onChange={(value) => updateProposalOutcome(value.target.value)}
+                ref={this.titleInputRef}
+              />
+            </div>
+          )
+        }
 
         <ReactTooltip
           backgroundColor='rgba(35, 65, 91, 1.0)'

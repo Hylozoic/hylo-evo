@@ -35,7 +35,7 @@ it('matches snapshot', () => {
   expect(wrapper).toMatchSnapshot()
   wrapper.setProps({ context, type: 'request', groups })
   expect(wrapper).toMatchSnapshot()
-  wrapper.setProps({ deletePost: () => {}, editPost: () => {} })
+  wrapper.setProps({ deletePost: () => {}, editPost: () => {}, duplicatePost: () => {} })
   expect(wrapper).toMatchSnapshot()
 })
 
@@ -64,7 +64,7 @@ it('matches announcement snapshot', () => {
   expect(wrapper).toMatchSnapshot()
   wrapper.setProps({ context, type: 'request', groups })
   expect(wrapper).toMatchSnapshot()
-  wrapper.setProps({ deletePost: () => {}, editPost: () => {} })
+  wrapper.setProps({ deletePost: () => {}, editPost: () => {}, duplicatePost: () => {} })
   expect(wrapper).toMatchSnapshot()
 })
 

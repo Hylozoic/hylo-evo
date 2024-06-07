@@ -4,7 +4,7 @@ import React from 'react'
 import MemberVotes from './MemberVotes'
 import denormalized from '../MemberProfile.test.json'
 
-describe.only('MemberVotes', () => {
+describe.only('MemberVotes', () => { // TODO REACTIONS: switch this to reactions
   const { person } = denormalized.data
 
   it('renders the same as the last snapshot', () => {

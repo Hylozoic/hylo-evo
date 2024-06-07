@@ -30,7 +30,7 @@ import RecentActivity from './RecentActivity'
 import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import Membership from 'components/Membership'
-import MemberVotes from './MemberVotes'
+import MemberVotes from './MemberVotes' // TODO REACTIONS: switch this to reactions
 import SkillsSection from 'components/SkillsSection'
 import SkillsToLearnSection from 'components/SkillsToLearnSection'
 import styles from './MemberProfile.scss'
@@ -116,7 +116,7 @@ class MemberProfile extends React.Component {
       { id: 'Overview', label: t('Overview'), title: t('{{name}}s recent activity', { name: person.name }), component: RecentActivity },
       { id: 'Posts', label: t('Posts'), title: t('{{name}}s posts', { name: person.name }), component: MemberPosts },
       { id: 'Comments', label: t('Comments'), title: t('{{name}}s comments', { name: person.name }), component: MemberComments },
-      { id: 'Reactions', label: t('Reactions'), title: t('{{name}}s reactions', { name: person.name }), component: MemberVotes }
+      { id: 'Reactions', label: t('Reactions'), title: t('{{name}}s reactions', { name: person.name }), component: MemberVotes } // TODO REACTIONS: switch this to reactions
     ].map(contentDropDownitem => ({
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))

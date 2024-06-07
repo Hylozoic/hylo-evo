@@ -1,4 +1,4 @@
-import NotificationsDropdown, { Notification, NotificationHeader, NotificationBody } from './NotificationsDropdown'
+import NotificationsDropdown, { Notification } from './NotificationsDropdown'
 import { shallow } from 'enzyme'
 import React from 'react'
 import {
@@ -8,7 +8,6 @@ import {
   ACTION_APPROVED_JOIN_REQUEST,
   ACTION_MENTION,
   ACTION_COMMENT_MENTION,
-  ACTION_ANNOUNCEMENT,
   ACTION_DONATION_TO,
   ACTION_DONATION_FROM
   // ACTION_EVENT_INVITATION
@@ -149,18 +148,6 @@ const notifications = [
   mentionNotification,
   commentMentionNotification
 ]
-
-const announcementNotification = {
-  id: 10,
-  activity: {
-    actor: u2,
-    action: ACTION_ANNOUNCEMENT,
-    meta: {},
-    post: { title: 'Announcement' },
-    unread: true
-  },
-  createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
-}
 
 // const eventInvitationNotification = {
 //   id: 10,

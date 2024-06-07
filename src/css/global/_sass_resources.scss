@@ -82,6 +82,7 @@ $color-athens-gray: #FAFBFC;
 $color-athens-gray-medium: #F1F2F4;
 $color-athens-gray-dark: #E1E5EA;
 $color-athens-gray-dark-50: rgba($color-athens-gray-dark, .5);
+$color-cloud-grey:#C0C5CD75;
 $color-ghost: #CCD1D7;
 $color-grey-filter-icon: #c4c4c4;
 $color-ghost-30: rgba($color-ghost, .3);
@@ -125,11 +126,17 @@ $color-members-30: rgba(201, 88, 172, .3);
 $color-members-40: rgba(201, 88, 172, .4);
 $color-members-50: rgba(201, 88, 172, .5);
 
-$color-requests: rgba(102, 75, 165, 1);
-$color-requests-20: rgba(102, 75, 165, .2);
-$color-requests-30: rgba(102, 75, 165, .3);
-$color-requests-40: rgba(102, 75, 165, .4);
-$color-requests-50: rgba(102, 75, 165, .5);
+$color-proposals: rgba(102, 75, 165, 1);
+$color-proposals-20: rgba(102, 75, 165, .2);
+$color-proposals-30: rgba(102, 75, 165, .3);
+$color-proposals-40: rgba(102, 75, 165, .4);
+$color-proposals-50: rgba(102, 75, 165, .5);
+
+$color-requests: rgba(0, 199, 157, 1);
+$color-requests-20: rgba(0, 199, 157, .2);
+$color-requests-30: rgba(0, 199, 157, .3);
+$color-requests-40: rgba(0, 199, 157, .4);
+$color-requests-50: rgba(0, 199, 157, .5);
 
 $color-offers: rgba(0, 199, 157, 1);
 $color-offers-20: rgba(0, 199, 157, .2);
@@ -168,6 +175,10 @@ $color-fuchsia-pink-50: rgba($color-fuchsia-pink, .5);;
 
 $color-picton-blue: #40A1DD;
 $color-picton-blue-50: rgba($color-picton-blue, .5);
+$color-picton-dark: #3078a5;
+
+$color-ultramarine: #0074D8;
+
 
 $color-persimmon: #FE6848;
 $color-persimmon-50: rgba($color-persimmon, .5);;

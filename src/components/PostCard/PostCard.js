@@ -15,7 +15,6 @@ import PostGroups from './PostGroups'
 import './PostCard.scss'
 
 export { PostHeader, PostFooter, PostBody, PostGroups, EventBody }
-
 export default function PostCard (props) {
   const {
     childPost,

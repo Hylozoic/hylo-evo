@@ -50,6 +50,7 @@ $wrapperBorderRadius: 8px;
 
 .icon {
   margin: 0 0 0 8px;
+  color: $color-discussions;
 }
 
 .icon {
@@ -73,6 +74,9 @@ $wrapperBorderRadius: 8px;
   }
   &-event {
     color: $color-events;
+  }
+  &-proposal {
+    color: $color-proposals;
   }
 }
 
@@ -131,6 +135,12 @@ $wrapperBorderRadius: 8px;
     &.selectable:hover, &:active, &.active  {
       color: $color-events;
       border: 1px solid $color-events-20;
+    }
+  }
+  &-proposal {
+    &.selectable:hover, &:active, &.active {
+      color: $color-proposals;
+      border: 1px solid $color-proposals-20;
     }
   }
 }
@@ -291,15 +301,29 @@ $wrapperBorderRadius: 8px;
   display: none;
 }
 
-.title-error {
+.datepicker-error {
   color: white;
   background-color: $color-amaranth;
-  float: right;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  width: 100%;
+  margin-left: 10px;
+  padding-top: 0px;
+  padding-bottom: 2px;
   padding-right: 10px;
   padding-left: 10px;
-  border-radius: 10px;
+  border-radius: 7px;
+}
+
+.title-error {
+  color: black;
+  background-color: $color-yellow-orange;
+  width: 100%;
+  position: relative;
+  top: -15px;
+  padding-top: 0px;
+  padding-bottom: 2px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 7px;
 }
 
 .accept-contributions-help {
@@ -330,6 +354,135 @@ $wrapperBorderRadius: 8px;
   }
 }
 
+.inputContainer {
+  background-color: #D9EBF8;
+  border-color: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: inherit;
+  height: 35px;
+  margin: 10px 0;
+  text-align: center;
+  padding: 0 5px;
+  color: $color-picton-blue;
+}
+
+.optionsContainer{
+  width: 100%;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: inherit;
+  margin: 10px 0;
+  padding: 0 5px;
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+}
+
+.proposalOption {
+  background-color: #D9EBF8;
+  border-color: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: inherit;
+  height: 34px;
+  padding: 0 5px;
+  color: $color-picton-blue;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown {
+  box-sizing: border-box;
+  color: $color-picton-blue;
+  font-size: 16px;
+  border: 1px solid rgba(224, 229, 233, 1.0);
+  padding: 0px 5px;
+  line-height: 16px;
+  height: 36px;
+  line-height: 36px;
+  width: 100%;
+}
+
+.dropdown-label {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  color: $color-picton-blue;
+  font-size: 15px;
+  padding: 3px;
+  white-space: nowrap;
+
+  span {
+    vertical-align: middle;
+  }
+}
+
+.option-dropdown{
+  border: $color-picton-blue 1px solid;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.option-dropdown-icon{
+  font-size: 16px;
+}
+
+.option-dropdown-label{
+  font-size: 16px;
+}
+
+.emoji-option{
+  font-size: 24px;
+}
+
+.emoji-grid{
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  gap: 8px;
+  padding: 8px;
+  border-radius: 3px;
+}
+
+.icon-plus {
+  font-size: 16px;
+  position: relative;
+  margin-right: 15px;
+}
+
+.optionText{
+  font-size: 16px;
+}
+
+.optionTextInput {
+  font-size: 16px;
+  border: 1px solid rgba(224, 229, 233, 1.0);
+  border-radius: 4px;
+  background-color: transparent;
+  color: $color-picton-blue;
+  padding: 5px;
+  width: 100%;
+}
+
+@media screen and (max-width: 460px) {
+  .inputContainer {
+    input {
+      width: 90px;
+      padding-left: 9px;
+
+      &::placeholder {
+        background-image: none;
+      }
+    }
+  }
+}
+
+
 
 @media screen and (max-width: 600px) {
 
@@ -358,6 +511,12 @@ $wrapperBorderRadius: 8px;
   .editor {
     font-size: 14px;
   }
+}
+
+.warning {
+  color: $color-amaranth;
+  border-color: $color-amaranth;
+  cursor: default;
 }
 
 @media screen and (max-width: 340px) {

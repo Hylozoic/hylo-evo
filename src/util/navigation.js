@@ -114,6 +114,10 @@ export function editPostUrl (id, opts = {}, querystringParams = {}) {
   return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
 }
 
+export function duplicatePostUrl (id, opts = {}) {
+  return createPostUrl(opts, { fromPostId: id })
+}
+
 export function postCommentUrl ({ postId, commentId, ...opts }, querystringParams = {}) {
   return `${postUrl(postId, opts, querystringParams)}/comments/${commentId}`
 }
@@ -162,6 +166,12 @@ export function topicUrl (topicName, opts) {
 }
 
 // URL utility functions
+
+export function setQuerystringParam (key, value, location) {
+  const querystringParams = new URLSearchParams(location.search)
+  querystringParams.set(key, value)
+  return querystringParams.toString()
+}
 
 export function addQuerystringToPath (path, querystringParams) {
   // The weird query needed to ignore empty arrays but allow for boolean values and numbers

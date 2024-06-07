@@ -35,6 +35,7 @@ const StreamViewControls = (props) => {
     { id: 'event', label: 'Events' },
     { id: 'offer', label: 'Offers' },
     { id: 'project', label: 'Projects' },
+    { id: 'proposal', label: 'Proposals' },
     { id: 'request', label: 'Requests' },
     { id: 'resource', label: 'Resources' }
   ]
@@ -109,7 +110,7 @@ const StreamViewControls = (props) => {
           </div>
         </div>
         {makeDropdown(sortBy, customViewType === 'collection' ? COLLECTION_SORT_OPTIONS : STREAM_SORT_OPTIONS, changeSort)}
-        {!['projects'].includes(view) && postTypeFilterDropdown}
+        {!['projects', 'proposals'].includes(view) && postTypeFilterDropdown}
         <Tooltip id='stream-viewmode-tip' position='bottom' />
       </div>
       {searchActive &&

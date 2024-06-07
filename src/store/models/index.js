@@ -27,7 +27,6 @@ import PostMembership from './PostMembership'
 import SearchResult from './SearchResult'
 import Skill from './Skill'
 import Topic from './Topic'
-import Vote from './Vote'
 import Widget from './Widget'
 
 export const orm = new ORM({ stateSelector: state => state.orm })
@@ -77,7 +76,6 @@ orm.register(
   SearchResult,
   Skill,
   Topic,
-  Vote,
   Widget
 )
 

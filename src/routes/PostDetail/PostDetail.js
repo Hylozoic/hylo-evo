@@ -206,7 +206,7 @@ class PostDetail extends Component {
                 />
               </div>
             )}
-            <CardImageAttachments attachments={post.attachments} linked />
+            <CardImageAttachments attachments={post.attachments} />
             {isEvent && (
               <EventBody
                 styleName='body'

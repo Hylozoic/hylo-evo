@@ -43,6 +43,7 @@
 
 .image-preview {
   composes: image-box;
+  position: relative;
   cursor: move;
 }
 
@@ -50,7 +51,6 @@
   composes: image-box;
   background-size: cover;
   background-position: center;
-  position: relative;
   padding: 8px;
 }
 
