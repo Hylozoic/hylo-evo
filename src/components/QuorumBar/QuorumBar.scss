@@ -4,6 +4,7 @@
   width: 100%; 
   background-color: $color-cloud-grey;
   border-radius: 5px;
+  margin-top: 4px;
 }
 
 .voters-bar {
@@ -40,6 +41,8 @@
 .quorum-text {
   position: absolute;
   text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
   top: 50%;
   transform: translateY(-50%);
   left: 8px;
@@ -61,6 +64,19 @@
 .big-quorum{
   right: 10px;
   color: white;
+}
+
+.small-quorum{
+  right: 10px;
+  color: white;
+}
+
+.quorum-tally {
+  text-transform: uppercase;
+  color: white;
+  font-size: 12px;
+  right: 12px;
+  position: relative;
 }
 
 .quorum-reached{

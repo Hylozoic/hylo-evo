@@ -4,7 +4,7 @@ import { throttle } from 'lodash/fp'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
-import { PROPOSAL_STATUS_CASUAL, PROPOSAL_STATUS_COMPLETED, PROPOSAL_STATUS_DISCUSSION, PROPOSAL_STATUS_VOTING, PROPOSAL_TYPE_MULTI_UNRESTRICTED, PROPOSAL_TYPE_SINGLE } from 'store/models/Post'
+import { PROPOSAL_STATUS_CASUAL, PROPOSAL_STATUS_COMPLETED, PROPOSAL_STATUS_DISCUSSION, PROPOSAL_STATUS_VOTING, VOTING_METHOD_MULTI_UNRESTRICTED, VOTING_METHOD_SINGLE } from 'store/models/Post'
 import {
   addProposalVote,
   removeProposalVote,
@@ -62,7 +62,7 @@ const isVotingOpen = (proposalStatus) => proposalStatus === PROPOSAL_STATUS_VOTI
 export default function PostBodyProposal ({
   currentUser,
   proposalStatus,
-  proposalType,
+  votingMethod,
   proposalOptions,
   proposalVotes,
   isAnonymousVote,
@@ -88,7 +88,7 @@ export default function PostBodyProposal ({
   const votingComplete = proposalStatus === PROPOSAL_STATUS_COMPLETED || fulfilledAt
 
   function handleVote (optionId) {
-    if (proposalType === PROPOSAL_TYPE_SINGLE) {
+    if (votingMethod === VOTING_METHOD_SINGLE) {
       if (currentUserVotesOptionIds.includes(optionId)) {
         dispatch(removeProposalVote({ optionId, postId: id }))
       } else if (currentUserVotesOptionIds.length === 0) {
@@ -98,7 +98,7 @@ export default function PostBodyProposal ({
         dispatch(swapProposalVote({ postId: id, addOptionId: optionId, removeOptionId }))
       }
     }
-    if (proposalType === PROPOSAL_TYPE_MULTI_UNRESTRICTED) {
+    if (votingMethod === VOTING_METHOD_MULTI_UNRESTRICTED) {
       if (currentUserVotesOptionIds.includes(optionId)) {
         dispatch(removeProposalVote({ optionId, postId: id }))
       } else {
@@ -108,16 +108,18 @@ export default function PostBodyProposal ({
   }
 
   const handleVoteThrottled = throttle(200, handleVote)
+
+  const votePrompt = votingMethod === VOTING_METHOD_SINGLE ? t('select one option') : t('select one or more options')
+
   return (
     <div styleName={cx('proposal-body-container', { discussion: proposalStatus === PROPOSAL_STATUS_DISCUSSION, voting: proposalStatus === PROPOSAL_STATUS_VOTING, casual: proposalStatus === PROPOSAL_STATUS_CASUAL, completed: votingComplete })}>
       <div styleName={cx('proposal-status')}>
         {proposalStatus === PROPOSAL_STATUS_DISCUSSION && t('Discussion in progress')}
-        {proposalStatus === PROPOSAL_STATUS_VOTING && t('Voting open')}
+        {proposalStatus === PROPOSAL_STATUS_VOTING && t('Voting open') + ', ' + votePrompt}
         {votingComplete && t('Voting ended')}
-        {proposalStatus === PROPOSAL_STATUS_CASUAL && t('Voting open')}
+        {proposalStatus === PROPOSAL_STATUS_CASUAL && !votingComplete && t('Voting open') + ', ' + votePrompt}
       </div>
       <div styleName={cx('proposal-timing')}>
-        {!startTime && t('Open timeframe')}
         {startTime && proposalStatus !== PROPOSAL_STATUS_COMPLETED && `${new Date(startTime).toLocaleDateString()} - ${new Date(endTime).toLocaleDateString()}`}
         {startTime && votingComplete && `${new Date(endTime).toLocaleDateString()}`}
       </div>
@@ -155,7 +157,7 @@ export default function PostBodyProposal ({
         delayShow={0}
         id='voters-tt'
       />
-      {quorum && <QuorumBar totalVoters={numberOfPossibleVoters} quorum={quorum} actualVoters={proposalVoterCount} proposalStatus={proposalStatus} />}
+      {quorum && quorum > 0 && <QuorumBar totalVoters={numberOfPossibleVoters} quorum={quorum} actualVoters={proposalVoterCount} proposalStatus={proposalStatus} />}
       {proposalOutcome && fulfilledAt && <div styleName='proposal-outcome'>  {t('Outcome')}: {proposalOutcome}</div>}
     </div>
   )

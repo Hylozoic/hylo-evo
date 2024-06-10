@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 // proposal templates
 export const PROPOSAL_YESNO = 'Yes/No'
-export const PROPOSAL_POLL_SINGLE = 'Poll, Single Vote'
+export const PROPOSAL_POLL_SINGLE = 'Poll, Single vote'
 export const PROPOSAL_ADVICE = 'Advice'
 export const PROPOSAL_CONSENT = 'Consent'
 export const PROPOSAL_CONSENSUS = 'Consensus'
@@ -12,9 +12,9 @@ export const PROPOSAL_GRADIENT = 'Gradient of Agreement'
 export const PROPOSAL_MULTIPLE_CHOICE = 'Multiple Choice'
 
 // proposal types
-export const PROPOSAL_TYPE_SINGLE = 'single'
-export const PROPOSAL_TYPE_MULTI_UNRESTRICTED = 'multi-unrestricted'
-// export const PROPOSAL_TYPE_CONSENSUS = 'consensus'
+export const VOTING_METHOD_SINGLE = 'single'
+export const VOTING_METHOD_MULTI_UNRESTRICTED = 'multi-unrestricted'
+// export const VOTING_METHOD_CONSENSUS = 'consensus'
 
 // proposal status
 export const PROPOSAL_STATUS_DISCUSSION = 'discussion'
@@ -190,7 +190,7 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
+      votingMethod: VOTING_METHOD_SINGLE,
       title: '',
       quorum: 25
     },
@@ -216,7 +216,7 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
+      votingMethod: VOTING_METHOD_SINGLE,
       title: 'Poll: ',
       quorum: 25
     },
@@ -237,7 +237,7 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
+      votingMethod: VOTING_METHOD_SINGLE,
       title: 'Advice: ',
       quorum: 35
     },
@@ -258,7 +258,7 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
+      votingMethod: VOTING_METHOD_SINGLE,
       title: 'Consent: ',
       quorum: 100
     },
@@ -289,7 +289,7 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
+      votingMethod: VOTING_METHOD_SINGLE,
       title: 'Consensus: ',
       quorum: 90
     },
@@ -325,7 +325,7 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_MULTI_UNRESTRICTED,
+      votingMethod: VOTING_METHOD_MULTI_UNRESTRICTED,
       title: 'Schedule: ',
       quorum: 25
     },
@@ -366,7 +366,7 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
+      votingMethod: VOTING_METHOD_SINGLE,
       title: 'Poll: ',
       quorum: 25
     },
@@ -402,7 +402,7 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_MULTI_UNRESTRICTED,
+      votingMethod: VOTING_METHOD_MULTI_UNRESTRICTED,
       title: 'Multiple Choice:',
       quorum: 25
     },

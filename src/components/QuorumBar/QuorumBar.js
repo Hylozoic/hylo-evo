@@ -17,10 +17,10 @@ const QuorumBar = ({ totalVoters, quorum, actualVoters, proposalStatus }) => {
   return (
     <div styleName='vote-progress-container'>
       <div styleName='actual-voters' style={{ width: `${actualVotersWidth}%` }}>
-        <div styleName='quorum-text'>{quorumStatus}</div>
+        {quorum > 10 && <div styleName='quorum-text'>{quorumStatus}{' '}{quorumReached && quorum > 20 && t('voterCount', { count: actualVoters })}</div>}
       </div>
       <div styleName='quorum-bar' style={{ width: `${quorum}%` }}>
-        {!quorumReached && <div styleName={cx('quorum-number', { 'quorum-reached': quorumReached, 'big-quorum': quorum > 70 })}>{quorum}% {actualVoters || 0}/{totalVoters}</div>}
+        {!quorumReached && <div styleName={cx('quorum-number', { 'quorum-reached': quorumReached, 'big-quorum': quorum > 70 })}>{quorum}% {actualVoters || 0}/{votersForQuorum}</div>}
       </div>
       <div styleName='total-voters-bar' />
     </div>
