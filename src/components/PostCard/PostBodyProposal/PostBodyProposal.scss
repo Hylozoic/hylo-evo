@@ -32,6 +32,13 @@
   white-space: nowrap;
 }
 
+.anonymous-voting{
+  color: $color-grey-keyline;
+  width: 12px;
+  height: 12px;
+  font-size: 16px;
+}
+
 .proposal-body-container{
   border-style: dashed;
   position: relative;
@@ -51,6 +58,9 @@
  left: 12px;
  padding: 6px;
  background-color: white;
+ display: flex;
+ align-items: center;
+ gap: 8px;
 }
 
 .proposal-timing {

@@ -13,6 +13,7 @@ import {
 import QuorumBar from 'components/QuorumBar/QuorumBar'
 import './PostBodyProposal.scss'
 import RoundImageRow from 'components/RoundImageRow'
+import Icon from 'components/Icon/Icon'
 
 const calcNumberOfVoters = (votes) => {
   return votes.reduce((acc, vote) => {
@@ -114,11 +115,18 @@ export default function PostBodyProposal ({
   return (
     <div styleName={cx('proposal-body-container', { discussion: proposalStatus === PROPOSAL_STATUS_DISCUSSION, voting: proposalStatus === PROPOSAL_STATUS_VOTING, casual: proposalStatus === PROPOSAL_STATUS_CASUAL, completed: votingComplete })}>
       <div styleName={cx('proposal-status')}>
+        {isAnonymousVote && <Icon name='Hidden' styleName='anonymous-voting' dataTip={t('Anonymous voting')} dataTipFor='anon-tt' />}
         {proposalStatus === PROPOSAL_STATUS_DISCUSSION && t('Discussion in progress')}
         {proposalStatus === PROPOSAL_STATUS_VOTING && t('Voting open') + ', ' + votePrompt}
         {votingComplete && t('Voting ended')}
         {proposalStatus === PROPOSAL_STATUS_CASUAL && !votingComplete && t('Voting open') + ', ' + votePrompt}
       </div>
+      <ReactTooltip
+        backgroundColor='rgba(35, 65, 91, 1.0)'
+        effect='solid'
+        delayShow={0}
+        id='anon-tt'
+      />
       <div styleName={cx('proposal-timing')}>
         {startTime && proposalStatus !== PROPOSAL_STATUS_COMPLETED && `${new Date(startTime).toLocaleDateString()} - ${new Date(endTime).toLocaleDateString()}`}
         {startTime && votingComplete && `${new Date(endTime).toLocaleDateString()}`}
@@ -138,7 +146,7 @@ export default function PostBodyProposal ({
               </div>
             </div>
             <div styleName='proposal-option-votes-container' data-tip={voterNames.join('\n')} data-for='voters-tt'>
-              {!isAnonymousVote &&
+              {(!isAnonymousVote || votingComplete) &&
                 <div styleName='proposal-option-vote-count'>
                   {optionVotes.length}
                 </div>}

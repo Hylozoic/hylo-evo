@@ -7,6 +7,16 @@
   margin-top: 4px;
 }
 
+.quorum-container {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.quorum-tooltip{
+  font-size: 16px;
+}
+
 .voters-bar {
   position: relative;
   height: 100%;
