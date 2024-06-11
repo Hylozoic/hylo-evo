@@ -18,7 +18,7 @@ const QuorumBar = ({ totalVoters, quorum, actualVoters, proposalStatus }) => {
 
   return (
     <div styleName='quorum-container'>
-      <Icon name='Info' styleName='quorum-tooltip' dataTip={t('quorumExplainer', { quorum })} dataTipFor='quorum-tt' />
+      <Icon name='Info' styleName='quorum-tooltip' dataTip={t('quorumExplainer')} dataTipFor='quorum-tt' />
       <div styleName='vote-progress-container'>
         <div styleName='actual-voters' style={{ width: `${actualVotersWidth}%` }}>
           {quorum > 10 && <div styleName='quorum-text'>{quorumStatus}{' '}{quorumReached && quorum > 20 && t('voterCount', { count: actualVoters })}</div>}

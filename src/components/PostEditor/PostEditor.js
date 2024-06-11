@@ -853,8 +853,9 @@ class PostEditor extends React.Component {
           )}
           {isProposal && proposalOptions && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Proposal options')}*</div>
-
+              <div styleName='footerSection-label'>
+                {t('Proposal options')}*
+              </div>
               <div styleName='optionsContainer'>
                 {proposalOptions.map((option, index) => (
                   <div styleName='proposalOption' key={index}>
@@ -961,8 +962,14 @@ class PostEditor extends React.Component {
           )}
           {isProposal && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Quorum')}</div>
+              <div styleName='footerSection-label'>{t('Quorum')} <Icon name='Info' styleName='quorum-tooltip' dataTip={t('quorumExplainer')} dataTipFor='quorum-tt' /></div>
               <SliderInput percentage={post.quorum} setPercentage={this.handleSetQuorum} />
+              <ReactTooltip
+                backgroundColor='rgba(35, 65, 91, 1.0)'
+                effect='solid'
+                delayShow={0}
+                id='quorum-tt'
+              />
             </div>
           )}
           {isProposal && (

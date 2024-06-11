@@ -984,7 +984,7 @@
   "proposal": "propuesta",
   "purchasing from you": "comprando de tí",
   "purposeHelpText": "Tu declaración de propósito es un resumen conciso de por qué existe tu grupo y qué esperas lograr. Un propósito claro y específico ayuda a alinear a los miembros de tu grupo para coordinarse eficazmente para lograr tus objetivos. Apunta a una o dos oraciones.",
-  "quorumExplainer": "El quórum es el porcentaje de miembros que deben participar en la decisión para que se considere válida. \nPara esta propuesta, el {{quorum}}% de los miembros del grupo deben votar para que el resultado de la propuesta sea válido.",
+  "quorumExplainer": "El quórum es el porcentaje de miembros que deben participar en la decisión para que se considere válida.",
   "reactivate": "reactivar",
   "reason-required": "motivación requerida",
   "request": "Petición",
