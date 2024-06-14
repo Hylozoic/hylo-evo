@@ -8,7 +8,7 @@ export const PROPOSAL_ADVICE = 'Advice'
 export const PROPOSAL_CONSENT = 'Consent'
 export const PROPOSAL_CONSENSUS = 'Consensus'
 export const PROPOSAL_SCHEDULING = 'Scheduling'
-export const PROPOSAL_GRADIENT = 'Gradient of Agreement'
+export const PROPOSAL_GRADIENT = 'Agree/Disagree'
 export const PROPOSAL_MULTIPLE_CHOICE = 'Multiple Choice'
 
 // proposal types
@@ -239,7 +239,7 @@ export const PROPOSAL_TEMPLATES = {
       ],
       votingMethod: VOTING_METHOD_SINGLE,
       title: 'Advice: ',
-      quorum: 35
+      quorum: 25
     },
     title: PROPOSAL_ADVICE,
     tooltip: 'Advice process'
@@ -260,7 +260,7 @@ export const PROPOSAL_TEMPLATES = {
       ],
       votingMethod: VOTING_METHOD_SINGLE,
       title: 'Consent: ',
-      quorum: 100
+      quorum: 25
     },
     title: PROPOSAL_CONSENT,
     tooltip: 'Consent poll: everyone must agree'
@@ -291,46 +291,10 @@ export const PROPOSAL_TEMPLATES = {
       ],
       votingMethod: VOTING_METHOD_SINGLE,
       title: 'Consensus: ',
-      quorum: 90
+      quorum: 25
     },
     title: PROPOSAL_CONSENSUS,
     tooltip: 'Consensus poll: One block/veto stops the proposal'
-  },
-  [PROPOSAL_SCHEDULING]: {
-    form: {
-      proposalOptions: [
-        {
-          text: 'Timing 1',
-          emoji: '',
-          color: ''
-        },
-        {
-          text: 'Timing 2',
-          emoji: '',
-          color: ''
-        },
-        {
-          text: 'Timing 3',
-          emoji: '',
-          color: ''
-        },
-        {
-          text: 'Timing 4',
-          emoji: '',
-          color: ''
-        },
-        {
-          text: 'Timing 5',
-          emoji: '',
-          color: ''
-        }
-      ],
-      votingMethod: VOTING_METHOD_MULTI_UNRESTRICTED,
-      title: 'Schedule: ',
-      quorum: 25
-    },
-    title: PROPOSAL_SCHEDULING,
-    tooltip: 'Members can pick many options for scheduling'
   },
   [PROPOSAL_GRADIENT]: {
     form: {

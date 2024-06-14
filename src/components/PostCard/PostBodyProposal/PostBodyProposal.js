@@ -10,7 +10,7 @@ import {
   removeProposalVote,
   swapProposalVote
 } from '../../../store/actions/proposals'
-import QuorumBar from 'components/QuorumBar/QuorumBar'
+import QuorumBar from 'components/QuorumBar'
 import './PostBodyProposal.scss'
 import RoundImageRow from 'components/RoundImageRow'
 import Icon from 'components/Icon/Icon'
@@ -165,7 +165,7 @@ export default function PostBodyProposal ({
         delayShow={0}
         id='voters-tt'
       />
-      {quorum && quorum > 0 && <QuorumBar totalVoters={numberOfPossibleVoters} quorum={quorum} actualVoters={proposalVoterCount} proposalStatus={proposalStatus} />}
+      {quorum && (quorum > 0) && <QuorumBar totalVoters={numberOfPossibleVoters} quorum={quorum} actualVoters={proposalVoterCount} proposalStatus={proposalStatus} />}
       {proposalOutcome && fulfilledAt && <div styleName='proposal-outcome'>  {t('Outcome')}: {proposalOutcome}</div>}
     </div>
   )
