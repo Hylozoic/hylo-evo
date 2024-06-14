@@ -153,7 +153,7 @@ export const POST_TYPES = {
     backgroundColor: 'rgba(0, 163, 227, .2)', // $color-link-water
     map: true,
     label: 'Proposal',
-    description: 'Invite people to your event'
+    description: 'Suggest a proposal for others to vote on'
   }
 }
 
