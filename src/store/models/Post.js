@@ -8,7 +8,7 @@ export const PROPOSAL_ADVICE = 'Advice'
 export const PROPOSAL_CONSENT = 'Consent'
 export const PROPOSAL_CONSENSUS = 'Consensus'
 export const PROPOSAL_SCHEDULING = 'Scheduling'
-export const PROPOSAL_GRADIENT = 'Agree/Disagree'
+export const PROPOSAL_GRADIENT = 'Gradient of Agreement'
 export const PROPOSAL_MULTIPLE_CHOICE = 'Multiple Choice'
 
 // proposal types
@@ -191,8 +191,7 @@ export const PROPOSAL_TEMPLATES = {
         }
       ],
       votingMethod: VOTING_METHOD_SINGLE,
-      title: '',
-      quorum: 25
+      title: ''
     },
     title: PROPOSAL_YESNO,
     tooltip: 'Simple yes or no poll'
@@ -217,8 +216,7 @@ export const PROPOSAL_TEMPLATES = {
         }
       ],
       votingMethod: VOTING_METHOD_SINGLE,
-      title: 'Poll: ',
-      quorum: 25
+      title: 'Poll: '
     },
     title: PROPOSAL_POLL_SINGLE,
     tooltip: 'Single vote poll'
@@ -238,8 +236,7 @@ export const PROPOSAL_TEMPLATES = {
         }
       ],
       votingMethod: VOTING_METHOD_SINGLE,
-      title: 'Advice: ',
-      quorum: 25
+      title: 'Advice: '
     },
     title: PROPOSAL_ADVICE,
     tooltip: 'Advice process'
@@ -259,8 +256,7 @@ export const PROPOSAL_TEMPLATES = {
         }
       ],
       votingMethod: VOTING_METHOD_SINGLE,
-      title: 'Consent: ',
-      quorum: 25
+      title: 'Consent: '
     },
     title: PROPOSAL_CONSENT,
     tooltip: 'Consent poll: everyone must agree'
@@ -290,8 +286,7 @@ export const PROPOSAL_TEMPLATES = {
         }
       ],
       votingMethod: VOTING_METHOD_SINGLE,
-      title: 'Consensus: ',
-      quorum: 25
+      title: 'Consensus: '
     },
     title: PROPOSAL_CONSENSUS,
     tooltip: 'Consensus poll: One block/veto stops the proposal'
@@ -331,8 +326,7 @@ export const PROPOSAL_TEMPLATES = {
         }
       ],
       votingMethod: VOTING_METHOD_SINGLE,
-      title: 'Poll: ',
-      quorum: 25
+      title: 'Poll: '
     },
     title: PROPOSAL_GRADIENT,
     tooltip: 'A poll that can show a gradient of approval'
@@ -367,10 +361,9 @@ export const PROPOSAL_TEMPLATES = {
         }
       ],
       votingMethod: VOTING_METHOD_MULTI_UNRESTRICTED,
-      title: 'Multiple Choice:',
-      quorum: 25
+      title: 'Multiple Choice:'
     },
     title: PROPOSAL_MULTIPLE_CHOICE,
-    tooltip: 'A poll where'
+    tooltip: 'A poll where users can vote multiple times'
   }
 }
