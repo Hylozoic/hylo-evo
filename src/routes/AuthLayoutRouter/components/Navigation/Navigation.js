@@ -123,7 +123,7 @@ export default function Navigation (props) {
       to: membersPath
     },
     proposalPath && {
-      label: t('Governance'),
+      label: t('Decisions'),
       icon: 'Proposal',
       to: proposalPath
     },
