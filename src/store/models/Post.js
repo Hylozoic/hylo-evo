@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 // proposal templates
 export const PROPOSAL_YESNO = 'Yes/No'
-export const PROPOSAL_POLL_SINGLE = 'Poll, Single Vote'
+export const PROPOSAL_POLL_SINGLE = 'Poll, Single vote'
 export const PROPOSAL_ADVICE = 'Advice'
 export const PROPOSAL_CONSENT = 'Consent'
 export const PROPOSAL_CONSENSUS = 'Consensus'
@@ -12,9 +12,9 @@ export const PROPOSAL_GRADIENT = 'Gradient of Agreement'
 export const PROPOSAL_MULTIPLE_CHOICE = 'Multiple Choice'
 
 // proposal types
-export const PROPOSAL_TYPE_SINGLE = 'single'
-export const PROPOSAL_TYPE_MULTI_UNRESTRICTED = 'multi-unrestricted'
-export const PROPOSAL_TYPE_CONSENSUS = 'consensus'
+export const VOTING_METHOD_SINGLE = 'single'
+export const VOTING_METHOD_MULTI_UNRESTRICTED = 'multi-unrestricted'
+// export const VOTING_METHOD_CONSENSUS = 'consensus'
 
 // proposal status
 export const PROPOSAL_STATUS_DISCUSSION = 'discussion'
@@ -153,7 +153,7 @@ export const POST_TYPES = {
     backgroundColor: 'rgba(0, 163, 227, .2)', // $color-link-water
     map: true,
     label: 'Proposal',
-    description: 'Invite people to your event'
+    description: 'Suggest a proposal for others to vote on'
   }
 }
 
@@ -190,9 +190,8 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
-      title: '',
-      quorum: 25
+      votingMethod: VOTING_METHOD_SINGLE,
+      title: ''
     },
     title: PROPOSAL_YESNO,
     tooltip: 'Simple yes or no poll'
@@ -216,9 +215,8 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
-      title: 'Poll: ',
-      quorum: 25
+      votingMethod: VOTING_METHOD_SINGLE,
+      title: 'Poll: '
     },
     title: PROPOSAL_POLL_SINGLE,
     tooltip: 'Single vote poll'
@@ -237,9 +235,8 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
-      title: 'Advice: ',
-      quorum: 35
+      votingMethod: VOTING_METHOD_SINGLE,
+      title: 'Advice: '
     },
     title: PROPOSAL_ADVICE,
     tooltip: 'Advice process'
@@ -258,9 +255,8 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
-      title: 'Consent: ',
-      quorum: 100
+      votingMethod: VOTING_METHOD_SINGLE,
+      title: 'Consent: '
     },
     title: PROPOSAL_CONSENT,
     tooltip: 'Consent poll: everyone must agree'
@@ -289,48 +285,11 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_CONSENSUS,
-      title: 'Consensus: ',
-      quorum: 90
+      votingMethod: VOTING_METHOD_SINGLE,
+      title: 'Consensus: '
     },
     title: PROPOSAL_CONSENSUS,
     tooltip: 'Consensus poll: One block/veto stops the proposal'
-  },
-  [PROPOSAL_SCHEDULING]: {
-    form: {
-      proposalOptions: [
-        {
-          text: 'Timing 1',
-          emoji: '',
-          color: ''
-        },
-        {
-          text: 'Timing 2',
-          emoji: '',
-          color: ''
-        },
-        {
-          text: 'Timing 3',
-          emoji: '',
-          color: ''
-        },
-        {
-          text: 'Timing 4',
-          emoji: '',
-          color: ''
-        },
-        {
-          text: 'Timing 5',
-          emoji: '',
-          color: ''
-        }
-      ],
-      proposalType: PROPOSAL_TYPE_MULTI_UNRESTRICTED,
-      title: 'Schedule: ',
-      quorum: 25
-    },
-    title: PROPOSAL_SCHEDULING,
-    tooltip: 'Members can pick many options for scheduling'
   },
   [PROPOSAL_GRADIENT]: {
     form: {
@@ -366,9 +325,8 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_SINGLE,
-      title: 'Poll: ',
-      quorum: 25
+      votingMethod: VOTING_METHOD_SINGLE,
+      title: 'Poll: '
     },
     title: PROPOSAL_GRADIENT,
     tooltip: 'A poll that can show a gradient of approval'
@@ -402,11 +360,10 @@ export const PROPOSAL_TEMPLATES = {
           color: ''
         }
       ],
-      proposalType: PROPOSAL_TYPE_MULTI_UNRESTRICTED,
-      title: 'Multiple Choice:',
-      quorum: 25
+      votingMethod: VOTING_METHOD_MULTI_UNRESTRICTED,
+      title: 'Multiple Choice:'
     },
     title: PROPOSAL_MULTIPLE_CHOICE,
-    tooltip: 'A poll where'
+    tooltip: 'A poll where users can vote multiple times'
   }
 }

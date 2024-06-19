@@ -75,7 +75,7 @@ export default function AuthLayoutRouter (props) {
     matchPath(location.pathname, [
       `/${POST_DETAIL_MATCH}`,
       '/groups/:joinGroupSlug/join/:accessCode',
-      '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics|custom)?',
+      '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|proposals|settings|stream|topics|custom)?',
       '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
       '/:context(all|welcome|my)'
     ])?.params || { context: 'all' }
@@ -87,7 +87,7 @@ export default function AuthLayoutRouter (props) {
 
   const paramPostId = matchPath(location.pathname, [
     `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`,
-    `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics|custom)/${POST_DETAIL_MATCH}`,
+    `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|proposals|topics|custom)/${POST_DETAIL_MATCH}`,
     `/:context(my)/:view(mentions|interactions|posts|announcements)/${POST_DETAIL_MATCH}`
   ])?.params?.postId
   const currentGroupSlug = pathMatchParams?.groupSlug
@@ -393,7 +393,7 @@ export default function AuthLayoutRouter (props) {
             <div styleName={cx('sidebar', { hidden: (hasDetail || hideSidebar) })}>
               <Route
                 path={[
-                  `/:context(groups)/:groupSlug/:view(events|explore|map|groups|projects|stream)/${OPTIONAL_NEW_POST_MATCH}`,
+                  `/:context(groups)/:groupSlug/:view(events|explore|map|groups|projects|proposals|stream)/${OPTIONAL_NEW_POST_MATCH}`,
                   `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`,
                   `/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`
                 ]}
@@ -411,7 +411,7 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(public)/:view(groups)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
               <Route path={`/:context(all)/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(all|public)/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(groups)/:groupSlug/:view(events|explore|map|projects|stream)/${POST_DETAIL_MATCH}`} component={PostDetail} />
+              <Route path={`/:context(groups)/:groupSlug/:view(events|explore|map|projects|stream|proposals)/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />

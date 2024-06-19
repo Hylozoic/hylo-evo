@@ -250,6 +250,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -337,6 +338,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         ]
       }
       id="test"
+      isProposal={true}
       loading={false}
       save={[Function]}
       setAnnouncement={[MockFunction]}
@@ -491,6 +493,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -578,6 +581,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         ]
       }
       id="test"
+      isProposal={true}
       loading={false}
       save={[Function]}
       setAnnouncement={[MockFunction]}
@@ -625,7 +629,6 @@ Array [
       "memberIds": undefined,
       "projectManagementLink": null,
       "proposalOptions": Array [],
-      "proposalType": undefined,
       "quorum": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
@@ -635,6 +638,7 @@ Array [
         "design",
       ],
       "type": "request",
+      "votingMethod": undefined,
     },
   ],
 ]
@@ -752,6 +756,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -788,6 +793,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      isProposal={true}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -911,6 +917,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -975,6 +982,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      isProposal={true}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -1098,6 +1106,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -1162,6 +1171,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      isProposal={true}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -1285,6 +1295,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -1349,6 +1360,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      isProposal={true}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -1473,6 +1485,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -1509,6 +1522,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      isProposal={true}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -1552,7 +1566,6 @@ Array [
       "memberIds": undefined,
       "projectManagementLink": null,
       "proposalOptions": Array [],
-      "proposalType": undefined,
       "quorum": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
@@ -1562,6 +1575,7 @@ Array [
         "design",
       ],
       "type": "offer",
+      "votingMethod": undefined,
     },
   ],
 ]
@@ -1680,6 +1694,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -1716,6 +1731,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      isProposal={true}
       loading={true}
       save={[Function]}
       submitButtonLabel="Save"
@@ -1840,6 +1856,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -1876,6 +1893,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      isProposal={true}
       loading={true}
       save={[Function]}
       submitButtonLabel="Post"
@@ -2092,6 +2110,7 @@ exports[`PostEditor renders contribution button 1`] = `
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -2194,6 +2213,7 @@ exports[`PostEditor renders contribution button 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      isProposal={true}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -2318,6 +2338,7 @@ exports[`PostEditor renders with min props 1`] = `
         data-stylename="footerSection-label"
       >
         Post in
+        *
       </div>
       <div
         data-stylename="footerSection-groups"
@@ -2354,6 +2375,7 @@ exports[`PostEditor renders with min props 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      isProposal={true}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -2400,7 +2422,6 @@ Array [
       "memberIds": undefined,
       "projectManagementLink": null,
       "proposalOptions": Array [],
-      "proposalType": undefined,
       "quorum": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
@@ -2410,6 +2431,7 @@ Array [
         "design",
       ],
       "type": "offer",
+      "votingMethod": undefined,
     },
   ],
 ]

@@ -128,7 +128,7 @@ const postFieldsFragment = withComments => `
   peopleReactedTotal
   proposalStatus
   proposalOutcome
-  proposalType
+  votingMethod
   quorum
   proposalOptions {
     total
