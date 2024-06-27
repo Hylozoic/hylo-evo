@@ -22,8 +22,8 @@ export default function PeopleInfo ({
 
   const defaultPhrases = {
     emptyMessage: t('Be the first to comment'),
-    phraseSingular: t('commentedSingular'),
-    mePhraseSingular: t('commentedSingular'),
+    phraseSingular: t('commented'),
+    mePhraseSingular: t('commented'),
     pluralPhrase: t('commentedPlural')
   }
 

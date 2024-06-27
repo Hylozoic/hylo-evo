@@ -109,6 +109,7 @@ export default function ResponsibilitiesTab ({ group }) {
     <>
       <h1>{t('Responsibilities and permissions')}</h1>
       <h2>{t('Platform Responsibilities')}</h2>
+      {/* Is this i18n weirdly busted? */}
       <span styleName='styles.description'>{t('adminResponsibilitiesHelpText')}</span>
       <SettingsSection>
         {/* <div styleName='styles.help-text'>{t('Each of these responsibilities gives access to specific functionality related to the platform')}</div> */}
