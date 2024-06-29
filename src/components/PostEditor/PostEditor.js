@@ -114,12 +114,12 @@ class PostEditor extends React.Component {
     )
     const currentPost = post
       ? {
-          ...post,
-          locationId: post.locationObject ? post.locationObject.id : null,
-          startTime: Moment(post.startTime),
-          endTime: Moment(post.endTime),
-          proposalOptions: post.proposalOptions?.items || []
-        }
+        ...post,
+        locationId: post.locationObject ? post.locationObject.id : null,
+        startTime: Moment(post.startTime),
+        endTime: Moment(post.endTime),
+        proposalOptions: post.proposalOptions?.items || []
+      }
       : defaultPostWithGroupsAndTopic
 
     return {
