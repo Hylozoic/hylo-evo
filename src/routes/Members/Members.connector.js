@@ -13,9 +13,9 @@ const defaultSortBy = 'name'
 
 export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
-  const slug = getRouteParam('groupSlug', state, props)
-  const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
-  const search = getQuerystringParam('q', state, props)
+  const slug = getRouteParam('groupSlug', props)
+  const sortBy = getQuerystringParam('s', props) || defaultSortBy
+  const search = getQuerystringParam('q', props)
   const canModerate = group && getMe(state, props).canModerate(group)
   const extraProps = {
     ...props,
@@ -47,7 +47,7 @@ export function mapDispatchToProps (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { slug } = stateProps
-  const params = getQuerystringParam(['s', 'q'], null, ownProps)
+  const params = getQuerystringParam(['s', 'q'], ownProps)
   var { s: sortBy = defaultSortBy, q: search } = params
 
   const removeMember = (id) => dispatchProps.removeMember(id, stateProps.group.id)

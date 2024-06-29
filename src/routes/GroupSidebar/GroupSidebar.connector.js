@@ -13,7 +13,7 @@ export function mapStateToProps (state, props) {
     group: group ? group.ref : null,
     members,
     leaders,
-    slug: getRouteParam('groupSlug', state, props),
+    slug: getRouteParam('groupSlug', props),
     canModerate
   }
 }

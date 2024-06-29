@@ -20,8 +20,8 @@ export function mapStateToProps (state, props) {
 
   return {
     groupSlugExists: get('slugExists', state.CreateGroup),
-    initialGroupName: getQuerystringParam('name', state, props),
-    initialGroupSlug: getQuerystringParam('slug', state, props),
+    initialGroupName: getQuerystringParam('name', props),
+    initialGroupSlug: getQuerystringParam('slug', props),
     parentGroupOptions,
     // If currently in a group that user can add as a parent then add it as a parent by default
     parentGroups: currentGroup && parentGroupOptions.find(p => p.id === currentGroup.id) ? [currentGroup] : []

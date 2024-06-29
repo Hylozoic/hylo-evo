@@ -22,7 +22,7 @@ import { allGroupsUrl } from 'util/navigation'
 import { fetchLocation } from 'components/LocationInput/LocationInput.store'
 
 export function mapStateToProps (state, props) {
-  const slug = getRouteParam('groupSlug', state, props, false)
+  const slug = getRouteParam('groupSlug', props, false)
   const group = getGroupForCurrentRoute(state, props)
   const canModerate = getCanModerate(state, { group })
   const currentUser = getMe(state)

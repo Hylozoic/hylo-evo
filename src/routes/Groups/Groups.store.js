@@ -8,7 +8,7 @@ import getRouteParam from 'store/selectors/getRouteParam'
 export const getPossibleRelatedGroups = ormCreateSelector(
   orm,
   getGroupForCurrentRoute,
-  (session, props) => getCurrentlyRelatedGroupIds(session, { groupSlug: getRouteParam('groupSlug', session, props) }),
+  (session, props) => getCurrentlyRelatedGroupIds(session, { groupSlug: getRouteParam('groupSlug', props) }),
   getMyModeratedGroups,
   (session, group, currentRelationships, moderatedGroups) => {
     // TODO: check for cycles, cant add a grandparent as a child

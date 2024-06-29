@@ -12,10 +12,10 @@ import { getPosts } from 'store/selectors/getPosts'
 import getRouteParam from 'store/selectors/getRouteParam'
 
 export function mapStateToProps (state, props) {
-  const groupSlug = getRouteParam('groupSlug', state, props)
+  const groupSlug = getRouteParam('groupSlug', props)
   const fetchPostsParam = { slug: groupSlug, context: 'groups', sortBy: 'created' }
   const group = presentGroup(getGroupForCurrentRoute(state, props))
-  const isAboutOpen = getRouteParam('detailGroupSlug', state, props)
+  const isAboutOpen = getRouteParam('detailGroupSlug', props)
   const isModerator = getCanModerate(state, { group })
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
   const routeParams = props.match.params
