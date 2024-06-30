@@ -6,7 +6,7 @@ import { withTranslation } from 'react-i18next'
 import { debounce, get, isEqual } from 'lodash/fp'
 import cx from 'classnames'
 import Moment from 'moment-timezone'
-import { POST_PROP_TYPES, POST_TYPES, PROPOSAL_ADVICE, PROPOSAL_CONSENSUS, PROPOSAL_CONSENT, PROPOSAL_GRADIENT, PROPOSAL_MULTIPLE_CHOICE, PROPOSAL_POLL_SINGLE, PROPOSAL_SCHEDULING, PROPOSAL_TEMPLATES, PROPOSAL_TYPE_MULTI_UNRESTRICTED, PROPOSAL_TYPE_SINGLE, PROPOSAL_YESNO } from 'store/models/Post'
+import { POST_PROP_TYPES, POST_TYPES, PROPOSAL_ADVICE, PROPOSAL_CONSENSUS, PROPOSAL_CONSENT, PROPOSAL_GRADIENT, PROPOSAL_MULTIPLE_CHOICE, PROPOSAL_POLL_SINGLE, PROPOSAL_TEMPLATES, VOTING_METHOD_MULTI_UNRESTRICTED, VOTING_METHOD_SINGLE, PROPOSAL_YESNO } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import Icon from 'components/Icon'
 import LocationInput from 'components/LocationInput'
@@ -109,7 +109,7 @@ class PostEditor extends React.Component {
         isAnonymousVote: false,
         isStrictProposal: false,
         proposalOptions: [],
-        proposalType: PROPOSAL_TYPE_SINGLE
+        votingMethod: VOTING_METHOD_SINGLE
       }
     )
     const currentPost = post
@@ -503,7 +503,7 @@ class PostEditor extends React.Component {
       members,
       projectManagementLink,
       proposalOptions,
-      proposalType,
+      votingMethod,
       quorum,
       startTime,
       timezone,
@@ -549,7 +549,7 @@ class PostEditor extends React.Component {
       proposalOptions: proposalOptions.map(({ color, emoji, text, id }) => {
         return { color, text, emoji, id }
       }),
-      proposalType,
+      votingMethod,
       quorum,
       sendAnnouncement: announcementSelected,
       startTime,
@@ -592,9 +592,9 @@ class PostEditor extends React.Component {
     })
   }
 
-  handleSetProposalType = (proposalType) => {
+  handleSetProposalType = (votingMethod) => {
     this.setState({
-      post: { ...this.state.post, proposalType }
+      post: { ...this.state.post, votingMethod }
     })
   }
 
@@ -606,7 +606,7 @@ class PostEditor extends React.Component {
         proposalOptions: templateData.form.proposalOptions.map(option => { return { ...option, tempId: generateTempID() } }),
         title: this.state.post.title.length > 0 ? this.state.post.title : templateData.form.title,
         quorum: templateData.form.quorum,
-        proposalType: templateData.form.proposalType
+        votingMethod: templateData.form.votingMethod
       },
       valid: this.isValid({ proposalOptions: templateData.form.proposalOptions })
     })
@@ -661,7 +661,7 @@ class PostEditor extends React.Component {
       donationsLink,
       projectManagementLink,
       proposalOptions,
-      proposalType
+      votingMethod
     } = post
     const {
       currentGroup,
@@ -702,6 +702,7 @@ class PostEditor extends React.Component {
 
     const donationsLinkPlaceholder = t('Add a donation link (must be valid URL)')
     const projectManagementLinkPlaceholder = t('Add a project management link (must be valid URL)')
+    const locationPrompt = type === 'proposal' ? t('Is there a relevant location for this proposal?') : t('Where is your {{type}} located?', { type })
 
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
@@ -808,7 +809,7 @@ class PostEditor extends React.Component {
             </div>
           </div>
           <div styleName='footerSection'>
-            <div styleName='footerSection-label'>{t('Post in')}</div>
+            <div styleName='footerSection-label'>{t('Post in')}*</div>
             <div styleName='footerSection-groups'>
               <GroupsSelector
                 options={groupOptions}
@@ -839,12 +840,11 @@ class PostEditor extends React.Component {
                   items={[
                     { label: t(PROPOSAL_YESNO), onClick: () => this.handleUseTemplate(PROPOSAL_YESNO) },
                     { label: t(PROPOSAL_POLL_SINGLE), onClick: () => this.handleUseTemplate(PROPOSAL_POLL_SINGLE) },
+                    { label: t(PROPOSAL_GRADIENT), onClick: () => this.handleUseTemplate(PROPOSAL_GRADIENT) },
                     { label: t(PROPOSAL_ADVICE), onClick: () => this.handleUseTemplate(PROPOSAL_ADVICE) },
                     { label: t(PROPOSAL_CONSENT), onClick: () => this.handleUseTemplate(PROPOSAL_CONSENT) },
                     { label: t(PROPOSAL_CONSENSUS), onClick: () => this.handleUseTemplate(PROPOSAL_CONSENSUS) },
-                    { label: t(PROPOSAL_SCHEDULING), onClick: () => this.handleUseTemplate(PROPOSAL_SCHEDULING) },
-                    { label: t(PROPOSAL_MULTIPLE_CHOICE), onClick: () => this.handleUseTemplate(PROPOSAL_MULTIPLE_CHOICE) },
-                    { label: t(PROPOSAL_GRADIENT), onClick: () => this.handleUseTemplate(PROPOSAL_GRADIENT) }
+                    { label: t(PROPOSAL_MULTIPLE_CHOICE), onClick: () => this.handleUseTemplate(PROPOSAL_MULTIPLE_CHOICE) }
                   ]}
                 />
               </div>
@@ -852,8 +852,9 @@ class PostEditor extends React.Component {
           )}
           {isProposal && proposalOptions && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Proposal options')}</div>
-
+              <div styleName='footerSection-label'>
+                {t('Proposal options')}*
+              </div>
               <div styleName='optionsContainer'>
                 {proposalOptions.map((option, index) => (
                   <div styleName='proposalOption' key={index}>
@@ -939,20 +940,20 @@ class PostEditor extends React.Component {
           )}
           {isProposal && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Proposal type')}</div>
+              <div styleName='footerSection-label'>{t('Voting method')}</div>
 
               <div styleName='inputContainer'>
                 <Dropdown
                   styleName='dropdown'
                   toggleChildren={
                     <span styleName='dropdown-label'>
-                      {proposalType ? t(`${proposalType}`) : t('Select pre-set')}
+                      {votingMethod === VOTING_METHOD_SINGLE ? t('Single vote per person') : t('Multiple votes allowed')}
                       <Icon name='ArrowDown' blue />
                     </span>
                   }
                   items={[
-                    { label: t('Single Vote per person'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_SINGLE) },
-                    { label: t('Multiple votes allowed'), onClick: () => this.handleSetProposalType(PROPOSAL_TYPE_MULTI_UNRESTRICTED) }
+                    { label: t('Single vote per person'), onClick: () => this.handleSetProposalType(VOTING_METHOD_SINGLE) },
+                    { label: t('Multiple votes allowed'), onClick: () => this.handleSetProposalType(VOTING_METHOD_MULTI_UNRESTRICTED) }
                   ]}
                 />
               </div>
@@ -960,8 +961,14 @@ class PostEditor extends React.Component {
           )}
           {isProposal && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Quorum')}</div>
+              <div styleName='footerSection-label'>{t('Quorum')} <Icon name='Info' styleName='quorum-tooltip' dataTip={t('quorumExplainer')} dataTipFor='quorum-tt' /></div>
               <SliderInput percentage={post.quorum} setPercentage={this.handleSetQuorum} />
+              <ReactTooltip
+                backgroundColor='rgba(35, 65, 91, 1.0)'
+                effect='solid'
+                delayShow={0}
+                id='quorum-tt'
+              />
             </div>
           )}
           {isProposal && (
@@ -1007,7 +1014,7 @@ class PostEditor extends React.Component {
                 locationObject={locationObject}
                 location={location}
                 onChange={this.handleLocationChange}
-                placeholder={t('Where is your {{type}} located?', { type })}
+                placeholder={locationPrompt}
               />
             </div>
           )}
@@ -1096,6 +1103,7 @@ class PostEditor extends React.Component {
             showImages={showImages}
             showFiles={showFiles}
             valid={valid}
+            isProposal
             loading={loading}
             submitButtonLabel={this.buttonLabel()}
             save={() => {
@@ -1130,6 +1138,7 @@ export function ActionsBar ({
   showFiles,
   valid,
   loading,
+  isProposal,
   submitButtonLabel,
   save,
   setAnnouncement,
@@ -1142,6 +1151,7 @@ export function ActionsBar ({
   groups,
   t
 }) {
+  const invalidPostWarning = isProposal ? t('You need a title, a group and at least one option for a proposal') : t('You need a title and at least one group to post')
   return (
     <div styleName='actionsBar'>
       <div styleName='actions'>
@@ -1203,7 +1213,7 @@ export function ActionsBar ({
         styleName='postButton'
         label={submitButtonLabel}
         color='green'
-        dataTip={!valid ? t('You need a title and at least one group to post') : ''}
+        dataTip={!valid ? invalidPostWarning : ''}
         dataFor='submit-tt'
       />
       <Tooltip

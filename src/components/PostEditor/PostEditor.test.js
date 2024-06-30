@@ -35,7 +35,7 @@ describe('PostEditor', () => {
       canMakeAnnouncement: true,
       save: () => {}
     }
-    const wrapper = shallow(<ActionsBar {...props} />)
+    const wrapper = shallow(<ActionsBar {...props} t={string => string} />)
     expect(wrapper).toMatchSnapshot()
     expect(wrapper.find('span[data-tip="Send Announcement"]')).toHaveLength(1)
   })
@@ -387,7 +387,7 @@ describe('ActionsBar', () => {
       submitButtonLabel: 'Save',
       save: () => {}
     }
-    const wrapper = shallow(<ActionsBar {...props} />)
+    const wrapper = shallow(<ActionsBar {...props} t={string => string} />)
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -401,7 +401,7 @@ describe('ActionsBar', () => {
       submitButtonLabel: 'Posting...',
       save: () => {}
     }
-    const wrapper = shallow(<ActionsBar {...props} />)
+    const wrapper = shallow(<ActionsBar {...props} t={string => string} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
