@@ -6,7 +6,7 @@ beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
   const group = session.Group.create({ id: '99', slug: 'foo' })
   session.Group.create({ id: '88', slug: 'bar' })
-  session.CommonRole.create({ id: 1, name: 'Coordinator', responsibilities: [{ id: 1, name: 'Administration' }] })
+  session.CommonRole.create({ id: 1, name: 'Coordinator', responsibilities: [{ id: 1, title: 'Administration' }] })
 
   session.Me.create({
     id: '1',

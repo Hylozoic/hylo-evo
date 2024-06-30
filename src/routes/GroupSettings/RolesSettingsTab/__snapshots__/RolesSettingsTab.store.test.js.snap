@@ -1,41 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`addModerator 1`] = `
+exports[`clearStewardSuggestions 1`] = `
 Object {
-  "graphql": Object {
-    "query": "mutation ($personId: ID, $groupId: ID) {
-        addModerator(personId: $personId, groupId: $groupId) {
-          id
-          moderators (first: 100) {
-            items {
-              id
-              name
-              avatarUrl
-            }
-          }
-        }
-      }",
-    "variables": Object {
-      "groupId": 111,
-      "personId": 123,
-    },
-  },
-  "meta": Object {
-    "groupId": 111,
-    "optimistic": true,
-    "personId": 123,
-  },
-  "type": "ADD_MODERATOR",
+  "type": "CLEAR_STEWARD_SUGGESTIONS",
 }
 `;
 
-exports[`clearModeratorSuggestions 1`] = `
-Object {
-  "type": "CLEAR_MODERATOR_SUGGESTIONS",
-}
-`;
-
-exports[`fetchModeratorSuggestions 1`] = `
+exports[`fetchStewardSuggestions 1`] = `
 Object {
   "graphql": Object {
     "query": "query ($id: ID, $autocomplete: String) {
@@ -59,37 +30,6 @@ Object {
   "meta": Object {
     "extractModel": "Group",
   },
-  "type": "FETCH_MODERATOR_SUGGESTIONS",
-}
-`;
-
-exports[`removeModerator 1`] = `
-Object {
-  "graphql": Object {
-    "query": "mutation ($personId: ID, $groupId: ID, $isRemoveFromGroup: Boolean) {
-        removeModerator(personId: $personId, groupId: $groupId, isRemoveFromGroup: $isRemoveFromGroup) {
-          id
-          moderators (first: 100) {
-            items {
-              id
-              name
-              avatarUrl
-            }
-          }
-        }
-      }",
-    "variables": Object {
-      "groupId": 111,
-      "isRemoveFromGroup": true,
-      "personId": 123,
-    },
-  },
-  "meta": Object {
-    "groupId": 111,
-    "isRemoveFromGroup": true,
-    "optimistic": true,
-    "personId": 123,
-  },
-  "type": "REMOVE_MODERATOR",
+  "type": "FETCH_STEWARD_SUGGESTIONS",
 }
 `;

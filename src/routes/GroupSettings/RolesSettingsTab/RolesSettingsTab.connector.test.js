@@ -35,7 +35,7 @@ beforeAll(() => {
 
   state = {
     orm: session.state,
-    ModeratorsSettings: []
+    RoleSettings: []
   }
 })
 

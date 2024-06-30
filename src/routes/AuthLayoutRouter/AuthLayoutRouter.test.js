@@ -141,6 +141,13 @@ it('shows group if the group exists', async () => {
           notifications: null
         })
       )
+    }),
+    graphql.query('FetchCommonRoles', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          commonRoles: null
+        })
+      )
     })
   )
 
@@ -222,6 +229,13 @@ it('shows NotFound if the group does not exist', async () => {
       return res(
         ctx.data({
           notifications: null
+        })
+      )
+    }),
+    graphql.query('FetchCommonRoles', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          commonRoles: null
         })
       )
     })

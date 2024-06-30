@@ -23,8 +23,38 @@ Object {
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
+      "membershipCommonRoles": Object {
+        "items": Array [
+          SessionBoundModel {
+            "_fields": Object {
+              "commonRoleId": 1,
+              "groupId": "99",
+              "id": 1,
+              "userId": 1,
+            },
+            "commonRoleId": 1,
+            "groupId": "99",
+            "userId": 1,
+          },
+        ],
+      },
     },
     "id": "1",
+    "membershipCommonRoles": Object {
+      "items": Array [
+        SessionBoundModel {
+          "_fields": Object {
+            "commonRoleId": 1,
+            "groupId": "99",
+            "id": 1,
+            "userId": 1,
+          },
+          "commonRoleId": 1,
+          "groupId": "99",
+          "userId": 1,
+        },
+      ],
+    },
   },
   "editing": false,
   "editingPostId": undefined,
@@ -87,8 +117,38 @@ Object {
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
+      "membershipCommonRoles": Object {
+        "items": Array [
+          SessionBoundModel {
+            "_fields": Object {
+              "commonRoleId": 1,
+              "groupId": "99",
+              "id": 1,
+              "userId": 1,
+            },
+            "commonRoleId": 1,
+            "groupId": "99",
+            "userId": 1,
+          },
+        ],
+      },
     },
     "id": "1",
+    "membershipCommonRoles": Object {
+      "items": Array [
+        SessionBoundModel {
+          "_fields": Object {
+            "commonRoleId": 1,
+            "groupId": "99",
+            "id": 1,
+            "userId": 1,
+          },
+          "commonRoleId": 1,
+          "groupId": "99",
+          "userId": 1,
+        },
+      ],
+    },
   },
   "editing": false,
   "editingPostId": undefined,

@@ -195,7 +195,10 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
     case CREATE_GROUP: {
       me = Me.withId(Me.first().id)
-      me.updateAppending({ memberships: [payload.data.createGroup.memberships.items[0].id] })
+      me.updateAppending({
+        memberships: [payload.data.createGroup.memberships.items[0].id],
+        membershipCommonRoles: payload.data.createGroup.memberships.items[0].person.membershipCommonRoles.items
+      })
       clearCacheFor(Me, me.id)
       break
     }

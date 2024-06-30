@@ -14,6 +14,7 @@
     "commentsTotal": 2,
     "memberships": [ "3" ],
     "membershipsTotal": 1,
+    "membershipCommonRoles": [ "1" ],
     "posts": [ "30003", "30002" ],
     "postsTotal": 2,
     "projects": [
@@ -54,6 +55,14 @@
       "id": "3",
       "person": "46816",
       "group": "1836"
+    }
+  ],
+  "membershipCommonRoles": [
+    {
+      "id": "1",
+      "commonRolId": "1",
+      "groupId": "1836",
+      "userId": "46816"
     }
   ],
   "comments": [

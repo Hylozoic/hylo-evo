@@ -16,7 +16,7 @@ export function mapStateToProps (state, props) {
 
   // Current user can add as parents groups ones that they are a Coordinator of or that are Open access
   const parentGroupOptions = (currentUser && currentUser.memberships.toModelArray()
-    .filter(m => m.group.accessibility === GROUP_ACCESSIBILITY.Open || hasResponsibilityForGroup(state, { groupId: m.groupId, RESP_ADMINISTRATION }))
+    .filter(m => m.group.accessibility === GROUP_ACCESSIBILITY.Open || hasResponsibilityForGroup(state, { groupId: m.group.id, responsibility: RESP_ADMINISTRATION }))
     .map((m) => m.group)
     .sort((a, b) => a.name.localeCompare(b.name)))
 

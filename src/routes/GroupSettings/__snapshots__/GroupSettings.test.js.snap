@@ -1,193 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders a redirect if you can not moderate 1`] = `
-<Redirect
-  to="/groups/foo"
-/>
-`;
+exports[`renders a redirect if you can not moderate 1`] = `<DocumentFragment />`;
 
-exports[`renders correctly with a group 1`] = `
-<withRouter(Connect(FullPageModal))
-  content={
-    Array [
-      Object {
-        "component": <withI18nextTranslation(GroupSettingsTab)
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "Settings",
-        "path": "/groups/foo/settings",
-      },
-      Object {
-        "component": <AgreementsTab
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "Agreements",
-        "path": "/groups/foo/settings/agreements",
-      },
-      Object {
-        "component": <ResponsibilitiesTab
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-          groupId={1}
-          slug="foo"
-        />,
-        "name": "Responsibilities",
-        "path": "/groups/foo/settings/responsibilities",
-      },
-      Object {
-        "component": <Memo(Connect(withI18nextTranslation(RolesSettingsTab)))
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-          groupId={1}
-          slug="foo"
-        />,
-        "name": "Roles & Badges",
-        "path": "/groups/foo/settings/roles",
-      },
-      Object {
-        "component": <withI18nextTranslation(PrivacySettingsTab)
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-          slug="foo"
-        />,
-        "name": "Privacy & Access",
-        "path": "/groups/foo/settings/privacy",
-      },
-      Object {
-        "component": <withI18nextTranslation(CustomViewsTab)
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "Custom Views",
-        "path": "/groups/foo/settings/views",
-      },
-      Object {
-        "component": <Memo(Connect(withI18nextTranslation(TopicsSettingsTab)))
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "Topics",
-        "path": "/groups/foo/settings/topics",
-      },
-      Object {
-        "component": <Memo(Connect(withI18nextTranslation(InviteSettingsTab)))
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "Invite",
-        "path": "/groups/foo/settings/invite",
-      },
-      Object {
-        "component": <Memo(Connect(MembershipRequestsTab))
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "Join Requests",
-        "path": "/groups/foo/settings/requests",
-      },
-      Object {
-        "component": <Memo(Connect(withI18nextTranslation(RelatedGroupsTab)))
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "Related Groups",
-        "path": "/groups/foo/settings/relationships",
-      },
-      Object {
-        "component": <withI18nextTranslation(ImportExportSettingsTab)
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "",
-        "path": "/groups/foo/settings/import",
-      },
-      Object {
-        "component": <ExportDataTab
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "Export Data",
-        "path": "/groups/foo/settings/export",
-      },
-      Object {
-        "component": <withI18nextTranslation(DeleteSettingsTab)
-          group={
-            Object {
-              "id": 1,
-              "name": "Foomunity",
-              "slug": "foo",
-            }
-          }
-        />,
-        "name": "Delete",
-        "path": "/groups/foo/settings/delete",
-      },
-    ]
-  }
-  goToOnClose="/groups/foo"
-/>
-`;
+exports[`renders correctly with a group 1`] = `<DocumentFragment />`;
 
-exports[`renders correctly with no group 1`] = `<Loading />`;
+exports[`renders correctly with no group 1`] = `
+<DocumentFragment>
+  <div
+    data-stylename="loading"
+  >
+    <div
+      data-stylename="loading-indicator"
+    >
+      <svg
+        height="40px"
+        version="1.1"
+        viewBox="0 0 50 50"
+        width="40px"
+        x="0px"
+        y="0px"
+      >
+        <path
+          d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z"
+          fill="#000"
+        >
+          <animatetransform
+            attributeName="transform"
+            attributeType="xml"
+            dur="0.6s"
+            from="0 25 25"
+            repeatCount="indefinite"
+            to="360 25 25"
+            type="rotate"
+          />
+        </path>
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -68,27 +68,34 @@ describe('CreateGroup.connector', () => {
       session.CommonRole.create({ id: 1, title: 'Coordinator', responsibilities: { items: [{ id: 1, title: 'Administration' }, { id: 2, title: 'Manage Content' }] } })
       session.Me.create({
         id: 1,
-        membershipCommonRoles: { items: [{ id: 1, groupId: 33, userId: 1, commonRoleId: 1 }] },
-        memberships: [session.Membership.create({
-          id: '345',
-          group: 33
-        }),
-        session.Membership.create({
-          id: '346',
-          group: 34
-        }),
-        session.Membership.create({
-          id: '347',
-          group: 35
-        })]
+        membershipCommonRoles: {
+          items: [
+            { id: 1, groupId: 33, userId: 1, commonRoleId: 1 },
+            { id: 1, groupId: 34, userId: 1, commonRoleId: 1 }
+          ]
+        },
+        memberships: [
+          session.Membership.create({
+            id: '345',
+            group: 33
+          }),
+          session.Membership.create({
+            id: '346',
+            group: 34
+          }),
+          session.Membership.create({
+            id: '347',
+            group: 35
+          })
+        ]
       })
 
       state = {
         orm: session.state
       }
       const actual = mapStateToProps(state, defaultProps)
-      expect(actual.parentGroupOptions.length).toEqual(2)
-      expect(actual.parentGroups.length).toEqual(1)
+      expect(actual.parentGroupOptions).toHaveLength(2)
+      expect(actual.parentGroups).toHaveLength(1)
     })
   })
 

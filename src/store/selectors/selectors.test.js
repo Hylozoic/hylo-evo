@@ -28,7 +28,7 @@ describe('getMyMemberships', () => {
     session.Membership.create({ id: 'm1', group: group1.id })
     const me = session.Me.create({ id: 1 })
     session.Membership.create({ id: 'm2', group: group2.id, person: me.id })
-    expect(getMyMemberships({ orm: session.state }, {}).length).toEqual(1)
+    expect(getMyMemberships({ orm: session.state }, {})).toHaveLength(1)
   })
 })
 
@@ -112,24 +112,29 @@ describe('getTopicForCurrentRoute', () => {
 
 describe('hasResponsibilityForGroup', () => {
   const session = orm.session(orm.getEmptyState())
+  let group, me, mcr
+
   beforeEach(() => {
-    session.Me.create({
-      id: '1'
-    })
     session.CommonRole.create({ id: 1, title: 'Coordinator', responsibilities: { items: [{ id: 1, title: 'Administration' }, { id: 2, title: 'Manage Content' }] } })
+    group = session.Group.create({ id: 1 })
+    mcr = session.MembershipCommonRole.create({ id: 1, groupId: group.id, userId: 1, commonRoleId: 1 })
+    me = session.Me.create({
+      id: '1',
+      membershipCommonRoles: { items: [mcr] }
+    })
+    session.Membership.create({ id: 1, group: group.id, person: 1 })
   })
+
   it('returns true when user can moderate', () => {
-    const me = session.Me.first()
-    const group = session.Group.create({ id: 1 })
-    session.Membership.create({ id: 1, group: group.id, person: me.id, commonRoles: { items: [{ id: 1 }] }, groupRoles: { items: [] } })
     const state = { orm: session.state }
-    const props = { group, responsibility: 'Manage Content' }
+    const props = { person: me, groupId: group.id, responsibility: 'Manage Content' }
     expect(hasResponsibilityForGroup(state, props)).toEqual(true)
   })
+
   it('returns false when user cannot moderate', () => {
-    const group = session.Group.create({ id: 2 })
+    group = session.Group.create({ id: 2 })
     const state = { orm: session.state }
-    const props = { group }
+    const props = { person: me, groupId: group.id, responsibility: 'Manage Content' }
     expect(hasResponsibilityForGroup(state, props)).toBeFalsy()
   })
 })

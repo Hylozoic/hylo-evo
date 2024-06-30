@@ -1,61 +1,131 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GroupSidebar renders correctly 1`] = `
-<div
-  data-stylename="group-sidebar"
->
-  <AboutSection
-    description="the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, "
-    t={[Function]}
-  />
-  <SettingsLink
-    canModerate={false}
-    group={
-      Object {
-        "description": "the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, ",
-        "id": 1,
-        "memberCount": 56,
-        "name": "A Great Cause",
-        "slug": "great-cause",
-      }
-    }
-  />
-  <MemberSection
-    canModerate={false}
-    memberCount={56}
-    members={
-      Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-      ]
-    }
-    slug="great-cause"
-  />
-  <GroupLeaderSection
-    groupId={1}
-    leaders={
-      Array [
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-        Object {
-          "id": 6,
-        },
-      ]
-    }
-    slug="great-cause"
-  />
-</div>
+<DocumentFragment>
+  <div
+    data-stylename="group-sidebar"
+  >
+    <div
+      data-stylename="about-section"
+    >
+      <div
+        data-stylename="about-content"
+      >
+        <span>
+          <h2>
+            Group Description
+          </h2>
+          <span>
+            <p>
+              the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, 
+            </p>
+            
+
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      data-stylename="member-section"
+    >
+      <a
+        data-stylename="members-link"
+        href="/groups/great-cause/members"
+      >
+        <div
+          data-stylename="header"
+        >
+          Members
+        </div>
+        <div
+          data-stylename="images-and-count"
+        >
+          <div
+            data-stylename="image-row"
+          >
+            <div
+              data-stylename="image overlaps medium"
+            />
+            <div
+              data-stylename="image overlaps medium"
+            />
+            <div
+              data-stylename="image overlaps medium"
+            />
+          </div>
+          <span
+            data-stylename="members-total"
+          >
+            +53
+          </span>
+        </div>
+      </a>
+    </div>
+    <div
+      data-stylename="leader-section"
+    >
+      <div
+        data-stylename="header leader-header"
+      >
+        Group {{locationDescriptor}}
+      </div>
+      <div
+        data-stylename="leader"
+      >
+        <a
+          href="/groups/great-cause/members/4"
+        >
+          <div
+            data-stylename="image medium"
+          />
+        </a>
+        <a
+          data-stylename="leader-name"
+          href="/groups/great-cause/members/4"
+        />
+        <div
+          data-stylename="badges"
+        />
+      </div>
+      <div
+        data-stylename="leader"
+      >
+        <a
+          href="/groups/great-cause/members/5"
+        >
+          <div
+            data-stylename="image medium"
+          />
+        </a>
+        <a
+          data-stylename="leader-name"
+          href="/groups/great-cause/members/5"
+        />
+        <div
+          data-stylename="badges"
+        />
+      </div>
+      <div
+        data-stylename="leader"
+      >
+        <a
+          href="/groups/great-cause/members/6"
+        >
+          <div
+            data-stylename="image medium"
+          />
+        </a>
+        <a
+          data-stylename="leader-name"
+          href="/groups/great-cause/members/6"
+        />
+        <div
+          data-stylename="badges"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`MemberSection Doesn't show total if it's < 1 1`] = `
@@ -90,21 +160,6 @@ exports[`MemberSection Doesn't show total if it's < 1 1`] = `
         }
       />
     </div>
-  </Link>
-  <Link
-    data-stylename="invite-link"
-    to="/groups/foo/settings/invite"
-  >
-    <Button
-      data-stylename="settings-link"
-    >
-      <Icon
-        data-stylename="invite-icon"
-        name="Invite"
-      />
-       
-      Invite People
-    </Button>
   </Link>
 </div>
 `;
@@ -150,7 +205,7 @@ exports[`MemberSection Formats total correctly if it's > 999 1`] = `
 </div>
 `;
 
-exports[`MemberSection Shows invite link if canModerate is true 1`] = `
+exports[`MemberSection Shows invite link if has responsibility ADD_MEMBERS is true 1`] = `
 <div
   data-stylename="member-section"
 >
@@ -187,21 +242,6 @@ exports[`MemberSection Shows invite link if canModerate is true 1`] = `
         +5.6k
       </span>
     </div>
-  </Link>
-  <Link
-    data-stylename="invite-link"
-    to="/groups/foo/settings/invite"
-  >
-    <Button
-      data-stylename="settings-link"
-    >
-      <Icon
-        data-stylename="invite-icon"
-        name="Invite"
-      />
-       
-      Invite People
-    </Button>
   </Link>
 </div>
 `;
