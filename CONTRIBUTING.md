@@ -59,6 +59,11 @@ We are actively seeking developers to join our mission to amplify cooperation am
 ### Our dev process
 Hylo is stewarded by a team of engineers, designers, artists, and product managers from [Terran Collective](https://www.terran.io/). We create project scopes in partnership with organizations who use Hylo and have resources to share to help improve the platform for everyone. These project scopes guide us to set a timeline and assemble a team to carry out the development in co-creation with our partners. Right now, we meet weekly for collaborative sprint planning and backlog generation. We also like to pair program, and have deep dive product conversations. If you’d like to be a part of it, here’s what to do:
 
+### Platform setup
+The platform is currently sustained by several repos; hylo-evo, hylo-node, hylo-shared and hyloeReactNative. Evo covers the React-based web-app. Node is the node.js backend, relying on a redis cache and a postgres db. HyloReactNative is the mobile app (the repo is private right now, we just haven't had priority to open source it yet). Hylo-shared has a bunch of helper functions and other code shared between all the other repos. We are considering making the jump to a mono-repo, and would love help from those experienced with such a transition.
+
+You will need to get at least EVO and NODE up and running in your local setup to contribute code. There are docker images several parts of the back-end as well, documented in the NODE repo. [The .devcontainer README](https://github.com/Hylozoic/hylo-node/blob/dev/.devcontainer/README.md) details some setup aspects, although its been some time since any of us have tried the direct vs code integration. Docker desktop now automatically runs images that were running on shutdown, so that has streamlined the process of using the docker images.
+
 ### Steps to get involved:
 - Join the [Building Hylo](https://www.hylo.com/groups/building-hylo/join/RcDe6vcG7u) group, our open source community for people co-creating Hylo!
 - Reach out to Hylo's tech lead Tibet Sprague to say hi: tibet [at] hylo [dot] com
