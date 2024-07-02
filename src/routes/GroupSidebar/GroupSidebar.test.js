@@ -2,14 +2,15 @@ import
 GroupSidebar,
 {
   MemberSection,
-  GroupLeaderSection,
-  GroupLeader
+  GroupStewardsSection,
+  GroupSteward
 } from './GroupSidebar'
 // import AboutSection from './AboutSection'
 import { shallow } from 'enzyme'
 import React from 'react'
 import faker from '@faker-js/faker'
 import { fakePerson } from 'util/testing/testData'
+import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
@@ -42,20 +43,22 @@ const responsibilities = ['RESP_ADD_MEMBERS', 'RESP_ADMINISTRATION', 'RESP_REMOV
 
 describe('GroupSidebar', () => {
   const members = [{ id: 1 }, { id: 2 }, { id: 3 }]
-  const leaders = [{ id: 4 }, { id: 5 }, { id: 6 }]
+  const stewards = [{ id: 4 }, { id: 5 }, { id: 6 }]
   const memberCount = 56
   const currentUser = { memberships: { toRefArray: () => [{ commonRoles: { items: [] } }] } }
 
   it('renders correctly', () => {
-    const wrapper = shallow(
+    const { asFragment } = render(
       <GroupSidebar
         group={{ ...group, memberCount }}
         currentUser={currentUser}
         members={members}
-        leaders={leaders}
-        responsibilities={responsibilities}
-      />)
-    expect(wrapper).toMatchSnapshot()
+        stewards={stewards}
+        myResponsibilities={responsibilities}
+      />,
+      { wrapper: AllTheProviders() }
+    )
+    expect(asFragment()).toMatchSnapshot()
   })
 })
 
@@ -107,27 +110,26 @@ describe('MemberSection', () => {
   })
 })
 
-describe('GroupLeaderSection', () => {
-  it('renders correctly', () => {
+describe('GroupStewardsSection', () => {
+  it('renders correctly', async () => {
     const n = 5
-    const leaders = fakePerson(n)
-    const wrapper = shallow(<GroupLeaderSection leaders={leaders} />)
-    expect(wrapper.find('GroupLeader').length).toEqual(n)
-    expect(wrapper.find('GroupLeader').at(1).prop('leader')).toEqual(leaders[1])
+    const stewards = fakePerson(n)
+    render(<GroupStewardsSection stewards={stewards} descriptor='Wizard' />, { wrapper: AllTheProviders() })
+
+    expect(await screen.findByText('Group {{locationDescriptor}}')).toBeInTheDocument()
   })
 })
 
-describe('GroupLeader', () => {
-  it('renders correctly', () => {
-    const leader = {
+describe('GroupSteward', () => {
+  it('renders correctly', async () => {
+    const steward = {
       id: 1,
       name: 'Jon Smith',
       avatarUrl: 'foo.png',
       commonRoles: { items: [] },
       groupRoles: { items: [] }
     }
-    const wrapper = shallow(<GroupLeader leader={leader} />)
-    expect(wrapper.find('Avatar').prop('avatarUrl')).toEqual(leader.avatarUrl)
-    expect(wrapper.find('Link').get(0).props.children).toEqual(leader.name)
+    render(<GroupSteward steward={steward} />, { wrapper: AllTheProviders() })
+    expect(await screen.findByText(steward.name)).toBeInTheDocument()
   })
 })

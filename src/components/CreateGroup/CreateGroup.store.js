@@ -2,7 +2,7 @@ import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { AnalyticsEvents } from 'hylo-shared'
 
-export const MODULE_NAME = `CreateGroup`
+export const MODULE_NAME = 'CreateGroup'
 export const ADD_GROUP_NAME = `${MODULE_NAME}/ADD_GROUP_NAME`
 export const ADD_GROUP_DOMAIN = `${MODULE_NAME}/ADD_GROUP_DOMAIN`
 export const ADD_GROUP_PRIVACY = `${MODULE_NAME}/ADD_GROUP_PRIVACY`
@@ -103,6 +103,14 @@ export function createGroup (data) {
               id
               person {
                 id
+                membershipCommonRoles {
+                  items {
+                    id
+                    groupId
+                    commonRoleId
+                    userId
+                  }
+                }
               }
               settings {
                 agreementsAcceptedAt
@@ -111,14 +119,6 @@ export function createGroup (data) {
                 showJoinForm
                 sendPushNotifications
               }
-            }
-          }
-          membershipCommonRoles {
-            items {
-              id
-              groupId
-              commonRoleId
-              userId
             }
           }
         }

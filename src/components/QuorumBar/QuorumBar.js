@@ -24,7 +24,7 @@ const QuorumBar = ({ totalVoters, quorum, actualVoters, proposalStatus }) => {
           {quorum > 10 && <div styleName='quorum-text'>{quorumStatus}{' '}{quorumReached && quorum > 20 && t('voterCount', { count: actualVoters })}</div>}
         </div>
         <div styleName='quorum-bar' style={{ width: `${quorum}%` }}>
-          {!quorumReached && <div styleName={cx('quorum-number', { 'quorum-reached': quorumReached, 'big-quorum': quorum > 70 })}>{quorum}% {actualVoters || 0}/{votersForQuorum}</div>}
+          {!quorumReached && <div styleName={cx('quorum-number', { 'quorum-reached': quorumReached, 'big-quorum': quorum > 70 })}>{quorum}% ({actualVoters || 0}/{votersForQuorum})</div>}
         </div>
         <div styleName='total-voters-bar' />
       </div>

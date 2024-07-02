@@ -71,11 +71,12 @@ posts: viewPosts(
     avatarUrl
     groupRoles {
       items {
-         name
-         emoji
-         active
-         groupId
-         responsibilities {
+        id
+        name
+        emoji
+        active
+        groupId
+        responsibilities {
           items {
             id
             title
@@ -84,21 +85,13 @@ posts: viewPosts(
         }
       }
     }
-    commonRoles{
+    membershipCommonRoles {
       items {
-         name
-         emoji
-         responsibilities {
-           items {
-              id
-              title
-              description
-            }
-          }
-       }
-     }
-    moderatedGroupMemberships {
-      groupId
+        id
+        commonRoleId
+        groupId
+        userId
+      }
     }
   }
   createdAt
@@ -347,11 +340,12 @@ posts(
     avatarUrl
     groupRoles {
       items {
-         name
-         emoji
-         active
-         groupId
-         responsibilities {
+        id
+        name
+        emoji
+        active
+        groupId
+        responsibilities {
           items {
             id
             title
@@ -360,21 +354,13 @@ posts(
         }
       }
     }
-    commonRoles{
+    membershipCommonRoles {
       items {
-         name
-         emoji
-         responsibilities {
-           items {
-              id
-              title
-              description
-            }
-          }
-       }
-     }
-    moderatedGroupMemberships {
-      groupId
+        id
+        commonRoleId
+        groupId
+        userId
+      }
     }
   }
   createdAt

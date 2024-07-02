@@ -7,7 +7,7 @@ import RemovableListItem from 'components/RemovableListItem'
 import Icon from 'components/Icon'
 import { isEmpty, get, includes } from 'lodash/fp'
 import { removeResponsibilityFromRole, addResponsibilityToRole, fetchResponsibilitiesForGroupRole, fetchResponsibilitiesForGroup, fetchResponsibilitiesForCommonRole } from 'store/actions/responsibilities'
-import { getKeyCode, keyMap } from 'util/textInput'
+import { keyMap } from 'util/textInput'
 import { personUrl } from 'util/navigation'
 import SettingsControl from 'components/SettingsControl'
 import SettingsSection from '../SettingsSection'
@@ -34,9 +34,9 @@ class RolesSettingsTab extends Component {
   static propTypes = {
     addGroupRole: func,
     addRoleToMember: func,
+    commonRoles: array,
     group: object,
     removeRoleFromMember: func,
-    roles: array,
     slug: string,
     updateGroupRole: func
   }
@@ -294,6 +294,8 @@ class AddMemberToRoleUntranslated extends Component {
     this.state = {
       adding: false
     }
+    this.listRef = React.createRef()
+    this.inputRef = React.createRef()
   }
 
   render () {
@@ -319,23 +321,23 @@ class AddMemberToRoleUntranslated extends Component {
     }
 
     const chooseCurrentItem = () => {
-      if (!this.refs.list) return
-      return this.refs.list.handleKeys({
+      if (!this.listRef.current) return
+      return this.listRef.current.handleKeys({
         keyCode: keyMap.ENTER,
         preventDefault: () => {}
       })
     }
 
     const handleKeys = e => {
-      if (getKeyCode(e) === keyMap.ESC) {
+      if (e.key === 'Escape') {
         toggle()
         return
       }
-      if (!this.refs.list) return
-      return this.refs.list.handleKeys(e)
+      if (!this.listRef.current) return
+      return this.listRef.current.handleKeys(e)
     }
 
-    const listWidth = { width: get('refs.input.clientWidth', this, 0) + 4 }
+    const listWidth = { width: get('inputRef.current.clientWidth', this, 0) + 4 }
 
     if (adding) {
       return (
@@ -348,14 +350,15 @@ class AddMemberToRoleUntranslated extends Component {
               type='text'
               onChange={onInputChange}
               onKeyDown={handleKeys}
-              ref='input'
+              ref={this.inputRef}
+              data-testid='add-member-input'
             />
             <span styleName='styles.cancel-button' onClick={toggle}>{t('Cancel')}</span>
             <span styleName='styles.add-button' onClick={chooseCurrentItem}>{t('Add')}</span>
           </div>
           {!isEmpty(memberSuggestions) && <div style={listWidth}>
             <KeyControlledItemList
-              ref='list'
+              ref={this.listRef}
               items={memberSuggestions}
               onChange={onChoose}
               theme={styles}
@@ -365,7 +368,7 @@ class AddMemberToRoleUntranslated extends Component {
       )
     } else {
       return (
-        <div styleName='styles.add-new' onClick={toggle}>
+        <div styleName='styles.add-new' onClick={toggle} data-testid='add-new'>
           + {t('Add Member to Role')}
         </div>
       )
@@ -373,7 +376,7 @@ class AddMemberToRoleUntranslated extends Component {
   }
 }
 
-const AddMemberToRole = withTranslation()(AddMemberToRoleUntranslated)
+export const AddMemberToRole = withTranslation()(AddMemberToRoleUntranslated)
 
 class AddResponsibilityToRoleUntranslated extends Component {
   static propTypes = {
@@ -387,6 +390,7 @@ class AddResponsibilityToRoleUntranslated extends Component {
     this.state = {
       adding: false
     }
+    this.listRef = React.createRef()
   }
 
   render () {
@@ -404,23 +408,23 @@ class AddResponsibilityToRoleUntranslated extends Component {
     }
 
     const chooseCurrentItem = () => {
-      if (!this.refs.list) return
-      return this.refs.list.handleKeys({
+      if (!this.listRef.current) return
+      return this.listRef.current.handleKeys({
         keyCode: keyMap.ENTER,
         preventDefault: () => {}
       })
     }
 
     const handleKeys = e => {
-      if (getKeyCode(e) === keyMap.ESC) {
+      if (e.key === 'Escape') {
         toggle()
         return
       }
-      if (!this.refs.list) return
-      return this.refs.list.handleKeys(e)
+      if (!this.listRef.current) return
+      return this.listRef.current.handleKeys(e)
     }
 
-    const listWidth = { width: get('refs.input.clientWidth', this, 0) + 4 }
+    const listWidth = { width: get('inputRef.current.clientWidth', this, 0) + 4 }
     if (adding) {
       return (
         <div styleName='styles.adding'>
@@ -431,14 +435,14 @@ class AddResponsibilityToRoleUntranslated extends Component {
               placeholder='Type...'
               type='text'
               onKeyDown={handleKeys}
-              ref='input'
+              ref={this.inputRef}
             />
             <span styleName='styles.cancel-button' onClick={toggle}>{t('Cancel')}</span>
             <span styleName='styles.add-button' onClick={chooseCurrentItem}>{t('Add')}</span>
           </div>
           {!isEmpty(responsibilitySuggestions) && <div style={listWidth}>
             <KeyControlledItemList
-              ref='list'
+              ref={this.listRef}
               items={responsibilitySuggestions}
               onChange={onChoose}
               theme={styles}
@@ -468,17 +472,20 @@ export function RoleList ({ slug, fetchStewardSuggestions, addRoleToMember, sugg
 
   useEffect(() => {
     memberFetcher({ roleId })
-      .then((response) => setMembersForRole(response.payload.data.group.members.items))
+      .then((response) => setMembersForRole(response?.payload?.data?.group?.members?.items || []))
+      .catch((e) => { console.error('Error fetching members for role ', e) })
   }, [])
 
   useEffect(() => {
     dispatch(responsbilityFetcher({ roleId }))
-      .then((response) => setResponsibilitiesForRole(response.payload.data.responsibilities))
+      .then((response) => setResponsibilitiesForRole(response?.payload?.data?.responsibilities || []))
+      .catch((e) => { console.error('Error fetching responsibilities for role ', e) })
   }, [])
 
   useEffect(() => {
     dispatch(fetchResponsibilitiesForGroup({ groupId: group.id }))
-      .then((response) => setAvailableResponsibilities(response.payload.data.responsibilities))
+      .then((response) => setAvailableResponsibilities(response?.payload?.data?.responsibilities || []))
+      .catch((e) => { console.error('Error fetching responsibilities for group', e) })
   }, [])
 
   const memberRoleIds = membersForRole.map(mr => mr.id)

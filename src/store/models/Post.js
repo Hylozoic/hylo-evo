@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 // proposal templates
 export const PROPOSAL_YESNO = 'Yes/No'
-export const PROPOSAL_POLL_SINGLE = 'Poll, Single vote'
+export const PROPOSAL_POLL_SINGLE = 'Poll, Single Vote'
 export const PROPOSAL_ADVICE = 'Advice'
 export const PROPOSAL_CONSENT = 'Consent'
 export const PROPOSAL_CONSENSUS = 'Consensus'

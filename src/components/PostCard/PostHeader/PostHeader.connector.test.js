@@ -4,13 +4,15 @@ import orm from 'store/models'
 describe('mapStateToProps', () => {
   it('maps', () => {
     const session = orm.session(orm.getEmptyState())
+    session.CommonRole.create({ id: 1, name: 'Coordinator', responsibilities: [{ id: 1, title: 'Administration' }] })
     session.Group.create({ id: 33, slug: 'mygroup' })
     session.Me.create({
       id: 20,
       memberships: [session.Membership.create({
         id: '345',
         group: 33
-      })]
+      })],
+      membershipCommonRoles: [{ commonRoleId: 1, groupId: 33, userId: 20, id: 1 }]
     })
 
     const state = {

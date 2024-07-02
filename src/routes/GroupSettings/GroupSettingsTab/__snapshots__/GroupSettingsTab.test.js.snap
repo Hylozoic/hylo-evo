@@ -127,7 +127,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   <p
     data-stylename="general.detailText"
   >
-    Note: as a moderator you will always see the exact location displayed
+    Note: with Administration rights you will always see the exact location displayed
   </p>
   <br />
   <SettingsControl

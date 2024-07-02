@@ -541,7 +541,7 @@ describe('on CREATE_GROUP', () => {
   const group1 = session.Group.create({ id: 'c1' })
   const group2 = session.Group.create({ id: 'c2' })
   const membership = session.Membership.create({ id: 'm1', group: group1.id })
-  session.CommonRole.create({ id: 1, name: 'Coordinator', responsibilities: [{ id: 1, name: 'Administration' }] })
+  session.CommonRole.create({ id: 1, name: 'Coordinator', responsibilities: [{ id: 1, title: 'Administration' }] })
   session.Membership.create({ id: 'm2', group: group2.id })
   session.Me.create({
     id: 1,
@@ -557,17 +557,18 @@ describe('on CREATE_GROUP', () => {
           memberships: {
             items: [
               {
-                id: 'm2'
-              }
-            ]
-          },
-          membershipCommonRoles: {
-            items: [
-              {
-                id: 2,
-                groupId: 'g2',
-                commonRoleId: 1,
-                userId: 1
+                id: 'm2',
+                person: {
+                  id: 1,
+                  membershipCommonRoles: {
+                    items: [{
+                      id: 1,
+                      groupId: group1.id,
+                      commonRoleId: 1,
+                      userId: 1
+                    }]
+                  }
+                }
               }
             ]
           }
@@ -580,8 +581,8 @@ describe('on CREATE_GROUP', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
     const currentUser = newSession.Me.first()
-    expect(currentUser.memberships.toModelArray().length).toEqual(2)
-    expect(currentUser.membershipCommonRoles.toRefArray()[0].commonRoleId).toEqual(1)
+    expect(currentUser.memberships.toModelArray()).toHaveLength(2)
+    expect(currentUser.membershipCommonRoles[0].commonRoleId).toEqual(1)
   })
 })
 

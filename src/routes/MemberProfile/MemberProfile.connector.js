@@ -22,7 +22,10 @@ const MESSAGES = {
 }
 
 export function mapStateToProps (state, props) {
-  const error = Number.isSafeInteger(Number(props.match.params.personId)) ? null : MESSAGES.invalid
+  if (!Number.isSafeInteger(Number(props.match.params.personId))) {
+    return { error: MESSAGES.invalid }
+  }
+
   const routeParams = props.match.params
   const person = getPresentedPerson(state, { ...routeParams, ...props })
   const contentLoading = isPendingFor([
@@ -42,7 +45,6 @@ export function mapStateToProps (state, props) {
 
   return {
     routeParams,
-    error,
     personLoading,
     contentLoading,
     group,

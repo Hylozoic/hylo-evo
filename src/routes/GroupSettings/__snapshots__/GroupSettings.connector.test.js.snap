@@ -2,12 +2,43 @@
 
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
-  "canModerate": true,
+  "commonRoles": Array [
+    Object {
+      "id": 1,
+      "name": "Coordinator",
+      "responsibilities": Array [
+        Object {
+          "id": 1,
+          "title": "Administration",
+        },
+      ],
+    },
+  ],
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
+      "membershipCommonRoles": Object {
+        "items": Array [
+          Object {
+            "commonRoleId": 1,
+            "groupId": "99",
+            "id": 1,
+            "userId": 1,
+          },
+        ],
+      },
     },
     "id": "1",
+    "membershipCommonRoles": Object {
+      "items": Array [
+        Object {
+          "commonRoleId": 1,
+          "groupId": "99",
+          "id": 1,
+          "userId": 1,
+        },
+      ],
+    },
   },
   "fetchCollectionPostsPending": undefined,
   "fetchPending": undefined,
@@ -21,10 +52,10 @@ Object {
     "id": "99",
     "joinQuestions": Array [],
     "members": Array [],
-    "moderators": Array [],
     "openOffersAndRequests": Array [],
     "prerequisiteGroups": Array [],
     "slug": "foo",
+    "stewards": Array [],
     "suggestedSkills": Array [],
     "upcomingEvents": Array [],
     "widgets": Array [],
@@ -94,12 +125,6 @@ Object {
               name
               avatarUrl
             }
-          }
-          commonRoles {
-            id
-            name
-            emoji
-            description
           }
           customViews {
             items {
@@ -282,13 +307,44 @@ Object {
 exports[`mergeProps merges the props 3`] = `
 Object {
   "addPostToCollection": [Function],
-  "canModerate": true,
+  "commonRoles": Array [
+    Object {
+      "id": 1,
+      "name": "Coordinator",
+      "responsibilities": Array [
+        Object {
+          "id": 1,
+          "title": "Administration",
+        },
+      ],
+    },
+  ],
   "createCollection": [Function],
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
+      "membershipCommonRoles": Object {
+        "items": Array [
+          Object {
+            "commonRoleId": 1,
+            "groupId": "99",
+            "id": 1,
+            "userId": 1,
+          },
+        ],
+      },
     },
     "id": "1",
+    "membershipCommonRoles": Object {
+      "items": Array [
+        Object {
+          "commonRoleId": 1,
+          "groupId": "99",
+          "id": 1,
+          "userId": 1,
+        },
+      ],
+    },
   },
   "deleteGroup": [Function],
   "fetchCollectionPosts": [Function],
@@ -307,10 +363,10 @@ Object {
     "id": "99",
     "joinQuestions": Array [],
     "members": Array [],
-    "moderators": Array [],
     "openOffersAndRequests": Array [],
     "prerequisiteGroups": Array [],
     "slug": "foo",
+    "stewards": Array [],
     "suggestedSkills": Array [],
     "upcomingEvents": Array [],
     "widgets": Array [],

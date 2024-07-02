@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { origin } from 'util/navigation'
 import { regenerateAccessCode, FETCH_GROUP_SETTINGS } from '../GroupSettings.store'
 import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
-import getMe from 'store/selectors/getMe'
 import {
   allowGroupInvites,
   createInvitations,

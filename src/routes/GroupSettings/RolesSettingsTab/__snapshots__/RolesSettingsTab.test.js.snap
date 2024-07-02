@@ -1,232 +1,110 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AddModerator renders correctly when adding with suggestions 1`] = `
-<div
-  data-stylename="styles.adding"
->
+exports[`AddMemberToRole renders correctly when adding with suggestions 1`] = `
+<DocumentFragment>
   <div
-    data-stylename="styles.help-text"
+    data-stylename="styles.adding"
   >
-    Search here for members to grant moderator powers
-  </div>
-  <div
-    data-stylename="styles.input-row"
-  >
-    <input
-      data-stylename="styles.input"
-      onChange={[Function]}
-      onKeyDown={[Function]}
-      placeholder="Type..."
-      type="text"
-    />
-    <span
-      data-stylename="styles.cancel-button"
-      onClick={[Function]}
+    <div
+      data-stylename="styles.help-text"
     >
-      Cancel
-    </span>
-    <span
-      data-stylename="styles.add-button"
-      onClick={[Function]}
+      Search here for members to grant this role too
+    </div>
+    <div
+      data-stylename="styles.input-row"
     >
-      Add
-    </span>
+      <input
+        data-stylename="styles.input"
+        data-testid="add-member-input"
+        placeholder="Type..."
+        type="text"
+      />
+      <span
+        data-stylename="styles.cancel-button"
+      >
+        Cancel
+      </span>
+      <span
+        data-stylename="styles.add-button"
+      >
+        Add
+      </span>
+    </div>
   </div>
-  <div
-    style={
-      Object {
-        "width": NaN,
-      }
-    }
-  >
-    <KeyControlledItemList
-      items={
-        Array [
-          Object {
-            "id": 1,
-            "name": "Demeter",
-          },
-          Object {
-            "id": 2,
-            "name": "Ares",
-          },
-          Object {
-            "id": 1,
-            "name": "Hermes",
-          },
-        ]
-      }
-      onChange={[Function]}
-      t={[Function]}
-      theme={Object {}}
-    />
-  </div>
-</div>
+</DocumentFragment>
 `;
 
-exports[`AddModerator renders correctly, and transitions from not adding to adding 1`] = `
-<div
-  data-stylename="styles.add-new"
-  id="add-new"
-  onClick={[Function]}
->
-  +
-  Add New
-</div>
+exports[`AddMemberToRole renders correctly, and transitions from not adding to adding 1`] = `
+<DocumentFragment>
+  <div
+    data-stylename="styles.add-new"
+    data-testid="add-new"
+  >
+    + Add Member to Role
+  </div>
+</DocumentFragment>
 `;
 
-exports[`AddModerator renders correctly, and transitions from not adding to adding 2`] = `
-<div
-  data-stylename="styles.adding"
->
+exports[`AddMemberToRole renders correctly, and transitions from not adding to adding 2`] = `
+<DocumentFragment>
   <div
-    data-stylename="styles.help-text"
+    data-stylename="styles.adding"
   >
-    Search here for members to grant moderator powers
-  </div>
-  <div
-    data-stylename="styles.input-row"
-  >
-    <input
-      data-stylename="styles.input"
-      onChange={[Function]}
-      onKeyDown={[Function]}
-      placeholder="Type..."
-      type="text"
-    />
-    <span
-      data-stylename="styles.cancel-button"
-      onClick={[Function]}
+    <div
+      data-stylename="styles.help-text"
     >
-      Cancel
-    </span>
-    <span
-      data-stylename="styles.add-button"
-      onClick={[Function]}
+      Search here for members to grant this role too
+    </div>
+    <div
+      data-stylename="styles.input-row"
     >
-      Add
-    </span>
+      <input
+        data-stylename="styles.input"
+        data-testid="add-member-input"
+        placeholder="Type..."
+        type="text"
+      />
+      <span
+        data-stylename="styles.cancel-button"
+      >
+        Cancel
+      </span>
+      <span
+        data-stylename="styles.add-button"
+      >
+        Add
+      </span>
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
-exports[`ModeratorsList renders correctly 1`] = `
-<div>
+exports[`RoleList renders correctly 1`] = `
+<DocumentFragment>
   <div>
-    <RemovableListItem
-      item={
-        Object {
-          "id": 1,
-        }
-      }
-      key="1"
-      skipConfirm={true}
-      url="/groups/foogroup/members/1"
-    />
-    <RemovableListItem
-      item={
-        Object {
-          "id": 2,
-        }
-      }
-      key="2"
-      skipConfirm={true}
-      url="/groups/foogroup/members/2"
-    />
-    <RemovableListItem
-      item={
-        Object {
-          "id": 3,
-        }
-      }
-      key="3"
-      skipConfirm={true}
-      url="/groups/foogroup/members/3"
-    />
-    <RemovableListItem
-      item={
-        Object {
-          "id": 4,
-        }
-      }
-      key="4"
-      skipConfirm={true}
-      url="/groups/foogroup/members/4"
-    />
-  </div>
-  <AddModeratorUntranslated
-    t={[Function]}
-  />
-</div>
-`;
-
-exports[`RolesSettingsTab renders a list of RemovableListItems and AddModerator 1`] = `
-<Fragment>
-  <SettingsSection>
-    <h3>
-      Moderators
+    <div>
+      <h4>
+        Responsibilities
+      </h4>
       <div
         data-stylename="styles.help-text"
       >
-        Who has access to group settings and moderation powers
+        Common roles cannot have their responsibilities edited
       </div>
-    </h3>
-    <ModeratorsList
-      key="mList"
-      moderators={
-        Array [
-          Object {
-            "id": 1,
-          },
-          Object {
-            "id": 2,
-          },
-          Object {
-            "id": 3,
-          },
-          Object {
-            "id": 4,
-          },
-        ]
-      }
-      removeItem={[Function]}
-      t={[Function]}
-    />
-  </SettingsSection>
-  <SettingsSection>
-    <h3>
-      Common Roles & Badges
-    </h3>
-    <div
-      data-stylename="styles.help-text"
-    >
-      Use common roles or badges for the group
-    </div>
-  </SettingsSection>
-  <SettingsSection>
-    <h3>
-      Other Roles & Badges
-    </h3>
-    <div
-      data-stylename="styles.help-text"
-    >
-      Create additional roles or badges for the group
     </div>
     <div
-      data-stylename="styles.add-role"
-      onClick={[Function]}
+      style="margin-top: 20px;"
     >
       <h4>
-        Create new role/badge
+        Members
       </h4>
-      <Icon
-        data-stylename="styles.new-role"
-        name="Circle-Plus"
-      />
     </div>
-  </SettingsSection>
-  <br />
-</Fragment>
+    <div
+      data-stylename="styles.add-new"
+      data-testid="add-new"
+    >
+      + Add Member to Role
+    </div>
+  </div>
+</DocumentFragment>
 `;
-
-exports[`RolesSettingsTab renders loading if no moderators 1`] = `<Loading />`;
