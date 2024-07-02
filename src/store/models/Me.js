@@ -1,20 +1,10 @@
-import { find, get, includes } from 'lodash/fp'
+import { includes } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import { attr, fk, many, Model } from 'redux-orm'
 import featureFlag from 'config/featureFlags'
-import { toRefArray } from 'util/reduxOrmMigration'
 
 export function firstName (user) {
   return user.name ? user.name.split(' ')[0] : null
-}
-
-export function canModerate (memberships, group) {
-  const matchedMembership = find(
-    m => m.group === get('id', group),
-    toRefArray(memberships)
-  )
-
-  return get('hasModeratorRole', matchedMembership)
 }
 
 export function isTester (userId) {
@@ -58,10 +48,6 @@ class Me extends Model {
     return firstName(this)
   }
 
-  canModerate (group) {
-    return canModerate(this.memberships, group)
-  }
-
   hasFeature (key) {
     return hasFeature(key, isTester(this.id))
   }
@@ -89,6 +75,7 @@ Me.fields = {
     to: 'Location',
     as: 'locationObject'
   }),
+  commonRoles: many('CommonRole'),
   memberships: many('Membership'),
   messageThreads: many('MessageThread'),
   notifications: many('Notification'),

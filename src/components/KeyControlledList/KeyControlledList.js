@@ -33,12 +33,12 @@ class KeyControlledList extends React.Component {
 
   constructor (props) {
     super(props)
-    let { selectedIndex } = props
+    const { selectedIndex } = props
     this.state = { selectedIndex }
   }
 
   componentWillReceiveProps (nextProps) {
-    var max = nextProps.children.length - 1
+    const max = nextProps.children.length - 1
     if (this.state.selectedIndex > max) {
       this.setState({ selectedIndex: max })
     }
@@ -47,8 +47,8 @@ class KeyControlledList extends React.Component {
   changeSelection = delta => {
     if (isEmpty(this.props.children)) return
 
-    var i = this.state.selectedIndex
-    var length = React.Children.count(this.props.children)
+    let i = this.state.selectedIndex
+    const length = React.Children.count(this.props.children)
 
     i += delta
     if (i < 0) i += length

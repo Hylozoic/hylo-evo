@@ -82,9 +82,9 @@ export function OpportunityToCollaborate ({ group, opportunity }) {
   const currentUser = useSelector(state => getMe(state))
   const { push } = useRouter()
   const prompt = t(`Hi there {{groupName}}, I'd like to talk about {{prompt}}.`, { groupName: group.name, prompt: promptLookup[opportunity] })
-  const goToGroupModeratorsMessage = useCallback(() => {
+  const goToGroupStewardsMessage = useCallback(() => {
     push(
-      `${newMessageUrl()}?participants=${group.moderators.map(m => m.id).join(',')}&prompt=${encodeURIComponent(prompt)}`
+      `${newMessageUrl()}?participants=${group.stewards.map(m => m.id).join(',')}&prompt=${encodeURIComponent(prompt)}`
     )
   }, [group?.id, prompt])
 
@@ -100,7 +100,7 @@ export function OpportunityToCollaborate ({ group, opportunity }) {
           name='Messages'
           blue
           styleName='collab-icon cursor-pointer'
-          onClick={goToGroupModeratorsMessage}
+          onClick={goToGroupStewardsMessage}
         />
       )}
     </div>

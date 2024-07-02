@@ -104,20 +104,34 @@ const membersFragment = `
       avatarUrl
       tagline
       groupRoles {
-        id
-        name
-        emoji
-        active
-        groupId
+        items {
+          id
+          name
+          emoji
+          active
+          groupId
+          responsibilities {
+            items {
+              id
+              title
+              description
+            }
+          }
+        }
+      }
+      membershipCommonRoles {
+        items {
+          id
+          commonRoleId
+          groupId
+          userId
+        }
       }
       locationObject {
         center {
           lat
           lng
         }
-      }
-      moderatedGroupMemberships {
-        groupId
       }
       skills {
         hasMore

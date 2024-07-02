@@ -57,7 +57,7 @@ export const getPosts = ormCreateSelector(
 const NUM_POSTS_TO_LOAD = 25
 
 export function mapStateToProps (state, props) {
-  let canModerate, group, topic, groupTopic
+  let group, topic, groupTopic
 
   const currentUser = getMe(state, props)
 
@@ -66,7 +66,6 @@ export function mapStateToProps (state, props) {
     group = getGroupForCurrentRoute(state, props)
     groupTopic = getGroupTopicForCurrentRoute(state, props)
     groupTopic = groupTopic && { ...groupTopic.ref, group: groupTopic.group, topic: groupTopic.topic }
-    canModerate = currentUser && currentUser.canModerate(group)
   }
 
   const routeParams = get('match.params', props)
@@ -133,7 +132,6 @@ export function mapStateToProps (state, props) {
   const totalPostsFuture = getTotalPosts(state, fetchPostsFutureParams) || 0
 
   return {
-    canModerate,
     context,
     currentPostIndex,
     currentUser,

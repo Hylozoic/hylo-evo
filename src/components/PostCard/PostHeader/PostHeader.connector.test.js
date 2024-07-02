@@ -4,13 +4,16 @@ import orm from 'store/models'
 describe('mapStateToProps', () => {
   it('maps', () => {
     const session = orm.session(orm.getEmptyState())
+    session.CommonRole.create({ id: 1, name: 'Coordinator', responsibilities: [{ id: 1, title: 'Administration' }] })
     session.Group.create({ id: 33, slug: 'mygroup' })
-    session.Me.create({ id: 20,
+    session.Me.create({
+      id: 20,
       memberships: [session.Membership.create({
         id: '345',
-        group: 33,
-        hasModeratorRole: true
-      })] })
+        group: 33
+      })],
+      membershipCommonRoles: [{ commonRoleId: 1, groupId: 33, userId: 20, id: 1 }]
+    })
 
     const state = {
       orm: session.state
@@ -98,12 +101,14 @@ describe('mergeProps', () => {
     it('can delete and edit own posts, and pin a post', () => {
       const session = orm.session(orm.getEmptyState())
       const group = session.Group.create({ id: 33, slug: 'mygroup' })
+      session.CommonRole.create({ id: 2, name: 'Moderator', responsibilities: [{ id: 2, title: 'Manage Content' }] })
       session.Me.create({ id: 20,
         memberships: [session.Membership.create({
           id: '345',
-          group: group.id,
-          hasModeratorRole: true
-        })] })
+          group: group.id
+        })],
+        membershipCommonRoles: [{ commonRoleId: 2, groupId: group.id, userId: 20, id: 2 }]
+      })
       const state = {
         orm: session.state
       }
@@ -129,12 +134,15 @@ describe('mergeProps', () => {
     it('cannot delete posts but can moderate', () => {
       const session = orm.session(orm.getEmptyState())
       const group = session.Group.create({ id: 33, slug: 'mygroup' })
-      session.Me.create({ id: 20,
+      session.CommonRole.create({ id: 2, name: 'Moderator', responsibilities: [{ id: 2, title: 'Manage Content' }] })
+      session.Me.create({
+        id: 20,
         memberships: [session.Membership.create({
           id: '345',
-          group: group.id,
-          hasModeratorRole: true
-        })] })
+          group: group.id
+        })],
+        membershipCommonRoles: [{ commonRoleId: 2, groupId: group.id, userId: 20, id: 2 }]
+      })
 
       const state = {
         orm: session.state
@@ -158,12 +166,13 @@ describe('mergeProps', () => {
     it("can delete and edit own posts, can duplicate any posts, can't pin posts", () => {
       const session = orm.session(orm.getEmptyState())
       const group = session.Group.create({ id: 33, slug: 'mygroup' })
-      session.Me.create({ id: 20,
+      session.Me.create({
+        id: 20,
         memberships: [session.Membership.create({
           id: '345',
-          group: group.id,
-          hasModeratorRole: false
-        })] })
+          group: group.id
+        })]
+      })
 
       const state = {
         orm: session.state
@@ -194,12 +203,13 @@ describe('mergeProps', () => {
   it('cannot delete, edit, or remove posts if not creator or moderator but can duplicate posts', () => {
     const session = orm.session(orm.getEmptyState())
     const group = session.Group.create({ id: 33, slug: 'mygroup' })
-    session.Me.create({ id: 20,
+    session.Me.create({
+      id: 20,
       memberships: [session.Membership.create({
         id: '345',
-        group: group.id,
-        hasModeratorRole: false
-      })] })
+        group: group.id
+      })]
+    })
 
     const state = {
       orm: session.state

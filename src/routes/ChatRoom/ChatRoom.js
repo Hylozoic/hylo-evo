@@ -50,7 +50,6 @@ export default function ChatRoom (props) {
     clearImageAttachments,
     clearLinkPreview,
     createPost,
-    canModerate,
     currentPostIndex,
     currentUser,
     fetchLinkPreviewPending,
@@ -432,7 +431,6 @@ export default function ChatRoom (props) {
                         {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='divider' /><div styleName='day'>{post.displayDay}</div></div> : ''}
                         {post.type === 'chat'
                           ? <ChatPost
-                            canModerate={canModerate}
                             currentUser={currentUser}
                             expanded={expanded}
                             group={group}

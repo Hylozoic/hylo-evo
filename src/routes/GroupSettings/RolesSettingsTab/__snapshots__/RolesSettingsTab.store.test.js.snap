@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`clearStewardSuggestions 1`] = `
+Object {
+  "type": "CLEAR_STEWARD_SUGGESTIONS",
+}
+`;
+
+exports[`fetchStewardSuggestions 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($id: ID, $autocomplete: String) {
+        group (id: $id) {
+          id
+          members (first: 10, autocomplete: $autocomplete) {
+            hasMore
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+        }
+      }",
+    "variables": Object {
+      "autocomplete": "to",
+      "id": 123,
+    },
+  },
+  "meta": Object {
+    "extractModel": "Group",
+  },
+  "type": "FETCH_STEWARD_SUGGESTIONS",
+}
+`;

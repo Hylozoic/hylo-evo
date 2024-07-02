@@ -100,20 +100,34 @@ Object {
       avatarUrl
       tagline
       groupRoles {
-        id
-        name
-        emoji
-        active
-        groupId
+        items {
+          id
+          name
+          emoji
+          active
+          groupId
+          responsibilities {
+            items {
+              id
+              title
+              description
+            }
+          }
+        }
+      }
+      membershipCommonRoles {
+        items {
+          id
+          commonRoleId
+          groupId
+          userId
+        }
       }
       locationObject {
         center {
           lat
           lng
         }
-      }
-      moderatedGroupMemberships {
-        groupId
       }
       skills {
         hasMore
@@ -221,13 +235,28 @@ posts: viewPosts(
     name
     avatarUrl
     groupRoles {
-      name
-      emoji
-      active
-      groupId
+      items {
+        id
+        name
+        emoji
+        active
+        groupId
+        responsibilities {
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
     }
-    moderatedGroupMemberships {
-      groupId
+    membershipCommonRoles {
+      items {
+        id
+        commonRoleId
+        groupId
+        userId
+      }
     }
   }
   createdAt

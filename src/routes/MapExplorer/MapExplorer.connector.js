@@ -34,7 +34,7 @@ import {
 
 export function presentMember (person, groupId) {
   return {
-    ...pick(['id', 'name', 'avatarUrl', 'groupRoles', 'locationObject', 'moderatedGroupMemberships', 'tagline', 'skills'], person.ref),
+    ...pick(['id', 'name', 'avatarUrl', 'groupRoles', 'locationObject', 'tagline', 'skills'], person.ref),
     type: 'member',
     skills: person.skills.toModelArray(),
     group: person.memberships.first()

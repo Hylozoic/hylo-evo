@@ -155,7 +155,6 @@ class TopicsSettingsTab extends Component {
                 key={topic.id}
                 singleGroup={group}
                 topic={topic}
-                canModerate
                 setGroupTopicVisibility={this.setGroupTopicVisibility}
               />
             )}

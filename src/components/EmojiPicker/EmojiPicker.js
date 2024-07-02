@@ -15,6 +15,7 @@ export default function EmojiPicker (props) {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalY, setModalY] = useState()
   const [modalX, setModalX] = useState()
+
   const handleClick = (data) => {
     const selectedEmoji = data.native
     if (myEmojis.includes(selectedEmoji)) {

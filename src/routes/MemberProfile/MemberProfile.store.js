@@ -13,20 +13,13 @@ export function getMemberships (person) {
   }))
 }
 
-export function getRoleForGroup (person, groupSlug) {
-  const memberships = getMemberships(person)
-
-  return memberships.find(m => m.group.slug === groupSlug && m.hasModeratorRole)
-    ? 'Group Moderator'
-    : null
-}
-
 export function presentPerson (person, selectedGroupSlug) {
   return {
     ...person.ref,
-    role: getRoleForGroup(person, selectedGroupSlug),
     skills: person.skills && person.skills.toRefArray(),
-    memberships: getMemberships(person)
+    memberships: getMemberships(person),
+    membershipCommonRoles: person.membershipCommonRoles,
+    groupRoles: person.groupRoles
   }
 }
 

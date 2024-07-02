@@ -25,6 +25,7 @@ jest.mock('react-i18next', () => ({
 
 function testWrapper (providedState) {
   const ormSession = orm.mutableSession(orm.getEmptyState())
+  ormSession.Me.create(denormalized.data.person)
   const reduxState = { orm: ormSession.state, ...providedState }
   return AllTheProviders(reduxState)
 }
@@ -33,7 +34,8 @@ describe('MemberProfile', () => {
   const defaultTestProps = {
     routeParams: { personId: '1' },
     person: denormalized.data.person,
-    fetchPerson: jest.fn()
+    fetchPerson: jest.fn(),
+    roles: []
   }
 
   it('renders the same as the last snapshot', () => {
@@ -106,6 +108,7 @@ describe('MemberProfile', () => {
         bio: 'WOMBATS'
       }
     }
+
     render(
       <MemberProfile {...props} />,
       { wrapper: testWrapper() }
@@ -155,7 +158,8 @@ describe('MemberProfile', () => {
   it('renders MemberVotes on reactions', () => {
     const props = {
       ...defaultTestProps,
-      currentTab: 'Reactions'
+      currentTab: 'Reactions',
+      roles: [{ id: 1, common: true, responsibilities: { items: [{ id: 1, title: 'Manage Content' }] } }]
     }
     const wrapper = shallow(<MemberProfile {...props} />)
     expect(wrapper.text().includes('{{name}}s reactions')).toBe(true)

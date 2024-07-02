@@ -1,0 +1,284 @@
+.adding {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.help-text {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin: 5px 0 10px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 5px 10px;
+  color: $color-rhino;
+  &::placeholder {
+    color: $color-rhino-60;
+  }
+}
+
+.cancel-button {
+  composes: text-button from 'css/typography.scss';
+  color: $color-rhino-60;
+  &:hover {
+    color: $color-rhino-80;
+  }
+  margin-right: 10px;
+}
+
+.add-button {
+  composes: text-button from 'css/typography.scss';
+}
+
+.add-new {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border: 1px dashed $color-ghost;
+  composes: text-button from 'css/typography.scss';
+  margin-top: 15px;
+}
+
+// KeyControlledListTheme
+
+ .items {
+   list-style: none;
+   border: 1px solid $color-ghost;
+   padding: 0;
+   li {
+     border-top: 1px solid $color-ghost;
+     &:first-child {
+       border: none;
+     }
+   }
+ }
+
+.item {
+  padding: 5px 5px 5px 11px;
+  color: $color-caribbean-green;
+}
+
+.item-active {
+  background-color: $color-athens-gray-dark;
+}
+
+.new-role {
+  font-size: 36px;
+  color: rgba(191, 197, 206, 1.0);
+}
+
+.warning {
+  color: $color-amaranth;
+}
+
+.add-role {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px;
+  box-shadow: 0px 5px 8px rgba(35, 65, 91, .2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h4 {
+    font-size: 16px;
+    color: rgba(35, 65, 91, 1.0);
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.responsibility-container {
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 5px 5px 5px 8px;
+  box-shadow: 0px 5px 8px rgba(35, 65, 91, .2);
+
+  /* For delete icon */
+  h4 {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(35, 65, 91, 1.0);
+    font-family: 'Circular Bold', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+
+    span {
+      vertical-align: bottom;
+      cursor: pointer;
+    }
+
+    strong {
+      font-size: 12px;
+      font-family: 'Circular Book', sans-serif;
+      opacity: .5;
+      display: block;
+    }
+
+  }
+}
+
+.responsibility-row {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  gap: 12px;
+
+  .label {
+    margin-bottom:0;
+  }
+}
+
+.responsibility-stack {
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+  align-items: center;
+  min-height: 30px;
+  width: 75%;
+
+  .label {
+    margin-bottom:0;
+  }
+}
+
+.system-responsibility-stack {
+  display: flex;
+  flex-direction: column;
+  min-height: 30px;
+
+  .label {
+    margin-bottom:0;
+  }
+}
+
+.responsibility-last-row {
+  padding: 10px 0;
+
+  &> div {
+    border: 1px solid rgba(224, 229, 233, 1.0);
+    border-radius: 5px;
+  }
+}
+
+.settings-control {
+  border-bottom: none;
+  padding-right: 10px;
+  margin-bottom: 0;
+  padding-bottom: 5px;
+  width: 100%;
+
+  label {
+    color: rgba(44, 64, 89, 0.6);
+  }
+
+  input, textarea {
+    border: 1px solid rgba(224, 229, 233, 1.0);
+    padding: 5px 8px;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+  }
+
+  textarea {
+    height: 100px;
+    line-height: normal;
+  };
+}
+
+.action-container {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.action {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 8px rgba(128, 140, 155, 0.28);
+  font-family: 'Circular Std';
+  font-style: normal;
+  font-weight: 700;
+  border-radius: 5px;
+  margin: 6px;
+  display: flex;
+  height: 32px;
+  gap: 4px;
+  padding: 4px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// Modal
+.content {
+  text-align: left;
+}
+
+.modal-text {
+  padding-bottom: 25px;
+  font-size: 18px;
+  font-family: "Circular Bold", sans-serif;
+}
+
+.emoji-picker {
+  font-weight: 450;
+  font-size: 36px;
+  line-height: 22px;
+  width: 70px;
+  height: 70px;
+  background: #FFFFFF;
+  box-shadow: 0px 8px 15px rgba(128, 140, 155, 0.28);
+  border-radius: 5px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    background-color: lighten($color-caribbean-green, 50%);
+  }
+}
+
+.create-button {
+  width: 104px;
+  height: 39.43px;
+  cursor: pointer;
+  background: #FFFFFF;
+  box-shadow: 0px 8px 15px rgba(128, 140, 155, 0.28);
+  border-radius: 5px;
+  font-family: 'Circular Std';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inactive {
+  background-color: $color-ghost-30;
+}
+
+.description {
+  color: $color-black-60;
+  font-size: 14px;
+  transition: all .25s ease;
+  margin-bottom: 5px;
+  display: inline-block;
+}

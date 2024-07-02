@@ -25,10 +25,10 @@ exports[`UserGroupsTab renders a list of Memberships 1`] = `
     key="1"
     membership={
       Object {
-        "hasModeratorRole": true,
         "id": "1",
       }
     }
+    rowStyle={true}
   />
   <Membership
     archive={[Function]}
@@ -36,10 +36,10 @@ exports[`UserGroupsTab renders a list of Memberships 1`] = `
     key="2"
     membership={
       Object {
-        "hasModeratorRole": true,
         "id": "2",
       }
     }
+    rowStyle={true}
   />
   <Membership
     archive={[Function]}
@@ -47,10 +47,10 @@ exports[`UserGroupsTab renders a list of Memberships 1`] = `
     key="3"
     membership={
       Object {
-        "hasModeratorRole": true,
         "id": "3",
       }
     }
+    rowStyle={true}
   />
   <h2
     data-stylename="subhead"

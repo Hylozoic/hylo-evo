@@ -10,17 +10,17 @@ it('can be created', () => {
   expect(itemsById[group.id]).toEqual(group)
 })
 
-it('can have moderators added', () => {
+it('can have stewards added', () => {
   const group = { id: '1' }
   const session = orm.session(orm.getEmptyState())
   session.Group.create(group)
 
-  const moderators = [{ id: 1, name: 'Joe' }, { id: 2, name: 'Sue' }].map(p =>
+  const stewards = [{ id: 1, name: 'Joe' }, { id: 2, name: 'Sue' }].map(p =>
     session.Person.create(p))
 
-  session.Group.withId('1').update({ moderators })
+  session.Group.withId('1').update({ stewards })
 
-  const retrievedMods = session.Group.withId('1').moderators.toModelArray()
+  const retrievedMods = session.Group.withId('1').stewards.toModelArray()
 
   expect(retrievedMods).toHaveLength(2)
   expect(retrievedMods[0].name).toEqual('Joe')

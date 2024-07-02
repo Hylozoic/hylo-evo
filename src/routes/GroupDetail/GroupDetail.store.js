@@ -18,6 +18,7 @@ export function fetchJoinRequests (groupId) {
   }
 }
 
+// TODO: RESP. check about joining a group as an coordinator, see if role is there?
 export function joinGroup (groupId, questionAnswers) {
   return {
     type: JOIN_GROUP,
@@ -25,8 +26,6 @@ export function joinGroup (groupId, questionAnswers) {
       query: `mutation ($groupId: ID, $questionAnswers: [QuestionAnswerInput]) {
         joinGroup(groupId: $groupId, questionAnswers: $questionAnswers) {
           id
-          role
-          hasModeratorRole
           group {
             id
             name

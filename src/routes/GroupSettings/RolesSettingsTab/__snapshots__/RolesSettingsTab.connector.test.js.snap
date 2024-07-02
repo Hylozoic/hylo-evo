@@ -3,60 +3,59 @@
 exports[`mapDispatchToProps correctly sets up dispatches 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($personId: ID, $groupId: ID) {
-        addModerator(personId: $personId, groupId: $groupId) {
+    "query": "mutation ($groupId: ID, $color: String, $name: String, $description: String, $emoji: String) {
+        addGroupRole (groupId: $groupId, color: $color, name: $name, description: $description, emoji: $emoji) {
           id
-          moderators (first: 100) {
-            items {
-              id
-              name
-              avatarUrl
-            }
-          }
+          color
+          name
+          description
+          emoji
+          active
         }
       }",
     "variables": Object {
-      "groupId": 11,
-      "personId": 10,
+      "color": undefined,
+      "description": undefined,
+      "emoji": undefined,
+      "groupId": 1,
+      "name": undefined,
     },
   },
   "meta": Object {
-    "groupId": 11,
+    "color": undefined,
+    "description": undefined,
+    "emoji": undefined,
+    "groupId": 1,
+    "name": undefined,
     "optimistic": true,
-    "personId": 10,
   },
-  "type": "ADD_MODERATOR",
+  "type": "ADD_GROUP_ROLE",
 }
 `;
 
 exports[`mapDispatchToProps correctly sets up dispatches 2`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($personId: ID, $groupId: ID, $isRemoveFromGroup: Boolean) {
-        removeModerator(personId: $personId, groupId: $groupId, isRemoveFromGroup: $isRemoveFromGroup) {
+    "query": "mutation ($personId: ID, $groupId: ID, $roleId: ID, $isCommonRole: Boolean) {
+        addRoleToMember(personId: $personId, groupId: $groupId, roleId: $roleId, isCommonRole: $isCommonRole) {
           id
-          moderators (first: 100) {
-            items {
-              id
-              name
-              avatarUrl
-            }
-          }
         }
       }",
     "variables": Object {
       "groupId": 11,
-      "isRemoveFromGroup": true,
-      "personId": 10,
+      "isCommonRole": true,
+      "personId": 1,
+      "roleId": 1,
     },
   },
   "meta": Object {
     "groupId": 11,
-    "isRemoveFromGroup": true,
+    "isCommonRole": true,
     "optimistic": true,
-    "personId": 10,
+    "personId": 1,
+    "roleId": 1,
   },
-  "type": "REMOVE_MODERATOR",
+  "type": "ADD_ROLE_TO_MEMBER",
 }
 `;
 
@@ -84,31 +83,18 @@ Object {
   "meta": Object {
     "extractModel": "Group",
   },
-  "type": "FETCH_MODERATOR_SUGGESTIONS",
+  "type": "FETCH_STEWARD_SUGGESTIONS",
 }
 `;
 
 exports[`mapDispatchToProps correctly sets up dispatches 4`] = `
 Object {
-  "type": "CLEAR_MODERATOR_SUGGESTIONS",
+  "type": "CLEAR_STEWARD_SUGGESTIONS",
 }
 `;
 
 exports[`mapStateToProps works 1`] = `
 Object {
-  "moderatorSuggestions": Array [],
-  "moderators": Array [
-    SessionBoundModel {
-      "_fields": Object {
-        "id": "1",
-      },
-    },
-    SessionBoundModel {
-      "_fields": Object {
-        "id": "2",
-      },
-    },
-  ],
-  "rawSuggestions": Array [],
+  "suggestions": Array [],
 }
 `;

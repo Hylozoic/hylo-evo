@@ -9,13 +9,27 @@ const CommentFieldsFragment = `
     name
     avatarUrl
     groupRoles {
-      name
-      emoji
-      active
-      groupId
-    }
-    moderatedGroupMemberships {
-      groupId
+      items {
+         name
+         emoji
+         active
+         groupId
+         responsibilities {
+          items {
+            id
+            title
+            description
+          }
+         }
+       }
+     }
+    membershipCommonRoles {
+      items {
+        id
+        commonRoleId
+        groupId
+        userId
+      }
     }
   }
   attachments {
@@ -53,13 +67,28 @@ const postFieldsFragment = withComments => `
     name
     avatarUrl
     groupRoles {
-      name
-      emoji
-      active
-      groupId
+      items {
+        id
+        name
+        emoji
+        active
+        groupId
+        responsibilities {
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
     }
-    moderatedGroupMemberships {
-      groupId
+    membershipCommonRoles {
+      items {
+        id
+        commonRoleId
+        groupId
+        userId
+      }
     }
   }
   createdAt

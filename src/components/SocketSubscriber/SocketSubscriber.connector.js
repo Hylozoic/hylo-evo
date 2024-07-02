@@ -5,7 +5,7 @@ import rollbar from 'client/rollbar'
 
 function mapDispatchToProps (dispatch, props) {
   const { id, type } = props
-  if (!['post', 'group'].includes(type)) {
+  if (!['post', 'group', 'user'].includes(type)) {
     throw new Error(`unrecognized SocketSubscriber type "${type}"`)
   }
 

@@ -127,7 +127,7 @@ export function fetchGroupSettings (slug) {
               text
             }
           }
-          moderators (first: 100) {
+          stewards (first: 100) {
             hasMore
             items {
               id

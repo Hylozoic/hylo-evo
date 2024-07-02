@@ -1,8 +1,9 @@
+import { isEmpty } from 'lodash/fp'
 import React, { Component } from 'react'
 import { useTranslation, withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { object, string, array } from 'prop-types'
-import { isEmpty } from 'lodash/fp'
 import { personUrl, groupUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
 import BadgeEmoji from 'components/BadgeEmoji'
@@ -11,6 +12,9 @@ import RoundImageRow from 'components/RoundImageRow'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import AboutSection from './AboutSection'
+import { RESP_ADD_MEMBERS, RESP_ADMINISTRATION } from 'store/constants'
+import getRolesForGroup from 'store/selectors/getRolesForGroup'
+
 import './GroupSidebar.scss'
 
 class GroupSidebar extends Component {
@@ -18,35 +22,35 @@ class GroupSidebar extends Component {
     slug: string,
     group: object,
     members: array,
-    leaders: array
+    stewards: array
   }
 
   render () {
-    const { group, members, leaders, canModerate } = this.props
+    const { group, members, stewards, myResponsibilities } = this.props
 
     if (!group || isEmpty(members)) return <Loading />
 
-    const { description, memberCount, moderatorDescriptorPlural, purpose, slug } = group
+    const { description, memberCount, stewardDescriptorPlural, purpose, slug } = group
 
     return (
       <div styleName='group-sidebar'>
         <AboutSection description={description} purpose={purpose} />
-        <SettingsLink canModerate={canModerate} group={group} />
+        <SettingsLink canAdmin={myResponsibilities.includes(RESP_ADMINISTRATION)} group={group} />
         <MemberSection
           members={members}
           memberCount={memberCount}
           slug={slug}
-          canModerate={canModerate}
+          canInvite={myResponsibilities.includes(RESP_ADD_MEMBERS)}
         />
-        <GroupLeaderSection leaders={leaders} slug={slug} descriptor={moderatorDescriptorPlural} groupId={group.id} />
+        <GroupStewardsSection stewards={stewards} slug={slug} descriptor={stewardDescriptorPlural} groupId={group.id} />
       </div>
     )
   }
 }
 
-export function SettingsLink ({ canModerate, group }) {
+export function SettingsLink ({ canAdmin, group }) {
   const { t } = useTranslation()
-  if (!canModerate) return null
+  if (!canAdmin) return null
   return (
     <Link styleName='settings-link' to={groupUrl(group.slug, 'settings')}>
       <Icon name='Settings' styleName='settings-icon' /> {t('Group Settings')}
@@ -54,7 +58,7 @@ export function SettingsLink ({ canModerate, group }) {
   )
 }
 
-export function MemberSection ({ members, memberCount, slug, canModerate }) {
+export function MemberSection ({ members, memberCount, slug, canInvite }) {
   const { t } = useTranslation()
   const formatTotal = total => {
     if (total < 1000) return `+${total}`
@@ -75,7 +79,7 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
             </span>}
         </div>
       </Link>
-      {canModerate &&
+      {canInvite &&
         <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
           <Button styleName='settings-link'><Icon name='Invite' styleName='invite-icon' /> {t('Invite People')}</Button>
         </Link>}
@@ -83,26 +87,26 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
   )
 }
 
-export function GroupLeaderSection ({ descriptor, leaders, groupId, slug }) {
+export function GroupStewardsSection ({ descriptor, stewards, groupId, slug }) {
   const { t } = useTranslation()
   return (
     <div styleName='leader-section'>
       <div styleName='header leader-header'>{t('Group {{locationDescriptor}}', { locationDescriptor: descriptor })}</div>
-      {leaders.map(l => <GroupLeader leader={l} slug={slug} key={l.id} groupId={groupId} />)}
+      {stewards.map(s => <GroupSteward steward={s} slug={slug} key={s.id} groupId={groupId} />)}
     </div>
   )
 }
 
-export function GroupLeader ({ groupId, leader, slug }) {
-  const { name, avatarUrl } = leader
-  const badges = leader.groupRoles?.filter(role => role.groupId === groupId) || []
+export function GroupSteward ({ groupId, steward, slug }) {
+  const { name, avatarUrl } = steward
+  const roles = useSelector(state => getRolesForGroup(state, { person: steward, groupId }))
   return (
     <div styleName='leader'>
-      <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />
-      <Link to={personUrl(leader.id, slug)} styleName='leader-name'>{name}</Link>
+      <Avatar url={personUrl(steward.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />
+      <Link to={personUrl(steward.id, slug)} styleName='leader-name'>{name}</Link>
       <div styleName='badges'>
-        {badges.map(badge => (
-          <BadgeEmoji key={badge.name} expanded {...badge} id={leader.id} />
+        {roles.map(role => (
+          <BadgeEmoji key={role.id + role.common} expanded {...role} responsibilities={role.responsibilities} id={steward.id} />
         ))}
       </div>
     </div>

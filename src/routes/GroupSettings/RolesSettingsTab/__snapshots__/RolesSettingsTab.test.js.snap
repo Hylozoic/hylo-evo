@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddMemberToRole renders correctly when adding with suggestions 1`] = `
+<DocumentFragment>
+  <div
+    data-stylename="styles.adding"
+  >
+    <div
+      data-stylename="styles.help-text"
+    >
+      Search here for members to grant this role too
+    </div>
+    <div
+      data-stylename="styles.input-row"
+    >
+      <input
+        data-stylename="styles.input"
+        data-testid="add-member-input"
+        placeholder="Type..."
+        type="text"
+      />
+      <span
+        data-stylename="styles.cancel-button"
+      >
+        Cancel
+      </span>
+      <span
+        data-stylename="styles.add-button"
+      >
+        Add
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AddMemberToRole renders correctly, and transitions from not adding to adding 1`] = `
+<DocumentFragment>
+  <div
+    data-stylename="styles.add-new"
+    data-testid="add-new"
+  >
+    + Add Member to Role
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AddMemberToRole renders correctly, and transitions from not adding to adding 2`] = `
+<DocumentFragment>
+  <div
+    data-stylename="styles.adding"
+  >
+    <div
+      data-stylename="styles.help-text"
+    >
+      Search here for members to grant this role too
+    </div>
+    <div
+      data-stylename="styles.input-row"
+    >
+      <input
+        data-stylename="styles.input"
+        data-testid="add-member-input"
+        placeholder="Type..."
+        type="text"
+      />
+      <span
+        data-stylename="styles.cancel-button"
+      >
+        Cancel
+      </span>
+      <span
+        data-stylename="styles.add-button"
+      >
+        Add
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`RoleList renders correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      <h4>
+        Responsibilities
+      </h4>
+      <div
+        data-stylename="styles.help-text"
+      >
+        Common roles cannot have their responsibilities edited
+      </div>
+    </div>
+    <div
+      style="margin-top: 20px;"
+    >
+      <h4>
+        Members
+      </h4>
+    </div>
+    <div
+      data-stylename="styles.add-new"
+      data-testid="add-new"
+    >
+      + Add Member to Role
+    </div>
+  </div>
+</DocumentFragment>
+`;

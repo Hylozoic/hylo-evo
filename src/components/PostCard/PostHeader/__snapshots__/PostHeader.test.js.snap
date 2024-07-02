@@ -373,7 +373,19 @@ exports[`matches snapshot 1`] = `
         </Highlight>
         <div
           data-stylename="badgeRow"
-        />
+        >
+          <Badge
+            common={true}
+            expanded={true}
+            key="2"
+            responsibilities={
+              Array [
+                "Administration",
+              ]
+            }
+            title="Coordinator"
+          />
+        </div>
         <div
           data-stylename="timestampRow"
         >
@@ -453,7 +465,19 @@ exports[`matches snapshot 2`] = `
         </Highlight>
         <div
           data-stylename="badgeRow"
-        />
+        >
+          <Badge
+            common={true}
+            expanded={true}
+            key="2"
+            responsibilities={
+              Array [
+                "Administration",
+              ]
+            }
+            title="Coordinator"
+          />
+        </div>
         <div
           data-stylename="timestampRow"
         >
@@ -537,7 +561,19 @@ exports[`matches snapshot 3`] = `
         </Highlight>
         <div
           data-stylename="badgeRow"
-        />
+        >
+          <Badge
+            common={true}
+            expanded={true}
+            key="2"
+            responsibilities={
+              Array [
+                "Administration",
+              ]
+            }
+            title="Coordinator"
+          />
+        </div>
         <div
           data-stylename="timestampRow"
         >

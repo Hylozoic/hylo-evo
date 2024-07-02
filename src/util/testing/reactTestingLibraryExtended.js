@@ -22,7 +22,7 @@ export function generateStore (providedState, providedHistory = history) {
 // This is used by default with an empty state in `customRender` (exported as render)
 // import and use this directly, providing state, when needing custom state, e.g.:
 //
-//   `render(<ComponentUnderTest />, { wrapper: AllTheProvieders(myOwnReduxState) }) />)`
+//   `render(<ComponentUnderTest />, { wrapper: AllTheProviders(myOwnReduxState) }) />)`
 //
 export const AllTheProviders = providedState => ({ children }) => {
   return (

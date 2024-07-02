@@ -13,9 +13,9 @@ describe('UserGroupsTab', () => {
   it('renders a list of Memberships', () => {
     const props = {
       memberships: [
-        { id: '1', hasModeratorRole: true },
-        { id: '2', hasModeratorRole: true },
-        { id: '3', hasModeratorRole: true }
+        { id: '1' },
+        { id: '2' },
+        { id: '3' }
       ],
       affiliations: {
         items: [

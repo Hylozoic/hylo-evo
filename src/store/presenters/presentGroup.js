@@ -49,7 +49,6 @@ export default function presentGroup (group) {
       : [],
     joinQuestions: group.joinQuestions ? group.joinQuestions.toRefArray() : [],
     members: group.members ? group.members.toModelArray() : [],
-    moderators: group.moderators ? group.moderators.toModelArray() : [],
     openOffersAndRequests: group.openOffersAndRequests
       ? group.openOffersAndRequests.toModelArray().map(p => {
         return {
@@ -66,6 +65,7 @@ export default function presentGroup (group) {
         }
       })
       : [],
+    stewards: group.stewards ? group.stewards.toModelArray() : [],
     suggestedSkills: group.suggestedSkills ? group.suggestedSkills.toRefArray() : [],
     upcomingEvents: group.upcomingEvents
       ? group.upcomingEvents.toModelArray().map(p => {

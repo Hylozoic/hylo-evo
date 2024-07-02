@@ -3,7 +3,7 @@ import testData from './MemberProfile.normalized.test.json'
 import { getPresentedPerson } from './MemberProfile.store'
 import { mapStateToProps } from './MemberProfile.connector'
 
-describe('connector', () => {
+describe('store & connector', () => {
   let session, state, selectorProps, props
 
   beforeEach(() => {
@@ -12,8 +12,10 @@ describe('connector', () => {
       person
     } = testData
     session = orm.mutableSession(orm.getEmptyState())
+    session.CommonRole.create({ id: 1, title: 'Coordinator', responsibilities: { items: [{ id: 1, title: 'Administration' }, { id: 2, title: 'Manage Content' }] } })
     session.Person.create(person)
     session.Group.create(groups[0])
+    session.MembershipCommonRole.create(testData.membershipCommonRoles[0])
     state = { orm: session.state }
     selectorProps = {
       personId: '46816',
@@ -37,17 +39,6 @@ describe('connector', () => {
       const expected = '46816'
       const actual = getPresentedPerson(state, selectorProps).id
       expect(actual).toBe(expected)
-    })
-
-    it('sets role to null if person is not moderator', () => {
-      const actual = getPresentedPerson(state, selectorProps).role
-      expect(actual).toBe(null)
-    })
-
-    it('adds a role if person is moderator', () => {
-      session.Membership.create(testData.memberships[0])
-      const actual = getPresentedPerson({ orm: session.state }, selectorProps).role
-      expect(actual).toBeTruthy()
     })
   })
 

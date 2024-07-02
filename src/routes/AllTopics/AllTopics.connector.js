@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import debounced from 'util/debounced'
-import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import isPendingFor from 'store/selectors/isPendingFor'
 import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
@@ -32,8 +31,6 @@ export function mapStateToProps (state, props) {
   const hasMore = getHasMoreTopics(state, fetchTopicsParams)
   const totalTopics = getTotalTopics(state, fetchTopicsParams)
   const fetchIsPending = isPendingFor(FETCH_TOPICS, state)
-  const currentUser = getMe(state, props)
-  const canModerate = currentUser && currentUser.canModerate(group)
 
   return {
     routeParams,
@@ -44,8 +41,7 @@ export function mapStateToProps (state, props) {
     topics,
     hasMore,
     totalTopics,
-    fetchIsPending,
-    canModerate
+    fetchIsPending
   }
 }
 
