@@ -85,3 +85,9 @@
   @include badgeSymbol();
   right: -0.5px;
 }
+
+.tipContent {
+  ul {
+    margin: 0;
+  }
+}
