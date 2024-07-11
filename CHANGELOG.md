@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.8.0] - 2024-07-03
+
+### Added
+- New post type: Proposals! Proposals are an easy, flexible way to suggest a change or idea to a group, ask for advice, run a poll, or make any kind of group decision. Proposals can be created by anyone in the group, in the same way as other posts, and can be edited and deleted by the creator. Proposals can be voted on by group members, and everyone can see who has voted and how they voted (except on anonymous proposals). The creator can also close the proposal, which will prevent any more votes from being cast, and share the outcome. There are different proposal templates built in for decision processes like Consent, Consensus, Polls, etc. but you can also customize them fully.
+
 ## [5.7.6] - 2024-06-04
 
 ### Added

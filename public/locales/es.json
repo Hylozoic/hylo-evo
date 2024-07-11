@@ -921,7 +921,7 @@
   "child group": "subgroupo",
   "commented on": "comentado",
   "commentedPlural": "comentaron",
-  "commentedSingular": "comentado",
+  "commented": "comentado",
   "cooperatives": "cooperativas",
   "deactivate": "desactivar",
   "description: text": "descripción: texto",
@@ -1073,5 +1073,6 @@
   "<strong>{{name}}</strong> invited you to: \"{{postSummary}}\"": "<strong>{{name}}</strong> te invitó a: \"{{postSummary}}\"",
   "<strong>{{groupName}}</strong> has invited <strong>{{name}}</strong> to join it": "<strong>{{groupName}}</strong> ha invitado a <strong>{{name}}</strong> a unirse",
   "<strong>{{groupName}}</strong> has joined <strong>{{otherGroupName}}</strong>": "<strong>{{groupName}}</strong> se ha unido a <strong>{{otherGroupName}}</strong>",
-  "<strong>{{groupName}}</strong> has requested to join <strong>{{otherGroupName}}</strong>": "<strong>{{groupName}}</strong> ha solicitado unirse a <strong>{{otherGroupName}}</strong>"
+  "<strong>{{groupName}}</strong> has requested to join <strong>{{otherGroupName}}</strong>": "<strong>{{groupName}}</strong> ha solicitado unirse a <strong>{{otherGroupName}}</strong>",
+  "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total de temas"
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 // proposal templates
 export const PROPOSAL_YESNO = 'Yes/No'
-export const PROPOSAL_POLL_SINGLE = 'Poll, Single vote'
+export const PROPOSAL_POLL_SINGLE = 'Poll, Single Vote'
 export const PROPOSAL_ADVICE = 'Advice'
 export const PROPOSAL_CONSENT = 'Consent'
 export const PROPOSAL_CONSENSUS = 'Consensus'
@@ -221,6 +221,41 @@ export const PROPOSAL_TEMPLATES = {
     title: PROPOSAL_POLL_SINGLE,
     tooltip: 'Single vote poll'
   },
+  [PROPOSAL_MULTIPLE_CHOICE]: {
+    form: {
+      proposalOptions: [
+        {
+          text: 'Option 1',
+          emoji: '1️⃣',
+          color: ''
+        },
+        {
+          text: 'Option 2',
+          emoji: '2️⃣',
+          color: ''
+        },
+        {
+          text: 'Option 3',
+          emoji: '3️⃣',
+          color: ''
+        },
+        {
+          text: 'Option 4',
+          emoji: '4️⃣',
+          color: ''
+        },
+        {
+          text: 'Option 5',
+          emoji: '5️⃣',
+          color: ''
+        }
+      ],
+      votingMethod: VOTING_METHOD_MULTI_UNRESTRICTED,
+      title: 'Multiple Choice:'
+    },
+    title: PROPOSAL_MULTIPLE_CHOICE,
+    tooltip: 'A poll where users can vote multiple times'
+  },
   [PROPOSAL_ADVICE]: {
     form: {
       proposalOptions: [
@@ -239,7 +274,7 @@ export const PROPOSAL_TEMPLATES = {
       title: 'Advice: '
     },
     title: PROPOSAL_ADVICE,
-    tooltip: 'Advice process'
+    tooltip: 'For the Advice Process - gather input before makig a decision'
   },
   [PROPOSAL_CONSENT]: {
     form: {
@@ -259,7 +294,7 @@ export const PROPOSAL_TEMPLATES = {
       title: 'Consent: '
     },
     title: PROPOSAL_CONSENT,
-    tooltip: 'Consent poll: everyone must agree'
+    tooltip: 'Consent is a lighter weight consensus, is this good enough for now, safe enough to try?'
   },
   [PROPOSAL_CONSENSUS]: {
     form: {
@@ -289,7 +324,7 @@ export const PROPOSAL_TEMPLATES = {
       title: 'Consensus: '
     },
     title: PROPOSAL_CONSENSUS,
-    tooltip: 'Consensus poll: One block/veto stops the proposal'
+    tooltip: 'Consensus means that everyone must agree. One block/veto stops the proposal'
   },
   [PROPOSAL_GRADIENT]: {
     form: {
@@ -326,44 +361,9 @@ export const PROPOSAL_TEMPLATES = {
         }
       ],
       votingMethod: VOTING_METHOD_SINGLE,
-      title: 'Poll: '
+      title: ''
     },
     title: PROPOSAL_GRADIENT,
-    tooltip: 'A poll that can show a gradient of approval'
-  },
-  [PROPOSAL_MULTIPLE_CHOICE]: {
-    form: {
-      proposalOptions: [
-        {
-          text: 'Option 1',
-          emoji: '1️⃣',
-          color: ''
-        },
-        {
-          text: 'Option 2',
-          emoji: '2️⃣',
-          color: ''
-        },
-        {
-          text: 'Option 3',
-          emoji: '3️⃣',
-          color: ''
-        },
-        {
-          text: 'Option 4',
-          emoji: '4️⃣',
-          color: ''
-        },
-        {
-          text: 'Option 5',
-          emoji: '5️⃣',
-          color: ''
-        }
-      ],
-      votingMethod: VOTING_METHOD_MULTI_UNRESTRICTED,
-      title: 'Multiple Choice:'
-    },
-    title: PROPOSAL_MULTIPLE_CHOICE,
-    tooltip: 'A poll where users can vote multiple times'
+    tooltip: 'Get a weighted opinion on a topic, how much do folks agree or not?'
   }
 }

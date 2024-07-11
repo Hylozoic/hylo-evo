@@ -245,3 +245,44 @@ exports[`MemberSection Shows invite link if has responsibility ADD_MEMBERS is tr
   </Link>
 </div>
 `;
+
+exports[`MemberSection Shows invite link if has responsibility ADD_MEMBERS is true 1`] = `
+<div
+  data-stylename="member-section"
+>
+  <Link
+    data-stylename="members-link"
+    to="/groups/foo/members"
+  >
+    <div
+      data-stylename="header"
+    >
+      Members
+    </div>
+    <div
+      data-stylename="images-and-count"
+    >
+      <RoundImageRow
+        data-stylename="image-row"
+        imageUrls={
+          Array [
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1150.jpg?26029",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1099.jpg?68045",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/439.jpg?10715",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/501.jpg?36352",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/178.jpg?42174",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/749.jpg?66249",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/414.jpg?52422",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/369.jpg?90195",
+          ]
+        }
+      />
+      <span
+        data-stylename="members-total"
+      >
+        +5.6k
+      </span>
+    </div>
+  </Link>
+</div>
+`;

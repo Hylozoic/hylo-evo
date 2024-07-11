@@ -922,7 +922,7 @@
   "child group": "child group",
   "commented on": "commented on",
   "commentedPlural": "commented",
-  "commentedSingular": "commented",
+  "commented": "commented",
   "cooperatives": "cooperatives",
   "deactivate": "deactivate",
   "description: text": "description: text",
@@ -1074,5 +1074,6 @@
   "<strong>{{name}}</strong> invited you to: \"{{postSummary}}\"": "<strong>{{name}}</strong> invited you to: \"{{postSummary}}\"",
   "<strong>{{groupName}}</strong> has invited <strong>{{name}}</strong> to join it": "<strong>{{groupName}}</strong> has invited <strong>{{name}}</strong> to join it",
   "<strong>{{groupName}}</strong> has joined <strong>{{otherGroupName}}</strong>": "<strong>{{groupName}}</strong> has joined <strong>{{otherGroupName}}</strong>",
-  "<strong>{{groupName}}</strong> has requested to join <strong>{{otherGroupName}}</strong>": "<strong>{{groupName}}</strong> has requested to join <strong>{{otherGroupName}}</strong>"
+  "<strong>{{groupName}}</strong> has requested to join <strong>{{otherGroupName}}</strong>": "<strong>{{groupName}}</strong> has requested to join <strong>{{otherGroupName}}</strong>",
+  "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total Topics"
 }
