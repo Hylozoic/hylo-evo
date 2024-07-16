@@ -230,6 +230,13 @@ export default () => {
             emoji
             active
             groupId
+            responsibilities {
+              items {
+                id
+                title
+                description
+              }
+            }
           }
         }
       }

@@ -107,6 +107,13 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
           emoji
           active
           groupId
+          responsibilities {
+            items {
+              id
+              title
+              description
+            }
+          }
         }
       }
       membershipCommonRoles {
