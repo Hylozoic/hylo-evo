@@ -840,11 +840,11 @@ class PostEditor extends React.Component {
                   items={[
                     { label: t(PROPOSAL_YESNO), onClick: () => this.handleUseTemplate(PROPOSAL_YESNO) },
                     { label: t(PROPOSAL_POLL_SINGLE), onClick: () => this.handleUseTemplate(PROPOSAL_POLL_SINGLE) },
-                    { label: t(PROPOSAL_GRADIENT), onClick: () => this.handleUseTemplate(PROPOSAL_GRADIENT) },
+                    { label: t(PROPOSAL_MULTIPLE_CHOICE), onClick: () => this.handleUseTemplate(PROPOSAL_MULTIPLE_CHOICE) },
                     { label: t(PROPOSAL_ADVICE), onClick: () => this.handleUseTemplate(PROPOSAL_ADVICE) },
                     { label: t(PROPOSAL_CONSENT), onClick: () => this.handleUseTemplate(PROPOSAL_CONSENT) },
                     { label: t(PROPOSAL_CONSENSUS), onClick: () => this.handleUseTemplate(PROPOSAL_CONSENSUS) },
-                    { label: t(PROPOSAL_MULTIPLE_CHOICE), onClick: () => this.handleUseTemplate(PROPOSAL_MULTIPLE_CHOICE) }
+                    { label: t(PROPOSAL_GRADIENT), onClick: () => this.handleUseTemplate(PROPOSAL_GRADIENT) }
                   ]}
                 />
               </div>

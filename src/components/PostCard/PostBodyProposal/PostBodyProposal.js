@@ -145,7 +145,7 @@ export default function PostBodyProposal ({
                 {option.text}
               </div>
             </div>
-            <div styleName='proposal-option-votes-container' data-tip={voterNames.join('\n')} data-for='voters-tt'>
+            <div styleName='proposal-option-votes-container' data-tip={`<pre>${voterNames.join('\r\n')}</pre>`} data-for='voters-tt'>
               {(!isAnonymousVote || votingComplete) &&
                 <div styleName='proposal-option-vote-count'>
                   {optionVotes.length}
@@ -163,6 +163,7 @@ export default function PostBodyProposal ({
         backgroundColor='rgba(35, 65, 91, 1.0)'
         effect='solid'
         delayShow={0}
+        html
         id='voters-tt'
       />
       {quorum && (quorum > 0) && <QuorumBar totalVoters={numberOfPossibleVoters} quorum={quorum} actualVoters={proposalVoterCount} proposalStatus={proposalStatus} />}
