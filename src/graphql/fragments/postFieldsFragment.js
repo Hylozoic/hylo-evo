@@ -40,6 +40,7 @@ const CommentFieldsFragment = `
     }
   }
   createdAt
+  editedAt
 `
 
 const postFieldsFragment = withComments => `
@@ -71,6 +72,7 @@ const postFieldsFragment = withComments => `
   endTime
   timezone
   donationsLink
+  editedAt
   projectManagementLink
   myEventResponse
   commenters(first: 3) {

@@ -6,7 +6,6 @@ import Moment from 'moment-timezone'
 
 import { isEmpty } from 'lodash/fp'
 import { personUrl, topicUrl } from 'util/navigation'
-import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import EmojiRow from 'components/EmojiRow'
 import HyloHTML from 'components/HyloHTML'
@@ -30,7 +29,7 @@ const PostListRow = (props) => {
     title,
     details,
     creator,
-    createdAt,
+    createdTimestamp,
     commentersTotal,
     topics
   } = post
@@ -85,7 +84,7 @@ const PostListRow = (props) => {
               />
             </div>}
           <div styleName={cx('timestamp', { 'push-to-right': !childPost })}>
-            {TextHelpers.humanDate(createdAt)}
+            {createdTimestamp}
           </div>
         </div>
         {!isEmpty(topics) && (
