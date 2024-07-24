@@ -5,9 +5,10 @@ import Agreement from './Agreement'
 import Attachment from './Attachment'
 import Collection, { CollectionPost } from './Collection'
 import Comment from './Comment'
+import CommonRole from './CommonRole'
 import CustomView from './CustomView'
 import EventInvitation from './EventInvitation'
-import Group, { GroupRelationship, GroupModerator, GroupJoinQuestion, GroupPrerequisite, GroupToGroupJoinQuestion } from './Group'
+import Group, { GroupRelationship, GroupSteward, GroupJoinQuestion, GroupPrerequisite, GroupToGroupJoinQuestion } from './Group'
 import GroupRelationshipInvite, { GroupToGroupJoinRequestQuestionAnswer } from './GroupRelationshipInvite'
 import GroupTopic from './GroupTopic'
 import Invitation from './Invitation'
@@ -19,7 +20,7 @@ import Membership, { MembershipAgreement } from './Membership'
 import Message from './Message'
 import MessageThread from './MessageThread'
 import Notification from './Notification'
-import Person, { PersonSkillsToLearn } from './Person'
+import Person, { MembershipCommonRole, PersonSkillsToLearn } from './Person'
 import PersonConnection from './PersonConnection'
 import Post, { PostFollower, PostCommenter, ProjectMember } from './Post'
 import PostMembership from './PostMembership'
@@ -37,18 +38,19 @@ orm.register(
   Collection,
   CollectionPost,
   Comment,
+  CommonRole,
   CustomView,
   EventInvitation,
   Group,
   GroupJoinQuestion,
   GroupJoinQuestionAnswer,
-  GroupModerator,
   GroupPrerequisite,
   GroupRelationship,
   GroupRelationshipInvite,
   GroupToGroupJoinQuestion,
   GroupToGroupJoinRequestQuestionAnswer,
   GroupTopic,
+  GroupSteward,
   Invitation,
   JoinRequest,
   LinkPreview,
@@ -56,6 +58,7 @@ orm.register(
   Me,
   Membership,
   MembershipAgreement,
+  MembershipCommonRole,
   Message,
   MessageThread,
   MySkillsToLearn,
@@ -69,6 +72,7 @@ orm.register(
   PostMembership,
   ProjectMember,
   Question,
+  // Responsibility,
   SearchResult,
   Skill,
   Topic,

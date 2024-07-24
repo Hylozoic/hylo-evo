@@ -60,7 +60,7 @@
   color: transparent;
 }
 
-.isModerator {
+.common {
   background-color: $color-badge-special;
   border: 1px solid $color-badge-special-border;
 }
@@ -84,4 +84,10 @@
 .parent:hover .badgeSymbol-collapsed {
   @include badgeSymbol();
   right: -0.5px;
+}
+
+.tipContent {
+  ul {
+    margin: 0;
+  }
 }

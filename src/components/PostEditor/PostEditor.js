@@ -622,13 +622,13 @@ class PostEditor extends React.Component {
     })
   }
 
-  canModerate = () => {
-    const { myModeratedGroups = [] } = this.props
+  canMakeAnnouncement = () => {
+    const { myAdminGroups = [] } = this.props
     const { post } = this.state
     const { groups = [] } = post
-    const myModeratedGroupsSlugs = myModeratedGroups.map(group => group.slug)
+    const myAdminGroupsSlugs = myAdminGroups.map(group => group.slug)
     for (let index = 0; index < groups.length; index++) {
-      if (!myModeratedGroupsSlugs.includes(groups[index].slug)) return false
+      if (!myAdminGroupsSlugs.includes(groups[index].slug)) return false
     }
     return true
   }
@@ -670,7 +670,7 @@ class PostEditor extends React.Component {
       loading,
       setAnnouncement,
       announcementSelected,
-      myModeratedGroups,
+      myAdminGroups,
       isProject,
       isEvent,
       isProposal,
@@ -1117,11 +1117,11 @@ class PostEditor extends React.Component {
             }}
             setAnnouncement={setAnnouncement}
             announcementSelected={announcementSelected}
-            canModerate={this.canModerate()}
+            canMakeAnnouncement={this.canMakeAnnouncement()}
             toggleAnnouncementModal={this.toggleAnnouncementModal}
             showAnnouncementModal={showAnnouncementModal}
             groupCount={get('groups', post).length}
-            myModeratedGroups={myModeratedGroups}
+            myAdminGroups={myAdminGroups}
             groups={post.groups}
             t={t}
           />
@@ -1146,8 +1146,8 @@ export function ActionsBar ({
   toggleAnnouncementModal,
   showAnnouncementModal,
   groupCount,
-  canModerate,
-  myModeratedGroups,
+  canMakeAnnouncement,
+  myAdminGroups,
   groups,
   t
 }) {
@@ -1181,7 +1181,7 @@ export function ActionsBar ({
             styleName={cx('action-icon', { 'highlight-icon': showFiles })}
           />
         </UploadAttachmentButton>
-        {canModerate && (
+        {canMakeAnnouncement && (
           <span data-tip='Send Announcement' data-for='announcement-tt'>
             <Icon
               name='Announcement'
@@ -1202,7 +1202,7 @@ export function ActionsBar ({
             closeModal={toggleAnnouncementModal}
             save={save}
             groupCount={groupCount}
-            myModeratedGroups={myModeratedGroups}
+            myAdminGroups={myAdminGroups}
             groups={groups}
           />
         )}

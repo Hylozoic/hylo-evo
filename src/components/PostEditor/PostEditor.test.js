@@ -32,7 +32,7 @@ describe('PostEditor', () => {
       valid: true,
       loading: false,
       submitButtonLabel: 'Save',
-      canModerate: true,
+      canMakeAnnouncement: true,
       save: () => {}
     }
     const wrapper = shallow(<ActionsBar {...props} t={string => string} />)

@@ -89,7 +89,6 @@ class AllTopics extends Component {
       setSort,
       fetchMoreTopics,
       fetchIsPending,
-      canModerate,
       toggleGroupTopicSubscribe,
       t
     } = this.props
@@ -111,7 +110,6 @@ class AllTopics extends Component {
                 singleGroup={group}
                 topic={topic}
                 routeParams={routeParams}
-                canModerate={canModerate}
                 deleteItem={this.deleteGroupTopic}
                 toggleSubscribe={toggleGroupTopicSubscribe}
               />
@@ -166,7 +164,7 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
   )
 }
 
-export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscribe, deleteItem, canModerate }) {
+export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscribe }) {
   const { name, groupTopics, postsTotal, followersTotal } = topic
   const { t } = useTranslation()
   let groupTopicContent

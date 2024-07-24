@@ -8,6 +8,16 @@ PersonSkillsToLearn.fields = {
   skillToLearn: fk('Skill', 'personSkillsToLearn')
 }
 
+export class MembershipCommonRole extends Model { }
+MembershipCommonRole.modelName = 'MembershipCommonRole'
+MembershipCommonRole.fields = {
+  id: attr(),
+  commonRoleId: attr(),
+  groupId: attr(),
+  userId: attr(),
+  commonRole: fk('CommonRole', 'membershipCommonRoles')
+}
+
 class Person extends Model {
   toString () {
     return `Person: ${this.name}`
@@ -33,12 +43,13 @@ Person.fields = {
     to: 'Location',
     as: 'locationObject'
   }),
+  membershipCommonRoles: many('MembershipCommonRole'),
   skills: many({ to: 'Skill', as: 'skills', relatedName: 'peopleHaving' }),
   skillsToLearn: many({
     to: 'Skill',
     relatedName: 'peopleLearning',
     through: 'PersonSkillsToLearn',
-    throughFields: [ 'person', 'skillToLearn' ]
+    throughFields: ['person', 'skillToLearn']
   }),
   postsTotal: attr()
 }

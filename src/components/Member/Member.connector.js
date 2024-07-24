@@ -1,9 +1,19 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { personUrl } from 'util/navigation'
+import getMe from 'store/selectors/getMe'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
+import getRolesForGroup from 'store/selectors/getRolesForGroup'
 
 export function mapStateToProps (state, props) {
-  return { }
+  const currentUser = getMe(state)
+  const currentUserResponsibilities = getResponsibilitiesForGroup(state, { person: currentUser, groupId: props.group.id }).map(r => r.title)
+  const roles = getRolesForGroup(state, { person: props.member, groupId: props.group.id })
+
+  return {
+    currentUserResponsibilities,
+    roles
+  }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {

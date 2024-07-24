@@ -40,15 +40,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       </h1>
       <div
         data-stylename="badgeRow"
-      >
-        <Badge
-          emoji="🛡️"
-          expanded={true}
-          isModerator={true}
-          key="mod"
-          name="Moderator"
-        />
-      </div>
+      />
       <div
         data-stylename="header-member-location"
       >
@@ -160,22 +152,33 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       >
         Hylo Groups
       </div>
-      <Membership
-        index={0}
-        key="3"
-        membership={
+      <div
+        data-stylename="groups"
+        style={
           Object {
-            "group": Object {
-              "id": "1836",
-              "name": "Wombats",
-              "slug": "wombats",
-            },
-            "hasModeratorRole": true,
-            "id": "3",
-            "role": 1,
+            "maxHeight": "200px",
           }
         }
-      />
+      >
+        <Membership
+          index={0}
+          key="3"
+          membership={
+            Object {
+              "group": Object {
+                "id": "1836",
+                "name": "Wombats",
+                "slug": "wombats",
+              },
+              "id": "3",
+              "person": Object {
+                "id": "46816",
+              },
+              "role": 1,
+            }
+          }
+        />
+      </div>
       <div
         data-stylename="profile-subhead"
       >

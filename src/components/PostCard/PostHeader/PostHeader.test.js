@@ -1,6 +1,7 @@
 import PostHeader, { TopicsLine } from './PostHeader'
 import { shallow } from 'enzyme'
 import React from 'react'
+import { RESP_ADMINISTRATION } from 'store/constants'
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
@@ -31,7 +32,7 @@ it('matches snapshot', () => {
     }
   ]
 
-  const wrapper = shallow(<PostHeader groups={groups} creator={creator} />)
+  const wrapper = shallow(<PostHeader groups={groups} creator={creator} roles={[{ id: 1, title: 'Coordinator', common: true, responsibilities: [RESP_ADMINISTRATION] }]} />)
   expect(wrapper).toMatchSnapshot()
   wrapper.setProps({ context, type: 'request', groups })
   expect(wrapper).toMatchSnapshot()
@@ -60,7 +61,7 @@ it('matches announcement snapshot', () => {
     }
   ]
 
-  const wrapper = shallow(<PostHeader groups={groups} creator={creator} announcement />)
+  const wrapper = shallow(<PostHeader groups={groups} creator={creator} announcement roles={[]} />)
   expect(wrapper).toMatchSnapshot()
   wrapper.setProps({ context, type: 'request', groups })
   expect(wrapper).toMatchSnapshot()
@@ -90,7 +91,7 @@ it('renders human readable dates', () => {
   let startTime = '2020-11-29'
   let endTime = '2029-11-29'
 
-  const wrapper = shallow(<PostHeader type='request' groups={groups} creator={creator} context={context} startTime={startTime} endTime={endTime} />)
+  const wrapper = shallow(<PostHeader type='request' groups={groups} creator={creator} context={context} startTime={startTime} endTime={endTime} roles={[]} />)
   expect(wrapper).toMatchSnapshot()
   startTime = '2022-11-29'
   endTime = '2029-11-29'

@@ -6,6 +6,8 @@ import BadgeEmoji from 'components/BadgeEmoji'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import SkillLabel from 'components/SkillLabel'
+import { RESP_REMOVE_MEMBERS } from 'store/constants'
+
 import './Member.scss'
 
 const { object, string, shape } = PropTypes
@@ -23,19 +25,19 @@ class Member extends React.Component {
     const {
       className,
       group,
-      member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships, groupRoles },
+      member,
       goToPerson,
-      canModerate,
       removeMember,
+      currentUserResponsibilities,
+      roles,
       t
     } = this.props
 
-    const badges = (group.id && groupRoles?.filter(role => role.groupId === group.id)) || []
-    const creatorIsModerator = moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
+    const { id, name, location, tagline, avatarUrl, skills } = member
 
     return (
       <div styleName='member' className={className}>
-        {canModerate &&
+        {(currentUserResponsibilities.includes(RESP_REMOVE_MEMBERS)) &&
           <Dropdown
             styleName='dropdown'
             toggleChildren={<Icon name='More' />}
@@ -46,11 +48,8 @@ class Member extends React.Component {
           <div styleName='name'>{name}</div>
           <div styleName='location'>{location}</div>
           <div styleName='badgeRow'>
-            {creatorIsModerator && (
-              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} id={id} />
-            )}
-            {badges.map(badge => (
-              <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
+            {roles.map(role => (
+              <BadgeEmoji key={role.id + role.common} expanded {...role} responsibilities={role.responsibilities} id={id} />
             ))}
           </div>
           {skills && <div styleName='skills'>

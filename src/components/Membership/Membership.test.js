@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { AllTheProviders, render } from 'util/testing/reactTestingLibraryExtended'
 import Membership from './Membership'
 
 jest.mock('react-i18next', () => ({
@@ -21,9 +21,8 @@ describe('Membership', () => {
         id: '1',
         lastViewedAt: '2020-12-11T01:21:22.424Z',
         newPostCount: null,
-        hasModeratorRole: true,
         settings: {
-          'sendEmail': null,
+          sendEmail: null,
           sendPushNotifications: null
         },
         group: {
@@ -39,7 +38,7 @@ describe('Membership', () => {
       }
     }
 
-    const wrapper = shallow(<Membership {...props} />)
-    expect(wrapper).toMatchSnapshot()
+    const { asFragment } = render(<Membership {...props} />, { wrapper: AllTheProviders() })
+    expect(asFragment()).toMatchSnapshot()
   })
 })
