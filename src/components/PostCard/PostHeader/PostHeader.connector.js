@@ -20,16 +20,14 @@ export function mapStateToProps (state, props) {
   const url = postUrl(props.id, props.routeParams)
   const context = props.routeParams.context
   const currentUser = getMe(state, props)
-  const roles = getRolesForGroup(state, { groupId: group?.id })
   const responsibilities = getResponsibilitiesForGroup(state, { groupId: group?.id }).map(r => r.title)
-
   return {
     context,
     currentUser,
     group,
     postUrl: url,
     responsibilities,
-    roles
+    connectorGetRolesForGroup: (creatorId) => getRolesForGroup(state, { groupId: group?.id, person: creatorId })
   }
 }
 
@@ -70,7 +68,7 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { currentUser, group, responsibilities } = stateProps
+  const { currentUser, group, responsibilities, connectorGetRolesForGroup } = stateProps
   const { id, creator } = ownProps
   const { deletePost, editPost, duplicatePost, fulfillPost, unfulfillPost, removePost, pinPost, updateProposalOutcome } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
@@ -87,6 +85,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     canFlag: !isCreator,
     pinPost: (responsibilities.includes(RESP_MANAGE_CONTENT)) && group ? () => pinPost(id, group.id) : undefined,
     removePost: !isCreator && (responsibilities.includes(RESP_MANAGE_CONTENT)) ? () => removePost(id) : undefined,
+    roles: connectorGetRolesForGroup(creator.id),
     updateProposalOutcome: isCreator ? (proposalOutcome) => updateProposalOutcome(id, proposalOutcome) : undefined,
     canEdit
   }
