@@ -62,7 +62,7 @@ exports[`matches announcement snapshot 1`] = `
           <span
             data-for="dateTip"
             data-stylename="timestamp"
-            data-tip="Tue, Jul 23, 2024 8:56 PM"
+            data-tip="Tue, Jul 23, 2024 12:30 PM"
           />
           <span
             data-stylename="announcementSection"
@@ -167,7 +167,7 @@ exports[`matches announcement snapshot 2`] = `
           <span
             data-for="dateTip"
             data-stylename="timestamp"
-            data-tip="Tue, Jul 23, 2024 8:56 PM"
+            data-tip="Tue, Jul 23, 2024 12:30 PM"
           />
           <span
             data-stylename="announcementSection"
@@ -276,7 +276,7 @@ exports[`matches announcement snapshot 3`] = `
           <span
             data-for="dateTip"
             data-stylename="timestamp"
-            data-tip="Tue, Jul 23, 2024 8:56 PM"
+            data-tip="Tue, Jul 23, 2024 12:30 PM"
           />
           <span
             data-stylename="announcementSection"
@@ -401,7 +401,7 @@ exports[`matches snapshot 1`] = `
           <span
             data-for="dateTip"
             data-stylename="timestamp"
-            data-tip="Tue, Jul 23, 2024 8:56 PM"
+            data-tip="Tue, Jul 23, 2024 12:30 PM"
           />
         </div>
       </div>
@@ -488,7 +488,7 @@ exports[`matches snapshot 2`] = `
           <span
             data-for="dateTip"
             data-stylename="timestamp"
-            data-tip="Tue, Jul 23, 2024 8:56 PM"
+            data-tip="Tue, Jul 23, 2024 12:30 PM"
           />
         </div>
       </div>
@@ -579,7 +579,7 @@ exports[`matches snapshot 3`] = `
           <span
             data-for="dateTip"
             data-stylename="timestamp"
-            data-tip="Tue, Jul 23, 2024 8:56 PM"
+            data-tip="Tue, Jul 23, 2024 12:30 PM"
           />
         </div>
       </div>
@@ -686,7 +686,7 @@ exports[`renders human readable dates 1`] = `
           <span
             data-for="dateTip"
             data-stylename="timestamp"
-            data-tip="Tue, Jul 23, 2024 8:56 PM"
+            data-tip="Tue, Jul 23, 2024 12:30 PM"
           />
         </div>
       </div>
@@ -783,7 +783,7 @@ exports[`renders human readable dates 2`] = `
           <span
             data-for="dateTip"
             data-stylename="timestamp"
-            data-tip="Tue, Jul 23, 2024 8:56 PM"
+            data-tip="Tue, Jul 23, 2024 12:30 PM"
           />
         </div>
       </div>
@@ -880,7 +880,7 @@ exports[`renders human readable dates 3`] = `
           <span
             data-for="dateTip"
             data-stylename="timestamp"
-            data-tip="Tue, Jul 23, 2024 8:56 PM"
+            data-tip="Tue, Jul 23, 2024 12:30 PM"
           />
         </div>
       </div>
