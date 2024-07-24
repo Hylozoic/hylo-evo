@@ -18,7 +18,6 @@ export function fetchJoinRequests (groupId) {
   }
 }
 
-// TODO: RESP. check about joining a group as an coordinator, see if role is there?
 export function joinGroup (groupId, questionAnswers) {
   return {
     type: JOIN_GROUP,

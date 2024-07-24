@@ -72,7 +72,7 @@ orm.register(
   PostMembership,
   ProjectMember,
   Question,
-  //Responsibility,
+  // Responsibility,
   SearchResult,
   Skill,
   Topic,

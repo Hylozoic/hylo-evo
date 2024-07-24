@@ -1,5 +1,6 @@
-import { attr, many, Model } from 'redux-orm'
+import { attr, Model } from 'redux-orm'
 
+// TODO: for some reason this isnt working! causing error, cant figure out why
 // export class Responsibility extends Model { }
 // Responsibility.modelName = 'Responsibility '
 // Responsibility.fields = {
@@ -23,8 +24,8 @@ CommonRole.fields = {
   id: attr(),
   emoji: attr(),
   description: attr(),
-  name: attr(),
-  //responsibilities: many('Responsibility')
+  name: attr()
+  // responsibilities: many('Responsibility')
 }
 
 CommonRole.Roles = {
