@@ -19,7 +19,9 @@ exports[`Comment displays image attachments 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Tue, Jan 31, 2023 7:00 PM"
     >
       1 year ago
     </span>
@@ -149,7 +151,9 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Tue, Jan 31, 2023 7:00 PM"
     >
       1 year ago
     </span>
@@ -273,7 +277,9 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Tue, Jan 31, 2023 7:00 PM"
     >
       1 year ago
     </span>
@@ -388,7 +394,9 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Tue, Jan 31, 2023 7:00 PM"
     >
       1 year ago
     </span>
@@ -494,7 +502,9 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Tue, Jan 31, 2023 7:00 PM"
     >
       1 year ago
     </span>
@@ -618,7 +628,9 @@ exports[`Comment renders correctly 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Tue, Jan 31, 2023 7:00 PM"
     >
       1 year ago
     </span>
@@ -724,7 +736,9 @@ exports[`Comment renders correctly when editing 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Tue, Jan 31, 2023 7:00 PM"
     >
       Editing now
     </span>

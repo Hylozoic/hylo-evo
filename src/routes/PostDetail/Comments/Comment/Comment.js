@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
+import moment from 'moment-timezone'
 import { filter, isFunction } from 'lodash/fp'
 import { withTranslation } from 'react-i18next'
 import { TextHelpers } from 'hylo-shared'
@@ -110,7 +111,7 @@ export class Comment extends Component {
         <div styleName='header'>
           <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
-          <span styleName='timestamp'>
+          <span styleName='timestamp' data-for='dateTip' data-tip={moment(createdAt).format('llll')}>
             {editing && 'Editing now'}
             {!editing && TextHelpers.humanDate(createdAt)}
           </span>
@@ -262,6 +263,11 @@ export class CommentWithReplies extends Component {
           </div>
         )}
         <Tooltip id={`reply-tip-${comment.id}`} />
+        <Tooltip
+          delay={550}
+          id='dateTip'
+          position='left'
+        />
       </div>
     )
   }
