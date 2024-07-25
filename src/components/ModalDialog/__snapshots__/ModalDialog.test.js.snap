@@ -3,6 +3,7 @@
 exports[`ModalDialog matches the last snapshot (useNotificationFormat) 1`] = `
 <div
   data-stylename="popup"
+  tabIndex="-1"
 >
   <div
     data-stylename="popup-inner"
@@ -70,6 +71,7 @@ exports[`ModalDialog matches the last snapshot (useNotificationFormat) 1`] = `
 exports[`ModalDialog matches the last snapshot 1`] = `
 <div
   data-stylename="popup"
+  tabIndex="-1"
 >
   <div
     data-stylename="popup-inner"
