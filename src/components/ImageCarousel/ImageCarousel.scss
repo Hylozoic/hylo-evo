@@ -17,8 +17,12 @@
     transform: scale(1.5);
   }
 
+  :global(.slick-prev) {
+    left: 10px;
+  }
+
   :global(.slick-next) {
-    right: 15px;
+    right: 10px;
   }
 
   .imageWrapper {
