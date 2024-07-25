@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Slider from 'react-slick'
 import { filter, isEmpty } from 'lodash/fp'
@@ -25,8 +25,37 @@ export default function ImageCarousel ({
     initialSlide: parseInt(initialSlide)
   }
 
+  const carouselRef = useRef()
+
+  const eventMouseclick = new window.MouseEvent('click', {
+    view: window,
+    bubbles: true,
+    cancelable: true
+  })
+
+  const prev = () => {
+    return carouselRef.current.querySelector('.slick-arrow.slick-prev')?.dispatchEvent(eventMouseclick)
+  }
+
+  const next = () => {
+    return carouselRef.current.querySelector('.slick-arrow.slick-next')?.dispatchEvent(eventMouseclick)
+  }
+
+  const handleKeydown = event => {
+    if (event.code === 'ArrowLeft') prev()
+    if (event.code === 'ArrowRight') next()
+  }
+
+  useEffect(() => {
+    carouselRef.current.addEventListener('keydown', handleKeydown)
+
+    return () => {
+      carouselRef.current.removeEventListener('keydown', handleKeydown)
+    }
+  }, [])
+
   return (
-    <div styleName='images'>
+    <div styleName='images' ref={carouselRef}>
       <Slider {...settings}>
         {imageAttachments.map((image, index) =>
           <div className={styles.imageWrapper} key={index} data-testid={`sc-img${index}`}>
