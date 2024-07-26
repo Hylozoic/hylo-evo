@@ -338,6 +338,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         ]
       }
       id="test"
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={false}
       save={[Function]}
@@ -581,6 +582,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         ]
       }
       id="test"
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={false}
       save={[Function]}
@@ -793,6 +795,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={false}
       save={[Function]}
@@ -982,6 +985,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={false}
       save={[Function]}
@@ -1171,6 +1175,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={false}
       save={[Function]}
@@ -1360,6 +1365,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={false}
       save={[Function]}
@@ -1522,6 +1528,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={false}
       save={[Function]}
@@ -1731,6 +1738,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={true}
       save={[Function]}
@@ -1893,6 +1901,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={true}
       save={[Function]}
@@ -2213,6 +2222,7 @@ exports[`PostEditor renders contribution button 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={false}
       save={[Function]}
@@ -2375,6 +2385,7 @@ exports[`PostEditor renders with min props 1`] = `
       canModerate={true}
       groupCount={0}
       groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
       isProposal={true}
       loading={false}
       save={[Function]}
