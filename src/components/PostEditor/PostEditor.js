@@ -1112,7 +1112,6 @@ class PostEditor extends React.Component {
             showImages={showImages}
             showFiles={showFiles}
             valid={valid}
-            isProposal
             loading={loading}
             submitButtonLabel={this.buttonLabel()}
             save={() => {
