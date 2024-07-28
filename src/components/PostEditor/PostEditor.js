@@ -448,26 +448,25 @@ class PostEditor extends React.Component {
       postUpdates
     )
 
-    let validEvent = type.length > 0
+    let validEvent = type?.length > 0
     switch (type) {
       case 'event':
-        validEvent = validEvent && endTime && startTime < endTime
+        validEvent = endTime && startTime && startTime < endTime
         break
       case 'project':
-        validEvent = validEvent &&
-          donationsLink && sanitizeURL(donationsLink) &&
-          projectManagementLink && sanitizeURL(projectManagementLink)
+        validEvent = (!donationsLink || sanitizeURL(donationsLink)) &&
+          (!projectManagementLink || sanitizeURL(projectManagementLink))
         break
       case 'proposal':
-        validEvent = validEvent && proposalOptions.length > 0
+        validEvent = proposalOptions?.length > 0
         break
     }
 
     return !!(
       validEvent &&
       this.editorRef.current &&
-      groups && groups.length > 0 &&
-      title && title.length > 0 && title.length <= MAX_TITLE_LENGTH
+      groups?.length > 0 &&
+      title?.length > 0 && title?.length <= MAX_TITLE_LENGTH
     )
   }
 
