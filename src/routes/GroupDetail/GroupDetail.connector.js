@@ -27,7 +27,7 @@ export function mapStateToProps (state, props) {
   const isMember = group && currentUser ? myMemberships.find(m => m.group.id === group.id) : false
   const joinRequests = getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)
   const stewards = group && group.stewards
-  const responsibilities = getResponsibilitiesForGroup(state, { person: currentUser, groupId: group.id }).map(r => r.title)
+  const responsibilities = group && getResponsibilitiesForGroup(state, { person: currentUser, groupId: group.id }).map(r => r.title)
 
   return {
     currentUser,
