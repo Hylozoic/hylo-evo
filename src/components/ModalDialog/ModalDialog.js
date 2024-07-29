@@ -64,8 +64,8 @@ class ModalDialog extends Component {
   modalRef = createRef()
 
   handleKeydown = event => {
-    if (event.code === 'Escape') this.submit()
-    if (event.code === 'Enter') this.cancel()
+    if (event.code === 'Escape') this.cancel()
+    if (event.code === 'Enter') this.submit()
   }
 
   handleMousedown = event => {
