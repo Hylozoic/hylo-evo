@@ -85,7 +85,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     canFlag: !isCreator,
     pinPost: (responsibilities.includes(RESP_MANAGE_CONTENT)) && group ? () => pinPost(id, group.id) : undefined,
     removePost: !isCreator && (responsibilities.includes(RESP_MANAGE_CONTENT)) ? () => removePost(id) : undefined,
-    roles: connectorGetRolesForGroup(creator.id),
+    roles: creator && connectorGetRolesForGroup(creator.id),
     updateProposalOutcome: isCreator ? (proposalOutcome) => updateProposalOutcome(id, proposalOutcome) : undefined,
     canEdit
   }
