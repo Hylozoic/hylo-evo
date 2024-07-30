@@ -447,19 +447,26 @@ class PostEditor extends React.Component {
       this.state.post,
       postUpdates
     )
-    const { isEvent, isProject, isProposal } = this.props
+
+    let validTypeData = type?.length > 0
+    switch (type) {
+      case 'event':
+        validTypeData = endTime && startTime && startTime < endTime
+        break
+      case 'project':
+        validTypeData = (!donationsLink || sanitizeURL(donationsLink)) &&
+          (!projectManagementLink || sanitizeURL(projectManagementLink))
+        break
+      case 'proposal':
+        validTypeData = proposalOptions?.length > 0
+        break
+    }
 
     return !!(
+      validTypeData &&
       this.editorRef.current &&
-      groups &&
-      type.length > 0 &&
-      title.length > 0 &&
-      groups.length > 0 &&
-      title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && startTime < endTime)) &&
-      (!isProject || sanitizeURL(donationsLink) || !donationsLink) &&
-      (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink) &&
-      (!isProposal || proposalOptions.length > 0)
+      groups?.length > 0 &&
+      title?.length > 0 && title?.length <= MAX_TITLE_LENGTH
     )
   }
 
@@ -703,6 +710,7 @@ class PostEditor extends React.Component {
     const donationsLinkPlaceholder = t('Add a donation link (must be valid URL)')
     const projectManagementLinkPlaceholder = t('Add a project management link (must be valid URL)')
     const locationPrompt = type === 'proposal' ? t('Is there a relevant location for this proposal?') : t('Where is your {{type}} located?', { type })
+    const invalidPostWarning = isProposal ? t('You need a title, a group and at least one option for a proposal') : t('You need a title and at least one group to post')
 
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
@@ -1103,7 +1111,6 @@ class PostEditor extends React.Component {
             showImages={showImages}
             showFiles={showFiles}
             valid={valid}
-            isProposal
             loading={loading}
             submitButtonLabel={this.buttonLabel()}
             save={() => {
@@ -1123,6 +1130,7 @@ class PostEditor extends React.Component {
             groupCount={get('groups', post).length}
             myAdminGroups={myAdminGroups}
             groups={post.groups}
+            invalidPostWarning={invalidPostWarning}
             t={t}
           />
         </div>
@@ -1138,7 +1146,6 @@ export function ActionsBar ({
   showFiles,
   valid,
   loading,
-  isProposal,
   submitButtonLabel,
   save,
   setAnnouncement,
@@ -1149,9 +1156,9 @@ export function ActionsBar ({
   canMakeAnnouncement,
   myAdminGroups,
   groups,
+  invalidPostWarning,
   t
 }) {
-  const invalidPostWarning = isProposal ? t('You need a title, a group and at least one option for a proposal') : t('You need a title and at least one group to post')
   return (
     <div styleName='actionsBar'>
       <div styleName='actions'>
