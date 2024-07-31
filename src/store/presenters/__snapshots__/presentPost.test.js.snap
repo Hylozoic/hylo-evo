@@ -21,6 +21,7 @@ Object {
   "location": undefined,
   "members": Array [],
   "pinned": true,
+  "proposalOptions": Array [],
   "topics": Array [],
 }
 `;

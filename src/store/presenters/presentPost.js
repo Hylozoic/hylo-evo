@@ -34,6 +34,7 @@ export default function presentPost (post, groupId) {
         response: eventInvitation.response,
         ...eventInvitation.person.ref
       }
-    })
+    }),
+    proposalOptions: post.proposalOptions?.toModelArray() || []
   }
 }
