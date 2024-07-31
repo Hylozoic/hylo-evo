@@ -16,7 +16,7 @@ const makeDropdown = (selected, options, onChange) => {
       toggleChildren={
         <span styleName='dropdown-label'>
           <Icon name='ArrowDown' />
-          {t(options.find(o => o.id === selected).label)}
+          {t(options.find(o => o.id === selected)?.label)}
         </span>
       }
       items={options.map(({ id, label }) => ({
