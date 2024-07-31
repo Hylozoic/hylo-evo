@@ -60,6 +60,7 @@ class UnwrappedGroupDetail extends Component {
   componentDidMount () {
     this.onGroupChange()
     this.props.fetchJoinRequests()
+    this.props.fetchForCurrentUser()
   }
 
   componentDidUpdate (prevProps) {

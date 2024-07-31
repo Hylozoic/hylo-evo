@@ -10,6 +10,7 @@ import getGroupForDetails from 'store/selectors/getGroupForDetails'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 import { FETCH_GROUP_DETAILS } from 'store/constants'
 import getRouteParam from 'store/selectors/getRouteParam'
+import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import { addSkill, removeSkill } from 'components/SkillsSection/SkillsSection.store'
 import {
   createJoinRequest,
@@ -50,6 +51,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     addSkill: (name) => dispatch(addSkill(name)),
     removeSkill: (skillId) => dispatch(removeSkill(skillId)),
+    fetchForCurrentUser: () => dispatch(fetchForCurrentUser()),
     fetchGroup: (currentUser) => dispatch(fetchGroupDetails({ slug, withWidgets: true, withPrerequisites: !!currentUser })),
     fetchJoinRequests: () => dispatch(fetchJoinRequests()),
     joinGroup: (groupId, questionAnswers) => dispatch(joinGroup(groupId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } }))),
