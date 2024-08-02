@@ -278,7 +278,7 @@ class CreateGroup extends Component {
               <span styleName='title'>{t('IS THIS GROUP A MEMBER OF OTHER GROUPS?')}</span>
               <div styleName='parentGroupInfo'>
                 ?
-                <div styleName='parentGroupTooltip'>{t('You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it')}</div>
+                <div styleName='parentGroupTooltip'>{t('You may add parent groups if you are an Administrator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it')}</div>
               </div>
               {/* TODO: somehow show groups that are restricted and will be a join request differently */}
               <GroupsSelector

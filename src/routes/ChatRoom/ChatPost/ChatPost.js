@@ -3,7 +3,7 @@ import { filter, isEmpty, isFunction, pick } from 'lodash/fp'
 import moment from 'moment-timezone'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ReactPlayer from 'react-player'
 import { useLongPress } from 'use-long-press'
 import Avatar from 'components/Avatar'
@@ -28,9 +28,11 @@ import { bgImageStyle } from 'util/index'
 import isWebView from 'util/webView'
 import { personUrl } from 'util/navigation'
 import styles from './ChatPost.scss'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
+import getRolesForGroup from 'store/selectors/getRolesForGroup'
+import { RESP_MANAGE_CONTENT } from 'store/constants'
 
 export default function ChatPost ({
-  canModerate,
   className,
   currentUser,
   group,
@@ -40,17 +42,6 @@ export default function ChatPost ({
   showDetails,
   updatePost
 }) {
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const ref = useRef()
-  const editorRef = useRef()
-  const isPressDevice = !window.matchMedia('(hover: hover) and (pointer: fine)').matches
-
-  const [editing, setEditing] = useState(false)
-  const [isVideo, setIsVideo] = useState()
-  const [flaggingVisible, setFlaggingVisible] = useState(false)
-  const [isLongPress, setIsLongPress] = useState(false)
-
   const {
     commenters,
     commentsTotal,
@@ -66,6 +57,21 @@ export default function ChatPost ({
     myReactions,
     postReactions
   } = post
+
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const ref = useRef()
+  const editorRef = useRef()
+  const isPressDevice = !window.matchMedia('(hover: hover) and (pointer: fine)').matches
+  const currentUserResponsibilities = useSelector(state => getResponsibilitiesForGroup(state, { person: currentUser, groupId: group.id })).map(r => r.title)
+
+  const [editing, setEditing] = useState(false)
+  const [isVideo, setIsVideo] = useState()
+  const [flaggingVisible, setFlaggingVisible] = useState(false)
+  const [isLongPress, setIsLongPress] = useState(false)
+
+  const isCreator = currentUser.id === creator.id
+  const creatorRoles = useSelector(state => getRolesForGroup(state, { person: creator, groupId: group.id }))
 
   const groupIds = groups.map(g => g.id)
 
@@ -152,8 +158,6 @@ export default function ChatPost ({
     return true
   }
 
-  const isCreator = currentUser.id === creator.id
-
   const deletePostWithConfirm = useCallback((event) => {
     if (window.confirm('Are you sure you want to delete this post? You cannot undo this.')) {
       dispatch(deletePost(id, group.id))
@@ -178,14 +182,12 @@ export default function ChatPost ({
     { icon: 'Edit', label: 'Edit', onClick: (isCreator && !isLongPress) ? editPost : null },
     { icon: 'Flag', label: 'Flag', onClick: !isCreator ? () => { setFlaggingVisible(true) } : null },
     { icon: 'Trash', label: 'Delete', onClick: isCreator ? deletePostWithConfirm : null, red: true },
-    { icon: 'Trash', label: 'Remove From Group', onClick: !isCreator && canModerate ? removePostWithConfirm : null, red: true }
+    { icon: 'Trash', label: 'Remove From Group', onClick: !isCreator && currentUserResponsibilities.includes(RESP_MANAGE_CONTENT) ? removePostWithConfirm : null, red: true }
   ])
+
   const myEmojis = myReactions ? myReactions.map((reaction) => reaction.emojiFull) : []
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
-
-  const badges = (group.id && creator.groupRoles?.filter(role => role.groupId === group.id)) || []
-  const creatorIsModerator = creator.moderatedGroupMemberships?.find(moderatedMembership => moderatedMembership.groupId === group.id)
 
   return (
     <Highlight {...highlightProps}>
@@ -228,11 +230,8 @@ export default function ChatPost ({
               <Avatar avatarUrl={creator.avatarUrl} className={styles.avatar} />
               <div styleName='name'>{creator.name}</div>
               <div styleName='badgeRow'>
-                {creatorIsModerator && (
-                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={id} />
-                )}
-                {badges.map(badge => (
-                  <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
+                {creatorRoles.map(role => (
+                  <BadgeEmoji key={role.id + role.common} expanded {...role} responsibilities={role.responsibilities} id={post.id} />
                 ))}
               </div>
             </div>

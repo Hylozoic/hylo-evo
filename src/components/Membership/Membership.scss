@@ -1,17 +1,33 @@
 .membership {
   border: 0;
   font-weight: 100;
-  display: flex;
+  display: inline-flex;
   justify-content: left;
   align-items: center;
-  min-height: 54px;
+  margin-bottom: 10px;
   font-size: 14px;
   padding-right: 10px;
 
-  .role {
+  &.rowStyle {
+    display: flex;
+    padding: 5px 0px;
+    margin-bottom: 0;
+
+    &.even {
+      background-color: $color-athens-gray;
+    }
+
+    &.odd {
+      background-color: $color-white;
+    }
+  }
+
+  .roles {
+    font-weight: bold;
     font-family: 'Circular Bold';
-    padding: 0 5px 0 10px;
+    padding: 0 0 0 10px;
     color: rgba(41, 64, 90, 1.00);
+    display: flex;
   }
 
   .group {
@@ -23,13 +39,16 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 400px;
+    min-width: auto;
 
     a {
       color: $color-regent;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      display: block;
+      display: flex;
+      align-items: center;
       width: 100%;
       text-decoration: none;
 
@@ -39,14 +58,10 @@
       }
     }
   }
-}
 
-.odd {
-  background-color: $color-white;
-}
-
-.even {
-  background-color: $color-athens-gray;
+  .rowStyle .group {
+    display: block;
+  }
 }
 
 .leave-button {

@@ -17,7 +17,7 @@ import useGetWidgetItems from 'hooks/useGetWidgetItems'
 import FarmDetailsWidget from './FarmDetailsWidget'
 import FarmOpenToPublic from './FarmOpenToPublic'
 import FarmMapWidget from './FarmMapWidget'
-import ModeratorsWidget from './ModeratorsWidget'
+import StewardsWidget from './StewardsWidget'
 import OpportunitiesToCollaborateWidget from './OpportunitiesToCollaborateWidget'
 import PrivacyWidget from './PrivacyWidget'
 import RichTextWidget from './RichTextWidget'
@@ -34,7 +34,7 @@ export default function Widget (props) {
   const WIDGETS = {
     text_block: {
       title: '',
-      moderatorTitle: t('Welcome Message'),
+      adminTitle: t('Welcome Message'),
       component: WelcomeWidget
     },
     announcements: {
@@ -101,9 +101,9 @@ export default function Widget (props) {
       title: t('Farm Surrounds & Posts'),
       component: FarmMapWidget
     },
-    moderators: {
-      title: t('Moderators'), // TODO: ensure there is a way to customize/overwrite this
-      component: ModeratorsWidget
+    stewards: {
+      title: t('Stewards'), // TODO: ensure there is a way to customize/overwrite this
+      component: StewardsWidget
     },
     opportunities_to_collaborate: {
       title: t('Opportunities to Collaborate'),
@@ -131,13 +131,13 @@ export default function Widget (props) {
     return (
       <div styleName='hidden-description'>
         <h4><Icon name='Hidden' styleName='hidden-icon' /> {t('Hidden')}</h4>
-        <p>{t('The {{title}} section is not visible to members of this group. Click the three dots', { title: WIDGETS[name].moderatorTitle || WIDGETS[name].title })} (<Icon name='More' styleName='more-icon' />) {t('above this box to change the visibility settings. Only moderators can see this message')}.</p>
+        <p>{t('The {{title}} section is not visible to members of this group. Click the three dots', { title: WIDGETS[name].adminTitle || WIDGETS[name].title })} (<Icon name='More' styleName='more-icon' />) {t('above this box to change the visibility settings. Only administrators can see this message')}.</p>
       </div>
     )
   }
 
   const dispatch = useDispatch()
-  const { childGroups, id, isModerator, isVisible, name, posts, isMember, settings = {} } = props
+  const { childGroups, id, canEdit, isVisible, name, posts, isMember, settings = {} } = props
   const router = useRouter()
   const routeParams = router && router.query
   const { group } = useEnsureCurrentGroup()
@@ -158,27 +158,32 @@ export default function Widget (props) {
 
   return (
     <div styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
-      {isModerator || (isVisible && widgetItems) ? <div styleName='header'>
-        <h3>{(isModerator && WIDGETS[name].moderatorTitle) || WIDGETS[name].title}</h3>
-        {isModerator && <div styleName='more'>
-          <Icon name='More' styleName={`more-icon ${isMenuOpen ? 'selected' : ''}`} onClick={() => { setIsMenuOpen(!isMenuOpen); setIsEditingSettings(false) }} />
-          <div styleName={`edit-menu ${isMenuOpen ? 'visible' : ''}`}>
-            {!isEditingSettings && <div styleName='edit-section'>
-              <span styleName='triangle'>&nbsp;</span>
-              {name === 'text_block' && <div styleName='edit-settings'><span onClick={() => setIsEditingSettings(!isEditingSettings)}><Icon name='Edit' /> {t('Edit welcome message')}</span></div>}
-              <div styleName='visibility-settings'>
-                <VisibilityToggle
-                  id={id}
-                  checked={isVisible}
-                  onChange={() => handleUpdateWidget(id, { isVisible: !isVisible })}
-                  styleName='widget-visibility'
-                  backgroundColor={isVisible ? 'gray' : 'black'} /> <span styleName='visibility-label'>{t('Visibility')}:</span> {isVisible ? t('Visible') : t('Hidden')}
+      {/* TODO: ADMIN RESP? Add something for RESP here */}
+      {canEdit || (isVisible && widgetItems)
+        ? (
+          <div styleName='header'>
+            <h3>{(canEdit && WIDGETS[name].adminTitle) || WIDGETS[name].title}</h3>
+            {canEdit && <div styleName='more'>
+              <Icon name='More' styleName={`more-icon ${isMenuOpen ? 'selected' : ''}`} onClick={() => { setIsMenuOpen(!isMenuOpen); setIsEditingSettings(false) }} />
+              <div styleName={`edit-menu ${isMenuOpen ? 'visible' : ''}`}>
+                {!isEditingSettings && <div styleName='edit-section'>
+                  <span styleName='triangle'>&nbsp;</span>
+                  {name === 'text_block' && <div styleName='edit-settings'><span onClick={() => setIsEditingSettings(!isEditingSettings)}><Icon name='Edit' /> {t('Edit welcome message')}</span></div>}
+                  <div styleName='visibility-settings'>
+                    <VisibilityToggle
+                      id={id}
+                      checked={isVisible}
+                      onChange={() => handleUpdateWidget(id, { isVisible: !isVisible })}
+                      styleName='widget-visibility'
+                      backgroundColor={isVisible ? 'gray' : 'black'} /> <span styleName='visibility-label'>{t('Visibility')}:</span> {isVisible ? t('Visible') : t('Hidden')}
+                  </div>
+                </div>}
               </div>
             </div>}
           </div>
-        </div>}
-      </div> : ''}
-      {isModerator && isEditingSettings &&
+        )
+        : ''}
+      {canEdit && isEditingSettings &&
         <EditForm
           id={id}
           setIsEditingSettings={setIsEditingSettings}
@@ -189,7 +194,7 @@ export default function Widget (props) {
         />}
       <div styleName={`content ${isVisible ? '' : 'hidden'}`}>
         {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, routeParams, settings, isMember: !!isMember }) : null)
-          : isModerator ? <HiddenWidget name={name} /> : null
+          : canEdit ? <HiddenWidget name={name} /> : null
         }
       </div>
     </div>

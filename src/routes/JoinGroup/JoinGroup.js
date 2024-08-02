@@ -57,7 +57,7 @@ export default function JoinGroup (props) {
           }
         }
       } catch (error) {
-        window.alert(t('Sorry, your invitation to this group is expired, has already been used, or is invalid. Please contact a group moderator for another one.'))
+        window.alert(t('Sorry, your invitation to this group is expired, has already been used, or is invalid. Please contact a group Host for another one.'))
         history.push(baseUrl({}))
       }
     })()

@@ -8,6 +8,7 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 
 const defaultSortBy = 'name'
 
@@ -23,16 +24,19 @@ export function mapStateToProps (state, props) {
     search,
     sortBy
   }
+  const myResponsibilities = getResponsibilitiesForGroup(state, { groupId: group.id }).map(r => r.title)
+
   return {
     slug,
     memberCount: get('memberCount', group),
     sortBy,
     search,
-    canModerate,
+    currentUser,
     group,
     members: getMembers(state, extraProps),
     hasMore: getHasMoreMembers(state, extraProps),
-    pending: state.pending[FETCH_MEMBERS]
+    pending: state.pending[FETCH_MEMBERS],
+    myResponsibilities
   }
 }
 

@@ -15,6 +15,7 @@ import { groupUrl } from 'util/navigation'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 
 import './Members.scss'
+import { RESP_ADD_MEMBERS } from 'store/constants'
 
 class Members extends Component {
   componentDidMount () {
@@ -48,7 +49,7 @@ class Members extends Component {
 
   render () {
     const {
-      group, memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember, t
+      group, currentUser, memberCount, members, sortBy, changeSort, search, slug, context, myResponsibilities, removeMember, t
     } = this.props
 
     const sortKeys = sortKeysFactory(context)
@@ -66,21 +67,25 @@ class Members extends Component {
               {t('{{memberCount}} Total Members', { memberCount })}
             </div>
           </div>
-          {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
-            <Button styleName='invite'
+          {myResponsibilities.includes(RESP_ADD_MEMBERS) && <Link to={groupUrl(slug, 'settings/invite')}>
+            <Button
+              styleName='invite'
               color='green-white-green-border'
-              narrow >
+              narrow
+            >
               <Icon name='Invite' styleName='invite-icon' /> {t('Invite People')}
             </Button>
           </Link>}
         </div>
         <div styleName='content'>
           <div styleName='controls'>
-            <TextInput placeholder={t('Search by name or skills & interests')}
+            <TextInput
+              placeholder={t('Search by name or skills & interests')}
               styleName='search'
               defaultValue={search}
               onChange={e => this.search(e.target.value)} />
-            <Dropdown styleName='sort-dropdown'
+            <Dropdown
+              styleName='sort-dropdown'
               toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
               alignRight
               items={Object.keys(sortKeys).map(k => ({
@@ -92,7 +97,7 @@ class Members extends Component {
             {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
               {pair.map(m => <Member
                 group={group}
-                canModerate={canModerate}
+                currentUser={currentUser}
                 removeMember={removeMember}
                 member={m} key={m.id}
                 context={context}
@@ -101,8 +106,10 @@ class Members extends Component {
             </div>)}
           </div>
         </div>
-        <ScrollListener onBottom={this.fetchMore}
-          elementId={CENTER_COLUMN_ID} />
+        <ScrollListener
+          onBottom={this.fetchMore}
+          elementId={CENTER_COLUMN_ID}
+        />
       </div>
     )
   }
@@ -119,8 +126,7 @@ Members.propTypes = {
   })),
   hasMore: bool,
   changeSort: func,
-  changeSearch: func,
-  canModerate: bool
+  changeSearch: func
 }
 
 function SortLabel ({ text }) {

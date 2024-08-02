@@ -89,13 +89,28 @@ export default gql`
         }
       }
     }
+    groupRoles {
+      items {
+        id
+        name
+        emoji
+        active
+        groupId
+        responsibilities {
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
+    }
     # For memberships only including only what is needed
     # for initial load in AuthLayoutRouter
     memberships {
       id
       lastViewedAt
       newPostCount
-      hasModeratorRole
       person {
         id
       }
@@ -112,12 +127,20 @@ export default gql`
         bannerUrl
         name
         memberCount
-        moderatorDescriptor
-        moderatorDescriptorPlural
+        stewardDescriptor
+        stewardDescriptorPlural
         settings {
           showSuggestedSkills
         }
         slug
+      }
+    }
+    membershipCommonRoles {
+      items {
+        id
+        commonRoleId
+        groupId
+        userId
       }
     }
     skills {

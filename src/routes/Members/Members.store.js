@@ -22,13 +22,28 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
         location
         tagline
         groupRoles {
-          name
-          emoji
-          active
-          groupId
+          items {
+            id
+            name
+            emoji
+            active
+            groupId
+            responsibilities {
+              items {
+                id
+                title
+                description
+              }
+            }
+          }
         }
-        moderatedGroupMemberships {
-          groupId
+        membershipCommonRoles {
+          items {
+            id
+            commonRoleId
+            groupId
+            userId
+          }
         }
         skills {
           hasMore
@@ -93,7 +108,8 @@ export const getMembers = makeQueryResultsModelSelector(
   'Person',
   person => ({
     ...person.ref,
-    skills: person.skills.toModelArray()
+    skills: person.skills.toModelArray(),
+    membershipCommonRoles: person.membershipCommonRoles.toModelArray()
   })
 )
 

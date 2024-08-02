@@ -25,8 +25,6 @@ export function joinGroup (groupId, questionAnswers) {
       query: `mutation ($groupId: ID, $questionAnswers: [QuestionAnswerInput]) {
         joinGroup(groupId: $groupId, questionAnswers: $questionAnswers) {
           id
-          role
-          hasModeratorRole
           group {
             id
             name
