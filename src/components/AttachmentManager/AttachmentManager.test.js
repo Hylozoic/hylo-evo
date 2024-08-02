@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
 import { shallow } from 'enzyme'
-import { render } from 'util/testing/reactTestingLibraryExtended'
 import AttachmentManager, { ImageManager, ImagePreview, FileManager, FilePreview } from './AttachmentManager'
 
 jest.mock('react-i18next', () => ({
