@@ -13,8 +13,8 @@ import '../Signup.scss'
 export default function VerifyEmail (props) {
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
-  const email = currentUser?.email || getQuerystringParam('email', null, props)
-  const token = getQuerystringParam('token', null, props)
+  const email = currentUser?.email || getQuerystringParam('email', props)
+  const token = getQuerystringParam('token', props)
   const [error, setError] = useState()
   const [code, setCode] = useState('')
   const [redirectTo, setRedirectTo] = useState()

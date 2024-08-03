@@ -192,7 +192,7 @@ export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
 
 export const getCustomView = ormCreateSelector(
   orm,
-  (session, props) => getRouteParam('customViewId', session, props),
+  (props) => getRouteParam('customViewId', props),
   (session, id) => session.CustomView.safeGet({ id })
 )
 

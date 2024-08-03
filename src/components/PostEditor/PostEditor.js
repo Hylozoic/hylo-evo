@@ -118,7 +118,7 @@ class PostEditor extends React.Component {
         locationId: post.locationObject ? post.locationObject.id : null,
         startTime: Moment(post.startTime),
         endTime: Moment(post.endTime),
-        proposalOptions: post.proposalOptions?.items || []
+        proposalOptions: post.proposalOptions || []
       }
       : defaultPostWithGroupsAndTopic
 
@@ -447,19 +447,26 @@ class PostEditor extends React.Component {
       this.state.post,
       postUpdates
     )
-    const { isEvent, isProject, isProposal } = this.props
+
+    let validTypeData = type?.length > 0
+    switch (type) {
+      case 'event':
+        validTypeData = endTime && startTime && startTime < endTime
+        break
+      case 'project':
+        validTypeData = (!donationsLink || sanitizeURL(donationsLink)) &&
+          (!projectManagementLink || sanitizeURL(projectManagementLink))
+        break
+      case 'proposal':
+        validTypeData = proposalOptions?.length > 0
+        break
+    }
 
     return !!(
+      validTypeData &&
       this.editorRef.current &&
-      groups &&
-      type.length > 0 &&
-      title.length > 0 &&
-      groups.length > 0 &&
-      title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && startTime < endTime)) &&
-      (!isProject || sanitizeURL(donationsLink) || !donationsLink) &&
-      (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink) &&
-      (!isProposal || proposalOptions.length > 0)
+      groups?.length > 0 &&
+      title?.length > 0 && title?.length <= MAX_TITLE_LENGTH
     )
   }
 
@@ -622,13 +629,13 @@ class PostEditor extends React.Component {
     })
   }
 
-  canModerate = () => {
-    const { myModeratedGroups = [] } = this.props
+  canMakeAnnouncement = () => {
+    const { myAdminGroups = [] } = this.props
     const { post } = this.state
     const { groups = [] } = post
-    const myModeratedGroupsSlugs = myModeratedGroups.map(group => group.slug)
+    const myAdminGroupsSlugs = myAdminGroups.map(group => group.slug)
     for (let index = 0; index < groups.length; index++) {
-      if (!myModeratedGroupsSlugs.includes(groups[index].slug)) return false
+      if (!myAdminGroupsSlugs.includes(groups[index].slug)) return false
     }
     return true
   }
@@ -670,7 +677,7 @@ class PostEditor extends React.Component {
       loading,
       setAnnouncement,
       announcementSelected,
-      myModeratedGroups,
+      myAdminGroups,
       isProject,
       isEvent,
       isProposal,
@@ -703,6 +710,7 @@ class PostEditor extends React.Component {
     const donationsLinkPlaceholder = t('Add a donation link (must be valid URL)')
     const projectManagementLinkPlaceholder = t('Add a project management link (must be valid URL)')
     const locationPrompt = type === 'proposal' ? t('Is there a relevant location for this proposal?') : t('Where is your {{type}} located?', { type })
+    const invalidPostWarning = isProposal ? t('You need a title, a group and at least one option for a proposal') : t('You need a title and at least one group to post')
 
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
@@ -923,7 +931,7 @@ class PostEditor extends React.Component {
                   <Icon name='Plus' styleName='icon-plus' blue />
                   <span styleName='optionText'>{t('Add an option to vote on...')}</span>
                 </div>
-                {this.props.post && !deepCompare(proposalOptions, this.props.post.proposalOptions?.items) && (
+                {this.props.post && !deepCompare(proposalOptions, this.props.post.proposalOptions) && (
                   <div styleName='proposalOption warning' onClick={() => this.handleAddOption()}>
                     <Icon name='Hand' styleName='icon-plus' />
                     <span styleName='optionText'>{t('If you save changes to options, all votes will be discarded')}</span>
@@ -1103,11 +1111,10 @@ class PostEditor extends React.Component {
             showImages={showImages}
             showFiles={showFiles}
             valid={valid}
-            isProposal
             loading={loading}
             submitButtonLabel={this.buttonLabel()}
             save={() => {
-              if (isProposal && this.props.post && !deepCompare(proposalOptions, this.props.post.proposalOptions?.items)) {
+              if (isProposal && this.props.post && !deepCompare(proposalOptions, this.props.post.proposalOptions)) {
                 if (window.confirm(t('Changing proposal options will reset the votes. Are you sure you want to continue?'))) {
                   this.save()
                 }
@@ -1117,12 +1124,13 @@ class PostEditor extends React.Component {
             }}
             setAnnouncement={setAnnouncement}
             announcementSelected={announcementSelected}
-            canModerate={this.canModerate()}
+            canMakeAnnouncement={this.canMakeAnnouncement()}
             toggleAnnouncementModal={this.toggleAnnouncementModal}
             showAnnouncementModal={showAnnouncementModal}
             groupCount={get('groups', post).length}
-            myModeratedGroups={myModeratedGroups}
+            myAdminGroups={myAdminGroups}
             groups={post.groups}
+            invalidPostWarning={invalidPostWarning}
             t={t}
           />
         </div>
@@ -1138,7 +1146,6 @@ export function ActionsBar ({
   showFiles,
   valid,
   loading,
-  isProposal,
   submitButtonLabel,
   save,
   setAnnouncement,
@@ -1146,12 +1153,12 @@ export function ActionsBar ({
   toggleAnnouncementModal,
   showAnnouncementModal,
   groupCount,
-  canModerate,
-  myModeratedGroups,
+  canMakeAnnouncement,
+  myAdminGroups,
   groups,
+  invalidPostWarning,
   t
 }) {
-  const invalidPostWarning = isProposal ? t('You need a title, a group and at least one option for a proposal') : t('You need a title and at least one group to post')
   return (
     <div styleName='actionsBar'>
       <div styleName='actions'>
@@ -1181,7 +1188,7 @@ export function ActionsBar ({
             styleName={cx('action-icon', { 'highlight-icon': showFiles })}
           />
         </UploadAttachmentButton>
-        {canModerate && (
+        {canMakeAnnouncement && (
           <span data-tip='Send Announcement' data-for='announcement-tt'>
             <Icon
               name='Announcement'
@@ -1202,7 +1209,7 @@ export function ActionsBar ({
             closeModal={toggleAnnouncementModal}
             save={save}
             groupCount={groupCount}
-            myModeratedGroups={myModeratedGroups}
+            myAdminGroups={myAdminGroups}
             groups={groups}
           />
         )}

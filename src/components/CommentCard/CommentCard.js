@@ -16,7 +16,8 @@ export default function CommentCard ({
   expanded = true,
   highlightProps
 }) {
-  const { creator, post, slug, attachments } = comment
+  const { creator, post, slug, createdAt, editedAt, attachments } = comment
+  const timestamp = (editedAt ? 'Edited ' : 'Commented ') + TextHelpers.humanDate(editedAt || createdAt)
   const postTitle = post.title ? TextHelpers.truncateText(post.title, 25) : TextHelpers.truncateHTML(post.details, 25)
 
   const commentText = expanded ? comment.text : TextHelpers.truncateHTML(comment.text, 144)
@@ -33,7 +34,7 @@ export default function CommentCard ({
               <span styleName='post-title'>{postTitle}</span>
             </div>
           </Highlight>
-          <span styleName='date'>{TextHelpers.humanDate(comment.createdAt)}</span>
+          <span styleName='date'>{timestamp}</span>
         </div>
         <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
         <CardFileAttachments attachments={attachments} styleName='comment-files' />

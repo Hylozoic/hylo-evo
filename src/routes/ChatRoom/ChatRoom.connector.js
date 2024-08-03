@@ -57,20 +57,19 @@ export const getPosts = ormCreateSelector(
 const NUM_POSTS_TO_LOAD = 25
 
 export function mapStateToProps (state, props) {
-  let canModerate, group, topic, groupTopic
+  let group, topic, groupTopic
 
   const currentUser = getMe(state, props)
 
-  const groupSlug = getRouteParam('groupSlug', state, props)
+  const groupSlug = getRouteParam('groupSlug', props)
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
     groupTopic = getGroupTopicForCurrentRoute(state, props)
     groupTopic = groupTopic && { ...groupTopic.ref, group: groupTopic.group, topic: groupTopic.topic }
-    canModerate = currentUser && currentUser.canModerate(group)
   }
 
   const routeParams = get('match.params', props)
-  const topicName = getRouteParam('topicName', state, props)
+  const topicName = getRouteParam('topicName', props)
   const topicLoading = isPendingFor([FETCH_TOPIC, FETCH_GROUP_TOPIC], state)
 
   if (topicName) {
@@ -81,11 +80,11 @@ export function mapStateToProps (state, props) {
     // TODO: what? redirect somewhere?
   }
 
-  const context = getRouteParam('context', state, props)
-  const view = getRouteParam('view', state, props)
+  const context = getRouteParam('context', props)
+  const view = getRouteParam('view', props)
 
-  const querystringParams = getQuerystringParam(['search', 'postId'], null, props)
-  const search = getQuerystringParam('search', state, props)
+  const querystringParams = getQuerystringParam(['search', 'postId'], props)
+  const search = getQuerystringParam('search', props)
   const postIdToStartAt = querystringParams?.postId
 
   const imageAttachments = getAttachments(state, { type: 'post', id: 'new', attachmentType: 'image' })
@@ -133,7 +132,6 @@ export function mapStateToProps (state, props) {
   const totalPostsFuture = getTotalPosts(state, fetchPostsFutureParams) || 0
 
   return {
-    canModerate,
     context,
     currentPostIndex,
     currentUser,
@@ -156,7 +154,7 @@ export function mapStateToProps (state, props) {
     totalPostsPast,
     routeParams,
     search,
-    selectedPostId: getRouteParam('postId', state, props),
+    selectedPostId: getRouteParam('postId', props),
     topicLoading,
     topicName,
     topic,
@@ -165,11 +163,11 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const groupSlug = getRouteParam('groupSlug', null, props)
-  const topicName = getRouteParam('topicName', null, props)
+  const groupSlug = getRouteParam('groupSlug', props)
+  const topicName = getRouteParam('topicName', props)
   const updateSettings = (params) => dispatch(updateUserSettings(params))
   const routeParams = get('match.params', props)
-  const querystringParams = getQuerystringParam(['s', 't'], null, props)
+  const querystringParams = getQuerystringParam(['s', 't'], props)
 
   return {
     changeSearch: search => {

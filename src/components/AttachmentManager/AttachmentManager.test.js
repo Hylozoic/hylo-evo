@@ -168,7 +168,7 @@ describe('ImagePreview', () => {
       position: 1,
       removeImage: () => {}
     }
-    const wrapper = render(<ImagePreview {...props} />)
+    const wrapper = shallow(<ImagePreview {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

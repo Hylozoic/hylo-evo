@@ -36,7 +36,7 @@ export default function NonAuthLayoutRouter (props) {
   const { location } = props
   const dispatch = useDispatch()
   const isAuthenticated = useSelector(getAuthenticated)
-  const returnToPathFromQueryString = getQuerystringParam('returnToUrl', null, props)
+  const returnToPathFromQueryString = getQuerystringParam('returnToUrl', props)
   const returnToNavigationState = props.location?.state?.from
   const returnToPath = returnToNavigationState
     ? returnToNavigationState.pathname + returnToNavigationState.search
@@ -173,7 +173,7 @@ export default function NonAuthLayoutRouter (props) {
             path='/oauth/login'
             component={(props) => (
               <div styleName='below-container'>
-                <p>{t(`Use your Hylo account to access {{name}}.`, { name: getQuerystringParam('name', {}, props) || thisApplicationText })}</p>
+                <p>{t(`Use your Hylo account to access {{name}}.`, { name: getQuerystringParam('name', props) || thisApplicationText })}</p>
               </div>
             )}
           />
@@ -181,7 +181,7 @@ export default function NonAuthLayoutRouter (props) {
             path='/oauth/consent'
             component={(props) => (
               <div styleName='below-container'>
-                <p>{t(`Make sure you trust {{name}} with your information.`, { name: getQuerystringParam('name', {}, props) || thisApplicationText })}</p>
+                <p>{t(`Make sure you trust {{name}} with your information.`, { name: getQuerystringParam('name', props) || thisApplicationText })}</p>
               </div>
             )}
           />

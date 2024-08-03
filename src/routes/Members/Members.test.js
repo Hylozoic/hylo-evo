@@ -1,6 +1,7 @@
 import Members, { twoByTwo } from './Members'
 import { shallow } from 'enzyme'
 import React from 'react'
+
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
   useTranslation: (domain) => {
@@ -22,10 +23,11 @@ it('does something', () => {
     <Members
       group={{ id: 1 }}
       members={[
-        { id: '1', groupRoles: [], moderatedGroupMemberships: [], name: 'You' },
-        { id: '2', groupRoles: [], moderatedGroupMemberships: [], name: 'Me' },
-        { id: '3', groupRoles: [], moderatedGroupMemberships: [], name: 'Everyone' }
+        { id: '1', groupRoles: [], name: 'You' },
+        { id: '2', groupRoles: [], name: 'Me' },
+        { id: '3', groupRoles: [], name: 'Everyone' }
       ]}
+      myResponsibilities={[]}
     />)
   expect(wrapper.find('Connect(Member)')).toHaveLength(3)
 })

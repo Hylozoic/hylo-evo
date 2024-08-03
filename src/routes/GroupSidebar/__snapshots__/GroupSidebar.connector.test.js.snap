@@ -2,10 +2,13 @@
 
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
-  "canModerate": false,
-  "group": null,
-  "leaders": Array [],
+  "group": Object {
+    "id": "88",
+    "slug": "bar",
+  },
   "members": Array [],
-  "slug": undefined,
+  "myResponsibilities": Array [],
+  "slug": "bar",
+  "stewards": Array [],
 }
 `;

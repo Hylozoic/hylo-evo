@@ -11,11 +11,13 @@ import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import hasResponsibilityForGroup from 'store/selectors/hasResponsibilityForGroup'
 import { fetchLocation, ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import {
   CREATE_POST,
   CREATE_PROJECT,
-  FETCH_POST
+  FETCH_POST,
+  RESP_ADMINISTRATION
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
 import updatePost from 'store/actions/updatePost'
@@ -40,13 +42,14 @@ export function mapStateToProps (state, props) {
   const currentGroup = getGroupForCurrentRoute(state, props)
   const groupOptions = props.groupOptions ||
     (currentUser && currentUser.memberships.toModelArray().map((m) => m.group).sort((a, b) => a.name.localeCompare(b.name)))
-  const myModeratedGroups = (currentUser && groupOptions.filter(c => currentUser.canModerate(c)))
+  const myAdminGroups = (currentUser && groupOptions.filter(g => hasResponsibilityForGroup(state, { person: currentUser, groupId: g.id, responsibility: RESP_ADMINISTRATION })))
+  // TODO RESP: verify this works as expected
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
   const uploadAttachmentPending = getUploadAttachmentPending(state)
-  const fromPostId = getQuerystringParam('fromPostId', null, props)
-  const editingPostId = getRouteParam('postId', state, props)
+  const fromPostId = getQuerystringParam('fromPostId', props)
+  const editingPostId = getRouteParam('postId', props)
   const attachmentPostId = (editingPostId || fromPostId)
   const uploadFileAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: attachmentPostId, attachmentType: 'file' })
   const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: attachmentPostId, attachmentType: 'image' })
@@ -54,7 +57,7 @@ export function mapStateToProps (state, props) {
   const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || postPending
   let post = null
   let editing = false
-  if (getRouteParam('action', null, props) === 'edit') {
+  if (getRouteParam('action', props) === 'edit') {
     post = props.post || presentPost(getPost(state, props))
     editing = !!post || loading
   } else if (fromPostId) {
@@ -65,13 +68,13 @@ export function mapStateToProps (state, props) {
   const fileAttachments = getAttachments(state, { type: 'post', id: attachmentPostId, attachmentType: 'file' })
   const showImages = !isEmpty(imageAttachments) || uploadImageAttachmentPending
   const showFiles = !isEmpty(fileAttachments) || uploadFileAttachmentPending
-  const context = getRouteParam('context', null, props)
-  const groupSlug = getRouteParam('groupSlug', null, props)
+  const context = getRouteParam('context', props)
+  const groupSlug = getRouteParam('groupSlug', props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
   const announcementSelected = state[MODULE_NAME].announcement
   const location = get('location', props)
-  const postType = getQuerystringParam('newPostType', null, props)
+  const postType = getQuerystringParam('newPostType', props)
   const isProject = postType === 'project' || get('type', post) === 'project'
   const isEvent = postType === 'event' || get('type', post) === 'event'
   const isProposal = postType === 'proposal' || get('type', post) === 'proposal'
@@ -95,7 +98,7 @@ export function mapStateToProps (state, props) {
     linkPreviewStatus,
     loading,
     location,
-    myModeratedGroups,
+    myAdminGroups,
     post,
     postPending,
     postType,
@@ -136,7 +139,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     // and translate as follow: `s`(ort), `t`(ab), `q`(uery aliased as `search`)
     // The remaining whitelisted params are for the map view.
     const querystringWhitelist = ['s', 't', 'q', 'search', 'zoom', 'center', 'lat', 'lng']
-    const querystringParams = ownProps?.location && getQuerystringParam(querystringWhitelist, null, ownProps)
+    const querystringParams = ownProps?.location && getQuerystringParam(querystringWhitelist, ownProps)
     const postPath = postUrl(id, ownProps?.match?.params, querystringParams)
 
     return goToUrl(postPath)

@@ -17,11 +17,11 @@ class LandingPage extends Component {
   }
 
   componentDidMount () {
-    this.props.fetchPosts()
+    // this.props.fetchPosts()
   }
 
   render () {
-    const { childGroups, group, isModerator, posts, routeParams, widgets } = this.props
+    const { childGroups, group, canEdit, posts, routeParams, widgets } = this.props
     if (!group) return <Loading />
 
     return (
@@ -38,7 +38,7 @@ class LandingPage extends Component {
             childGroups={childGroups}
             key={widget.id}
             group={group}
-            isModerator={isModerator}
+            canEdit={canEdit}
             posts={posts}
             routeParams={routeParams}
           />

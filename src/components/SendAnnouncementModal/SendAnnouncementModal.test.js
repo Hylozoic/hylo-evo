@@ -19,7 +19,7 @@ it('renders correctly with one group', () => {
     closeModal: jest.fn(),
     save: jest.fn(),
     groupMembersCount: 100,
-    myModeratedGroups: [{ id: 1 }],
+    myAdminGroups: [{ id: 1 }],
     groups: [{ id: 1 }]
   }
   const wrapper = shallow(<SendAnnouncementModal {...props} />)
@@ -31,7 +31,7 @@ it('renders correctly with multiple groups', () => {
     closeModal: jest.fn(),
     save: jest.fn(),
     groupMembersCount: 100,
-    myModeratedGroups: [{ id: 1 }, { id: 2 }],
+    myAdminGroups: [{ id: 1 }, { id: 2 }],
     groups: [{ id: 1 }, { id: 2 }]
   }
   const wrapper = shallow(<SendAnnouncementModal {...props} />)
@@ -43,7 +43,7 @@ it('renders correctly with multiple groups, where the current user is not always
     closeModal: jest.fn(),
     save: jest.fn(),
     groupMembersCount: 100,
-    myModeratedGroups: [{ id: 1 }],
+    myAdminGroups: [{ id: 1 }],
     groups: [{ id: 1 }, { id: 2 }]
   }
   const wrapper = shallow(<SendAnnouncementModal {...props} />)

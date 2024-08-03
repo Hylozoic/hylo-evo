@@ -35,7 +35,10 @@ import SkillsSection from 'components/SkillsSection'
 import SkillsToLearnSection from 'components/SkillsToLearnSection'
 import styles from './MemberProfile.scss'
 
+const GROUPS_DIV_HEIGHT = 200
+
 class MemberProfile extends React.Component {
+  // TODO: translation
   static defaultProps = {
     currentTab: 'Overview',
     blockConfirmMessage: `Are you sure you want to block this member?
@@ -49,14 +52,28 @@ class MemberProfile extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentTab: props.currentTab
+      currentTab: props.currentTab,
+      showAllGroups: false,
+      showExpandGroupsButton: false
     }
+    this.groupsRef = React.createRef()
   }
 
   componentDidMount () {
     const { personId } = this.props.routeParams
     if (personId) this.props.fetchPerson(personId)
+    this.checkGroupsHeight()
   }
+
+  componentDidUpdate () {
+    this.checkGroupsHeight()
+  }
+
+  checkGroupsHeight = () => {
+    if (this.groupsRef.current && this.groupsRef.current.scrollHeight > GROUPS_DIV_HEIGHT && !this.state.showExpandGroupsButton) {
+      this.setState({ showExpandGroupsButton: true })
+    }
+  };
 
   selectTab = currentTab => this.setState({ currentTab })
 
@@ -64,6 +81,10 @@ class MemberProfile extends React.Component {
     if (window.confirm(this.props.blockConfirmMessage)) {
       this.props.blockUser(personId).then(this.props.goToPreviousLocation)
     }
+  }
+
+  toggleShowAllGroups = () => {
+    this.setState({ showAllGroups: !this.state.showAllGroups })
   }
 
   render () {
@@ -76,9 +97,9 @@ class MemberProfile extends React.Component {
       person,
       currentUser,
       isSingleColumn,
-      group,
       routeParams,
       showDetails,
+      roles,
       push,
       t
     } = this.props
@@ -116,9 +137,6 @@ class MemberProfile extends React.Component {
       title: currentContentTitle,
       component: CurrentContentComponent
     } = contentDropDownItems.find(contentItem => contentItem.id === currentTab)
-    const groupId = group && group.id
-    const badges = (groupId && person.groupRoles && person.groupRoles.filter(role => role.groupId === groupId)) || []
-    const creatorIsModerator = (person && person.memberships && person.memberships.find(membership => membership.groupId === groupId || membership.hasModeratorRole)) || false
 
     return (
       <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
@@ -135,22 +153,14 @@ class MemberProfile extends React.Component {
             <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
             <h1 styleName='header-member-name'>{person.name}</h1>
             <div styleName='badgeRow'>
-              {creatorIsModerator && (
-                <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} />
-              )}
-              {badges.map(badge => (
-                <BadgeEmoji key={badge.name} expanded {...badge} />
+              {roles.map(role => (
+                <BadgeEmoji key={role.id + role.common} expanded {...role} responsibilities={role.responsibilities} id={person.id} />
               ))}
             </div>
             {person.location && <div styleName='header-member-location'>
               <Icon name='Location' styleName='header-member-location-icon' />
               {locationWithoutUsa}
             </div>}
-            {/* TODO: Do we still want to show the "Group manager" role? */}
-            {/* {role && <div styleName='location'>
-              <Icon styleName='star' name='StarCircle' />
-              {role}
-            </div>} */}
           </div>
           <div styleName='action-icons'>
             <ActionButtons items={actionButtonsItems} />
@@ -171,8 +181,22 @@ class MemberProfile extends React.Component {
               {t('What I\'m Learning')}
             </div>
             <SkillsToLearnSection personId={personId} editable={false} />
+
             {memberships && memberships.length > 0 && <div styleName='profile-subhead'>{t('Hylo Groups')}</div>}
-            {memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={m.id} index={index} membership={m} />)}
+            <div
+              ref={this.groupsRef}
+              styleName='groups'
+              style={{
+                maxHeight: this.state.showAllGroups ? 'none' : `${GROUPS_DIV_HEIGHT}px`
+              }}
+            >
+              {memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={m.id} index={index} membership={m} />)}
+            </div>
+            {this.state.showExpandGroupsButton && (
+              <button onClick={this.toggleShowAllGroups} styleName='showMoreButton'>
+                {this.state.showAllGroups ? 'Show Less' : 'Show More'}
+              </button>
+            )}
 
             {affiliations && affiliations.length > 0 && <div styleName='profile-subhead'>{t('Other Affiliations')}</div>}
             {affiliations && affiliations.length > 0 && affiliations.map((a, index) => <Affiliation key={a.id} index={index} affiliation={a} />)}

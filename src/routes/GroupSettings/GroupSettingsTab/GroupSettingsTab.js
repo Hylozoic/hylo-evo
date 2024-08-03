@@ -64,8 +64,8 @@ class GroupSettingsTab extends Component {
         geoShape: geoShape && typeof geoShape !== 'string' ? JSON.stringify(geoShape) || '' : geoShape || '',
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
-        moderatorDescriptor: group.moderatorDescriptor || t('Moderator'),
-        moderatorDescriptorPlural: group.moderatorDescriptorPlural || t('Moderators'),
+        stewardDescriptor: group.stewardDescriptor || t('Moderator'),
+        stewardDescriptorPlural: group.stewardDescriptorPlural || t('Moderators'),
         name: name || '',
         purpose: group.purpose || '',
         settings: typeof settings !== 'undefined' ? settings : { }
@@ -135,7 +135,7 @@ class GroupSettingsTab extends Component {
 
     const { changed, edits, error } = this.state
     const {
-      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, moderatorDescriptor, moderatorDescriptorPlural, name, purpose, settings
+      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, stewardDescriptor, stewardDescriptorPlural, name, purpose, settings
     } = edits
 
     const { locationDisplayPrecision, showSuggestedSkills } = settings
@@ -192,26 +192,24 @@ class GroupSettingsTab extends Component {
             {LOCATION_PRECISION[locationDisplayPrecision || 'precise']}
             <Icon name='ArrowDown' />
           </span>}
-
           items={Object.keys(LOCATION_PRECISION).map(value => ({
             label: t(LOCATION_PRECISION[value]),
             onClick: () => this.updateSettingDirectly('settings.locationDisplayPrecision')(value)
           }))}
         />
-        <p styleName='general.detailText'>{t('Note: as a moderator you will always see the exact location displayed')}</p>
-
+        <p styleName='general.detailText'>{t('Note: with Administration rights you will always see the exact location displayed')}</p>
         <br />
 
         <SettingsControl
-          label={t('Word used to describe a group Moderator')}
-          onChange={this.updateSetting('moderatorDescriptor')}
-          value={moderatorDescriptor}
+          label={t('Word used to describe a group Steward')}
+          onChange={this.updateSetting('stewardDescriptor')}
+          value={stewardDescriptor}
         />
 
         <SettingsControl
-          label={t('Plural word used to describe group Moderators')}
-          onChange={this.updateSetting('moderatorDescriptorPlural')}
-          value={moderatorDescriptorPlural}
+          label={t('Plural word used to describe group Stewards')}
+          onChange={this.updateSetting('stewardDescriptorPlural')}
+          value={stewardDescriptorPlural}
         />
 
         <br />

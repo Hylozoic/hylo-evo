@@ -6,15 +6,19 @@ beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
   const group = session.Group.create({ id: '99', slug: 'foo' })
   session.Group.create({ id: '88', slug: 'bar' })
+  session.CommonRole.create({ id: 1, name: 'Coordinator', responsibilities: [{ id: 1, title: 'Administration' }] })
 
   session.Me.create({
     id: '1',
     memberships: [session.Membership.create({
       id: '345',
       group: group.id,
-      hasModeratorRole: true,
-      person: 1
-    })]
+      person: 1,
+      groupRoles: { items: [] }
+    })],
+    membershipCommonRoles: {
+      items: [{ id: 1, groupId: group.id, commonRoleId: 1, userId: 1 }]
+    }
   })
 
   state = {

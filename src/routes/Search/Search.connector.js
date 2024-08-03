@@ -16,7 +16,7 @@ import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 export function mapStateToProps (state, props) {
-  const searchFromQueryString = getQuerystringParam('t', state, props) || ''
+  const searchFromQueryString = getQuerystringParam('t', props) || ''
   const searchForInput = getSearchTerm(state, props)
   const filter = getSearchFilter(state, props)
   const queryResultProps = { search: searchForInput, type: filter }

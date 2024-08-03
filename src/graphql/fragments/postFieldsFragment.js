@@ -9,13 +9,27 @@ const CommentFieldsFragment = `
     name
     avatarUrl
     groupRoles {
-      name
-      emoji
-      active
-      groupId
-    }
-    moderatedGroupMemberships {
-      groupId
+      items {
+         name
+         emoji
+         active
+         groupId
+         responsibilities {
+          items {
+            id
+            title
+            description
+          }
+         }
+       }
+     }
+    membershipCommonRoles {
+      items {
+        id
+        commonRoleId
+        groupId
+        userId
+      }
     }
   }
   attachments {
@@ -40,6 +54,7 @@ const CommentFieldsFragment = `
     }
   }
   createdAt
+  editedAt
 `
 
 const postFieldsFragment = withComments => `
@@ -53,13 +68,28 @@ const postFieldsFragment = withComments => `
     name
     avatarUrl
     groupRoles {
-      name
-      emoji
-      active
-      groupId
+      items {
+        id
+        name
+        emoji
+        active
+        groupId
+        responsibilities {
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
     }
-    moderatedGroupMemberships {
-      groupId
+    membershipCommonRoles {
+      items {
+        id
+        commonRoleId
+        groupId
+        userId
+      }
     }
   }
   createdAt
@@ -71,6 +101,7 @@ const postFieldsFragment = withComments => `
   endTime
   timezone
   donationsLink
+  editedAt
   projectManagementLink
   myEventResponse
   commenters(first: 3) {

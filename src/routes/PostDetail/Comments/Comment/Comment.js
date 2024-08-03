@@ -40,6 +40,7 @@ export class Comment extends Component {
   editor = React.createRef()
 
   state = {
+    edited: false,
     editing: false,
     editedText: null,
     scrolledToComment: false
@@ -72,7 +73,7 @@ export class Comment extends Component {
     }
 
     this.props.updateComment(comment.id, contentHTML)
-    this.setState({ editing: false })
+    this.setState({ editing: false, edited: true })
 
     // Tell Editor this keyboard event was handled and to end propagation.
     return true
@@ -95,8 +96,9 @@ export class Comment extends Component {
 
   render () {
     const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId, post, t } = this.props
-    const { id, creator, createdAt, text, attachments } = comment
-    const { editing } = this.state
+    const { id, creator, createdAt, editedAt, text, attachments } = comment
+    const { editing, edited } = this.state
+    const timestamp = (editedAt || edited ? 'Edited ' : 'Commented ') + TextHelpers.humanDate(editedAt || createdAt)
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
     const dropdownItems = filter(item => isFunction(item.onClick), [
@@ -113,7 +115,7 @@ export class Comment extends Component {
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
           <span styleName='timestamp' data-for='dateTip' data-tip={moment(createdAt).format('llll')}>
             {editing && 'Editing now'}
-            {!editing && TextHelpers.humanDate(createdAt)}
+            {!editing && timestamp}
           </span>
           <div styleName='upperRight'>
             {editing && (

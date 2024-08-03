@@ -35,6 +35,7 @@ import { inIframe } from 'util/index'
 import { groupDetailUrl, groupUrl, personUrl, removeGroupFromUrl } from 'util/navigation'
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
+import { RESP_ADMINISTRATION } from 'store/constants'
 
 const MAX_DETAILS_LENGTH = 144
 
@@ -59,6 +60,7 @@ class UnwrappedGroupDetail extends Component {
   componentDidMount () {
     this.onGroupChange()
     this.props.fetchJoinRequests()
+    this.props.fetchForCurrentUser()
   }
 
   componentDidUpdate (prevProps) {
@@ -97,12 +99,12 @@ class UnwrappedGroupDetail extends Component {
       isAboutCurrentGroup,
       isMember,
       location,
-      moderators,
+      stewards,
       pending,
       routeParams,
       t
     } = this.props
-    const fullPage = !getRouteParam('detailGroupSlug', {}, this.props)
+    const fullPage = !getRouteParam('detailGroupSlug', this.props)
 
     if (!group && !pending) return <NotFound />
     if (pending) return <Loading />
@@ -152,10 +154,10 @@ class UnwrappedGroupDetail extends Component {
           )}
           {isAboutCurrentGroup || group.type === GROUP_TYPES.farm
             ? <div styleName='g.aboutCurrentGroup'>
-              <h3>{group.moderatorDescriptorPlural || t('Moderators')}</h3>
-              <div styleName='g.moderators'>
-                {moderators.map(p => (
-                  <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
+              <h3>{group.stewardDescriptorPlural || t('Stewards')}</h3>
+              <div styleName='g.stewards'>
+                {stewards.map(p => (
+                  <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.steward'>
                     <Avatar avatarUrl={p.avatarUrl} medium />
                     <span>{p.name}</span>
                   </Link>
@@ -224,21 +226,20 @@ class UnwrappedGroupDetail extends Component {
 
   defaultGroupBody () {
     const {
-      canModerate,
       group,
       isAboutCurrentGroup,
+      responsibilties,
       t
     } = this.props
 
     // XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
     // const topics = group.groupTopics && group.groupTopics.toModelArray()
-
     return (
       <>
         {isAboutCurrentGroup && group.aboutVideoUri && (
           <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
         )}
-        {isAboutCurrentGroup && (!group.purpose && !group.description) && canModerate
+        {isAboutCurrentGroup && (!group.purpose && !group.description) && responsibilties.includes(RESP_ADMINISTRATION)
           ? <div styleName='g.no-description'>
             <div>
               <h4>{t('Your group doesn\'t have a description')}</h4>

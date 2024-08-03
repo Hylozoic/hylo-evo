@@ -2,7 +2,6 @@
 
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
-  "canModerate": undefined,
   "fetchIsPending": false,
   "fetchTopicsParams": Object {
     "autocomplete": undefined,
