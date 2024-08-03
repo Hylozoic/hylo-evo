@@ -268,6 +268,7 @@ posts: viewPosts(
   endTime
   timezone
   donationsLink
+  editedAt
   projectManagementLink
   myEventResponse
   commenters(first: 3) {

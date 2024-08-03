@@ -41,7 +41,7 @@ exports[`displays image an image attachments 1`] = `
       <span
         data-stylename="date"
       >
-        just now
+        Commented just now
       </span>
     </div>
     <CardImageAttachments
@@ -127,7 +127,7 @@ exports[`matches last snapshot 1`] = `
       <span
         data-stylename="date"
       >
-        just now
+        Commented just now
       </span>
     </div>
     <CardImageAttachments
@@ -199,7 +199,7 @@ exports[`matches last snapshot with different config 1`] = `
       <span
         data-stylename="date"
       >
-        just now
+        Commented just now
       </span>
     </div>
     <CardImageAttachments

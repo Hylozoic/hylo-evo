@@ -3,7 +3,6 @@ import cx from 'classnames'
 import Tooltip from 'components/Tooltip'
 import { useTranslation } from 'react-i18next'
 import { personUrl } from 'util/navigation'
-import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
@@ -21,7 +20,7 @@ export default function PostGridItem (props) {
     title,
     details,
     creator,
-    createdAt,
+    createdTimestampForGrid,
     attachments
   } = post
 
@@ -78,9 +77,9 @@ export default function PostGridItem (props) {
               <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
               {creator.name}
             </div>
-            <div styleName='timestamp'>
-              {TextHelpers.humanDate(createdAt)}
-            </div>
+            <span styleName='timestamp'>
+              {createdTimestampForGrid}
+            </span>
           </div>
         </div>
         <div styleName='grid-fade' />

@@ -35,8 +35,8 @@ class PostHeader extends PureComponent {
       routeParams,
       canEdit,
       creator,
-      createdAt,
       detailHasImage,
+      createdTimestamp,
       expanded,
       type,
       id,
@@ -141,7 +141,7 @@ class PostHeader extends PureComponent {
               </div>
               <div styleName='timestampRow'>
                 <span styleName='timestamp'>
-                  {TextHelpers.humanDate(createdAt)}
+                  {createdTimestamp}
                 </span>
                 {announcement && <span styleName='announcementSection'>
                   <span styleName='announcementSpacer'>•</span>

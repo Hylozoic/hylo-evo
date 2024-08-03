@@ -28,4 +28,5 @@ fragment CommentFields on Comment {
     id
   }
   createdAt
+  editedAt
 }
