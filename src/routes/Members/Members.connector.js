@@ -7,7 +7,6 @@ import { get } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
-import getMe from 'store/selectors/getMe'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 
 const defaultSortBy = 'name'
@@ -17,7 +16,6 @@ export function mapStateToProps (state, props) {
   const slug = getRouteParam('groupSlug', props)
   const sortBy = getQuerystringParam('s', props) || defaultSortBy
   const search = getQuerystringParam('q', props)
-  const canModerate = group && getMe(state, props).canModerate(group)
   const extraProps = {
     ...props,
     slug,
@@ -31,7 +29,6 @@ export function mapStateToProps (state, props) {
     memberCount: get('memberCount', group),
     sortBy,
     search,
-    currentUser,
     group,
     members: getMembers(state, extraProps),
     hasMore: getHasMoreMembers(state, extraProps),
