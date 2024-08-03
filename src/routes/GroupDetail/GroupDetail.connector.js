@@ -22,7 +22,7 @@ export function mapStateToProps (state, props) {
   const routeParams = props.match.params
   const group = presentGroup(props.group || getGroupForDetails(state, props))
   const slug = get(group, 'slug')
-  const isAboutCurrentGroup = getRouteParam('groupSlug', state, props) === getRouteParam('detailGroupSlug', state, props)
+  const isAboutCurrentGroup = getRouteParam('groupSlug', props) === getRouteParam('detailGroupSlug', props)
   const currentUser = getMe(state)
   const myMemberships = getMyMemberships(state, props)
   const isMember = group && currentUser ? myMemberships.find(m => m.group.id === group.id) : false
@@ -46,7 +46,7 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const slug = getRouteParam('detailGroupSlug', {}, props) || getRouteParam('groupSlug', {}, props)
+  const slug = getRouteParam('detailGroupSlug', props) || getRouteParam('groupSlug', props)
 
   return {
     addSkill: (name) => dispatch(addSkill(name)),

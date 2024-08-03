@@ -104,7 +104,7 @@ class UnwrappedGroupDetail extends Component {
       routeParams,
       t
     } = this.props
-    const fullPage = !getRouteParam('detailGroupSlug', {}, this.props)
+    const fullPage = !getRouteParam('detailGroupSlug', this.props)
 
     if (!group && !pending) return <NotFound />
     if (pending) return <Loading />

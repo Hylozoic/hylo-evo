@@ -4,7 +4,7 @@ import getRouteParam from 'store/selectors/getRouteParam'
 
 const getGroupForDetail = ormCreateSelector(
   orm,
-  (state, props) => getRouteParam('detailGroupSlug', state, props) || getRouteParam('groupSlug', state, props),
+  (state, props) => getRouteParam('detailGroupSlug', props) || getRouteParam('groupSlug', props),
   ({ Group }, slug) => Group.safeGet({ slug })
 )
 

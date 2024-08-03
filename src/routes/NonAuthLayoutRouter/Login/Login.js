@@ -16,7 +16,7 @@ export default function Login (props) {
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const [error, setError] = useState(getQuerystringParam('error', null, props))
+  const [error, setError] = useState(getQuerystringParam('error', props))
   const { t } = useTranslation()
   const DEFAULT_LOGIN_ERROR = t('Sorry, that Email and Password combination didn\'t work.')
 

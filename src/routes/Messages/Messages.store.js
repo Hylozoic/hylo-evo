@@ -187,7 +187,7 @@ export const getParticipantsFromQuerystring = ormCreateSelector(
   orm,
   (_, props) => props,
   ({ Person }, props) => {
-    const participantsQuerystringParam = getQuerystringParam('participants', null, props)
+    const participantsQuerystringParam = getQuerystringParam('participants', props)
     if (!isEmpty(participantsQuerystringParam)) {
       const participantIds = participantsQuerystringParam.split(',')
       const participants = Person

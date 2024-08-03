@@ -13,10 +13,10 @@ import getRouteParam from 'store/selectors/getRouteParam'
 import { RESP_ADMINISTRATION, RESP_MANAGE_CONTENT } from 'store/constants'
 
 export function mapStateToProps (state, props) {
-  const groupSlug = getRouteParam('groupSlug', state, props)
+  const groupSlug = getRouteParam('groupSlug', props)
   const fetchPostsParam = { slug: groupSlug, context: 'groups', sortBy: 'created' }
   const group = presentGroup(getGroupForCurrentRoute(state, props))
-  const isAboutOpen = getRouteParam('detailGroupSlug', state, props)
+  const isAboutOpen = getRouteParam('detailGroupSlug', props)
   const canEdit = hasResponsibilityForGroup(state, { groupId: group.id, responsibility: [RESP_ADMINISTRATION, RESP_MANAGE_CONTENT] })
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
   const routeParams = props.match.params
