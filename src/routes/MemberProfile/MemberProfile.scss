@@ -248,7 +248,7 @@
 
 .profile-subhead {
   text-transform: uppercase;
-  color: $color-rhino-30;
+  color: $color-rhino-80;
   font-size: $space-3x;
   padding-top: $space-3x;
   margin-top: $space-3x;
@@ -258,6 +258,32 @@
 .profile-subhead:first-of-type {
   margin-top: 0;
   border-top: 0;
+}
+
+.groups {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  position: relative;
+}
+
+.groups::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px; /* Height of the fade effect */
+  background: linear-gradient(transparent, #f5f6f7);
+  pointer-events: none; /* Ensures the fade doesn't interfere with clicks */
+}
+
+.showMoreButton {
+  margin-top: $space-3x;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: small;
+  color: $color-rhino-80;
 }
 
 // EVENTS & PROJECTS

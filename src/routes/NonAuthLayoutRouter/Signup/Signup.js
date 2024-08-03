@@ -16,7 +16,7 @@ import './Signup.scss'
 export default function Signup (props) {
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
-  const [error, setError] = useState(getQuerystringParam('error', null, props))
+  const [error, setError] = useState(getQuerystringParam('error', props))
   const [redirectTo, setRedirectTo] = useState()
   const { t } = useTranslation()
 

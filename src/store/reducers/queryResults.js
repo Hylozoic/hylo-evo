@@ -23,11 +23,6 @@ import {
   FETCH_COMMENTS,
   REMOVE_POST_PENDING
 } from 'store/constants'
-// import {
-//   FETCH_NETWORK_SETTINGS,
-//   FETCH_MODERATORS,
-//   FETCH_GROUPS
-// } from 'routes/NetworkSettings/NetworkSettings.store'
 import {
   CREATE_TOPIC
 } from 'components/CreateTopic/CreateTopic.store'
@@ -137,6 +132,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
     // Chat posts only appear in the chat rooms, nowhere else
     if (type !== 'chat') {
       queriesToMatch.push(
+        // TODO: add types here
         { context: 'groups', slug: group.slug },
         { context: 'groups', slug: group.slug, activePostsOnly: false, childPostInclusion: 'no' },
         { context: 'groups', slug: group.slug, activePostsOnly: false, childPostInclusion: 'yes' },

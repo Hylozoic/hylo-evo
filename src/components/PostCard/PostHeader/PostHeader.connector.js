@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
+import { RESP_MANAGE_CONTENT } from 'store/constants'
 import { removePostFromUrl, editPostUrl, duplicatePostUrl, postUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
 import deletePost from 'store/actions/deletePost'
@@ -11,17 +12,22 @@ import {
   getGroup,
   updateProposalOutcome
 } from './PostHeader.store'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
+import getRolesForGroup from 'store/selectors/getRolesForGroup'
 
 export function mapStateToProps (state, props) {
   const group = getGroup(state, props)
   const url = postUrl(props.id, props.routeParams)
   const context = props.routeParams.context
-
+  const currentUser = getMe(state, props)
+  const responsibilities = getResponsibilitiesForGroup(state, { groupId: group?.id }).map(r => r.title)
   return {
     context,
-    currentUser: getMe(state, props),
+    currentUser,
     group,
-    postUrl: url
+    postUrl: url,
+    responsibilities,
+    connectorGetRolesForGroup: (creatorId) => getRolesForGroup(state, { groupId: group?.id, person: creatorId })
   }
 }
 
@@ -62,13 +68,11 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { currentUser, group } = stateProps
+  const { currentUser, group, responsibilities, connectorGetRolesForGroup } = stateProps
   const { id, creator } = ownProps
   const { deletePost, editPost, duplicatePost, fulfillPost, unfulfillPost, removePost, pinPost, updateProposalOutcome } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
-  const canModerate = currentUser && currentUser.canModerate(group)
-
   return {
     ...stateProps,
     ...dispatchProps,
@@ -79,8 +83,9 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     fulfillPost: isCreator ? () => fulfillPost(id) : undefined,
     unfulfillPost: isCreator ? () => unfulfillPost(id) : undefined,
     canFlag: !isCreator,
-    pinPost: canModerate && group ? () => pinPost(id, group.id) : undefined,
-    removePost: !isCreator && canModerate ? () => removePost(id) : undefined,
+    pinPost: (responsibilities.includes(RESP_MANAGE_CONTENT)) && group ? () => pinPost(id, group.id) : undefined,
+    removePost: !isCreator && (responsibilities.includes(RESP_MANAGE_CONTENT)) ? () => removePost(id) : undefined,
+    roles: creator && connectorGetRolesForGroup(creator.id),
     updateProposalOutcome: isCreator ? (proposalOutcome) => updateProposalOutcome(id, proposalOutcome) : undefined,
     canEdit
   }

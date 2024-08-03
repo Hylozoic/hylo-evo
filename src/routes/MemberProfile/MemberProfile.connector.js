@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { postUrl } from 'util/navigation'
 import blockUser from 'store/actions/blockUser'
+import getRolesForGroup from 'store/selectors/getRolesForGroup'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
@@ -21,7 +22,10 @@ const MESSAGES = {
 }
 
 export function mapStateToProps (state, props) {
-  const error = Number.isSafeInteger(Number(props.match.params.personId)) ? null : MESSAGES.invalid
+  if (!Number.isSafeInteger(Number(props.match.params.personId))) {
+    return { error: MESSAGES.invalid }
+  }
+
   const routeParams = props.match.params
   const person = getPresentedPerson(state, { ...routeParams, ...props })
   const contentLoading = isPendingFor([
@@ -31,20 +35,21 @@ export function mapStateToProps (state, props) {
     FETCH_MEMBER_VOTES // TODO REACTIONS: switch this to reactions
   ], state)
   const personLoading = isPendingFor(fetchPerson, state)
-  const groupSlug = getRouteParam('groupSlug', state, props)
+  const groupSlug = getRouteParam('groupSlug', props)
   let group
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
   }
+  const roles = getRolesForGroup(state, { person, groupId: group?.id })
 
   return {
     routeParams,
-    error,
     personLoading,
     contentLoading,
     group,
     person,
+    roles,
     currentUser: getMe(state),
     previousLocation: getPreviousLocation(state)
   }

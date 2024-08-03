@@ -5,7 +5,7 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { cancel, confirm } from './Consent.store'
 
 export function mapStateToProps (state, props) {
-  let missingOIDCScopes = getQuerystringParam('missingScopes', state, props) || []
+  let missingOIDCScopes = getQuerystringParam('missingScopes', props) || []
 
   // XXX: ideally we would know offline_access was requested even if it's not missing, so we can tell user they already granted it
   //      but i don't know how to get that from the back-end yet.
@@ -19,22 +19,22 @@ export function mapStateToProps (state, props) {
     missingOIDCScopes = missingOIDCScopes.filter(s => !['openid', 'offline_access'].includes(s))
   }
 
-  let missingOIDCClaims = getQuerystringParam('missingClaims', state, props) || []
+  let missingOIDCClaims = getQuerystringParam('missingClaims', props) || []
   if (Array.isArray(missingOIDCClaims) && missingOIDCClaims.length) {
     missingOIDCClaims = missingOIDCClaims.filter(c => !['sub', 'sid', 'auth_time', 'acr', 'amr', 'iss'].includes(c))
   }
 
-  const missingResourceScopes = getQuerystringParam('missingResourceScopes', state, props) || []
+  const missingResourceScopes = getQuerystringParam('missingResourceScopes', props) || []
   const previousAuthsOnly = isEmpty(missingOIDCScopes) && isEmpty(missingOIDCClaims) && isEmpty(missingResourceScopes)
 
   return {
     missingOIDCClaims,
     missingOIDCScopes,
     missingResourceScopes,
-    appName: getQuerystringParam('name', state, props) || 'The App',
+    appName: getQuerystringParam('name', props) || 'The App',
     offlineAccessRequested,
     previousAuthsOnly,
-    oauthUID: getRouteParam('uid', state, props)
+    oauthUID: getRouteParam('uid', props)
   }
 }
 

@@ -65,7 +65,6 @@ export default
     memberships {
       id
       role
-      hasModeratorRole
       group {
         id
         name
@@ -75,11 +74,29 @@ export default
         id
       }
     }
+    membershipCommonRoles {
+      items {
+        id
+        commonRoleId
+        groupId
+        userId
+      }
+    }
     groupRoles {
-      name
-      emoji
-      active
-      groupId
+      items {
+        id
+        name
+        emoji
+        active
+        groupId
+        responsibilities {
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
     }
     projects {
       items {

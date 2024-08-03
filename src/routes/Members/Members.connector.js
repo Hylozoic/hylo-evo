@@ -8,14 +8,15 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 
 const defaultSortBy = 'name'
 
 export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
-  const slug = getRouteParam('groupSlug', state, props)
-  const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
-  const search = getQuerystringParam('q', state, props)
+  const slug = getRouteParam('groupSlug', props)
+  const sortBy = getQuerystringParam('s', props) || defaultSortBy
+  const search = getQuerystringParam('q', props)
   const canModerate = group && getMe(state, props).canModerate(group)
   const extraProps = {
     ...props,
@@ -23,16 +24,19 @@ export function mapStateToProps (state, props) {
     search,
     sortBy
   }
+  const myResponsibilities = getResponsibilitiesForGroup(state, { groupId: group.id }).map(r => r.title)
+
   return {
     slug,
     memberCount: get('memberCount', group),
     sortBy,
     search,
-    canModerate,
+    currentUser,
     group,
     members: getMembers(state, extraProps),
     hasMore: getHasMoreMembers(state, extraProps),
-    pending: state.pending[FETCH_MEMBERS]
+    pending: state.pending[FETCH_MEMBERS],
+    myResponsibilities
   }
 }
 
@@ -47,7 +51,7 @@ export function mapDispatchToProps (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { slug } = stateProps
-  const params = getQuerystringParam(['s', 'q'], null, ownProps)
+  const params = getQuerystringParam(['s', 'q'], ownProps)
   var { s: sortBy = defaultSortBy, q: search } = params
 
   const removeMember = (id) => dispatchProps.removeMember(id, stateProps.group.id)

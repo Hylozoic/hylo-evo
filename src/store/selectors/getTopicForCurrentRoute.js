@@ -5,7 +5,7 @@ import presentTopic from 'store/presenters/presentTopic'
 
 const getTopicForCurrentRoute = ormCreateSelector(
   orm,
-  (state, props) => getRouteParam('topicName', state, props),
+  (state, props) => getRouteParam('topicName', props),
   (session, topicName) => {
     const topic = session.Topic.safeGet({ name: topicName })
     return topic ? presentTopic(topic, {}) : null

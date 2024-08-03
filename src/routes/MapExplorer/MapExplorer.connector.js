@@ -34,7 +34,7 @@ import {
 
 export function presentMember (person, groupId) {
   return {
-    ...pick(['id', 'name', 'avatarUrl', 'groupRoles', 'locationObject', 'moderatedGroupMemberships', 'tagline', 'skills'], person.ref),
+    ...pick(['id', 'name', 'avatarUrl', 'groupRoles', 'locationObject', 'tagline', 'skills'], person.ref),
     type: 'member',
     skills: person.skills.toModelArray(),
     group: person.memberships.first()
@@ -48,10 +48,10 @@ export function presentGroup (group) {
 }
 
 export function mapStateToProps (state, props) {
-  const context = getRouteParam('context', state, props)
+  const context = getRouteParam('context', props)
   let group = getGroupForCurrentRoute(state, props)
-  const slug = getRouteParam('groupSlug', state, props)
-  let groupSlugs = getQuerystringParam('group', state, props)
+  const slug = getRouteParam('groupSlug', props)
+  let groupSlugs = getQuerystringParam('group', props)
   let groupId
   if (group) {
     group = group.ref
@@ -61,9 +61,9 @@ export function mapStateToProps (state, props) {
 
   const currentUser = getMe(state, props)
   const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
-  const childPostInclusion = getQuerystringParam('c', state, props) || defaultChildPostInclusion
+  const childPostInclusion = getQuerystringParam('c', props) || defaultChildPostInclusion
 
-  const hideDrawer = getQuerystringParam('hideDrawer', state, props) === 'true'
+  const hideDrawer = getQuerystringParam('hideDrawer', props) === 'true'
 
   // Map view parameters come from the URL query params first, and if not there then from the Redux state
   const boundingBox = get('totalBoundingBoxLoaded', state.MapExplorer)
@@ -79,7 +79,7 @@ export function mapStateToProps (state, props) {
   const topicsFromPosts = getCurrentTopics(state, fetchPostsParams)
 
   const stateFilters = state.MapExplorer.clientFilterParams
-  const queryParams = getQuerystringParam(['search', 'sortBy', 'hide', 'topics', 'group'], state, props)
+  const queryParams = getQuerystringParam(['search', 'sortBy', 'hide', 'topics', 'group'], props)
   const filters = {
     ...stateFilters,
     ...pick(['search', 'sortBy'], queryParams)
@@ -120,7 +120,7 @@ export function mapStateToProps (state, props) {
   const postsForMap = getFilteredPostsForMap(state, fetchPostsParams).map(p => presentPost(p, groupId))
   const groups = getGroupsFilteredByTopics(state, fetchGroupParams).map(g => presentGroup(g))
 
-  const centerParam = getQuerystringParam('center', state, props)
+  const centerParam = getQuerystringParam('center', props)
   let centerLocation, defaultZoom
   if (centerParam) {
     const decodedCenter = decodeURIComponent(centerParam).split(',')
@@ -140,11 +140,11 @@ export function mapStateToProps (state, props) {
     defaultZoom = 0
   }
 
-  const zoomParam = getQuerystringParam('zoom', state, props)
+  const zoomParam = getQuerystringParam('zoom', props)
   const zoom = zoomParam ? parseFloat(zoomParam) : state.MapExplorer.zoom || defaultZoom
 
   // First look for base layer style in query param, then saved local state, then user settings
-  const baseStyleParam = getQuerystringParam('style', state, props)
+  const baseStyleParam = getQuerystringParam('style', props)
   const baseLayerStyle = baseStyleParam || state.MapExplorer.baseLayerStyle || currentUser?.settings?.mapBaseLayer
 
   return {
@@ -183,7 +183,7 @@ export function mapDispatchToProps (dispatch, props) {
   const routeParams = get('match.params', props)
 
   const updateUrlFromStore = (params, replace) => {
-    const querystringParams = getQuerystringParam(['sortBy', 'search', 'hide', 'topics'], null, props)
+    const querystringParams = getQuerystringParam(['sortBy', 'search', 'hide', 'topics'], props)
 
     // See if we need to update the URL to match the new filters in the redux store
     let newQueryParams = { ...pick([ 'search', 'sortBy' ], params) }
@@ -214,8 +214,8 @@ export function mapDispatchToProps (dispatch, props) {
     fetchSavedSearches: (userId) => () => dispatch(fetchSavedSearches(userId)),
     deleteSearch: (searchId) => dispatch(deleteSearch(searchId)),
     saveSearch: (params) => dispatch(saveSearch(params)),
-    showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, getQuerystringParam(['hideDrawer', 't', 'group'], null, props)))),
-    showGroupDetails: (groupSlug) => dispatch(push(groupDetailUrl(groupSlug, { ...routeParams, view: 'map' }, getQuerystringParam(['hideDrawer', 't', 'group'], null, props)))),
+    showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, getQuerystringParam(['hideDrawer', 't', 'group'], props)))),
+    showGroupDetails: (groupSlug) => dispatch(push(groupDetailUrl(groupSlug, { ...routeParams, view: 'map' }, getQuerystringParam(['hideDrawer', 't', 'group'], props)))),
     showCreateModal: (location) => dispatch(push(createUrl(routeParams, location))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.groupSlug))),
     toggleDrawer: (hidden) => dispatch(changeQuerystringParam(props, 'hideDrawer', hidden)),

@@ -1,20 +1,20 @@
 import { connect } from 'react-redux'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
-import getCanModerate from 'store/selectors/getCanModerate'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 
 export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const members = group ? group.members.toModelArray().slice(0, 8) : []
-  const leaders = group ? group.moderators.toModelArray() : []
-  const canModerate = getCanModerate(state, { group })
+  const stewards = group ? group.stewards.toModelArray() : []
+  const myResponsibilities = getResponsibilitiesForGroup(state, { groupId: group.id }).map(r => r.title)
 
   return {
     group: group ? group.ref : null,
     members,
-    leaders,
-    slug: getRouteParam('groupSlug', state, props),
-    canModerate
+    myResponsibilities,
+    stewards,
+    slug: getRouteParam('groupSlug', props)
   }
 }
 

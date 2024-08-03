@@ -1,4 +1,4 @@
-import { mapStateToProps, mapDispatchToProps } from './ModeratorsSettingsTab.connector'
+import { mapStateToProps, mapDispatchToProps } from './RolesSettingsTab.connector'
 import orm from 'store/models'
 
 let state
@@ -11,8 +11,7 @@ beforeAll(() => {
     id: '1',
     memberships: [session.Membership.create({
       id: '345',
-      group: group.id,
-      hasModeratorRole: true
+      group: group.id
     })]
   })
 
@@ -27,15 +26,14 @@ beforeAll(() => {
   session.Membership.create({
     id: '355',
     group: group.id,
-    person: '2',
-    hasModeratorRole: true
+    person: '2'
   })
 
   group.update({ moderators: ['1', '2'] })
 
   state = {
     orm: session.state,
-    ModeratorsSettings: []
+    RoleSettings: []
   }
 })
 
@@ -57,9 +55,9 @@ describe('mapDispatchToProps', () => {
     }
 
     const dispatchProps = mapDispatchToProps(dispatch, props)
-    expect(dispatchProps.addModerator(10)).toMatchSnapshot()
-    expect(dispatchProps.removeModerator(10, true)).toMatchSnapshot()
-    expect(dispatchProps.fetchModeratorSuggestions('autocomplete')).toMatchSnapshot()
-    expect(dispatchProps.clearModeratorSuggestions()).toMatchSnapshot()
+    expect(dispatchProps.addGroupRole({ groupId: 1, role: { name: 'Cook' } })).toMatchSnapshot()
+    expect(dispatchProps.addRoleToMember({ personId: 1, roleId: 1, isCommonRole: true })).toMatchSnapshot()
+    expect(dispatchProps.fetchStewardSuggestions('autocomplete')).toMatchSnapshot()
+    expect(dispatchProps.clearStewardSuggestions()).toMatchSnapshot()
   })
 })

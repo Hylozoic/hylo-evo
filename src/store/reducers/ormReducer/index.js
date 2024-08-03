@@ -2,7 +2,6 @@
 import * as sessionReducers from './sessionReducers'
 import {
   ACCEPT_GROUP_RELATIONSHIP_INVITE,
-  ADD_MODERATOR_PENDING,
   ADD_PROPOSAL_VOTE_PENDING,
   CANCEL_GROUP_RELATIONSHIP_INVITE,
   CREATE_COMMENT,
@@ -24,7 +23,6 @@ import {
   REACT_ON_POST_PENDING,
   REACT_ON_COMMENT_PENDING,
   REJECT_GROUP_RELATIONSHIP_INVITE,
-  REMOVE_MODERATOR_PENDING,
   REMOVE_REACT_ON_COMMENT_PENDING,
   REMOVE_REACT_ON_POST_PENDING,
   REMOVE_POST_PENDING,
@@ -130,12 +128,6 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
-    case ADD_MODERATOR_PENDING: {
-      person = Person.withId(meta.personId)
-      Group.withId(meta.groupId).updateAppending({ moderators: [person] })
-      break
-    }
-
     case ADD_PROPOSAL_VOTE_PENDING: {
       me = Me.first()
       const optionId = meta.optionId
@@ -203,7 +195,10 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
     case CREATE_GROUP: {
       me = Me.withId(Me.first().id)
-      me.updateAppending({ memberships: [payload.data.createGroup.memberships.items[0].id] })
+      me.updateAppending({
+        memberships: [payload.data.createGroup.memberships.items[0].id],
+        membershipCommonRoles: payload.data.createGroup.memberships.items[0].person.membershipCommonRoles.items
+      })
       clearCacheFor(Me, me.id)
       break
     }
@@ -399,15 +394,6 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
           })
         })
       }
-      break
-    }
-
-    case REMOVE_MODERATOR_PENDING: {
-      group = Group.withId(meta.groupId)
-      const moderators = group.moderators.filter(m =>
-        m.id !== meta.personId)
-        .toModelArray()
-      group.update({ moderators })
       break
     }
 

@@ -38,6 +38,7 @@ export default function presentPost (post, groupId) {
         ...eventInvitation.person.ref
       }
     }),
+    proposalOptions: post.proposalOptions?.toModelArray() || [],
     createdTimestampForGrid: createdAtHumanDate,
     createdTimestamp: `Posted ${createdAtHumanDate}`,
     editedTimestamp: post.editedAt ? `Edited ${editedAtHumanDate}` : null

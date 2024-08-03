@@ -42,8 +42,8 @@ export default () => {
     geoShape
     location
     memberCount
-    moderatorDescriptor
-    moderatorDescriptorPlural
+    stewardDescriptor
+    stewardDescriptorPlural
     name
     purpose
     settings {
@@ -166,6 +166,22 @@ export default () => {
         }
       }
     }
+    groupRoles {
+      items {
+        id
+        name
+        emoji
+        groupId
+        responsibilities {
+          items {
+            id
+            title
+            description
+          }
+        }
+
+      }
+    }
     locationObject {
       id
       addressNumber
@@ -193,17 +209,35 @@ export default () => {
         name
       }
     }
-    moderators {
+    stewards {
       items {
         id
         avatarUrl
         lastActiveAt
         name
+        membershipCommonRoles {
+          items {
+            id
+            groupId
+            userId
+            commonRoleId
+          }
+        }
         groupRoles {
-          name
-          emoji
-          active
-          groupId
+          items {
+            id
+            name
+            emoji
+            active
+            groupId
+            responsibilities {
+              items {
+                id
+                title
+                description
+              }
+            }
+          }
         }
       }
     }

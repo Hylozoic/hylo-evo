@@ -527,7 +527,7 @@ class MapExplorer extends React.Component {
     const { hideNavLayout } = this.context
     const withoutNav = isWebView() || hideNavLayout
 
-    const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
+    const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], this.props) : null
 
     return (
       <div styleName={cx('container', { noUser: !currentUser, withoutNav })}>

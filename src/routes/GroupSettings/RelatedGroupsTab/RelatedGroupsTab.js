@@ -179,7 +179,7 @@ class RelatedGroupsTab extends Component {
             <div styleName='group-picker-list'>
               {possibleParents.map(membership => <div key={membership.id}>
                 <span styleName='invite-button' onClick={this.handleRequestToAddGroupToParent(membership.group, group)}>
-                  <b>{membership.hasModeratorRole ? t('Join') : t('Request')}</b>
+                  <b>{membership.hasAdministrationAbility ? t('Join') : t('Request')}</b>
                   {membership.group.name}
                 </span>
               </div>)}
@@ -252,7 +252,7 @@ class RelatedGroupsTab extends Component {
             <div styleName='group-picker-list'>
               {possibleChildren.map(membership => <div key={membership.id}>
                 <span styleName='invite-button' onClick={this.handleInviteGroupToJoinParent(group.id, membership.group.id)}>
-                  <b>{membership.hasModeratorRole ? t('Add') : t('Invite')}</b>
+                  <b>{membership.hasAdministrationAbility ? t('Add') : t('Invite')}</b>
                   {membership.group.name}
                 </span>
               </div>)}

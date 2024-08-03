@@ -23,7 +23,7 @@ import Messages from 'routes/Messages/Messages.store'
 import Members from 'routes/Members/Members.store'
 import MembershipRequests from 'routes/GroupSettings/MembershipRequestsTab/MembershipRequestsTab.store'
 import MemberSelector from 'components/MemberSelector/MemberSelector.store'
-import ModeratorsSettings from 'routes/GroupSettings/ModeratorsSettingsTab/ModeratorsSettingsTab.store'
+import RoleSettings from 'routes/GroupSettings/RolesSettingsTab/RolesSettingsTab.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import PostEditor from 'components/PostEditor/PostEditor.store'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
@@ -58,7 +58,7 @@ export const createCombinedReducers = history => combineReducers({
   Members,
   MemberSelector,
   Messages,
-  ModeratorsSettings,
+  RoleSettings,
   PeopleTyping,
   AuthLayoutRouter,
   PostEditor,
