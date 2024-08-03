@@ -38,6 +38,7 @@ class PostHeader extends PureComponent {
       creator,
       detailHasImage,
       createdTimestamp,
+      exactTimestamp,
       expanded,
       type,
       id,
@@ -141,8 +142,8 @@ class PostHeader extends PureComponent {
                 ))}
               </div>
               <div styleName='timestampRow'>
-                <span styleName='timestamp' data-for='dateTip' data-tip={moment(createdAt).format('llll')}>
-                  {TextHelpers.humanDate(createdAt)}
+                <span styleName='timestamp' data-for='dateTip' data-tip={exactTimestamp}>
+                  {createdTimestamp}
                 </span>
                 {announcement && <span styleName='announcementSection'>
                   <span styleName='announcementSpacer'>•</span>

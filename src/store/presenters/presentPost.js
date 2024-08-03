@@ -1,3 +1,4 @@
+import moment from 'moment-timezone'
 import presentTopic from 'store/presenters/presentTopic'
 import { TextHelpers } from 'hylo-shared'
 
@@ -41,6 +42,7 @@ export default function presentPost (post, groupId) {
     proposalOptions: post.proposalOptions?.toModelArray() || [],
     createdTimestampForGrid: createdAtHumanDate,
     createdTimestamp: `Posted ${createdAtHumanDate}`,
-    editedTimestamp: post.editedAt ? `Edited ${editedAtHumanDate}` : null
+    editedTimestamp: post.editedAt ? `Edited ${editedAtHumanDate}` : null,
+    exactTimestamp: moment(post.createdAt).format('llll')
   }
 }
