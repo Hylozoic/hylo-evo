@@ -12,6 +12,8 @@ describe('presentPost', () => {
   const eventInvitation = session.EventInvitation.create({ response: 'yes', person, event: postId })
   session.Post.create({ id: postId, postMemberships: [postMembership], eventInvitations: [eventInvitation] })
 
+  Date.now = jest.fn(() => new Date(Date.UTC(2024, 6, 23, 16, 30)).valueOf())
+
   it('matches the snapshot', () => {
     const post = session.Post.withId(postId)
     const result = presentPost(post, groupId)

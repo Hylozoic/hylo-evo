@@ -11,6 +11,8 @@ jest.mock('react-i18next', () => ({
   }
 }))
 
+Date.now = jest.fn(() => new Date(Date.UTC(2024, 6, 23, 16, 30)).valueOf())
+
 it('matches snapshot', () => {
   const creator = {
     name: 'JJ',

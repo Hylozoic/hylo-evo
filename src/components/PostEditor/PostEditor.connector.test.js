@@ -1,7 +1,7 @@
 import { mapStateToProps, mapDispatchToProps, mergeProps } from './PostEditor.connector'
 import orm from 'store/models'
 import { CREATE_POST } from 'store/constants'
-import { MAX_TITLE_LENGTH } from './PostEditor'
+// import { MAX_TITLE_LENGTH } from './PostEditor'
 
 let state, requiredProps
 beforeAll(() => {

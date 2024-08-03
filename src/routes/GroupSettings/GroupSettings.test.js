@@ -1,8 +1,6 @@
 import GroupSettings from './GroupSettings'
-import { shallow } from 'enzyme'
 import React from 'react'
-import { RESP_ADMINISTRATION } from 'store/constants'
-import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
+import { AllTheProviders, render } from 'util/testing/reactTestingLibraryExtended'
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),

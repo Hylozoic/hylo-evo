@@ -12,6 +12,7 @@ import PostLabel from 'components/PostLabel'
 import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
+import Tooltip from 'components/Tooltip'
 import PostCompletion from '../PostCompletion'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
@@ -37,6 +38,7 @@ class PostHeader extends PureComponent {
       creator,
       detailHasImage,
       createdTimestamp,
+      exactTimestamp,
       expanded,
       type,
       id,
@@ -140,7 +142,7 @@ class PostHeader extends PureComponent {
                 ))}
               </div>
               <div styleName='timestampRow'>
-                <span styleName='timestamp'>
+                <span styleName='timestamp' data-for='dateTip' data-tip={exactTimestamp}>
                   {createdTimestamp}
                 </span>
                 {announcement && <span styleName='announcementSection'>
@@ -205,6 +207,11 @@ class PostHeader extends PureComponent {
           effect='solid'
           delayShow={0}
           id='announcement-tt'
+        />
+        <Tooltip
+          delay={550}
+          id='dateTip'
+          position='left'
         />
       </div>
     )

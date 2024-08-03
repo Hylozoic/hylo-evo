@@ -60,6 +60,7 @@ exports[`matches announcement snapshot 1`] = `
           data-stylename="timestampRow"
         >
           <span
+            data-for="dateTip"
             data-stylename="timestamp"
           />
           <span
@@ -118,6 +119,11 @@ exports[`matches announcement snapshot 1`] = `
     resizeHide={true}
     wrapper="div"
   />
+  <Tooltip
+    delay={550}
+    id="dateTip"
+    position="left"
+  />
 </div>
 `;
 
@@ -158,6 +164,7 @@ exports[`matches announcement snapshot 2`] = `
           data-stylename="timestampRow"
         >
           <span
+            data-for="dateTip"
             data-stylename="timestamp"
           />
           <span
@@ -220,6 +227,11 @@ exports[`matches announcement snapshot 2`] = `
     resizeHide={true}
     wrapper="div"
   />
+  <Tooltip
+    delay={550}
+    id="dateTip"
+    position="left"
+  />
 </div>
 `;
 
@@ -260,6 +272,7 @@ exports[`matches announcement snapshot 3`] = `
           data-stylename="timestampRow"
         >
           <span
+            data-for="dateTip"
             data-stylename="timestamp"
           />
           <span
@@ -337,6 +350,11 @@ exports[`matches announcement snapshot 3`] = `
     insecure={true}
     resizeHide={true}
     wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip"
+    position="left"
   />
 </div>
 `;
@@ -390,6 +408,7 @@ exports[`matches snapshot 1`] = `
           data-stylename="timestampRow"
         >
           <span
+            data-for="dateTip"
             data-stylename="timestamp"
           />
         </div>
@@ -429,6 +448,11 @@ exports[`matches snapshot 1`] = `
     insecure={true}
     resizeHide={true}
     wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip"
+    position="left"
   />
 </div>
 `;
@@ -482,6 +506,7 @@ exports[`matches snapshot 2`] = `
           data-stylename="timestampRow"
         >
           <span
+            data-for="dateTip"
             data-stylename="timestamp"
           />
         </div>
@@ -525,6 +550,11 @@ exports[`matches snapshot 2`] = `
     insecure={true}
     resizeHide={true}
     wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip"
+    position="left"
   />
 </div>
 `;
@@ -578,6 +608,7 @@ exports[`matches snapshot 3`] = `
           data-stylename="timestampRow"
         >
           <span
+            data-for="dateTip"
             data-stylename="timestamp"
           />
         </div>
@@ -638,6 +669,11 @@ exports[`matches snapshot 3`] = `
     resizeHide={true}
     wrapper="div"
   />
+  <Tooltip
+    delay={550}
+    id="dateTip"
+    position="left"
+  />
 </div>
 `;
 
@@ -678,6 +714,7 @@ exports[`renders human readable dates 1`] = `
           data-stylename="timestampRow"
         >
           <span
+            data-for="dateTip"
             data-stylename="timestamp"
           />
         </div>
@@ -727,6 +764,11 @@ exports[`renders human readable dates 1`] = `
     insecure={true}
     resizeHide={true}
     wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip"
+    position="left"
   />
 </div>
 `;
@@ -768,6 +810,7 @@ exports[`renders human readable dates 2`] = `
           data-stylename="timestampRow"
         >
           <span
+            data-for="dateTip"
             data-stylename="timestamp"
           />
         </div>
@@ -818,6 +861,11 @@ exports[`renders human readable dates 2`] = `
     resizeHide={true}
     wrapper="div"
   />
+  <Tooltip
+    delay={550}
+    id="dateTip"
+    position="left"
+  />
 </div>
 `;
 
@@ -858,6 +906,7 @@ exports[`renders human readable dates 3`] = `
           data-stylename="timestampRow"
         >
           <span
+            data-for="dateTip"
             data-stylename="timestamp"
           />
         </div>
@@ -907,6 +956,11 @@ exports[`renders human readable dates 3`] = `
     insecure={true}
     resizeHide={true}
     wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip"
+    position="left"
   />
 </div>
 `;
