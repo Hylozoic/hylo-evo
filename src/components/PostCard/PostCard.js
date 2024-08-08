@@ -90,7 +90,7 @@ export default function PostCard (props) {
             hasImage={hasImage}
           />
         </div>
-        <div onClick={onClick}>
+        <div>
           <CardImageAttachments attachments={post.attachments} />
         </div>
         {isEvent && (
