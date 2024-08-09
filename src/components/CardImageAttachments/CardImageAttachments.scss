@@ -1,20 +1,18 @@
 .image {
   position: relative;
   cursor: pointer;
-
-  img {
+  > img {
     width: 100%;
   }
 }
 
 .others {
   position: absolute;
-  width: 100%;
   bottom: 15px;
   right: 0;
   display: flex;
   overflow-x: auto;
-  padding: 10px 0;
+  padding: 10px 10px;
   padding-left: $space-2x;
   cursor: pointer;
 }
