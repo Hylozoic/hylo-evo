@@ -3,6 +3,8 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 describe('Comment', () => {
+  Date.now = jest.fn(() => new Date(2024, 6, 23, 16, 30))
+
   const props = {
     comment: {
       text: '<p>text of the comment</p>',
@@ -12,7 +14,7 @@ describe('Comment', () => {
         avatarUrl: 'foo.jpg'
       },
       attachments: [],
-      createdAt: new Date('2023-02-01'),
+      createdAt: Date.now(),
       childComments: []
     },
     canModerate: false,

@@ -21,9 +21,9 @@ exports[`Comment displays image attachments 1`] = `
     <span
       data-for="dateTip"
       data-stylename="timestamp"
-      data-tip="Tue, Jan 31, 2023 7:00 PM"
+      data-tip="Tue, Jul 23, 2024 4:30 PM"
     >
-      Commented 1 year ago
+      Commented 2w ago
     </span>
     <div
       data-stylename="upperRight"
@@ -52,7 +52,7 @@ exports[`Comment displays image attachments 1`] = `
                 },
               ],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2024-07-23T20:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -114,7 +114,7 @@ exports[`Comment displays image attachments 1`] = `
           },
         ],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2024-07-23T20:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -153,9 +153,9 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
     <span
       data-for="dateTip"
       data-stylename="timestamp"
-      data-tip="Tue, Jan 31, 2023 7:00 PM"
+      data-tip="Tue, Jul 23, 2024 4:30 PM"
     >
-      Commented 1 year ago
+      Commented 2w ago
     </span>
     <div
       data-stylename="upperRight"
@@ -197,7 +197,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2024-07-23T20:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -240,7 +240,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2024-07-23T20:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -279,9 +279,9 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
     <span
       data-for="dateTip"
       data-stylename="timestamp"
-      data-tip="Tue, Jan 31, 2023 7:00 PM"
+      data-tip="Tue, Jul 23, 2024 4:30 PM"
     >
-      Commented 1 year ago
+      Commented 2w ago
     </span>
     <div
       data-stylename="upperRight"
@@ -314,7 +314,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2024-07-23T20:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -357,7 +357,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2024-07-23T20:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -396,9 +396,9 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
     <span
       data-for="dateTip"
       data-stylename="timestamp"
-      data-tip="Tue, Jan 31, 2023 7:00 PM"
+      data-tip="Tue, Jul 23, 2024 4:30 PM"
     >
-      Commented 1 year ago
+      Commented 2w ago
     </span>
     <div
       data-stylename="upperRight"
@@ -422,7 +422,7 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2024-07-23T20:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -465,7 +465,7 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2024-07-23T20:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -504,9 +504,9 @@ exports[`Comment does not display the remove menu when removeComment is not defi
     <span
       data-for="dateTip"
       data-stylename="timestamp"
-      data-tip="Tue, Jan 31, 2023 7:00 PM"
+      data-tip="Tue, Jul 23, 2024 4:30 PM"
     >
-      Commented 1 year ago
+      Commented 2w ago
     </span>
     <div
       data-stylename="upperRight"
@@ -548,7 +548,7 @@ exports[`Comment does not display the remove menu when removeComment is not defi
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2024-07-23T20:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -591,7 +591,7 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2024-07-23T20:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -630,9 +630,9 @@ exports[`Comment renders correctly 1`] = `
     <span
       data-for="dateTip"
       data-stylename="timestamp"
-      data-tip="Tue, Jan 31, 2023 7:00 PM"
+      data-tip="Tue, Jul 23, 2024 4:30 PM"
     >
-      Commented 1 year ago
+      Commented 2w ago
     </span>
     <div
       data-stylename="upperRight"
@@ -656,7 +656,7 @@ exports[`Comment renders correctly 1`] = `
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2024-07-23T20:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -699,7 +699,7 @@ exports[`Comment renders correctly 1`] = `
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2024-07-23T20:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -738,7 +738,7 @@ exports[`Comment renders correctly when editing 1`] = `
     <span
       data-for="dateTip"
       data-stylename="timestamp"
-      data-tip="Tue, Jan 31, 2023 7:00 PM"
+      data-tip="Tue, Jul 23, 2024 4:30 PM"
     >
       Editing now
     </span>
@@ -769,7 +769,7 @@ exports[`Comment renders correctly when editing 1`] = `
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2024-07-23T20:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
