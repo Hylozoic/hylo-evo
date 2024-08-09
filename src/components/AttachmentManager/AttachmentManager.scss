@@ -52,6 +52,9 @@
   background-size: cover;
   background-position: center;
   padding: 8px;
+  > img {
+    width: 100%;
+  }
 }
 
 .remove-image {
