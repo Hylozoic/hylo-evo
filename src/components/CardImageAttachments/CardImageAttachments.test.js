@@ -52,3 +52,16 @@ it('displays modal when image is clicked', async () => {
   expect(((await screen.findAllByTestId('sc-img1'))[0]).parentNode.parentNode).toHaveAttribute('aria-hidden', 'false')
   expect(((await screen.findAllByTestId('sc-img2'))[0]).parentNode.parentNode).toHaveAttribute('aria-hidden', 'true')
 })
+
+it('does not displays modal when image is clicked from postCard', async () => {
+  render(<CardImageAttachments attachments={[
+    { url: 'bar', type: 'image' },
+    { url: 'baz', type: 'image' },
+    { url: 'bonk', type: 'image' }
+  ]} className='postCard' />)
+
+  userEvent.click(await screen.findByAltText('Attached image 2'))
+  expect((await screen.findAllByTestId('sc-img0')).length).toBe(0)
+  expect((await screen.findAllByTestId('sc-img1')).length).toBe(0)
+  expect((await screen.findAllByTestId('sc-img2')).length).toBe(0)
+})
