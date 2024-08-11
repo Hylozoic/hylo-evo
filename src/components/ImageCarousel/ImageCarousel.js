@@ -34,7 +34,7 @@ export default function ImageCarousel ({
   }
 
   return (
-    <div styleName='images' ref={carouselRef} onKeydown={handleKeydown}>
+    <div styleName='images' ref={carouselRef} onKeyDown={handleKeydown}>
       <Slider ref={slickRef} {...settings}>
         {imageAttachments.map((image, index) =>
           <div className={styles.imageWrapper} key={index} data-testid={`sc-img${index}`}>

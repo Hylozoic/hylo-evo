@@ -60,8 +60,6 @@ it('does not displays modal when image is clicked from postCard', async () => {
     { url: 'bonk', type: 'image' }
   ]} className='postCard' />)
 
-  userEvent.click(await screen.findByAltText('Attached image 2'))
-  expect((await screen.findAllByTestId('sc-img0')).length).toBe(0)
-  expect((await screen.findAllByTestId('sc-img1')).length).toBe(0)
-  expect((await screen.findAllByTestId('sc-img2')).length).toBe(0)
+  userEvent.click(await screen.findByAltText('Attached image 1'))
+  await expect(() => screen.getByTestId('sc-img0')).toThrow('Unable to find an element by: [data-testid="sc-img0"]')
 })

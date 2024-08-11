@@ -3,7 +3,7 @@
 exports[`renders a single image 1`] = `
 <div
   data-stylename="images"
-  onKeydown={[Function]}
+  onKeyDown={[Function]}
 >
   <Slider
     adaptiveHeight={true}
@@ -31,7 +31,7 @@ exports[`renders a single image 1`] = `
 exports[`renders multiple images 1`] = `
 <div
   data-stylename="images"
-  onKeydown={[Function]}
+  onKeyDown={[Function]}
 >
   <Slider
     adaptiveHeight={true}
