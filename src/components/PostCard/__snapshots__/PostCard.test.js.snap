@@ -91,6 +91,7 @@ exports[`renders as expected 1`] = `
             },
           ]
         }
+        className="post-card"
       />
     </div>
     <div>

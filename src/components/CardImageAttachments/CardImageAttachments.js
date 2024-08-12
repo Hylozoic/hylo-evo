@@ -21,6 +21,7 @@ export default function CardImageAttachments ({
   const [initialSlide, setInitialSlide] = useState(0)
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = (e) => {
+    if (className === 'post-card') return
     setInitialSlide(e?.target.dataset.index || 0)
     setModalVisible(!modalVisible)
   }
