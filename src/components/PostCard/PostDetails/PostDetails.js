@@ -22,7 +22,6 @@ export default function PostDetails ({
   expanded,
   highlightProps,
   fileAttachments,
-  hideDetails,
   onClick,
   editedTimestamp,
   ...post
@@ -44,7 +43,7 @@ export default function PostDetails ({
         {linkPreview?.url && linkPreviewFeatured && isVideo && (
           <Feature url={linkPreview.url} />
         )}
-        {details && !hideDetails && (
+        {details && (
           <ClickCatcher groupSlug={slug}>
             <HyloHTML styleName='details' html={details} />
           </ClickCatcher>

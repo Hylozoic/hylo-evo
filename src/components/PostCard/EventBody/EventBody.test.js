@@ -12,7 +12,7 @@ jest.mock('react-i18next', () => ({
 }))
 
 describe('EventBody', () => {
-  it.skip('matches last snapshot', () => {
+  it('matches last snapshot', () => {
     const event = {
       startTime: moment(1551908483315),
       endTime: moment(1551919283315),
