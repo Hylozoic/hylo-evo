@@ -1,7 +1,6 @@
 import React from 'react'
 import FlagContent from './FlagContent'
 import ReactDOM from 'react-dom'
-import connector from './FlagContent.connector'
 import { rootDomId } from 'client/util'
 
 const FlagContentPortal = function (props) {
@@ -11,4 +10,4 @@ const FlagContentPortal = function (props) {
   )
 }
 
-export default connector(FlagContentPortal)
+export default FlagContentPortal

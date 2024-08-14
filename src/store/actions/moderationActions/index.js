@@ -1,23 +1,26 @@
+import { get } from 'lodash/fp'
+
 import {
   CLEAR_MODERATION_ACTION,
   CREATE_MODERATION_ACTION,
+  FETCH_MODERATION_ACTIONS,
   RECORD_CLICKTHROUGH
 } from 'store/constants'
 
-export function clearModerationACtion ({ optionId, postId, moderationActionId }) {
+export function clearModerationAction ({ postId, moderationActionId, groupId }) {
   return {
     type: CLEAR_MODERATION_ACTION,
     graphql: {
-      query: `mutation ($optionId: ID, $postId: ID, $moderationActionId: ID) {
-        clearModeationAction (optionId: $optionId, postId: $postId, moderationActionId: $moderationActionId) {
+      query: `mutation ( $postId: ID, $moderationActionId: ID, $groupId: ID ) {
+        clearModerationAction ( postId: $postId, moderationActionId: $moderationActionId, groupId: $groupId ) {
           success
         }
       }`,
-      variables: { optionId, postId, moderationActionId }
+      variables: { postId, moderationActionId, groupId }
     },
     meta: {
       moderationActionId,
-      optionId,
+      groupId,
       postId,
       optimistic: true
     }
@@ -40,6 +43,7 @@ export function createModerationAction (data) {
           }
           platformAgreements {
             id
+          }
         }
       }`,
       variables: { data }
@@ -65,6 +69,63 @@ export function recordClickthrough ({ postId }) {
     meta: {
       postId,
       optimistic: true
+    }
+  }
+}
+
+export function fetchModerationActions ({ slug, offset, sortBy, first = 20 }) {
+  return {
+    type: FETCH_MODERATION_ACTIONS,
+    graphql: {
+      query: `query ($slug: String, $offset: Int, $sortBy: String, $first: Int) {
+        moderationActions (slug: $slug, offset: $offset, sortBy: $sortBy, first: $first) {
+          hasMore
+          items {
+            id
+            postId
+            groupId
+            status
+            post {
+              id
+              title
+              details
+              type
+              creator {
+                id
+                name
+                avatarUrl
+              }
+              groups { 
+                id
+              }
+            }
+            text
+            reporter {
+              id
+              name
+              avatarUrl
+            }
+            anonymous
+            agreements {
+              id
+              description
+              order
+              title
+            }
+            platformAgreements {
+              id
+            }
+          }
+        }
+      }`,
+      variables: { slug, offset, sortBy, first }
+    },
+    meta: {
+      slug,
+      extractModel: 'ModerationAction',
+      extractQueryResults: {
+        getItems: get('payload.data.items.moderationActions')
+      }
     }
   }
 }

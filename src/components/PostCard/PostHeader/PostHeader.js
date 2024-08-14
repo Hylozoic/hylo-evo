@@ -40,6 +40,7 @@ class PostHeader extends PureComponent {
       expanded,
       type,
       id,
+      isFlagged,
       startTime,
       hasImage,
       endTime,
@@ -57,6 +58,7 @@ class PostHeader extends PureComponent {
       removePost,
       pinPost,
       highlightProps,
+      moderationActionsGroupUrl = '',
       announcement,
       fulfillPost,
       unfulfillPost,
@@ -152,6 +154,7 @@ class PostHeader extends PureComponent {
               </div>
             </div>
             <div styleName='upperRight'>
+              {isFlagged && <a href={moderationActionsGroupUrl}><Icon name='Flag' styleName='flagIcon' /></a>}
               {pinned && <Icon name='Pin' styleName='pinIcon' />}
               {fulfilledAt && <div data-tip='Completed' data-for='announcement-tt'><PostLabel type='completed' styleName='label' /></div>}
               {type && <PostLabel type={type} styleName='label' />}

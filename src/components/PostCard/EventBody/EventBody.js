@@ -23,7 +23,7 @@ class EventBody extends Component {
   toggleInviteDialog = () => this.setState({ showInviteDialog: !this.state.showInviteDialog })
 
   render () {
-    const { currentUser, event, respondToEvent, slug, expanded, className, constrained, onClick, togglePeopleDialog, t } = this.props
+    const { currentUser, event, isFlagged, respondToEvent, slug, expanded, className, constrained, onClick, togglePeopleDialog, t } = this.props
     const { showInviteDialog } = this.state
     const { id, startTime, endTime, location, eventInvitations, groups } = event
 
@@ -34,7 +34,7 @@ class EventBody extends Component {
     const eventAttendees = filter(ei => ei.response === RESPONSES.YES, eventInvitations)
 
     return (
-      <div styleName={cx('body', 'eventBody', { smallMargin: !expanded, eventImage: attachmentType === 'image' }, { constrained })} className={className}>
+      <div styleName={cx('body', 'eventBody', { smallMargin: !expanded, eventImage: attachmentType === 'image' }, { constrained }, { isFlagged: isFlagged && !event.clickthrough })} className={className}>
 
         <div styleName='eventTop'>
           <div styleName='calendarDate' onClick={onClick}>

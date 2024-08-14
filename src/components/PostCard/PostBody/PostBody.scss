@@ -257,6 +257,48 @@
   font-size: 20px;
 }
 
+.isFlagged {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+.clickthrough-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  padding: 20px;
+  background-color: $color-mango-yellow;
+  box-shadow: 0px 4px 15px rgba(17, 39, 64, 0.20);
+  border-radius: 5px;
+  margin: 10px;
+  color: $color-regent;
+  line-height: 20px;
+  font-size: 14px;
+  text-align: center;
+  align-items: center;
+  top: 44px;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  width: 300px;
+  z-index: 300;
+}
+.clickthrough-button{
+  margin-top: 6px;
+  width: 120px;
+  height: 30px;
+  border: 1px solid $color-regent;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
 @media screen and (max-width: 500px) {
   .eventBody {
     padding: 0 15px 0 15px;

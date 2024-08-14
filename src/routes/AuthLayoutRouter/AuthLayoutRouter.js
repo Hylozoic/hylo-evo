@@ -15,6 +15,7 @@ import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import setReturnToPath from 'store/actions/setReturnToPath'
 import fetchCommonRoles from 'store/actions/fetchCommonRoles'
+import fetchPlatformAgreements from 'store/actions/fetchPlatformAgreements'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
 import getMe from 'store/selectors/getMe'
@@ -117,6 +118,7 @@ export default function AuthLayoutRouter (props) {
       await dispatch(fetchCommonRoles())
       await dispatch(fetchForCurrentUser())
       setCurrentUserLoading(false)
+      await dispatch(fetchPlatformAgreements())
     })()
   }, [])
 

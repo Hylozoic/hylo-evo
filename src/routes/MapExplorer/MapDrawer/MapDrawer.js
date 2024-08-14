@@ -178,16 +178,23 @@ function MapDrawer (props) {
         </div>
 
         <div styleName='contentListContainer' id='contentList'>
-          {posts.map(p => <PostCard
-            constrained
-            expanded={false}
-            key={p.id}
-            locationParams={locationParams}
-            post={p}
-            querystringParams={queryParams}
-            routeParams={routeParams}
-            styleName='contentCard'
-          />)}
+          {posts.map(p => {
+            const isFlagged = group && p.flaggedGroups && p.flaggedGroups.includes(group.id)
+
+            return (
+              <PostCard
+                isFlagged={isFlagged}
+                constrained
+                expanded={false}
+                key={p.id}
+                locationParams={locationParams}
+                post={p}
+                querystringParams={queryParams}
+                routeParams={routeParams}
+                styleName='contentCard'
+              />
+            )
+          })}
         </div>
 
         <ScrollListener onBottom={() => fetchPostsForDrawer(numFetchedPosts, false)} elementId='mapDrawerWrapper' />

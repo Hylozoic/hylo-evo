@@ -19,9 +19,11 @@ import Me, { MySkillsToLearn } from './Me'
 import Membership, { MembershipAgreement } from './Membership'
 import Message from './Message'
 import MessageThread from './MessageThread'
+import ModerationAction from './ModerationAction'
 import Notification from './Notification'
 import Person, { MembershipCommonRole, PersonSkillsToLearn } from './Person'
 import PersonConnection from './PersonConnection'
+import PlatformAgreement from './PlatformAgreement'
 import Post, { PostFollower, PostCommenter, ProjectMember } from './Post'
 import PostMembership from './PostMembership'
 import SearchResult from './SearchResult'
@@ -61,11 +63,13 @@ orm.register(
   MembershipCommonRole,
   Message,
   MessageThread,
+  ModerationAction,
   MySkillsToLearn,
   Notification,
   Person,
   PersonConnection,
   PersonSkillsToLearn,
+  PlatformAgreement,
   Post,
   PostCommenter,
   PostFollower,

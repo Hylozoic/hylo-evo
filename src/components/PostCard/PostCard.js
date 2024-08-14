@@ -20,6 +20,7 @@ export default function PostCard (props) {
     childPost,
     className,
     constrained,
+    currentGroupId,
     currentUser,
     editPost,
     expanded,
@@ -62,6 +63,7 @@ export default function PostCard (props) {
 
   const postType = get('type', post)
   const isEvent = postType === 'event'
+  const isFlagged = post.flaggedGroups && post.flaggedGroups.includes(currentGroupId) // TODO COMOD also check platform
 
   const hasImage = post.attachments.find(a => a.type === 'image') || false
 
@@ -86,6 +88,7 @@ export default function PostCard (props) {
             highlightProps={highlightProps}
             currentUser={currentUser}
             editPost={editPost}
+            isFlagged={isFlagged}
             constrained={constrained}
             hasImage={hasImage}
           />
@@ -102,6 +105,7 @@ export default function PostCard (props) {
               slug={routeParams.groupSlug}
               respondToEvent={respondToEvent}
               constrained={constrained}
+              isFlagged={isFlagged}
             />
           </div>
         )}
@@ -113,6 +117,7 @@ export default function PostCard (props) {
               slug={routeParams.groupSlug}
               constrained={constrained}
               currentUser={currentUser}
+              isFlagged={isFlagged}
             />
           </div>
         )}

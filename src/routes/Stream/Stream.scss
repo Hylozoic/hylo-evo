@@ -3,6 +3,11 @@
   overflow: visible;
 }
 
+.stream-moderation-items {
+  margin: 5px auto;
+  overflow: visible;
+}
+
 .stream-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);

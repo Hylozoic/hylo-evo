@@ -74,8 +74,9 @@ export default function GroupBanner ({
 
         {group && <div styleName='right'>
           <Link
-            styleName={cx({ 'about': true, 'is-about-open': isAboutOpen })}
+            styleName={cx({ about: true, 'is-about-open': isAboutOpen })}
             to={isAboutOpen ? groupUrl(group.slug, routeParams, querystringParams) : groupDetailUrl(group.slug, routeParams, querystringParams)}
+            // TODO COMOD: groupUrl doesn't have this call signature, need to fix
           >
             <Icon name='Info' />{t('About us')}
           </Link>

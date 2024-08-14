@@ -4,11 +4,13 @@ import {
   ACCEPT_GROUP_RELATIONSHIP_INVITE,
   ADD_PROPOSAL_VOTE_PENDING,
   CANCEL_GROUP_RELATIONSHIP_INVITE,
+  CLEAR_MODERATION_ACTION_PENDING,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_JOIN_REQUEST,
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
+  CREATE_MODERATION_ACTION_PENDING,
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
   DELETE_POST_PENDING,
@@ -22,6 +24,7 @@ import {
   PROCESS_STRIPE_TOKEN_PENDING,
   REACT_ON_POST_PENDING,
   REACT_ON_COMMENT_PENDING,
+  RECORD_CLICKTHROUGH_PENDING,
   REJECT_GROUP_RELATIONSHIP_INVITE,
   REMOVE_REACT_ON_COMMENT_PENDING,
   REMOVE_REACT_ON_POST_PENDING,
@@ -83,6 +86,7 @@ import clearCacheFor from './clearCacheFor'
 import { find, get, values } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
+import ModerationAction from 'store/models/ModerationAction'
 
 export default function ormReducer (state = orm.getEmptyState(), action) {
   const session = orm.session(state)
@@ -170,6 +174,15 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
+    case CLEAR_MODERATION_ACTION_PENDING: {
+      if (meta.data) {
+        post = Post.withId(meta?.data?.postId)
+        const moderationAction = ModerationAction.withId(meta.data.moderationActionId)
+        moderationAction.update({ status: 'cleared' })
+      }
+      break
+    }
+
     case CREATE_COMMENT: {
       Comment.withId(meta.tempId).delete()
       if (!PostCommenter.safeGet({ post: meta.postId, commenter: Me.first().id })) {
@@ -230,6 +243,15 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
+    case CREATE_MODERATION_ACTION_PENDING: {
+      if (meta.data) {
+        post = Post.withId(meta?.data?.postId)
+        post.update({ flaggedGroups: post.flaggedGroups ? post.flaggedGroups.push(meta?.data?.groupId) : [meta?.data?.groupId] })
+        post.update({ moderationActions: post.moderationActions ? post.moderationActions.push(meta?.data) : [meta?.data] })
+      }
+      break
+    }
+
     case DELETE_COMMENT_PENDING: {
       comment = Comment.withId(meta.id)
       comment.delete()
@@ -287,7 +309,7 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
     case FETCH_GROUP_WELCOME_DATA: {
       clearCacheFor(Group, meta.id)
       membership = Membership.safeGet({ group: meta.id, person: meta.userId })
-      clearCacheFor(Membership, membership.id)
+      membership && clearCacheFor(Membership, membership.id)
       break
     }
 
@@ -640,6 +662,12 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       me = Me.first()
       me.updateAppending({ memberships: [payload.data.useInvitation.membership.id] })
       Invitation.filter({ email: me.email, group: payload.data.useInvitation.membership.group.id }).delete()
+      break
+    }
+
+    case RECORD_CLICKTHROUGH_PENDING: {
+      post = Post.withId(meta.postId)
+      post.update({ clickthrough: true })
       break
     }
 

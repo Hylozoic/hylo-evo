@@ -17,6 +17,7 @@ import './PostBigGridItem.scss'
 export default function PostBigGridItem (props) {
   const {
     childPost,
+    currentGroupId,
     routeParams,
     post,
     respondToEvent,
@@ -38,6 +39,7 @@ export default function PostBigGridItem (props) {
   // XXX: we should figure out what to actually do with 'video' type attachments, which are almost never used
   let attachmentType = (firstAttachment.type === 'video' ? 'file' : firstAttachment.type) || 0
   const attachmentUrl = firstAttachment.url || 0
+  const isFlagged = post.flaggedGroups && post.flaggedGroups.includes(currentGroupId)
 
   const detailLength = details.length
   let detailClass = null
@@ -64,7 +66,7 @@ export default function PostBigGridItem (props) {
   const showDetailsTargeted = () => {
     return attachmentType === 'image' || post.type === 'event' ? showDetails() : null
   }
-
+  console.log(post.clickthrough, 'post.clickthrough')
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType, detailClass, post.type)} onClick={attachmentType !== 'image' && post.type !== 'event' ? showDetails : null}>
       <div styleName='content-summary'>
@@ -88,13 +90,12 @@ export default function PostBigGridItem (props) {
             <EventDate {...post} />
           </div>
         }
-        <h3 styleName='title' onClick={showDetailsTargeted}>{title}</h3>
-
+        <h3 styleName={cx('title', { isFlagged: isFlagged && !post.clickthrough })} onClick={showDetailsTargeted}>{title}</h3>
         {attachmentType === 'image'
-          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image' onClick={showDetails} />
+          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName={cx('first-image', { isFlagged: isFlagged && !post.clickthrough })} onClick={showDetails} />
           : ' '
         }
-
+        {isFlagged && <Icon name='Flag' styleName='flagIcon' />}
         <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
         <div styleName='grid-meta'>
           <div styleName='grid-meta-row-1'>

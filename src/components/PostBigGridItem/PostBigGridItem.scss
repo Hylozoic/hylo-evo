@@ -692,6 +692,20 @@
   }
 }
 
+.isFlagged {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+.flagIcon {
+  top: 1px;
+  margin-right: 12px;
+  font-size: 24px;
+  color: $color-persimmon;
+  font-weight: bolder;
+  position: absolute;
+}
+
 @media screen and (max-width: 375px) {
   .event-response, .donate {
     display: none;

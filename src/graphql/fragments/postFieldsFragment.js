@@ -92,7 +92,9 @@ const postFieldsFragment = withComments => `
     }
   }
   createdAt
+  clickthrough
   updatedAt
+  flaggedGroups
   isAnonymousVote
   isPublic
   fulfilledAt

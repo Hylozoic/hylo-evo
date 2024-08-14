@@ -12,6 +12,7 @@ import './PostGridItem.scss'
 export default function PostGridItem (props) {
   const {
     childPost,
+    currentGroupId,
     routeParams,
     post,
     showDetails,
@@ -33,6 +34,7 @@ export default function PostGridItem (props) {
     return null
   }
   const { t } = useTranslation()
+  const isFlagged = post.flaggedGroups && post.flaggedGroups.includes(currentGroupId)
   const creatorUrl = personUrl(creator.id, routeParams.slug)
   const unread = false
   // will reintegrate once I have attachment vars
@@ -56,9 +58,9 @@ export default function PostGridItem (props) {
               id='childgroup-tt'
             />
           </div>}
-        <h3 styleName='title'>{title}</h3>
+        <h3 styleName={cx('title', { isFlagged: isFlagged && !post.clickthrough })}>{title}</h3>
         {attachmentType === 'image'
-          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image' />
+          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName={cx('first-image', { isFlagged: isFlagged && !post.clickthrough })} />
           : attachmentType === 'file'
             ? <div styleName='file-attachment'>
               {numAttachments > 1
@@ -70,6 +72,7 @@ export default function PostGridItem (props) {
             </div>
             : ' '
         }
+        {isFlagged && <Icon name='Flag' styleName='flagIcon' />}
 
         <HyloHTML styleName='details' html={details} />
         <div styleName='grid-meta'>

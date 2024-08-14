@@ -231,6 +231,18 @@ div .post-row:nth-child(1) {
   border-top: 3px solid rgba(0, 118, 223, 0.5);
 }
 
+.isFlagged {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+.flagIcon {
+  top: 1px;
+  margin-right: 12px;
+  font-size: 24px;
+  color: $color-persimmon;
+  font-weight: bolder;
+}
 
 @media screen and (max-width: 425px) {
   .participants div span {

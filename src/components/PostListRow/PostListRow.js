@@ -21,6 +21,7 @@ const PostListRow = (props) => {
   const {
     childPost,
     routeParams,
+    currentGroupId,
     post,
     showDetails,
     expanded,
@@ -46,12 +47,14 @@ const PostListRow = (props) => {
   const numOtherCommentors = commentersTotal - 1
   const unread = false
   const startTimeMoment = Moment(post.startTime)
+  const isFlagged = post.flaggedGroups && post.flaggedGroups.includes(currentGroupId)
   const { t } = useTranslation()
 
   return (
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
       <div styleName='content-summary'>
         <div styleName='type-author'>
+          {isFlagged && <Icon name='Flag' styleName='flagIcon' />}
           <div styleName={cx('post-type', post.type)}>
             <Icon name={typeName} />
           </div>
@@ -94,7 +97,7 @@ const PostListRow = (props) => {
               <Link styleName='topic' to={topicUrl(t.name, { groupSlug: routeParams.slug })} key={t.name} onClick={stopEvent}>#{t.name}</Link>)}
           </div>
         )}
-        <h3 styleName='title'>{title}</h3>
+        <h3 styleName={cx('title', { isFlagged: isFlagged && !post.clickthrough })}>{title}</h3>
         <HyloHTML styleName='details' html={details} />
         <div styleName='reactions'>
           <EmojiRow

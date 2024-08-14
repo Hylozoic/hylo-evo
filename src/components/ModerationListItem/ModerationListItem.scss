@@ -1,0 +1,166 @@
+// Footer Height
+$footer-height: 40px;
+
+.avatar {
+  margin-right: 8px;
+
+  div {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.userName {
+  // Extract typography?
+  @include font-bold;
+  color: $color-rhino-80;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.constrained .userName {
+  font-size: 12px;
+}
+
+.agreements-link {
+  color: #2C405A;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+
+.cleared {
+  color: $color-caribbean-green;
+}
+
+.active {
+  color: $color-yellow-orange;
+}
+
+.userTitle {
+  // Extract typography? this one is very close to bdy-drk-sm
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 14px;
+}
+
+.moderation-action-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 0 $space-4x $space-6x;
+  box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
+
+  &> div:nth-child(2) > div:nth-child(1) {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 10px rgba(35, 65, 91, .3);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid rgba(235, 235, 235, 1.0);
+    border-radius: 5px 5px 0 0;
+
+    h3 {
+      margin: 0;
+    }
+
+    .reporter-info {
+      display: flex;
+      align-items: center;
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .card-body {
+    padding: 0px 1rem;
+    padding-top: 8px;
+    margin-bottom: 16px;
+
+    h4 {
+      margin: 0 0 8px 0;
+    }
+
+    @include font-regular;
+    color: rgba(44, 64, 89, 0.7);
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 20px;
+  
+    h1, h2, h3 {
+      font-family: 'Circular Bold';
+      color: rgba(35, 65, 91, 1.0);
+    }
+  
+    h1 {
+      font-size: 24px;
+    }
+  
+    h2 {
+      font-size: 18px;
+    }
+  
+    h3, h4, h5 {
+      font-size: 16px;
+    }
+    
+
+    .agreements {
+      margin-top: 16px;
+
+      h5 {
+        margin: 0 0 8px 0;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin-bottom: 4px;
+        }
+      }
+    }
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-left: 8px;
+    align-items: center;
+    height: $footer-height + 12px;
+    border-top: 1px dashed $color-cape-cod-10;
+    background: linear-gradient(180deg, rgba(225, 229, 233, 0.3) 0%, rgba(225, 229, 233, 0) 100%);
+    overflow: hidden;
+    padding-right: 8px;
+    .people div {
+      width: 30px;
+      height: 30px;
+    }
+  
+    // change avatar sizes
+    > span > div > div {
+      width: 30px;
+      height: 30px;
+    }
+
+    button {
+      margin-left: 8px;
+    }
+  }
+}

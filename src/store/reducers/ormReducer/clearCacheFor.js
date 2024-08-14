@@ -1,5 +1,5 @@
 export default function clearCacheFor (ormModel, id) {
   const modelInstance = ormModel.withId(id)
   // this line is to clear the selector memoization
-  modelInstance.update({ _invalidate: (modelInstance._invalidate || 0) + 1 })
+  modelInstance && modelInstance.update({ _invalidate: (modelInstance._invalidate || 0) + 1 })
 }

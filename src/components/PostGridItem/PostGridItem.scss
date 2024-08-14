@@ -264,6 +264,21 @@
   background-color: rgba(255,255,255,1);
 }
 
+.isFlagged {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+.flagIcon {
+  top: 1px;
+  margin-right: 12px;
+  font-size: 24px;
+  color: $color-persimmon;
+  font-weight: bolder;
+  position: absolute;
+  right: -1px;
+}
+
 
 @media screen and (max-width: 425px) {
   .participants div span {

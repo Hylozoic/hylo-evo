@@ -128,12 +128,13 @@ class PostDetail extends Component {
       t
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
-
+ 
     if (!post && !pending) return <NotFound />
     if (pending) return <Loading />
 
     const isProject = get('type', post) === 'project'
     const isEvent = get('type', post) === 'event'
+    const isFlagged = post.flaggedGroups && post.flaggedGroups.includes(currentGroup.id)
 
     const m = post.projectManagementLink ? post.projectManagementLink.match(/(asana|trello|airtable|clickup|confluence|teamwork|notion|wrike|zoho)/) : null
     const projectManagementTool = m ? m[1] : null
@@ -191,6 +192,7 @@ class PostDetail extends Component {
               styleName='header'
               {...post}
               routeParams={routeParams}
+              isFlagged={isFlagged}
               close={onClose}
               expanded
               detailHasImage={detailHasImage}
@@ -216,6 +218,7 @@ class PostDetail extends Component {
                 event={post}
                 respondToEvent={respondToEvent}
                 togglePeopleDialog={togglePeopleDialog}
+                isFlagged={isFlagged}
               />
             )}
             {!isEvent && (
@@ -225,6 +228,7 @@ class PostDetail extends Component {
                 expanded
                 routeParams={routeParams}
                 slug={routeParams.groupSlug}
+                isFlagged={isFlagged}
                 {...post}
               />
             )}

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { RESP_MANAGE_CONTENT } from 'store/constants'
-import { removePostFromUrl, editPostUrl, duplicatePostUrl, postUrl } from 'util/navigation'
+import { removePostFromUrl, editPostUrl, duplicatePostUrl, postUrl, groupUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
 import deletePost from 'store/actions/deletePost'
 import removePost from 'store/actions/removePost'
@@ -21,10 +21,13 @@ export function mapStateToProps (state, props) {
   const context = props.routeParams.context
   const currentUser = getMe(state, props)
   const responsibilities = getResponsibilitiesForGroup(state, { groupId: group?.id }).map(r => r.title)
+  const moderationActionsGroupUrl = group && groupUrl(group.slug) + '?d=moderation'
+
   return {
     context,
     currentUser,
     group,
+    moderationActionsGroupUrl,
     postUrl: url,
     responsibilities,
     connectorGetRolesForGroup: (creatorId) => getRolesForGroup(state, { groupId: group?.id, person: creatorId })

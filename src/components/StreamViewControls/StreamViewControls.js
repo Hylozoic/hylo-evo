@@ -8,8 +8,9 @@ import { CONTEXT_MY } from 'store/constants'
 import { COLLECTION_SORT_OPTIONS, STREAM_SORT_OPTIONS } from 'util/constants'
 import './StreamViewControls.scss'
 
-const makeDropdown = (selected, options, onChange) => {
-  const { t } = useTranslation()
+const makeDropdown = (selected, options, onChange, t) => {
+  t('Proposals')
+  t('Moderation')
   return (
     <Dropdown
       styleName='dropdown'
@@ -29,6 +30,7 @@ const makeDropdown = (selected, options, onChange) => {
 
 const StreamViewControls = (props) => {
   const { t } = useTranslation()
+  let decisionViewDropdown
   const POST_TYPE_OPTIONS = [
     { id: undefined, label: 'All Posts' },
     { id: 'discussion', label: 'Discussions' },
@@ -40,12 +42,21 @@ const StreamViewControls = (props) => {
     { id: 'resource', label: 'Resources' }
   ]
 
-  const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, context, searchValue, view, customPostTypes, changeChildPostInclusion, childPostInclusion } = props
+  const DECISIONS_OPTIONS = [
+    { id: 'proposals', label: 'Proposals' },
+    { id: 'moderation', label: 'Moderation' }
+  ]
+
+  const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, context, searchValue, view, customPostTypes, changeChildPostInclusion, childPostInclusion, decisionView, changeDecisionView } = props
   const [searchActive, setSearchActive] = useState(!!searchValue)
   const [searchState, setSearchState] = useState('')
 
   const postTypeOptionsForFilter = customPostTypes && customPostTypes.length > 1 ? POST_TYPE_OPTIONS.filter(postType => postType.label === 'All Posts' || customPostTypes.includes(postType.id)) : POST_TYPE_OPTIONS
-  const postTypeFilterDropdown = makeDropdown(postTypeFilter, postTypeOptionsForFilter, changeTab)
+  const postTypeFilterDropdown = makeDropdown(postTypeFilter, postTypeOptionsForFilter, changeTab, t)
+
+  if (view === 'proposals') {
+    decisionViewDropdown = makeDropdown(decisionView, DECISIONS_OPTIONS, changeDecisionView, t)
+  }
 
   const handleSearchToggle = () => {
     setSearchActive(!searchActive)
@@ -109,8 +120,9 @@ const StreamViewControls = (props) => {
             <Icon name='SmallGridView' styleName='grid-view-icon' />
           </div>
         </div>
-        {makeDropdown(sortBy, customViewType === 'collection' ? COLLECTION_SORT_OPTIONS : STREAM_SORT_OPTIONS, changeSort)}
+        {makeDropdown(sortBy, customViewType === 'collection' ? COLLECTION_SORT_OPTIONS : STREAM_SORT_OPTIONS, changeSort, t)}
         {!['projects', 'proposals'].includes(view) && postTypeFilterDropdown}
+        {view === 'proposals' && decisionViewDropdown}
         <Tooltip id='stream-viewmode-tip' position='bottom' />
       </div>
       {searchActive &&

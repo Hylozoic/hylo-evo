@@ -13,6 +13,7 @@ export default function presentPost (post, groupId) {
     linkPreview: post.linkPreview,
     location: post.location,
     isPublic: post.isPublic,
+    clickthrough: post.clickthrough,
     commenters: post.commenters.toModelArray(),
     groups: post.groups.toModelArray(),
     attachments: post.attachments

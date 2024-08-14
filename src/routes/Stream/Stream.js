@@ -16,6 +16,7 @@ import TopicFeedHeader from 'components/TopicFeedHeader'
 import { CONTEXT_MY } from 'store/constants'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './Stream.scss'
+import ModerationListItem from 'components/ModerationListItem/ModerationListItem'
 
 const propHasChanged = (thisProps, prevProps) => sel => get(sel, thisProps) !== get(sel, prevProps)
 
@@ -33,7 +34,9 @@ export default class Stream extends Component {
     postTypeFilter: PropTypes.string,
     sortBy: PropTypes.string,
     viewMode: PropTypes.string,
+    decisionView: PropTypes.string,
     fetchPosts: PropTypes.func.isRequired,
+    fetchModerationActions: PropTypes.func,
     changeTab: PropTypes.func.isRequired,
     changeSort: PropTypes.func.isRequired,
     changeView: PropTypes.func.isRequired,
@@ -41,17 +44,21 @@ export default class Stream extends Component {
   }
 
   componentDidMount () {
-    const { routeParams, fetchTopic } = this.props
+    const { routeParams, fetchTopic, decisionView } = this.props
     const { topicName } = routeParams
-
+    console.log(decisionView, 'decisionView in cDM')
     if (topicName) fetchTopic()
-    this.fetchPosts(0)
+    if (decisionView === 'moderation') {
+      this.fetchModerationActions(0)
+    } else {
+      this.fetchPosts(0)
+    }
   }
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
 
-    const { fetchTopic } = this.props
+    const { fetchTopic, decisionView } = this.props
 
     const hasChanged = propHasChanged(this.props, prevProps)
 
@@ -63,8 +70,13 @@ export default class Stream extends Component {
       hasChanged('search') ||
       hasChanged('customViewId') ||
       hasChanged('topic') ||
+      hasChanged('decisionView') ||
       hasChanged('view')) {
-      this.fetchPosts(0)
+      if (decisionView === 'moderation') {
+        this.fetchModerationActions(0)
+      } else {
+        this.fetchPosts(0)
+      }
     }
 
     if (hasChanged('topicName')) fetchTopic()
@@ -78,30 +90,43 @@ export default class Stream extends Component {
     fetchPosts(offset)
   }
 
+  fetchModerationActions (offset) {
+    const { pendingModerationActions, hasMoreModerationActions, fetchModerationActions } = this.props
+
+    if (pendingModerationActions || hasMoreModerationActions === false) return
+
+    fetchModerationActions(offset)
+  }
+
   render () {
     const {
       customActivePostsOnly,
       changeChildPostInclusion,
+      changeDecisionView,
       changeSearch,
       changeSort,
       changeTab,
       changeView,
       childPostInclusion,
+      clearModerationAction,
       context,
       currentUser,
       currentUserHasMemberships,
       customPostTypes,
       customViewTopics,
       customViewType,
+      decisionView,
       followersTotal,
       groupTopic,
       group,
       isAboutOpen,
       newPost,
       routeParams,
+      moderationActions,
       posts,
       postTypeFilter,
       pending,
+      pendingModerationActions,
       postsTotal,
       querystringParams,
       respondToEvent,
@@ -169,8 +194,9 @@ export default class Stream extends Component {
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
           changeTab={changeTab} context={context} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
           changeChildPostInclusion={changeChildPostInclusion} childPostInclusion={childPostInclusion}
+          decisionView={decisionView} changeDecisionView={changeDecisionView}
         />
-        <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
+        {decisionView !== 'moderation' && (<div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
             const expanded = selectedPostId === post.id
@@ -182,6 +208,7 @@ export default class Stream extends Component {
                 routeParams={routeParams}
                 post={post}
                 key={post.id}
+                currentGroupId={group && group.id}
                 currentUser={currentUser}
                 respondToEvent={respondToEvent}
                 querystringParams={querystringParams}
@@ -189,7 +216,20 @@ export default class Stream extends Component {
               />
             )
           })}
-        </div>
+        </div>)}
+        {decisionView === 'moderation' && (<div styleName='stream-items'>
+          {!pendingModerationActions && moderationActions.length === 0 ? <NoPosts /> : ''}
+          {moderationActions.map(modAction => {
+            return (
+              <ModerationListItem
+                group={group}
+                key={modAction.id}
+                moderationAction={modAction}
+                handleClearModerationAction={() => clearModerationAction({ postId: modAction?.post?.id, moderationActionId: modAction?.id, groupId: group?.id })}
+              />
+            )
+          })}
+        </div>)}
         <ScrollListener
           onBottom={() => this.fetchPosts(posts.length)}
           elementId={CENTER_COLUMN_ID}

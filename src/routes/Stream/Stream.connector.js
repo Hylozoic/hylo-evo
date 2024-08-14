@@ -9,7 +9,7 @@ import fetchTopic from 'store/actions/fetchTopic'
 import fetchPosts from 'store/actions/fetchPosts'
 import respondToEvent from 'store/actions/respondToEvent'
 import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
-import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC, CONTEXT_MY, VIEW_MENTIONS, VIEW_ANNOUNCEMENTS, VIEW_INTERACTIONS, VIEW_POSTS } from 'store/constants'
+import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC, CONTEXT_MY, VIEW_MENTIONS, VIEW_ANNOUNCEMENTS, VIEW_INTERACTIONS, VIEW_POSTS, FETCH_MODERATION_ACTIONS } from 'store/constants'
 import orm from 'store/models'
 import presentPost from 'store/presenters/presentPost'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
@@ -22,6 +22,8 @@ import { getHasMorePosts, getPosts } from 'store/selectors/getPosts'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import isPendingFor from 'store/selectors/isPendingFor'
 import { createPostUrl } from 'util/navigation'
+import { fetchModerationActions, clearModerationAction } from 'store/actions/moderationActions'
+import { getHasMoreModerationActions, getModerationActions } from 'store/selectors/getModerationActions'
 
 export const getCustomView = ormCreateSelector(
   orm,
@@ -75,7 +77,7 @@ export function mapStateToProps (state, props) {
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
   const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
 
-  const querystringParams = getQuerystringParam(['s', 't', 'v', 'c', 'search'], null, props)
+  const querystringParams = getQuerystringParam(['s', 't', 'v', 'c', 'search', 'd'], null, props)
   const determinePostTypeFilter = () => {
     if (view === 'projects') return 'project'
     if (view === 'proposals') return 'proposal'
@@ -114,6 +116,19 @@ export function mapStateToProps (state, props) {
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
+  const decisionView = getQuerystringParam('d', state, props) || 'proposal'
+  let fetchModerationActionParam, moderationActions, hasMoreModerationActions
+  if (decisionView === 'moderation') {
+    fetchModerationActionParam = {
+      slug: groupSlug,
+      groupId,
+      sortBy
+    }
+
+    moderationActions = getModerationActions(state, fetchModerationActionParam)
+    hasMoreModerationActions = getHasMoreModerationActions(state, fetchModerationActionParam)
+  }
+
   return {
     childPostInclusion,
     customActivePostsOnly: activePostsOnly,
@@ -124,11 +139,16 @@ export function mapStateToProps (state, props) {
     currentUserHasMemberships,
     customViewTopics: customViewTopics?.toModelArray(),
     customPostTypes,
+    decisionView,
     fetchPostsParam,
+    fetchModerationActionParam,
     group,
     hasMore,
+    hasMoreModerationActions,
     isAboutOpen,
+    moderationActions,
     pending: state.pending[FETCH_POSTS],
+    pendingModerationActions: state.pending[FETCH_MODERATION_ACTIONS],
     postTypeFilter,
     posts,
     querystringParams,
@@ -177,8 +197,15 @@ export function mapDispatchToProps (dispatch, props) {
     changeSearch: search => {
       return dispatch(changeQuerystringParam(props, 'search', search, 'all'))
     },
+    changeDecisionView: view => {
+      return dispatch(changeQuerystringParam(props, 'd', view, 'proposals'))
+    },
+    clearModerationAction: ({ moderationActionId, postId, groupId }) => dispatch(clearModerationAction({ moderationActionId, postId, groupId })),
     fetchPosts: param => offset => {
       return dispatch(fetchPosts({ offset, ...param }))
+    },
+    fetchModerationActions: param => offset => {
+      return dispatch(fetchModerationActions({ offset, ...param }))
     },
     fetchTopic: () => {
       if (groupSlug && topicName) {
@@ -194,13 +221,13 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { fetchPostsParam } = stateProps
-
+  const { fetchPostsParam, fetchModerationActionParam } = stateProps
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchPosts: dispatchProps.fetchPosts(fetchPostsParam)
+    fetchPosts: dispatchProps.fetchPosts(fetchPostsParam),
+    fetchModerationActions: dispatchProps.fetchModerationActions(fetchModerationActionParam)
   }
 }
 
