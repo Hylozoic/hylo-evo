@@ -29,3 +29,23 @@ jest.mock('client/rollbar', () => ({
   error: error => console.log(error),
   configure: jest.fn()
 }))
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  },
+  useTranslation: () => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  },
+  initReactI18next: {
+    type: '3rdParty',
+    init: () => {}
+  }
+}))
