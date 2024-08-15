@@ -8,7 +8,7 @@ exports[`renders as expected 1`] = `
     <div
       onClick={[Function]}
     >
-      <Connect(withI18nextTranslation(PostHeader))
+      <Connect(PostHeader)
         attachments={
           Array [
             Object {
@@ -91,6 +91,7 @@ exports[`renders as expected 1`] = `
             },
           ]
         }
+        className="post-card"
       />
     </div>
     <div>
@@ -163,7 +164,7 @@ exports[`renders as expected 1`] = `
     <div
       onClick={[Function]}
     >
-      <Connect(withI18nextTranslation(PostGroups))
+      <Connect(PostGroups)
         groups={
           Array [
             Object {
@@ -175,7 +176,7 @@ exports[`renders as expected 1`] = `
         }
       />
     </div>
-    <withI18nextTranslation(PostFooter)
+    <PostFooter
       attachments={
         Array [
           Object {
@@ -231,6 +232,7 @@ exports[`renders as expected 1`] = `
       onClick={[Function]}
       peopleReactedTotal={11519}
       postId="FAKE_29222"
+      t={[Function]}
       tags={
         Array [
           "activism",

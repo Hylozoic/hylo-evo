@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
+import moment from 'moment-timezone'
 import { filter, isFunction } from 'lodash/fp'
 import { withTranslation } from 'react-i18next'
 import { TextHelpers } from 'hylo-shared'
@@ -39,6 +40,7 @@ export class Comment extends Component {
   editor = React.createRef()
 
   state = {
+    edited: false,
     editing: false,
     editedText: null,
     scrolledToComment: false
@@ -71,7 +73,7 @@ export class Comment extends Component {
     }
 
     this.props.updateComment(comment.id, contentHTML)
-    this.setState({ editing: false })
+    this.setState({ editing: false, edited: true })
 
     // Tell Editor this keyboard event was handled and to end propagation.
     return true
@@ -94,8 +96,9 @@ export class Comment extends Component {
 
   render () {
     const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId, post, t } = this.props
-    const { id, creator, createdAt, text, attachments } = comment
-    const { editing } = this.state
+    const { id, creator, createdAt, editedAt, text, attachments } = comment
+    const { editing, edited } = this.state
+    const timestamp = (editedAt || edited ? 'Edited ' : 'Commented ') + TextHelpers.humanDate(editedAt || createdAt)
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
     const dropdownItems = filter(item => isFunction(item.onClick), [
@@ -110,9 +113,9 @@ export class Comment extends Component {
         <div styleName='header'>
           <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
-          <span styleName='timestamp'>
+          <span styleName='timestamp' data-for='dateTip' data-tip={moment(createdAt).format('llll')}>
             {editing && 'Editing now'}
-            {!editing && TextHelpers.humanDate(createdAt)}
+            {!editing && timestamp}
           </span>
           <div styleName='upperRight'>
             {editing && (
@@ -262,6 +265,11 @@ export class CommentWithReplies extends Component {
           </div>
         )}
         <Tooltip id={`reply-tip-${comment.id}`} />
+        <Tooltip
+          delay={550}
+          id='dateTip'
+          position='left'
+        />
       </div>
     )
   }

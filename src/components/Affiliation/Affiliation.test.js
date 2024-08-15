@@ -2,18 +2,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Affiliation from './Affiliation'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 describe('Affiliation', () => {
   it('matches last snapshot', () => {
     const props = {

@@ -3,18 +3,6 @@ import { keyMap } from 'util/textInput'
 import { shallow, mount } from 'enzyme'
 import React from 'react'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 const messageThreadId = '1'
 const currentUser = {
   id: '1',

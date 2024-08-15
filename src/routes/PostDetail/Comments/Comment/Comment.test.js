@@ -2,7 +2,24 @@ import { Comment } from './Comment'
 import { shallow } from 'enzyme'
 import React from 'react'
 
+// local timezone is UTC so snapshots on CI match dev machines
+describe('Timezone', () => {
+  it('should always be UTC', () => {
+    expect(new Date().getTimezoneOffset()).toBe(0)
+  })
+})
+
 describe('Comment', () => {
+  const createdAt = new Date(2023, 6, 23, 16, 30)
+  const epochTime = createdAt.getTime() // 'just now' for humanDate in snapshots
+  beforeAll(() => {
+    jest.spyOn(Date.prototype, 'getTime').mockImplementation(() => epochTime)
+  })
+
+  afterAll(() => {
+    jest.restoreAllMocks()
+  })
+
   const props = {
     comment: {
       text: '<p>text of the comment</p>',
@@ -12,7 +29,7 @@ describe('Comment', () => {
         avatarUrl: 'foo.jpg'
       },
       attachments: [],
-      createdAt: new Date('2023-02-01'),
+      createdAt: createdAt,
       childComments: []
     },
     canModerate: false,

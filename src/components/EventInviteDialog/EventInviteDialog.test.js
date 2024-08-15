@@ -2,18 +2,6 @@ import EventInviteDialog, { InviteeRow, Search } from './EventInviteDialog'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 describe('EventInviteDialog', () => {
   it('renders correctly', () => {
     const props = {

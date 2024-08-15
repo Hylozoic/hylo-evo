@@ -23,7 +23,9 @@ exports[`TopNavDropdown renders correctly 1`] = `
           }
         }
       />
-      <withI18nextTranslation(ErrorBoundary)>
+      <ErrorBoundary
+        t={[Function]}
+      >
         <li
           data-stylename="header"
         >
@@ -34,7 +36,7 @@ exports[`TopNavDropdown renders correctly 1`] = `
         <div>
           body
         </div>
-      </withI18nextTranslation(ErrorBoundary)>
+      </ErrorBoundary>
     </ul>
   </div>
 </div>

@@ -2,18 +2,6 @@ import SkillsToLearnSection from './SkillsToLearnSection'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 it('shows basic pills', () => {
   const skills = [{ id: 1, name: 'test' }, { id: 2, name: 'unclickable' }]
 

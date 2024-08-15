@@ -43,6 +43,12 @@ ProjectMember.fields = {
   member: fk('Person', 'projectmembers')
 }
 
+export class ProposalOption extends Model {}
+ProposalOption.modelName = 'ProposalOption'
+ProposalOption.fields = {
+  post: fk('Post', 'proposaloptions')
+}
+
 class Post extends Model {
   toString () {
     return `Post: ${this.name}`
@@ -95,7 +101,8 @@ Post.fields = {
   peopleReactedTotal: attr(),
   timezone: attr(),
   topics: many('Topic'),
-  isPublic: attr()
+  isPublic: attr(),
+  proposalOptions: many('ProposalOption')
 }
 
 export const POST_TYPES = {

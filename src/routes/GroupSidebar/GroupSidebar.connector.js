@@ -14,7 +14,7 @@ export function mapStateToProps (state, props) {
     members,
     myResponsibilities,
     stewards,
-    slug: getRouteParam('groupSlug', state, props)
+    slug: getRouteParam('groupSlug', props)
   }
 }
 

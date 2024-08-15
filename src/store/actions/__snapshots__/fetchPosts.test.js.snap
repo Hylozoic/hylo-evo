@@ -103,6 +103,7 @@ posts: viewPosts(
   endTime
   timezone
   donationsLink
+  editedAt
   projectManagementLink
   myEventResponse
   commenters(first: 3) {
@@ -372,6 +373,7 @@ posts(
   endTime
   timezone
   donationsLink
+  editedAt
   projectManagementLink
   myEventResponse
   commenters(first: 3) {

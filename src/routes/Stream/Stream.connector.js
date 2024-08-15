@@ -27,7 +27,7 @@ import { getHasMoreModerationActions, getModerationActions } from 'store/selecto
 
 export const getCustomView = ormCreateSelector(
   orm,
-  (session, props) => getRouteParam('customViewId', session, props),
+  (_, props) => getRouteParam('customViewId', props),
   (session, id) => session.CustomView.safeGet({ id })
 )
 
@@ -35,7 +35,7 @@ export function mapStateToProps (state, props) {
   let group, topic, groupTopic
   let groupId = 0
 
-  const groupSlug = getRouteParam('groupSlug', state, props)
+  const groupSlug = getRouteParam('groupSlug', props)
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
@@ -54,9 +54,9 @@ export function mapStateToProps (state, props) {
   const customViewSort = customView?.defaultSort
   const viewName = customViewName
   const viewIcon = customViewIcon
-  const topicName = getRouteParam('topicName', state, props)
+  const topicName = getRouteParam('topicName', props)
   const topicLoading = isPendingFor([FETCH_TOPIC, FETCH_GROUP_TOPIC], state)
-  const isAboutOpen = getRouteParam('detailGroupSlug', state, props)
+  const isAboutOpen = getRouteParam('detailGroupSlug', props)
 
   if (groupSlug) {
     groupTopic = getGroupTopicForCurrentRoute(state, props)
@@ -66,8 +66,8 @@ export function mapStateToProps (state, props) {
     topic = getTopicForCurrentRoute(state, props)
   }
 
-  const context = getRouteParam('context', state, props)
-  const view = getRouteParam('view', state, props)
+  const context = getRouteParam('context', props)
+  const view = getRouteParam('view', props)
 
   const currentUser = getMe(state, props)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
@@ -77,21 +77,21 @@ export function mapStateToProps (state, props) {
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
   const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
 
-  const querystringParams = getQuerystringParam(['s', 't', 'v', 'c', 'search', 'd'], null, props)
+  const querystringParams = getQuerystringParam(['s', 't', 'v', 'c', 'search', 'd'], props)
   const determinePostTypeFilter = () => {
     if (view === 'projects') return 'project'
     if (view === 'proposals') return 'proposal'
-    return getQuerystringParam('t', state, props) || defaultPostType
+    return getQuerystringParam('t', props) || defaultPostType
   }
   const postTypeFilter = determinePostTypeFilter()
-  const search = getQuerystringParam('search', state, props)
-  let sortBy = getQuerystringParam('s', state, props) || customViewSort || defaultSortBy
+  const search = getQuerystringParam('search', props)
+  let sortBy = getQuerystringParam('s', props) || customViewSort || defaultSortBy
   // Only custom views can be sorted by manual order
   if (!customView && sortBy === 'order') {
     sortBy = 'updated'
   }
-  const viewMode = getQuerystringParam('v', state, props) || customViewMode || projectsDefault || defaultViewMode
-  const childPostInclusion = getQuerystringParam('c', state, props) || defaultChildPostInclusion
+  const viewMode = getQuerystringParam('v', props) || customViewMode || projectsDefault || defaultViewMode
+  const childPostInclusion = getQuerystringParam('c', props) || defaultChildPostInclusion
 
   const fetchPostsParam = {
     activePostsOnly,
@@ -156,7 +156,7 @@ export function mapStateToProps (state, props) {
     followersTotal: get('followersTotal', groupSlug ? groupTopic : topic),
     routeParams,
     search,
-    selectedPostId: getRouteParam('postId', state, props),
+    selectedPostId: getRouteParam('postId', props),
     sortBy,
     topicLoading,
     topicName,
@@ -169,11 +169,11 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const groupSlug = getRouteParam('groupSlug', null, props)
-  const topicName = getRouteParam('topicName', null, props)
+  const groupSlug = getRouteParam('groupSlug', props)
+  const topicName = getRouteParam('topicName', props)
   const updateSettings = (params) => dispatch(updateUserSettings(params))
   const routeParams = get('match.params', props)
-  const querystringParams = getQuerystringParam(['s', 't'], null, props)
+  const querystringParams = getQuerystringParam(['s', 't'], props)
 
   return {
     respondToEvent: (post) => response => dispatch(respondToEvent(post, response)),

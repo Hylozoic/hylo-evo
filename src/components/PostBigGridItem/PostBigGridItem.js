@@ -8,7 +8,6 @@ import EventDate from 'components/PostCard/EventDate'
 import EventRSVP from 'components/PostCard/EventRSVP'
 import HyloHTML from 'components/HyloHTML'
 import { personUrl } from 'util/navigation'
-import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import EmojiRow from 'components/EmojiRow'
 import Icon from 'components/Icon'
@@ -29,7 +28,7 @@ export default function PostBigGridItem (props) {
     title,
     details,
     creator,
-    createdAt,
+    createdTimestamp,
     attachments
   } = post
   const { t } = useTranslation()
@@ -146,7 +145,7 @@ export default function PostBigGridItem (props) {
                 {creator.name}
               </div>
               <div styleName='timestamp'>
-                {TextHelpers.humanDate(createdAt)}
+                {createdTimestamp}
               </div>
             </div>
           </div>

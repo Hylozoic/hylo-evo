@@ -17,7 +17,7 @@ import getRouteParam from 'store/selectors/getRouteParam'
 
 export function mapStateToProps (state, props) {
   // match params
-  const id = getRouteParam('postId', state, props)
+  const id = getRouteParam('postId', props)
   const routeParams = props.match.params
   // everything else
   const currentGroup = getGroupForCurrentRoute(state, props)
@@ -38,7 +38,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const { location } = props
-  const postId = getRouteParam('postId', {}, props)
+  const postId = getRouteParam('postId', props)
   const closeLocation = {
     ...props.location,
     pathname: removePostFromUrl(location.pathname) || '/'

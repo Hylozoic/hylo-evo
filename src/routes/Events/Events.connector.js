@@ -22,7 +22,7 @@ export function mapStateToProps (state, props) {
   const location = get('location', props)
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
-  const groupSlug = getRouteParam('groupSlug', state, props)
+  const groupSlug = getRouteParam('groupSlug', props)
   const childPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
 
   if (groupSlug) {

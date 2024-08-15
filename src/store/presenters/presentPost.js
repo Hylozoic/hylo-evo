@@ -1,4 +1,6 @@
+import moment from 'moment-timezone'
 import presentTopic from 'store/presenters/presentTopic'
+import { TextHelpers } from 'hylo-shared'
 
 export default function presentPost (post, groupId) {
   if (!post) return null
@@ -6,6 +8,8 @@ export default function presentPost (post, groupId) {
   const postMembership = post.postMemberships.toRefArray().find(p =>
     Number(p.group) === Number(groupId))
   const pinned = postMembership && postMembership.pinned
+  const createdAtHumanDate = TextHelpers.humanDate(post.createdAt)
+  const editedAtHumanDate = TextHelpers.humanDate(post.editedAt)
 
   return {
     ...post.ref,
@@ -35,6 +39,11 @@ export default function presentPost (post, groupId) {
         response: eventInvitation.response,
         ...eventInvitation.person.ref
       }
-    })
+    }),
+    proposalOptions: post.proposalOptions?.toModelArray() || [],
+    createdTimestampForGrid: createdAtHumanDate,
+    createdTimestamp: `Posted ${createdAtHumanDate}`,
+    editedTimestamp: post.editedAt ? `Edited ${editedAtHumanDate}` : null,
+    exactTimestamp: moment(post.createdAt).format('llll')
   }
 }

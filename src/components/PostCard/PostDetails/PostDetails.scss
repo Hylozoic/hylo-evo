@@ -73,6 +73,19 @@
   }
 }
 
+.timestamp {
+  // KMT: composes seems to be ignored, need help to understand what I'm doing wrong
+  // composes: timestamp from 'css/typography.scss';
+  composes: cardPadding;
+  @include font-regular;
+  color: $color-rhino-40;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 16px;
+  white-space: nowrap;
+  padding: 0px 10px;
+}
+
 .constrained .details {
   font-size: 12px;
   line-height: 20px;

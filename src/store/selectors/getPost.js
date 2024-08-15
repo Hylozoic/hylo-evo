@@ -5,7 +5,7 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 const getPost = ormCreateSelector(
   orm,
-  (state, props) => getRouteParam('postId', state, props) || getQuerystringParam('fromPostId', state, props),
+  (state, props) => getRouteParam('postId', props) || getQuerystringParam('fromPostId', props),
   ({ Post }, id) => {
     return Post.withId(id)
   }

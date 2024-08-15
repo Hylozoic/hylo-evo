@@ -1,37 +1,130 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`UserSettings renders correctly 1`] = `
-<UserSettings
-  currentUser={
-    Object {
-      "blockedUsers": Object {
-        "toRefArray": [Function],
-      },
-      "hasFeature": [Function],
-      "id": 1,
-    }
-  }
-  fetchForCurrentUser={[MockFunction]}
-  fetchPending={true}
-  fetchSavedSearches={[Function]}
-  i18n={Object {}}
-  leaveGroup={[Function]}
-  loginWithService={[Function]}
-  memberships={
+<withRouter(Connect(FullPageModal))
+  content={
     Array [
       Object {
-        "id": 2,
+        "component": <EditProfileTab
+          currentUser={
+            Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
+              "hasFeature": [Function],
+              "id": 1,
+            }
+          }
+          fetchPending={true}
+          loginWithService={[Function]}
+          setConfirm={[Function]}
+          t={[Function]}
+          unlinkAccount={[Function]}
+          updateUserSettings={[Function]}
+        />,
+        "name": "Edit Profile",
+        "path": "/settings",
       },
       Object {
-        "id": 3,
+        "component": <Memo(Connect(UserGroupsTab))
+          personId={1}
+        />,
+        "name": "Groups & Affiliations",
+        "path": "/settings/groups",
+      },
+      Object {
+        "component": <Memo(Connect(ManageInvitesTab))
+          currentUser={
+            Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
+              "hasFeature": [Function],
+              "id": 1,
+            }
+          }
+        />,
+        "name": "Invites & Requests",
+        "path": "/settings/invitations",
+      },
+      Object {
+        "component": <NotificationSettingsTab
+          currentUser={
+            Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
+              "hasFeature": [Function],
+              "id": 1,
+            }
+          }
+          memberships={
+            Array [
+              Object {
+                "id": 2,
+              },
+              Object {
+                "id": 3,
+              },
+            ]
+          }
+          t={[Function]}
+          updateMembershipSettings={[Function]}
+          updateUserSettings={[Function]}
+        />,
+        "name": "Notifications",
+        "path": "/settings/notifications",
+      },
+      Object {
+        "component": <AccountSettingsTab
+          currentUser={
+            Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
+              "hasFeature": [Function],
+              "id": 1,
+            }
+          }
+          setConfirm={[Function]}
+          t={[Function]}
+          updateUserSettings={[Function]}
+        />,
+        "name": "Account",
+        "path": "/settings/account",
+      },
+      Object {
+        "component": <SavedSearchesTab />,
+        "name": "Saved Searches",
+        "path": "/settings/saved-searches",
+      },
+      Object {
+        "component": <BlockedUsersTab
+          loading={true}
+          t={[Function]}
+        />,
+        "name": "Blocked Users",
+        "path": "/settings/blocked-users",
+      },
+      Object {
+        "component": <PaymentSettingsTab
+          currentUser={
+            Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
+              "hasFeature": [Function],
+              "id": 1,
+            }
+          }
+          setConfirm={[Function]}
+          t={[Function]}
+          updateUserSettings={[Function]}
+        />,
+        "name": "Payment",
+        "path": "/settings/payment",
       },
     ]
   }
-  setConfirm={[Function]}
-  t={[Function]}
-  tReady={false}
-  unlinkAccount={[Function]}
-  updateMembershipSettings={[Function]}
-  updateUserSettings={[Function]}
 />
 `;

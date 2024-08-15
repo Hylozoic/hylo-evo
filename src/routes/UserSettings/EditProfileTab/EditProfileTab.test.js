@@ -4,13 +4,6 @@ import { shallow } from 'enzyme'
 import EditProfileTab from './EditProfileTab'
 import SocialControl from './SocialControl'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
 // const props = {
 //   updateSettingDirectly: jest.fn(),
 //   handleUnlinkAccount: jest.fn(),

@@ -4,14 +4,6 @@ import { merge } from 'lodash'
 import React from 'react'
 import { RESP_ADMINISTRATION, RESP_REMOVE_MEMBERS } from 'store/constants'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 const minProps = {
   group: { id: 1 },
   currentUser: { id: 1, memberships: [{ id: 1, groupId: 1 }] },

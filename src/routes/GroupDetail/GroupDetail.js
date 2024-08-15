@@ -60,6 +60,7 @@ class UnwrappedGroupDetail extends Component {
   componentDidMount () {
     this.onGroupChange()
     this.props.fetchJoinRequests()
+    this.props.fetchForCurrentUser()
   }
 
   componentDidUpdate (prevProps) {
@@ -103,7 +104,7 @@ class UnwrappedGroupDetail extends Component {
       routeParams,
       t
     } = this.props
-    const fullPage = !getRouteParam('detailGroupSlug', {}, this.props)
+    const fullPage = !getRouteParam('detailGroupSlug', this.props)
 
     if (!group && !pending) return <NotFound />
     if (pending) return <Loading />

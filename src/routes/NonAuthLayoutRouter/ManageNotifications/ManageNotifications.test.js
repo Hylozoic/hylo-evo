@@ -4,18 +4,6 @@ import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibrar
 import { act } from '@testing-library/react'
 import ManageNotifications from './ManageNotifications'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 jest.mock('hooks/useRouter', () => () => {
   return {
     query: {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import { withTranslation } from 'react-i18next'
 import { bool, func, node, string } from 'prop-types'
 
@@ -61,13 +61,31 @@ class ModalDialog extends Component {
     useNotificationFormat: false
   }
 
+  modalRef = createRef()
+
+  handleKeydown = event => {
+    if (event.code === 'Escape') this.cancel()
+    if (event.code === 'Enter') this.submit()
+  }
+
+  handleMousedown = event => {
+    if (!this.modalRef.current.contains(event.target)) this.cancel()
+  }
+
   componentDidMount () {
+    if (this.modalRef.current) { // for testing via shallow render
+      this.modalRef.current.querySelector("[tabindex='-1']").focus()
+      this.modalRef.current.addEventListener('keydown', this.handleKeydown)
+    }
+    document.addEventListener('mousedown', this.handleMousedown)
     // disable main window scrolling
     this.previousOverflowStyle = document.body.style.overflow
     document.body.style.overflow = 'hidden'
   }
 
   componentWillUnmount () {
+    this.modalRef.current.removeEventListener('keydown', this.handleKeydown)
+    document.removeEventListener('mousedown', this.handleMousedown)
     // re-enable main window scrolling
     document.body.style.overflow = this.previousOverflowStyle
   }
@@ -109,8 +127,8 @@ class ModalDialog extends Component {
     const showControls = showCancelButton || showSubmitButton
 
     return (
-      <div styleName='popup'>
-        <div styleName='popup-inner' style={innerStyle}>
+      <div styleName='popup' tabIndex='-1'>
+        <div styleName='popup-inner' style={innerStyle} ref={this.modalRef}>
           <span onClick={this.cancel} styleName='close-btn'>
             <Icon name='Ex' styleName='icon' />
           </span>

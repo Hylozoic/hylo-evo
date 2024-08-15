@@ -4,7 +4,10 @@ exports[`presentPost matches the snapshot 1`] = `
 Object {
   "attachments": Array [],
   "commenters": Array [],
+  "createdTimestamp": "Posted ",
+  "createdTimestampForGrid": "",
   "creator": null,
+  "editedTimestamp": null,
   "eventInvitations": Array [
     Object {
       "id": 0,
@@ -12,6 +15,7 @@ Object {
       "response": "yes",
     },
   ],
+  "exactTimestamp": "Tue, Jul 23, 2024 4:30 PM",
   "fileAttachments": Array [],
   "groups": Array [],
   "id": 324,
@@ -21,6 +25,7 @@ Object {
   "location": undefined,
   "members": Array [],
   "pinned": true,
+  "proposalOptions": Array [],
   "topics": Array [],
 }
 `;

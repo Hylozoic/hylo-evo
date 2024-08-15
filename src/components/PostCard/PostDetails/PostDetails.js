@@ -22,8 +22,8 @@ export default function PostDetails ({
   expanded,
   highlightProps,
   fileAttachments,
-  hideDetails,
   onClick,
+  editedTimestamp,
   ...post
 }) {
   const [isVideo, setIsVideo] = useState()
@@ -43,11 +43,14 @@ export default function PostDetails ({
         {linkPreview?.url && linkPreviewFeatured && isVideo && (
           <Feature url={linkPreview.url} />
         )}
-        {details && !hideDetails && (
+        {details && (
           <ClickCatcher groupSlug={slug}>
             <HyloHTML styleName='details' html={details} />
           </ClickCatcher>
         )}
+        {editedTimestamp && (<div styleName='timestamp'>
+          {editedTimestamp}
+        </div>)}
         {linkPreview && !linkPreviewFeatured && (
           <LinkPreview {...pick(['title', 'description', 'url', 'imageUrl'], linkPreview)} />
         )}

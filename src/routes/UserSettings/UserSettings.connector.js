@@ -44,7 +44,7 @@ export function mapStateToProps (state, props) {
   const confirm = get('FullPageModal.confirm', state)
   const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
   const queryParams = {
-    registered: getQuerystringParam('registered', null, props)
+    registered: getQuerystringParam('registered', props)
   }
 
   return {

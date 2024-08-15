@@ -1,13 +1,6 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import FlagContent from './FlagContent'
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
 
 describe('FlagContent', () => {
   it('matches the last snapshot', () => {

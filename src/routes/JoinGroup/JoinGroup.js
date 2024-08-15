@@ -22,14 +22,14 @@ export default function JoinGroup (props) {
   const { t } = useTranslation()
 
   // This is used in iFrames where we want people to join a group and go directly to a specific page (for OpenTEAM coffee shop for example)
-  const redirectToView = getQuerystringParam('redirectToView', null, props)
+  const redirectToView = getQuerystringParam('redirectToView', props)
 
   useEffect(() => {
     (async function () {
       try {
         const invitationTokenAndCode = {
-          invitationToken: getQuerystringParam('token', null, props),
-          accessCode: getRouteParam('accessCode', null, props)
+          invitationToken: getQuerystringParam('token', props),
+          accessCode: getRouteParam('accessCode', props)
         }
         if (every(isEmpty, invitationTokenAndCode)) {
           throw new Error(t('Please provide either a `token` query string parameter or `accessCode` route param'))

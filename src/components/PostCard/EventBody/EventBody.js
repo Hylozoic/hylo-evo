@@ -27,9 +27,8 @@ class EventBody extends Component {
     const { showInviteDialog } = this.state
     const { id, startTime, endTime, location, eventInvitations, groups } = event
 
-    const numAttachments = event.attachments.length || 0
-    const firstAttachment = numAttachments ? event.attachments[0] || 0 : null
-    const attachmentType = firstAttachment ? firstAttachment.type || 0 : null
+    const firstAttachment = event.attachments?.[0]
+    const attachmentType = firstAttachment?.type
 
     const eventAttendees = filter(ei => ei.response === RESPONSES.YES, eventInvitations)
 
@@ -62,7 +61,6 @@ class EventBody extends Component {
               onClick={onClick}
               constrained={constrained}
               expanded={expanded}
-              hideDetails={!expanded}
               slug={slug}
             />
           </div>

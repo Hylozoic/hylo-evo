@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.9.1] - 2024-07-31
+
+### Fixed
+- Bug that prevented editing chat posts
+- Invalid post warning when changing post types
+- Sometimes after requesting to join a group and being accepted in you would have to answer the join questions a second time
+- Bug when clicking on a post from a notification
+- Bug that prevented viewing public group landing page
+
 ## [5.9.0] - 2024-07-23
 
 ### Added

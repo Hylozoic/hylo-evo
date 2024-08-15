@@ -35,7 +35,7 @@ export function mapStateToProps (state, props) {
     FETCH_MEMBER_VOTES // TODO REACTIONS: switch this to reactions
   ], state)
   const personLoading = isPendingFor(fetchPerson, state)
-  const groupSlug = getRouteParam('groupSlug', state, props)
+  const groupSlug = getRouteParam('groupSlug', props)
   let group
 
   if (groupSlug) {

@@ -19,9 +19,11 @@ exports[`Comment displays image attachments 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      1 year ago
+      Commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -50,7 +52,7 @@ exports[`Comment displays image attachments 1`] = `
                 },
               ],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2023-07-23T16:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -112,7 +114,7 @@ exports[`Comment displays image attachments 1`] = `
           },
         ],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2023-07-23T16:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -149,9 +151,11 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      1 year ago
+      Commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -193,7 +197,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2023-07-23T16:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -236,7 +240,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2023-07-23T16:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -273,9 +277,11 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      1 year ago
+      Commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -308,7 +314,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2023-07-23T16:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -351,7 +357,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2023-07-23T16:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -388,9 +394,11 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      1 year ago
+      Commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -414,7 +422,7 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2023-07-23T16:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -457,7 +465,7 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2023-07-23T16:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -494,9 +502,11 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      1 year ago
+      Commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -538,7 +548,7 @@ exports[`Comment does not display the remove menu when removeComment is not defi
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2023-07-23T16:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -581,7 +591,7 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2023-07-23T16:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -618,9 +628,11 @@ exports[`Comment renders correctly 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      1 year ago
+      Commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -644,7 +656,7 @@ exports[`Comment renders correctly 1`] = `
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2023-07-23T16:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,
@@ -687,7 +699,7 @@ exports[`Comment renders correctly 1`] = `
       Object {
         "attachments": Array [],
         "childComments": Array [],
-        "createdAt": 2023-02-01T00:00:00.000Z,
+        "createdAt": 2023-07-23T16:30:00.000Z,
         "creator": Object {
           "avatarUrl": "foo.jpg",
           "id": 1,
@@ -724,7 +736,9 @@ exports[`Comment renders correctly when editing 1`] = `
       Joe Smith
     </Link>
     <span
+      data-for="dateTip"
       data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
       Editing now
     </span>
@@ -755,7 +769,7 @@ exports[`Comment renders correctly when editing 1`] = `
             Object {
               "attachments": Array [],
               "childComments": Array [],
-              "createdAt": 2023-02-01T00:00:00.000Z,
+              "createdAt": 2023-07-23T16:30:00.000Z,
               "creator": Object {
                 "avatarUrl": "foo.jpg",
                 "id": 1,

@@ -78,7 +78,7 @@ export default function PostBodyProposal ({
 }) {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const proposalOptionsArray = useMemo(() => proposalOptions?.items || [], [proposalOptions])
+  const proposalOptionsArray = useMemo(() => proposalOptions || [], [proposalOptions])
   const proposalVotesArray = useMemo(() => proposalVotes?.items || [], [proposalVotes])
 
   const currentUserVotes = useMemo(() => proposalVotesArray.filter(vote => vote?.user?.id === currentUser.id), [proposalVotesArray, currentUser.id])

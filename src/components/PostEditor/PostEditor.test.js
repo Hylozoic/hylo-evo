@@ -8,14 +8,6 @@ jest.mock('lodash/debounce', () => fn => {
   return fn
 })
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 describe('PostEditor', () => {
   const baseProps = {}
 
@@ -259,6 +251,94 @@ describe('PostEditor', () => {
       testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeTruthy()
     })
+
+    it('is valid when event has dates where endTime > startTime', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'event',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ],
+          startTime: new Date(1551908483315),
+          endTime: new Date(1551908483316)
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeTruthy()
+    })
+
+    it('is valid when proposal has options', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'proposal',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ],
+          proposalOptions: [
+            { text: 'Yes', emoji: '👍' },
+            { text: 'No', emoji: '👎' }
+          ]
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeTruthy()
+    })
+
+    it('is valid when project has no links', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'project',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ]
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeTruthy()
+    })
+
+    it('is valid when project has valid project management link', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'project',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ],
+          projectManagementLink: 'https://example.com'
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeTruthy()
+    })
+
+    it('is valid when project has valid donations link', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'project',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ],
+          donationsLink: 'https://example.com'
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeTruthy()
+    })
   })
 
   describe('invalid', () => {
@@ -321,6 +401,126 @@ describe('PostEditor', () => {
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
       testInstance.editorRef = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when event has no dates', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'event',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ]
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when event has only endTime', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'event',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ],
+          startTime: null,
+          endTime: new Date(1551908483315)
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when event has only startTime', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'event',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ],
+          startTime: new Date(1551908483315),
+          endTime: null
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when event has dates where endTime = startTime', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'event',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ],
+          startTime: new Date(1551908483315),
+          endTime: new Date(1551908483315)
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when proposal has no options', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'proposal',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ]
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when project has no valid project management link', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'project',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ],
+          projectManagementLink: 'test'
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
+      expect(testInstance.isValid(props.post, {})).toBeFalsy()
+    })
+
+    it('is invalid when project has no valid donations link', () => {
+      const props = {
+        ...baseProps,
+        post: {
+          type: 'project',
+          title: 'x'.repeat(MAX_TITLE_LENGTH),
+          groups: [
+            { id: '1', name: 'test group 1' }
+          ],
+          donationsLink: 'test'
+        }
+      }
+      const testInstance = shallow(<PostEditor {...props} />).instance()
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeFalsy()
     })
   })

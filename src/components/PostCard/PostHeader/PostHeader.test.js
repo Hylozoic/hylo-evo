@@ -3,13 +3,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import { RESP_ADMINISTRATION } from 'store/constants'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
+Date.now = jest.fn(() => new Date(2024, 6, 23, 16, 30))
 
 it('matches snapshot', () => {
   const creator = {

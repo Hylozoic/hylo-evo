@@ -7,22 +7,6 @@ import { act } from '@testing-library/react'
 import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import RolesSettingsTab, { AddMemberToRole, RoleList } from './RolesSettingsTab'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  },
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 describe('RolesSettingsTab', () => {
   it('clears suggestions on unmount', () => {
     const clearStewardSuggestions = jest.fn()

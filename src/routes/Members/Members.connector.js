@@ -7,17 +7,15 @@ import { get } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
-import getMe from 'store/selectors/getMe'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 
 const defaultSortBy = 'name'
 
 export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
-  const slug = getRouteParam('groupSlug', state, props)
-  const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
-  const search = getQuerystringParam('q', state, props)
-  const currentUser = getMe(state, props)
+  const slug = getRouteParam('groupSlug', props)
+  const sortBy = getQuerystringParam('s', props) || defaultSortBy
+  const search = getQuerystringParam('q', props)
   const extraProps = {
     ...props,
     slug,
@@ -31,7 +29,6 @@ export function mapStateToProps (state, props) {
     memberCount: get('memberCount', group),
     sortBy,
     search,
-    currentUser,
     group,
     members: getMembers(state, extraProps),
     hasMore: getHasMoreMembers(state, extraProps),
@@ -51,7 +48,7 @@ export function mapDispatchToProps (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { slug } = stateProps
-  const params = getQuerystringParam(['s', 'q'], null, ownProps)
+  const params = getQuerystringParam(['s', 'q'], ownProps)
   var { s: sortBy = defaultSortBy, q: search } = params
 
   const removeMember = (id) => dispatchProps.removeMember(id, stateProps.group.id)

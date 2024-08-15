@@ -4,6 +4,22 @@ import { shallow } from 'enzyme'
 import { render, screen } from 'util/testing/reactTestingLibraryExtended'
 import userEvent from '@testing-library/user-event'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  },
+  useTranslation: () => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 it('renders no images', () => {
   expect(shallow(<CardImageAttachments attachments={[
     { url: 'bonkerz', type: 'file' },
@@ -51,4 +67,15 @@ it('displays modal when image is clicked', async () => {
   expect(((await screen.findAllByTestId('sc-img0'))[0]).parentNode.parentNode).toHaveAttribute('aria-hidden', 'true')
   expect(((await screen.findAllByTestId('sc-img1'))[0]).parentNode.parentNode).toHaveAttribute('aria-hidden', 'false')
   expect(((await screen.findAllByTestId('sc-img2'))[0]).parentNode.parentNode).toHaveAttribute('aria-hidden', 'true')
+})
+
+it('does not displays modal when image is clicked from postCard', async () => {
+  render(<CardImageAttachments attachments={[
+    { url: 'bar', type: 'image' },
+    { url: 'baz', type: 'image' },
+    { url: 'bonk', type: 'image' }
+  ]} className='post-card' />)
+
+  userEvent.click(await screen.findByAltText('Attached image 1'))
+  await expect(() => screen.getByTestId('sc-img0')).toThrow('Unable to find an element by: [data-testid="sc-img0"]')
 })
