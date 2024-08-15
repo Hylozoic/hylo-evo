@@ -31,7 +31,7 @@ it('renders correctly', () => {
     { wrapper: currentUserProvider() }
   )
 
-  expect(screen.getByText('One more step!')).toBeInTheDocument()
+  expect(screen.getByText('One more step!')).toBeVisible()
 })
 
 it('renders password error if it not confirmed', async () => {
@@ -47,7 +47,7 @@ it('renders password error if it not confirmed', async () => {
   await user.type(screen.getByLabelText('passwordConfirmation'), '012345671')
   await user.click(screen.getByText('Jump in to Hylo!'))
 
-  expect(screen.getByText("Passwords don't match")).toBeInTheDocument()
+  expect(screen.getByText("Passwords don't match")).toBeVisible()
 })
 
 it('does not submit if name is not present, even if password is valid', async () => {
@@ -59,7 +59,7 @@ it('does not submit if name is not present, even if password is valid', async ()
       registerCalled(req.variables)
 
       // this return is required, results are ignored
-      return res(ctx.data({}))
+      return {}
     })
   )
 
@@ -84,7 +84,7 @@ it('registers user if a name and valid password provided', async () => {
       registerCalled(req.variables)
 
       // this return is required, results are ignored
-      return res(ctx.data({}))
+      return {}
     })
   )
 

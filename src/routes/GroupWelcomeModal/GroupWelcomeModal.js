@@ -164,7 +164,7 @@ export default function GroupWelcomeModal (props) {
                           data-testid={'cbAgreement' + i}
                           value={i}
                           onChange={handleCheckAgreement}
-                          checked={currentAgreements[i]}
+                          checked={currentAgreements[i] || false}
                         />
                         <label htmlFor={'agreement' + agreement.id} styleName={cx('i-agree', { accepted: currentAgreements[i] })}>
                           {t('I agree to the above')}

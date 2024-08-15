@@ -477,15 +477,19 @@ export function RoleList ({ slug, fetchStewardSuggestions, addRoleToMember, sugg
   }, [])
 
   useEffect(() => {
+    let isMounted = true
     dispatch(responsbilityFetcher({ roleId }))
-      .then((response) => setResponsibilitiesForRole(response?.payload?.data?.responsibilities || []))
+      .then((response) => { if (isMounted) setResponsibilitiesForRole(response?.payload?.data?.responsibilities || []) })
       .catch((e) => { console.error('Error fetching responsibilities for role ', e) })
+    return () => { isMounted = false }
   }, [])
 
   useEffect(() => {
+    let isMounted = true
     dispatch(fetchResponsibilitiesForGroup({ groupId: group.id }))
-      .then((response) => setAvailableResponsibilities(response?.payload?.data?.responsibilities || []))
+      .then((response) => { if (isMounted) setAvailableResponsibilities(response?.payload?.data?.responsibilities || []) })
       .catch((e) => { console.error('Error fetching responsibilities for group', e) })
+    return () => { isMounted = false }
   }, [])
 
   const memberRoleIds = membersForRole.map(mr => mr.id)
