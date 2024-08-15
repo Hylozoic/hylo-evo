@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`shows basic pills 1`] = `
-<withI18nextTranslation(SkillsSection)
+<SkillsSection
+  editable={true}
   fetchMemberSkills={[MockFunction]}
   label="Add a skill you want to learn"
   placeholder="What skills do you want to learn?"
@@ -17,11 +18,13 @@ exports[`shows basic pills 1`] = `
       },
     ]
   }
+  t={[Function]}
 />
 `;
 
 exports[`shows editable fields when isMe = true 1`] = `
-<withI18nextTranslation(SkillsSection)
+<SkillsSection
+  editable={true}
   fetchMemberSkills={[MockFunction]}
   isMe={true}
   label="Add a skill you want to learn"
@@ -38,5 +41,6 @@ exports[`shows editable fields when isMe = true 1`] = `
       },
     ]
   }
+  t={[Function]}
 />
 `;

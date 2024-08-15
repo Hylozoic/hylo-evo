@@ -3,18 +3,6 @@ import EventRSVP from './EventRSVP'
 import { RESPONSES } from 'store/models/EventInvitation'
 import { shallow } from 'enzyme'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 it('renders correctly with YES response', () => {
   const props = {
     myEventResponse: RESPONSES.YES

@@ -1,14 +1,6 @@
 import { mapStateToProps, mergeProps } from './Comment.connector'
 import orm from 'store/models'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 describe('mapStateToProps', () => {
   describe('as moderator', () => {
     let state, myComment, otherComment

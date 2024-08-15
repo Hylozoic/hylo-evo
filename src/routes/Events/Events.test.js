@@ -2,14 +2,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Events from './Events'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 describe('Events', () => {
   it('renders a post list', () => {
     const posts = [{ id: 1, groups: [] }, { id: 2, groups: [] }, { id: 3, groups: [] }]
