@@ -12,22 +12,6 @@ import faker from '@faker-js/faker'
 import { fakePerson } from 'util/testing/testData'
 import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  },
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 const group = {
   id: 1,
   name: 'A Great Cause',

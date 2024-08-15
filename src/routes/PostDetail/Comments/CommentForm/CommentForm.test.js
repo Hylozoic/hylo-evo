@@ -3,14 +3,6 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import Me from 'store/models/Me'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 const minDefaultProps = {
   postId: 'new',
   createComment: () => {},

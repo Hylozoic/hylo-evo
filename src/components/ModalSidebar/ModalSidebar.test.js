@@ -2,18 +2,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import ModalSidebar from './ModalSidebar'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 describe('ModalSidebar', () => {
   it('renders correctly without a theme', () => {
     const header = 'header'

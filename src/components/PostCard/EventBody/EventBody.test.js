@@ -3,14 +3,6 @@ import { shallow } from 'enzyme'
 import EventBody from './EventBody'
 import moment from 'moment-timezone'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 describe('EventBody', () => {
   it('matches last snapshot', () => {
     const event = {

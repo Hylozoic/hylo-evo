@@ -2,14 +2,6 @@ import PostFooter from './PostFooter'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 const commenters = [
   { name: 'Joe Smith', id: '1', avatarUrl: '' },
   { name: 'Sue Jones', id: '2', avatarUrl: '' },

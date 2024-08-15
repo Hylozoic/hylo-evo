@@ -2,18 +2,6 @@ import React from 'react'
 import { AllTheProviders, render } from 'util/testing/reactTestingLibraryExtended'
 import Membership from './Membership'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 describe('Membership', () => {
   it('matches last snapshot', () => {
     const props = {

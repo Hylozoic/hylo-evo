@@ -2,17 +2,6 @@ import Search, { PersonCard } from './Search'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
 describe('Search', () => {
   it('matches the latest snapshot', () => {
     const props = {

@@ -3,14 +3,6 @@ import { BrowserRouter } from 'react-router-dom'
 import { shallow } from 'enzyme'
 import MapExplorer from './MapExplorer'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 describe('MapExplorer', () => {
   it('Matches Snapshot', () => {
     const wrapper = shallow(

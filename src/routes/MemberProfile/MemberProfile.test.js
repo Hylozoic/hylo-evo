@@ -7,22 +7,6 @@ import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibrar
 import denormalized from './MemberProfile.test.json'
 import MemberProfile from './MemberProfile.js'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  },
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 function testWrapper (providedState) {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   ormSession.Me.create(denormalized.data.person)

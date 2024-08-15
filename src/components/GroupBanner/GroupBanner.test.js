@@ -3,18 +3,6 @@ import GroupBanner, { PostPrompt } from './GroupBanner'
 import { BrowserRouter } from 'react-router-dom'
 import { shallow } from 'enzyme'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  }
-}))
-
 const currentUser = {
   avatarUrl: 'me.png',
   firstName: () => 'Bob',

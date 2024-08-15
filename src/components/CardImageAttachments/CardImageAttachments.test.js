@@ -4,6 +4,22 @@ import { shallow } from 'enzyme'
 import { render, screen } from 'util/testing/reactTestingLibraryExtended'
 import userEvent from '@testing-library/user-event'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  },
+  useTranslation: () => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 it('renders no images', () => {
   expect(shallow(<CardImageAttachments attachments={[
     { url: 'bonkerz', type: 'file' },

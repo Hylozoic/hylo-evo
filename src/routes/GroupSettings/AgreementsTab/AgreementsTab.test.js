@@ -3,22 +3,6 @@ import React from 'react'
 import orm from 'store/models'
 import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 
-jest.mock('react-i18next', () => ({
-  ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  },
-  withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
-    return Component
-  }
-}))
-
 function testProviders () {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   ormSession.Me.create({ id: '1' })

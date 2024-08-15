@@ -25,7 +25,7 @@ import { createPostUrl } from 'util/navigation'
 
 export const getCustomView = ormCreateSelector(
   orm,
-  (props) => getRouteParam('customViewId', props),
+  (_, props) => getRouteParam('customViewId', props),
   (session, id) => session.CustomView.safeGet({ id })
 )
 
