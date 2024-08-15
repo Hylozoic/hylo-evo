@@ -17,6 +17,7 @@ import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import './PostHeader.scss'
 import { PROPOSAL_STATUS_CASUAL, PROPOSAL_STATUS_COMPLETED } from 'store/models/Post'
+import FlagGroupContent from 'components/FlagGroupContent/FlagGroupContent'
 
 class PostHeader extends PureComponent {
   static defaultProps = {
@@ -38,6 +39,7 @@ class PostHeader extends PureComponent {
       createdAt,
       detailHasImage,
       expanded,
+      group,
       type,
       id,
       isFlagged,
@@ -126,7 +128,6 @@ class PostHeader extends PureComponent {
     }
 
     const showNormal = ((canBeCompleted && canEdit && expanded) && (topics?.length > 0 || (canHaveTimes && timeWindow.length > 0))) || false
-
     return (
       <div styleName={cx('header', { constrained }, { detailHasImage })} className={className}>
         <div styleName='headerMainRow'>
@@ -164,13 +165,18 @@ class PostHeader extends PureComponent {
                 <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
             </div>
           </div>
-          {flaggingVisible &&
+          {flaggingVisible && !group &&
             <FlagContent
               type='post'
               linkData={flagPostData}
               onClose={() => this.setState({ flaggingVisible: false })}
-            />
-          }
+            />}
+          {flaggingVisible && group &&
+            <FlagGroupContent
+              type='post'
+              linkData={flagPostData}
+              onClose={() => this.setState({ flaggingVisible: false })}
+            />}
         </div>
         <div styleName={cx('subheader', { hasImage }, { showNormal })}>
           {topics?.length > 0 && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
