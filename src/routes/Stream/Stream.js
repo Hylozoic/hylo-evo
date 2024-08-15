@@ -46,7 +46,6 @@ export default class Stream extends Component {
   componentDidMount () {
     const { routeParams, fetchTopic, decisionView } = this.props
     const { topicName } = routeParams
-    console.log(decisionView, 'decisionView in cDM')
     if (topicName) fetchTopic()
     if (decisionView === 'moderation') {
       this.fetchModerationActions(0)

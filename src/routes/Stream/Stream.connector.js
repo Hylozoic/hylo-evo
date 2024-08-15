@@ -116,7 +116,7 @@ export function mapStateToProps (state, props) {
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
-  const decisionView = getQuerystringParam('d', state, props) || 'proposal'
+  const decisionView = getQuerystringParam('d', props) || 'proposals'
   let fetchModerationActionParam, moderationActions, hasMoreModerationActions
   if (decisionView === 'moderation') {
     fetchModerationActionParam = {

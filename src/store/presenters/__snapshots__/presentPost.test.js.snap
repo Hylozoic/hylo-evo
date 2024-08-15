@@ -3,6 +3,7 @@
 exports[`presentPost matches the snapshot 1`] = `
 Object {
   "attachments": Array [],
+  "clickthrough": undefined,
   "commenters": Array [],
   "createdTimestamp": "Posted ",
   "createdTimestampForGrid": "",
