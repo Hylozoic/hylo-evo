@@ -247,7 +247,7 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
         post = Post.withId(meta?.data?.postId)
         if (post) {
           post.update({ flaggedGroups: post.flaggedGroups ? post.flaggedGroups.push(meta?.data?.groupId) : [meta?.data?.groupId] })
-          post.update({ moderationActions: post.moderationActions ? post.moderationActions.push(meta?.data) : [meta?.data] })
+          post.update({ moderationActions: post.moderationActions ? post.moderationActions.unshift(meta?.data) : [meta?.data] })
         }
       }
       break

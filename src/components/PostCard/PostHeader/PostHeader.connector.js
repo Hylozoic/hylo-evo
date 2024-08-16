@@ -21,7 +21,7 @@ export function mapStateToProps (state, props) {
   const context = props.routeParams.context
   const currentUser = getMe(state, props)
   const responsibilities = getResponsibilitiesForGroup(state, { groupId: group?.id }).map(r => r.title)
-  const moderationActionsGroupUrl = group && groupUrl(group.slug) + '?d=moderation'
+  const moderationActionsGroupUrl = group && groupUrl(group.slug, 'proposals') + '?d=moderation'
 
   return {
     context,

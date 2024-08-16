@@ -46,6 +46,7 @@ const ModerationListItem = ({
   const platformAgreements = allPlatformAgreements.filter(agreement => platformAgreementsIds.includes(agreement.id))
   const reporterUrl = `/user/${reporter.id}` // TODO COMOD, fix this
   const groupAgreementsUrl = group ? groupUrl(group.slug) + `/group/${group.slug}` : ''
+  const currentUserIsReporter = reporter.id === currentUser.id
 
   t('status-active')
   t('status-cleared')
@@ -93,7 +94,7 @@ const ModerationListItem = ({
       </div>
 
       <div styleName='card-footer'>
-        {canModerate && status !== 'cleared' && (
+        {(canModerate || currentUserIsReporter) && status !== 'cleared' && (
           <Button
             onClick={handleClearModerationAction}
             label={t('Clear')}

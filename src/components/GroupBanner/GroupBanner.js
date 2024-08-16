@@ -66,7 +66,7 @@ export default function GroupBanner ({
 
   const hasPostPrompt = currentUserHasMemberships && context !== CONTEXT_MY && view !== 'explore'
   const numCustomFilters = customViewType === 'stream' ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
-
+  if (isAboutOpen) console.log(groupUrl(group.slug, routeParams, querystringParams), routeParams, querystringParams, 'jaajajajaj')
   return (
     <div styleName={cx('banner', { 'all-groups': context === 'all', 'has-post-prompt': hasPostPrompt })}>
       <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
@@ -75,8 +75,7 @@ export default function GroupBanner ({
         {group && <div styleName='right'>
           <Link
             styleName={cx({ about: true, 'is-about-open': isAboutOpen })}
-            to={isAboutOpen ? groupUrl(group.slug, routeParams, querystringParams) : groupDetailUrl(group.slug, routeParams, querystringParams)}
-            // TODO COMOD: groupUrl doesn't have this call signature, need to fix
+            to={isAboutOpen ? groupUrl(group.slug) : groupDetailUrl(group.slug, routeParams, querystringParams)}
           >
             <Icon name='Info' />{t('About us')}
           </Link>
