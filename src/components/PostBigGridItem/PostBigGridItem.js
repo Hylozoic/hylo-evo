@@ -65,7 +65,6 @@ export default function PostBigGridItem (props) {
   const showDetailsTargeted = () => {
     return attachmentType === 'image' || post.type === 'event' ? showDetails() : null
   }
-  console.log(post.clickthrough, 'post.clickthrough')
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType, detailClass, post.type)} onClick={attachmentType !== 'image' && post.type !== 'event' ? showDetails : null}>
       <div styleName='content-summary'>

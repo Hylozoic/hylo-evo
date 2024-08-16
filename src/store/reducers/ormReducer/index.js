@@ -176,7 +176,6 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
     case CLEAR_MODERATION_ACTION_PENDING: {
       if (meta.data) {
-        post = Post.withId(meta?.data?.postId)
         const moderationAction = ModerationAction.withId(meta.data.moderationActionId)
         moderationAction.update({ status: 'cleared' })
       }
@@ -246,8 +245,10 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
     case CREATE_MODERATION_ACTION_PENDING: {
       if (meta.data) {
         post = Post.withId(meta?.data?.postId)
-        post.update({ flaggedGroups: post.flaggedGroups ? post.flaggedGroups.push(meta?.data?.groupId) : [meta?.data?.groupId] })
-        post.update({ moderationActions: post.moderationActions ? post.moderationActions.push(meta?.data) : [meta?.data] })
+        if (post) {
+          post.update({ flaggedGroups: post.flaggedGroups ? post.flaggedGroups.push(meta?.data?.groupId) : [meta?.data?.groupId] })
+          post.update({ moderationActions: post.moderationActions ? post.moderationActions.push(meta?.data) : [meta?.data] })
+        }
       }
       break
     }

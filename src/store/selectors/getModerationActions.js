@@ -12,10 +12,11 @@ export const getModerationActions = ormCreateSelector(
   (state, props) => props.groupId,
   (session, groupId) => {
     const moderationActions = session.ModerationAction.all().toModelArray()
-    return groupId ? moderationActions.filter(ma => {
-      console.log('ma.groupId', ma.groupId, 'akakaka', ma, moderationActions)
-      return ma.groupId === groupId
-    }) : moderationActions || []
+    return groupId
+      ? moderationActions.filter(ma => {
+        return ma.groupId === groupId
+      })
+      : moderationActions || []
   }
 )
 

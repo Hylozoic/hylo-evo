@@ -27,9 +27,9 @@ export default function PostBody (props) {
   return (
     <div>
       {isFlagged && !post.clickthrough &&
-        <div styleName='clickthrough-container'>
+        <div styleName='clickthroughContainer'>
           <div>{t('clickthroughExplainer')}</div>
-          <div styleName='clickthrough-button' onClick={() => dispatch(recordClickthrough({ postId: post.id }))}>{t('View post')}</div>
+          <div styleName='clickthroughButton' onClick={() => dispatch(recordClickthrough({ postId: post.id }))}>{t('View post')}</div>
         </div>
       }
       <div styleName={cx('body', { smallMargin: !expanded }, { constrained }, { isFlagged: isFlagged && !post.clickthrough })} className={className}>
