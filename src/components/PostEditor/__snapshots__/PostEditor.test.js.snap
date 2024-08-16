@@ -644,6 +644,176 @@ Array [
 ]
 `;
 
+exports[`PostEditor for a new event renders correctly 1`] = `
+<div
+  data-stylename="wrapper"
+>
+  <div
+    data-stylename="header"
+  >
+    <div
+      data-stylename="initial"
+    >
+      <div />
+    </div>
+  </div>
+  <div
+    data-stylename="body"
+  >
+    <div
+      data-stylename="body-column"
+    >
+      <RoundImage
+        data-stylename="titleAvatar"
+        medium={true}
+      />
+    </div>
+    <div
+      data-stylename="body-column"
+    >
+      <input
+        data-stylename="titleInput"
+        disabled={false}
+        maxLength={80}
+        onChange={[Function]}
+        placeholder="Add a title"
+        type="text"
+        value=""
+      />
+      <ForwardRef(HyloEditor)
+        data-stylename="editor"
+        onAddLink={[Function]}
+        onAddTopic={[Function]}
+        onUpdate={[Function]}
+        placeholder="Add a description"
+        readOnly={false}
+        showMenu={true}
+      />
+    </div>
+  </div>
+  <Connect(AttachmentManager)
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
+  />
+  <Connect(AttachmentManager)
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
+  />
+  <div
+    data-stylename="footer"
+  >
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Topics
+      </div>
+      <div
+        data-stylename="footerSection-topics"
+      >
+        <Connect(TopicSelector)
+          forGroups={Array []}
+          onChange={[Function]}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Post in
+        *
+      </div>
+      <div
+        data-stylename="footerSection-groups"
+      >
+        <GroupsSelector
+          onChange={[Function]}
+          options={Array []}
+          readOnly={false}
+          selected={Array []}
+          t={[Function]}
+        />
+      </div>
+    </div>
+    <PublicToggle
+      isPublic={false}
+      t={[Function]}
+      togglePublic={[Function]}
+    />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Timeframe
+      </div>
+      <div
+        data-stylename="datePickerModule"
+      >
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select Start"
+          value={"2024-07-23T16:30:00.000Z"}
+        />
+        <div
+          data-stylename="footerSection-helper"
+        >
+          To
+        </div>
+        <DatePicker
+          onChange={[Function]}
+          placeholder="Select End"
+          value={"2024-07-23T16:30:00.000Z"}
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Invite People
+      </div>
+      <div
+        data-stylename="footerSection-groups"
+      >
+        <Connect(MemberSelector)
+          forGroups={Array []}
+          initialMembers={Array []}
+          onChange={[Function]}
+          readOnly={false}
+        />
+      </div>
+    </div>
+    <ActionsBar
+      canMakeAnnouncement={true}
+      groupCount={0}
+      groups={Array []}
+      invalidPostWarning="You need a title and at least one group to post"
+      loading={false}
+      save={[Function]}
+      submitButtonLabel="Post"
+      t={[Function]}
+      toggleAnnouncementModal={[Function]}
+      valid={false}
+    />
+  </div>
+</div>
+`;
+
 exports[`PostEditor for a new post correct title placeholder and type button selection for "discussion" type 1`] = `
 <div
   data-stylename="wrapper"

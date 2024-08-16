@@ -99,7 +99,8 @@ describe('PostEditor', () => {
     })
   })
 
-  describe.skip('for a new event', () => {
+  describe('for a new event', () => {
+    Date.now = jest.fn(() => new Date(2024, 6, 23, 16, 30))
     it('renders correctly', () => {
       const props = {
         ...baseProps,
