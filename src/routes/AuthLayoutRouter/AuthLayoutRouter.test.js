@@ -132,6 +132,13 @@ it('shows group if the group exists', async () => {
           commonRoles: null
         })
       )
+    }),
+    graphql.query('FetchPlatformAgreements', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          platformAgreements: null
+        })
+      )
     })
   )
 
@@ -220,6 +227,13 @@ it('shows NotFound if the group does not exist', async () => {
       return res(
         ctx.data({
           commonRoles: null
+        })
+      )
+    }),
+    graphql.query('FetchPlatformAgreements', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          platformAgreements: null
         })
       )
     })
