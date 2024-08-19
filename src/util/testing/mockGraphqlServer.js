@@ -1,8 +1,13 @@
+import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
 export const mockGraphqlServer = setupServer()
 
 export default mockGraphqlServer
+
+export const handlers = [
+  rest.get('http://localhost/socket.io/', 'no hylo-node server in mocked tests')
+]
 
 // AuthLayoutRouter empty handlers for reference; to reduce boilerplace
 // possibly pre-polulate these on each test load
