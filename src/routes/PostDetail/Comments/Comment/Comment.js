@@ -113,7 +113,7 @@ export class Comment extends Component {
         <div styleName='header'>
           <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
-          <span styleName='timestamp' data-for='dateTip' data-tip={moment(createdAt).format('llll')}>
+          <span styleName='timestamp' data-for={`dateTip-${comment.id}`} data-tip={moment(createdAt).format('llll')}>
             {editing && 'Editing now'}
             {!editing && timestamp}
           </span>
@@ -267,7 +267,7 @@ export class CommentWithReplies extends Component {
         <Tooltip id={`reply-tip-${comment.id}`} />
         <Tooltip
           delay={550}
-          id='dateTip'
+          id={`dateTip-${comment.id}`}
           position='left'
         />
       </div>
