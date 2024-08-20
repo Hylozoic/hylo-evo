@@ -66,7 +66,6 @@ export default function GroupBanner ({
 
   const hasPostPrompt = currentUserHasMemberships && context !== CONTEXT_MY && view !== 'explore'
   const numCustomFilters = customViewType === 'stream' ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
-  if (isAboutOpen) console.log(groupUrl(group.slug, routeParams, querystringParams), routeParams, querystringParams, 'jaajajajaj')
   return (
     <div styleName={cx('banner', { 'all-groups': context === 'all', 'has-post-prompt': hasPostPrompt })}>
       <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>

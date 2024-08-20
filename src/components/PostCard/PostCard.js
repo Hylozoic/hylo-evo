@@ -63,7 +63,7 @@ export default function PostCard (props) {
 
   const postType = get('type', post)
   const isEvent = postType === 'event'
-  const isFlagged = post.flaggedGroups && post.flaggedGroups.includes(currentGroupId) // TODO COMOD also check platform
+  const isFlagged = post.flaggedGroups && post.flaggedGroups.includes(currentGroupId)
 
   const hasImage = post.attachments.find(a => a.type === 'image') || false
 
