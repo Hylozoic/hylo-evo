@@ -15,7 +15,7 @@ configure({ adapter: new Adapter() })
 // import { IntercomProvider } from 'react-use-intercom'
 
 // Keep the mockGraphqlServer (msw) tidy between tests
-beforeAll(() => mockGraphqlServer.listen({ onUnhandledRequest: 'bypass' }))
+beforeAll(() => mockGraphqlServer.listen({ onUnhandledRequest: 'error' }))
 afterEach(() => mockGraphqlServer.resetHandlers())
 afterAll(() => mockGraphqlServer.close())
 
