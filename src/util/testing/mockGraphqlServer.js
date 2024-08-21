@@ -1,6 +1,7 @@
 import { setupServer } from 'msw/node'
+import { handlers } from './handlers'
 
-export const mockGraphqlServer = setupServer()
+export const mockGraphqlServer = setupServer(...handlers)
 
 export default mockGraphqlServer
 
