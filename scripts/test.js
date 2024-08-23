@@ -24,5 +24,6 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
 // argv.push('--no-cache')
 
 argv.push('--runInBand') // Needed to speed up test run times in docker and CI envs
+argv.push('--ci') // Attempting to address warnings from msw on circleci
 
 jest.run(argv)
