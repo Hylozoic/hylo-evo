@@ -23,10 +23,10 @@ jobs:
         command: |
           export PATH=$PATH:$HOME/$CIRCLE_PROJECT_REPONAME/node_modules/.bin
     # Note: Uncomment or add to the commented list of echo's for debugging purposes
-    - run: echo 'echoing env vars'
-    - run: echo $CIRCLE_ARTIFACTS
-    - run: echo $CIRCLE_TEST_REPORTS
-    - run: echo `node --version`
+    # - run: echo 'echoing env vars'
+    # - run: echo $CIRCLE_ARTIFACTS
+    # - run: echo $CIRCLE_TEST_REPORTS
+    # - run: echo `node --version`
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
     - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     - restore_cache:
