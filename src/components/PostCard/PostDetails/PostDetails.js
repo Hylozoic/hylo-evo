@@ -48,9 +48,6 @@ export default function PostDetails ({
             <HyloHTML styleName='details' html={details} />
           </ClickCatcher>
         )}
-        {editedTimestamp && (<div styleName='timestamp'>
-          {editedTimestamp}
-        </div>)}
         {linkPreview && !linkPreviewFeatured && (
           <LinkPreview {...pick(['title', 'description', 'url', 'imageUrl'], linkPreview)} />
         )}

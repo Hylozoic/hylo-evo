@@ -2,6 +2,8 @@ import PostHeader, { TopicsLine } from './PostHeader'
 import { shallow } from 'enzyme'
 import React from 'react'
 import { RESP_ADMINISTRATION } from 'store/constants'
+import { render } from 'util/testing/reactTestingLibraryExtended'
+import '@testing-library/jest-dom'
 
 Date.now = jest.fn(() => new Date(2024, 6, 23, 16, 30))
 
@@ -95,6 +97,34 @@ it('renders human readable dates', () => {
   endTime = '2020-11-29'
   wrapper.setProps({ startTime, endTime })
   expect(wrapper).toMatchSnapshot()
+})
+
+it('renders created at timestamp', () => {
+  const creator = {
+    name: 'JJ',
+    avatarUrl: 'foo.png',
+    id: 123,
+    moderatedGroupMemberships: []
+  }
+
+  const createdTimestamp = 'Posted 1w ago'
+  const editedTimestamp = null
+  const { getByText } = render(<PostHeader creator={creator} roles={[]} editedTimestamp={editedTimestamp} createdTimestamp={createdTimestamp} />)
+  expect(getByText(createdTimestamp)).toBeInTheDocument()
+})
+
+it('renders edited at timestamp', () => {
+  const creator = {
+    name: 'JJ',
+    avatarUrl: 'foo.png',
+    id: 123,
+    moderatedGroupMemberships: []
+  }
+
+  const createdTimestamp = 'Posted 1w ago'
+  const editedTimestamp = 'Edited 12m ago'
+  const { getByText } = render(<PostHeader creator={creator} roles={[]} editedTimestamp={editedTimestamp} createdTimestamp={createdTimestamp} />)
+  expect(getByText(editedTimestamp)).toBeInTheDocument()
 })
 
 describe('TopicsLine', () => {
