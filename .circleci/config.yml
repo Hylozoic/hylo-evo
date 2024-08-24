@@ -23,10 +23,10 @@ jobs:
         command: |
           export PATH=$PATH:$HOME/$CIRCLE_PROJECT_REPONAME/node_modules/.bin
     # Note: Uncomment or add to the commented list of echo's for debugging purposes
-    # - run: echo 'echoing env vars'
-    # - run: echo $CIRCLE_ARTIFACTS
-    # - run: echo $CIRCLE_TEST_REPORTS
-    # - run: echo `node --version`
+    - run: echo 'echoing env vars'
+    - run: echo $CIRCLE_ARTIFACTS
+    - run: echo $CIRCLE_TEST_REPORTS
+    - run: echo `node --version`
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
     - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     - restore_cache:
@@ -40,7 +40,7 @@ jobs:
         paths: 
         - node_modules   
     # Test
-    - run: yarn test -- --coverage --runInBand
+    - run: yarn test --coverage --runInBand
     - run: codecov --token=c2dc871a-a23b-4a38-b105-f46e97f383c7
     # Deployment in CircleCI 2.0 are better handled through workflows.
     # See the documentation for more information https://circleci.com/docs/2.0/workflows/
