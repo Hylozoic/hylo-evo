@@ -32,7 +32,7 @@ it('matches last snapshot', () => {
   expect(wrapper).toMatchSnapshot()
 })
 
-it('does render edited at timestamp and not edited at timestamp', () => {
+it('does render edited at timestamp and not created at timestamp', () => {
   const createdTimestamp = 'Posted 1w ago'
   const editedTimestamp = 'Edited 12m ago'
   const props = {
