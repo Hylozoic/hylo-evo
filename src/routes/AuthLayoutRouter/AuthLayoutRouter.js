@@ -55,8 +55,8 @@ import PostDetail from 'routes/PostDetail'
 import Search from 'routes/Search'
 import WelcomeWizardRouter from 'routes/WelcomeWizardRouter'
 import SiteTour from 'routes/AuthLayoutRouter/components/SiteTour'
-import SocketListener from 'components/SocketListener'
-import SocketSubscriber from 'components/SocketSubscriber'
+// import SocketListener from 'components/SocketListener'
+// import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
 
 import UserSettings from 'routes/UserSettings'
@@ -424,8 +424,8 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />
             </Switch>
           </div>
-          <SocketListener location={location} groupSlug={currentGroupSlug} />
-          <SocketSubscriber type='group' id={get('slug', currentGroup)} />
+          {/* <SocketListener location={location} groupSlug={currentGroupSlug} /> */}
+          {/* <SocketSubscriber type='group' id={get('slug', currentGroup)} /> */}
         </div>
       </Div100vh>
     </IntercomProvider>
