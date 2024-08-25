@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IntercomProvider } from 'react-use-intercom'
 import { Helmet } from 'react-helmet'
 import Div100vh from 'react-div-100vh'
-import { some } from 'lodash/fp'
-import { useResizeDetector } from 'react-resize-detector'
+// import { some } from 'lodash/fp'
+// import { useResizeDetector } from 'react-resize-detector'
 import cx from 'classnames'
 // import mixpanel from 'mixpanel-browser'
 import config, { isTest } from 'config'
 import isWebView from 'util/webView'
-import { localeLocalStorageSync } from 'util/locale'
+// import { localeLocalStorageSync } from 'util/locale'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 // import setReturnToPath from 'store/actions/setReturnToPath'
@@ -19,7 +19,7 @@ import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 // import fetchForGroup from 'store/actions/fetchForGroup'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
-import getMyMemberships from 'store/selectors/getMyMemberships'
+// import getMyMemberships from 'store/selectors/getMyMemberships'
 import getMyGroupMembership from 'store/selectors/getMyGroupMembership'
 import { getSignupInProgress } from 'store/selectors/getAuthState'
 // import { toggleDrawer as toggleDrawerAction } from './AuthLayoutRouter.store'
@@ -33,14 +33,14 @@ import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 // import SocketListener from 'components/SocketListener'
 // import SocketSubscriber from 'components/SocketSubscriber'
-import TopNav from './components/TopNav'
+// import TopNav from './components/TopNav'
 
 // import { GROUP_TYPES } from 'store/models/Group'
 import './AuthLayoutRouter.scss'
 
 export default function AuthLayoutRouter (props) {
   const resizeRef = useRef()
-  const { width } = useResizeDetector({ handleHeight: false, targetRef: resizeRef })
+  // const { width } = useResizeDetector({ handleHeight: false, targetRef: resizeRef })
 
   const { hideNavLayout } = useLayoutFlags()
   const withoutNav = isWebView() || hideNavLayout
@@ -78,7 +78,7 @@ export default function AuthLayoutRouter (props) {
   const currentGroupMembership = useSelector(state => getMyGroupMembership(state, { match: { params: pathMatchParams } }))
   const currentUser = useSelector(getMe)
   // const isDrawerOpen = useSelector(state => get('AuthLayoutRouter.isDrawerOpen', state))
-  const memberships = useSelector(getMyMemberships)
+  // const memberships = useSelector(getMyMemberships)
   const returnToPath = useSelector(getReturnToPath)
   const signupInProgress = useSelector(getSignupInProgress)
 
@@ -102,7 +102,7 @@ export default function AuthLayoutRouter (props) {
       //   $location: currentUser.location
       // })
 
-      if (currentUser?.settings?.locale) localeLocalStorageSync(currentUser?.settings?.locale)
+      // if (currentUser?.settings?.locale) localeLocalStorageSync(currentUser?.settings?.locale)
     }
   }, [currentUser?.id])
 
@@ -153,7 +153,7 @@ export default function AuthLayoutRouter (props) {
     userId: currentUser.id
   }
   // const handleCloseDrawer = () => isDrawerOpen && dispatch(toggleDrawerAction())
-  const showMenuBadge = some(m => m.newPostCount > 0, memberships)
+  // const showMenuBadge = some(m => m.newPostCount > 0, memberships)
   const collapsedState = hasDetail || (isMapView && hideDrawer)
   const isSingleColumn = (currentGroupSlug && !currentGroupMembership) ||
     matchPath(location.pathname, '/members/:personId')
@@ -212,7 +212,7 @@ export default function AuthLayoutRouter (props) {
       {!withoutNav && (
         <>
           {/* Depends on `pathMatchParams` */}
-          <TopNav styleName='top' {...{ group: currentGroup, currentUser, routeParams: pathMatchParams, showMenuBadge, width }} />
+          {/* <TopNav styleName='top' {...{ group: currentGroup, currentUser, routeParams: pathMatchParams, showMenuBadge, width }} /> */}
           {/* {isDrawerOpen && (
             <Route
               path={[
