@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IntercomProvider } from 'react-use-intercom'
 import { Helmet } from 'react-helmet'
 import Div100vh from 'react-div-100vh'
-import { get, some } from 'lodash/fp'
+import { some } from 'lodash/fp'
 import { useResizeDetector } from 'react-resize-detector'
 import cx from 'classnames'
 import mixpanel from 'mixpanel-browser'
@@ -13,29 +13,29 @@ import isWebView from 'util/webView'
 import { localeLocalStorageSync } from 'util/locale'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
-import setReturnToPath from 'store/actions/setReturnToPath'
-import fetchCommonRoles from 'store/actions/fetchCommonRoles'
+// import setReturnToPath from 'store/actions/setReturnToPath'
+// import fetchCommonRoles from 'store/actions/fetchCommonRoles'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
-import fetchForGroup from 'store/actions/fetchForGroup'
+// import fetchForGroup from 'store/actions/fetchForGroup'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import getMyGroupMembership from 'store/selectors/getMyGroupMembership'
 import { getSignupInProgress } from 'store/selectors/getAuthState'
-import { toggleDrawer as toggleDrawerAction } from './AuthLayoutRouter.store'
+// import { toggleDrawer as toggleDrawerAction } from './AuthLayoutRouter.store'
 import {
   POST_DETAIL_MATCH, GROUP_DETAIL_MATCH, postUrl
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
-import Stream from 'routes/Stream'
-import LandingPage from 'routes/LandingPage'
+// import Stream from 'routes/Stream'
+// import LandingPage from 'routes/LandingPage'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 // import SocketListener from 'components/SocketListener'
 // import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
 
-import { GROUP_TYPES } from 'store/models/Group'
+// import { GROUP_TYPES } from 'store/models/Group'
 import './AuthLayoutRouter.scss'
 
 export default function AuthLayoutRouter (props) {
@@ -77,7 +77,7 @@ export default function AuthLayoutRouter (props) {
   const currentGroup = useSelector(state => getGroupForCurrentRoute(state, { match: { params: pathMatchParams } }))
   const currentGroupMembership = useSelector(state => getMyGroupMembership(state, { match: { params: pathMatchParams } }))
   const currentUser = useSelector(getMe)
-  const isDrawerOpen = useSelector(state => get('AuthLayoutRouter.isDrawerOpen', state))
+  // const isDrawerOpen = useSelector(state => get('AuthLayoutRouter.isDrawerOpen', state))
   const memberships = useSelector(getMyMemberships)
   const returnToPath = useSelector(getReturnToPath)
   const signupInProgress = useSelector(getSignupInProgress)
@@ -87,7 +87,7 @@ export default function AuthLayoutRouter (props) {
 
   useEffect(() => {
     (async function () {
-      await dispatch(fetchCommonRoles())
+      // await dispatch(fetchCommonRoles())
       await dispatch(fetchForCurrentUser())
       setCurrentUserLoading(false)
     })()
@@ -124,7 +124,7 @@ export default function AuthLayoutRouter (props) {
     (async function () {
       if (currentGroupSlug) {
         setCurrentGroupLoading(true)
-        await dispatch(fetchForGroup(currentGroupSlug))
+        // await dispatch(fetchForGroup(currentGroupSlug))
         setCurrentGroupLoading(false)
       }
     })()
@@ -152,7 +152,7 @@ export default function AuthLayoutRouter (props) {
     name: currentUser.name,
     userId: currentUser.id
   }
-  const handleCloseDrawer = () => isDrawerOpen && dispatch(toggleDrawerAction())
+  // const handleCloseDrawer = () => isDrawerOpen && dispatch(toggleDrawerAction())
   const showMenuBadge = some(m => m.newPostCount > 0, memberships)
   const collapsedState = hasDetail || (isMapView && hideDrawer)
   const isSingleColumn = (currentGroupSlug && !currentGroupMembership) ||
@@ -162,7 +162,7 @@ export default function AuthLayoutRouter (props) {
   if (!signupInProgress && returnToPath) {
     const returnToPathName = new URL(returnToPath, 'https://hylo.com')?.pathname
     if (location.pathname === returnToPathName) {
-      dispatch(setReturnToPath())
+      // dispatch(setReturnToPath())
     } else {
       return <Redirect push to={returnToPath} />
     }
@@ -212,7 +212,7 @@ export default function AuthLayoutRouter (props) {
       {!withoutNav && (
         <>
           {/* Depends on `pathMatchParams` */}
-          <TopNav styleName='top' onClick={handleCloseDrawer} {...{ group: currentGroup, currentUser, routeParams: pathMatchParams, showMenuBadge, width }} />
+          <TopNav styleName='top' {...{ group: currentGroup, currentUser, routeParams: pathMatchParams, showMenuBadge, width }} />
           {/* {isDrawerOpen && (
             <Route
               path={[
@@ -261,7 +261,7 @@ export default function AuthLayoutRouter (props) {
       /> */}
 
       <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
-        <div ref={resizeRef} styleName={cx('main', { 'map-view': isMapView, withoutNav, 'main-pad': !withoutNav })} onClick={handleCloseDrawer}>
+        <div ref={resizeRef} styleName={cx('main', { 'map-view': isMapView, withoutNav, 'main-pad': !withoutNav })} >
           {/* View navigation menu */}
           {/* <Route
             path={[
@@ -389,13 +389,13 @@ export default function AuthLayoutRouter (props) {
   )
 }
 
-export function returnDefaultRouteForGroup (group) {
-  if (!group) return Stream
+// export function returnDefaultRouteForGroup (group) {
+//   if (!group) return Stream
 
-  switch (group.type) {
-    case GROUP_TYPES.farm:
-      return LandingPage
-    default:
-      return Stream
-  }
-}
+//   switch (group.type) {
+//     case GROUP_TYPES.farm:
+//       return LandingPage
+//     default:
+//       return Stream
+//   }
+// }
