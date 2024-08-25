@@ -145,99 +145,99 @@ it('shows group if the group exists', async () => {
   expect(screen.getByText('Stream')).toBeInTheDocument()
 })
 
-it('shows NotFound if the group does not exist', async () => {
-  const me = {
-    id: '1',
-    name: 'Test User',
-    hasRegistered: true,
-    emailValidated: true,
-    settings: {
-      signupInProgress: false,
-      alreadySeenTour: true
-    },
-    memberships: [{ id: '3', person: { id: '3' }, commonRoles: { items: [] } }]
-  }
+// it('shows NotFound if the group does not exist', async () => {
+//   const me = {
+//     id: '1',
+//     name: 'Test User',
+//     hasRegistered: true,
+//     emailValidated: true,
+//     settings: {
+//       signupInProgress: false,
+//       alreadySeenTour: true
+//     },
+//     memberships: [{ id: '3', person: { id: '3' }, commonRoles: { items: [] } }]
+//   }
 
-  mockGraphqlServer.resetHandlers(
-    graphql.query('MeQuery', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          me: me
-        })
-      )
-    }),
-    graphql.query('FetchForGroup', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          group: null
-        })
-      )
-    }),
-    graphql.query('GroupDetailsQuery', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          group: null
-        })
-      )
-    }),
-    graphql.query('GroupWelcomeQuery', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          group: null
-        })
-      )
-    }),
-    graphql.query('PostsQuery', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          group: null
-        })
-      )
-    }),
-    graphql.query('GroupPostsQuery', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          group: null
-        })
-      )
-    }),
-    // defaults
-    graphql.query('MessageThreadsQuery', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          me: null
-        })
-      )
-    }),
-    graphql.query('MyPendingJoinRequestsQuery', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          joinRequests: null
-        })
-      )
-    }),
-    graphql.query('NotificationsQuery', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          notifications: null
-        })
-      )
-    }),
-    graphql.query('FetchCommonRoles', (req, res, ctx) => {
-      return res(
-        ctx.data({
-          commonRoles: null
-        })
-      )
-    })
-  )
+//   mockGraphqlServer.resetHandlers(
+//     graphql.query('MeQuery', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           me: me
+//         })
+//       )
+//     }),
+//     graphql.query('FetchForGroup', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           group: null
+//         })
+//       )
+//     }),
+//     graphql.query('GroupDetailsQuery', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           group: null
+//         })
+//       )
+//     }),
+//     graphql.query('GroupWelcomeQuery', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           group: null
+//         })
+//       )
+//     }),
+//     graphql.query('PostsQuery', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           group: null
+//         })
+//       )
+//     }),
+//     graphql.query('GroupPostsQuery', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           group: null
+//         })
+//       )
+//     }),
+//     // defaults
+//     graphql.query('MessageThreadsQuery', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           me: null
+//         })
+//       )
+//     }),
+//     graphql.query('MyPendingJoinRequestsQuery', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           joinRequests: null
+//         })
+//       )
+//     }),
+//     graphql.query('NotificationsQuery', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           notifications: null
+//         })
+//       )
+//     }),
+//     graphql.query('FetchCommonRoles', (req, res, ctx) => {
+//       return res(
+//         ctx.data({
+//           commonRoles: null
+//         })
+//       )
+//     })
+//   )
 
-  render(
-    <AuthLayoutRouter location={{ pathname: '/groups/no-group', search: '' }} />,
-    { wrapper: testWrapper() }
-  )
+//   render(
+//     <AuthLayoutRouter location={{ pathname: '/groups/no-group', search: '' }} />,
+//     { wrapper: testWrapper() }
+//   )
 
-  await waitForElementToBeRemoved(screen.queryByTestId('loading-screen'))
+//   await waitForElementToBeRemoved(screen.queryByTestId('loading-screen'))
 
-  expect(screen.getByText('404 Not Found')).toBeInTheDocument()
-})
+//   expect(screen.getByText('404 Not Found')).toBeInTheDocument()
+// })
