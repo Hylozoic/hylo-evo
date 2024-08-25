@@ -180,6 +180,13 @@ it('shows NotFound if the group does not exist', async () => {
         })
       )
     }),
+    graphql.query('GroupWelcomeQuery', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          group: null
+        })
+      )
+    }),
     graphql.query('PostsQuery', (req, res, ctx) => {
       return res(
         ctx.data({
