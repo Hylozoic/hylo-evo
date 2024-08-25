@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { matchPath, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { IntercomProvider } from 'react-use-intercom'
+// import { IntercomProvider } from 'react-use-intercom'
 import { Helmet } from 'react-helmet'
 import Div100vh from 'react-div-100vh'
 // import { some } from 'lodash/fp'
 // import { useResizeDetector } from 'react-resize-detector'
 import cx from 'classnames'
 // import mixpanel from 'mixpanel-browser'
-import config, { isTest } from 'config'
+// import config, { isTest } from 'config'
 import isWebView from 'util/webView'
 // import { localeLocalStorageSync } from 'util/locale'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
@@ -145,13 +145,13 @@ export default function AuthLayoutRouter (props) {
   }
 
   // Layout props, flags, and event handlers
-  const intercomProps = {
-    hideDefaultLauncher: true,
-    userHash: currentUser.intercomHash,
-    email: currentUser.email,
-    name: currentUser.name,
-    userId: currentUser.id
-  }
+  // const intercomProps = {
+  //   hideDefaultLauncher: true,
+  //   userHash: currentUser.intercomHash,
+  //   email: currentUser.email,
+  //   name: currentUser.name,
+  //   userId: currentUser.id
+  // }
   // const handleCloseDrawer = () => isDrawerOpen && dispatch(toggleDrawerAction())
   // const showMenuBadge = some(m => m.newPostCount > 0, memberships)
   const collapsedState = hasDetail || (isMapView && hideDrawer)
@@ -184,7 +184,7 @@ export default function AuthLayoutRouter (props) {
   }
 
   return (
-    <IntercomProvider appId={isTest ? '' : config.intercom.appId} autoBoot autoBootProps={intercomProps}>
+    <>
       <Helmet>
         <title>{currentGroup ? `${currentGroup.name} | ` : ''}Hylo</title>
         <meta name='description' content='Prosocial Coordination for a Thriving Planet' />
@@ -385,7 +385,7 @@ export default function AuthLayoutRouter (props) {
           {/* <SocketSubscriber type='group' id={get('slug', currentGroup)} /> */}
         </div>
       </Div100vh>
-    </IntercomProvider>
+    </>
   )
 }
 
