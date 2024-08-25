@@ -40,7 +40,7 @@ jobs:
         paths: 
         - node_modules   
     # Test
-    - run: yarn test AttachmentManager.test.js #--coverage --runInBand
+    - run: yarn test AuthLayoutRouter.test.js #--coverage --runInBand
     - run: codecov --token=c2dc871a-a23b-4a38-b105-f46e97f383c7
     # Deployment in CircleCI 2.0 are better handled through workflows.
     # See the documentation for more information https://circleci.com/docs/2.0/workflows/
