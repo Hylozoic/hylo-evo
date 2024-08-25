@@ -7,7 +7,7 @@ import Div100vh from 'react-div-100vh'
 import { some } from 'lodash/fp'
 import { useResizeDetector } from 'react-resize-detector'
 import cx from 'classnames'
-import mixpanel from 'mixpanel-browser'
+// import mixpanel from 'mixpanel-browser'
 import config, { isTest } from 'config'
 import isWebView from 'util/webView'
 import { localeLocalStorageSync } from 'util/locale'
@@ -95,12 +95,12 @@ export default function AuthLayoutRouter (props) {
 
   useEffect(() => {
     if (currentUser?.id) {
-      mixpanel.identify(currentUser.id)
-      mixpanel.people.set({
-        $name: currentUser.name,
-        $email: currentUser.email,
-        $location: currentUser.location
-      })
+      // mixpanel.identify(currentUser.id)
+      // mixpanel.people.set({
+      //   $name: currentUser.name,
+      //   $email: currentUser.email,
+      //   $location: currentUser.location
+      // })
 
       if (currentUser?.settings?.locale) localeLocalStorageSync(currentUser?.settings?.locale)
     }
@@ -108,15 +108,15 @@ export default function AuthLayoutRouter (props) {
 
   useEffect(() => {
     // Add all current group membershps to mixpanel user
-    mixpanel.set_group('groupId', memberships.map(m => m.group.id))
+    // mixpanel.set_group('groupId', memberships.map(m => m.group.id))
 
     if (currentGroup?.id) {
       // Setup group profile info
-      mixpanel.get_group('groupId', currentGroup.id).set({
-        $location: currentGroup.location,
-        $name: currentGroup.name,
-        type: currentGroup.type
-      })
+      // mixpanel.get_group('groupId', currentGroup.id).set({
+      //   $location: currentGroup.location,
+      //   $name: currentGroup.name,
+      //   type: currentGroup.type
+      // })
     }
   }, [currentGroup?.id])
 
