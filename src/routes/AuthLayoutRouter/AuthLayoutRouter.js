@@ -1,9 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { matchPath, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import cx from 'classnames'
-import isWebView from 'util/webView'
-import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
@@ -20,9 +17,6 @@ import './AuthLayoutRouter.scss'
 
 export default function AuthLayoutRouter (props) {
   const resizeRef = useRef()
-
-  const { hideNavLayout } = useLayoutFlags()
-  const withoutNav = isWebView() || hideNavLayout
 
   const location = props.location
   const pathMatchParams = useMemo(() => (
@@ -45,7 +39,6 @@ export default function AuthLayoutRouter (props) {
     `/:context(my)/:view(mentions|interactions|posts|announcements)/${POST_DETAIL_MATCH}`
   ])?.params?.postId
   const currentGroupSlug = pathMatchParams?.groupSlug
-  const isMapView = pathMatchParams?.view === 'map'
   const isWelcomeContext = pathMatchParams?.context === 'welcome'
   // Store
   const dispatch = useDispatch()
@@ -108,6 +101,6 @@ export default function AuthLayoutRouter (props) {
   }
 
   return (
-    <div ref={resizeRef} styleName={cx('main', { 'map-view': isMapView, withoutNav, 'main-pad': !withoutNav })} />
+    <div ref={resizeRef} />
   )
 }
