@@ -150,7 +150,8 @@ export default function fetchForCurrentUser () {
             }
           }
         }
-      }`
+      }`,
+      variables: { }
     },
     meta: {
       extractModel: [
