@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'msw'
 import orm from 'store/models'
 import mockGraphqlServer from 'util/testing/mockGraphqlServer'
-import { AllTheProviders, render, screen, waitForElementToBeRemoved } from 'util/testing/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import AuthLayoutRouter from './AuthLayoutRouter'
 
 const { ResizeObserver } = window
@@ -237,7 +237,5 @@ it('shows NotFound if the group does not exist', async () => {
     { wrapper: testWrapper() }
   )
 
-  await waitForElementToBeRemoved(screen.queryByTestId('loading-screen'))
-
-  expect(screen.getByText('404 Not Found')).toBeInTheDocument()
+  expect(await screen.findByText('404 Not Found')).toBeInTheDocument()
 })
