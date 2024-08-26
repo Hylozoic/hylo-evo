@@ -66,7 +66,7 @@ export default function AuthLayoutRouter (props) {
         setCurrentGroupLoading(false)
       }
     })()
-  }, [currentGroupSlug])
+  }, [currentGroupSlug, dispatch])
 
   // Scroll to top of center column when context, groupSlug, or view changes (from `pathMatchParams`)
   useEffect(() => {
