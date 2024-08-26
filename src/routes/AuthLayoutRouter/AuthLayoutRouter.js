@@ -3,7 +3,8 @@ import { matchPath, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 // import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
-import fetchForGroup from 'store/actions/fetchForGroup'
+// import fetchForGroup from 'store/actions/fetchForGroup'
+import fetchCommonRoles from 'store/actions/fetchCommonRoles'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyGroupMembership from 'store/selectors/getMyGroupMembership'
 import { getSignupInProgress } from 'store/selectors/getAuthState'
@@ -53,6 +54,7 @@ export default function AuthLayoutRouter (props) {
 
   useEffect(() => {
     (async function () {
+      await dispatch(fetchCommonRoles())
       // await dispatch(fetchForCurrentUser())
       setCurrentUserLoading(false)
     })()
@@ -62,7 +64,7 @@ export default function AuthLayoutRouter (props) {
     (async function () {
       if (currentGroupSlug) {
         setCurrentGroupLoading(true)
-        await dispatch(fetchForGroup(currentGroupSlug))
+        // await dispatch(fetchForGroup(currentGroupSlug))
         setCurrentGroupLoading(false)
       }
     })()
