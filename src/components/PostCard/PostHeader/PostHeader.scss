@@ -145,13 +145,15 @@
 
 .timestampRow {
   align-items: center;
-  display: flex;
+  display: block;
+  margin-top: -3px;
   margin-left: 10px;
 }
 
 .timestamp {
   composes: timestamp from 'css/typography.scss';
   white-space: nowrap;
+  display: block;
 }
 
 .timeWindow {

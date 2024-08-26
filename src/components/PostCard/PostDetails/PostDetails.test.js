@@ -43,9 +43,10 @@ it('does render edited at timestamp and not created at timestamp', () => {
     createdTimestamp,
     editedTimestamp
   }
-  const re = new RegExp(`Unable to find an element with the text: ${createdTimestamp}`, 's')
+  const re1 = new RegExp(`Unable to find an element with the text: ${createdTimestamp}`, 's')
+  const re2 = new RegExp(`Unable to find an element with the text: ${editedTimestamp}`, 's')
 
   const { getByText } = render(<PostDetails {...props} />)
-  expect(getByText(editedTimestamp)).toBeInTheDocument()
-  expect(() => getByText(createdTimestamp)).toThrow(re)
+  expect(() => getByText(createdTimestamp)).toThrow(re1)
+  expect(() => getByText(editedTimestamp)).toThrow(re2)
 })

@@ -109,10 +109,9 @@ it('renders created at timestamp and not edited at timestamp', () => {
 
   const createdTimestamp = 'Posted 1w ago'
   const editedTimestamp = 'Edited just now'
-  const re = new RegExp(`Unable to find an element with the text: ${editedTimestamp}`, 's')
   const { getByText } = render(<PostHeader creator={creator} roles={[]} editedTimestamp={editedTimestamp} createdTimestamp={createdTimestamp} />)
   expect(getByText(createdTimestamp)).toBeInTheDocument()
-  expect(() => getByText(editedTimestamp)).toThrow(re)
+  expect(getByText(editedTimestamp)).toBeInTheDocument()
 })
 
 describe('TopicsLine', () => {
