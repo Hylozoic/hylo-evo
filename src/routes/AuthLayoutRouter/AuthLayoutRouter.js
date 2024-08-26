@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { matchPath, Redirect } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import getReturnToPath from 'store/selectors/getReturnToPath'
+import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyGroupMembership from 'store/selectors/getMyGroupMembership'
 import { getSignupInProgress } from 'store/selectors/getAuthState'
@@ -40,6 +41,7 @@ export default function AuthLayoutRouter (props) {
   const currentGroupSlug = pathMatchParams?.groupSlug
   const isWelcomeContext = pathMatchParams?.context === 'welcome'
   // Store
+  const dispatch = useDispatch()
   const currentGroup = useSelector(state => getGroupForCurrentRoute(state, { match: { params: pathMatchParams } }))
   const currentGroupMembership = useSelector(state => getMyGroupMembership(state, { match: { params: pathMatchParams } }))
   const returnToPath = useSelector(getReturnToPath)
@@ -50,6 +52,7 @@ export default function AuthLayoutRouter (props) {
 
   useEffect(() => {
     (async function () {
+      await dispatch(fetchForCurrentUser())
       setCurrentUserLoading(false)
     })()
   }, [])
