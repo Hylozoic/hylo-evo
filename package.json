@@ -183,7 +183,7 @@
     "mock-fs": "^4.2.0",
     "moment-locales-webpack-plugin": "^1.2.0",
     "moment-timezone": "^0.5.37",
-    "msw": "^0.38.0",
+    "msw": "^0.39.0",
     "newrelic": "^7.0.2",
     "normalize.css": "^7.0.0",
     "object-assign": "4.1.1",
