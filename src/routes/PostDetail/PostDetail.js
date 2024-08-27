@@ -128,7 +128,7 @@ class PostDetail extends Component {
       t
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
- 
+
     if (!post && !pending) return <NotFound />
     if (pending) return <Loading />
 

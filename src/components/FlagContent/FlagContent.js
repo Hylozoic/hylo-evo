@@ -92,33 +92,35 @@ class FlagContent extends PureComponent {
       reasonRequired,
       selectedCategory = '', explanation } = this.state
 
-    return <div styleName='popup'>
-      <div styleName='popup-inner'>
-        <h1>{t('Explanation for Flagging')}</h1>
-        <span onClick={this.closeModal} styleName='close-btn'>
-          <Icon name='Ex' styleName='icon' />
-        </span>
+    return (
+      <div styleName='popup'>
+        <div styleName='popup-inner'>
+          <h1>{t('Explanation for Flagging')}</h1>
+          <span onClick={this.closeModal} styleName='close-btn'>
+            <Icon name='Ex' styleName='icon' />
+          </span>
 
-        <div styleName='content'>
-          <div styleName='reason'>
-            <Select
-              onChange={this.updateSelected}
-              fullWidth
-              styleName={reasonRequired ? t('reason-required') : ''}
-              selected={selectedCategory}
-              placeholder={t('Select a reason')}
-              options={options} />
+          <div styleName='content'>
+            <div styleName='reason'>
+              <Select
+                onChange={this.updateSelected}
+                fullWidth
+                styleName={reasonRequired ? t('reason-required') : ''}
+                selected={selectedCategory}
+                placeholder={t('Select a reason')}
+                options={options} />
+            </div>
+            <TextareaAutosize
+              styleName='explanation-textbox'
+              minRows={6}
+              value={explanation}
+              onChange={(e) => { this.setState({ explanation: e.target.value }) }}
+              placeholder={subtitle} />
+            <Button styleName='submit-btn' onClick={this.submit} disabled={isEmpty(selectedCategory)}>{t('Submit')}</Button>
           </div>
-          <TextareaAutosize
-            styleName='explanation-textbox'
-            minRows={6}
-            value={explanation}
-            onChange={(e) => { this.setState({ explanation: e.target.value }) }}
-            placeholder={subtitle} />
-          <Button styleName='submit-btn' onClick={this.submit} disabled={isEmpty(selectedCategory)}>{t('Submit')}</Button>
         </div>
       </div>
-    </div>
+    )
   }
 }
 export default withTranslation()(FlagContent)

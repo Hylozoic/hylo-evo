@@ -14,6 +14,7 @@ import getGroupForDetail from 'store/selectors/getGroupForDetails'
 import getPlatformAgreements from 'store/selectors/getPlatformAgreements'
 import { groupUrl } from 'util/navigation'
 import './FlagGroupContent.scss'
+import Tooltip from 'components/Tooltip'
 
 const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
   const { t } = useTranslation()
@@ -68,7 +69,7 @@ const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
   }
 
   return (
-    <div styleName='popup'>
+    <div styleName='popup' onClick={(e) => e.stopPropagation()}>
       <div styleName='popup-inner'>
         <h1>{t('Explanation for Flagging')}</h1>
         <span onClick={closeModal} styleName='close-btn'>
@@ -93,15 +94,15 @@ const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
             <>
               <h3>{t('Not permitted in {{groupName}}', { groupName: group?.name })}</h3>
               <a href={groupAgreementsUrl} target='_blank' rel='noopener noreferrer' styleName='agreements-link'>{t('Link to group agreements')}</a>
-              <MultiSelect items={agreements} selected={agreementsSelected} handleSelect={handleAgreementsSelect} hideAfter={3} />
+              <MultiSelect items={agreements} selected={agreementsSelected} handleSelect={handleAgreementsSelect} />
             </>
           )}
           <h3>{t('Violations of platform agreements')}</h3>
           <a href={agreementsURL} target='_blank' rel='noopener noreferrer' styleName='agreements-link'>{t('Link to platform agreements')}</a>
           <h5>{t('Not permitted in Public Spaces')}</h5>
-          <MultiSelect items={platformAgreements.filter((ag) => ag.type !== 'anywhere')} selected={platformAgreementsSelected} handleSelect={handlePlatformAgreementsSelect} hideAfter={2} />
+          <MultiSelect items={platformAgreements.filter((ag) => ag.type !== 'anywhere')} selected={platformAgreementsSelected} handleSelect={handlePlatformAgreementsSelect} />
           <h5>{t('Not permitted anywhere on the platform')}</h5>
-          <MultiSelect items={platformAgreements.filter((ag) => ag.type === 'anywhere')} selected={platformAgreementsSelected} handleSelect={handlePlatformAgreementsSelect} hideAfter={2} />
+          <MultiSelect items={platformAgreements.filter((ag) => ag.type === 'anywhere')} selected={platformAgreementsSelected} handleSelect={handlePlatformAgreementsSelect} />
           <div styleName='submission'>
             <CheckBox
               checked={anonymous}
@@ -109,9 +110,13 @@ const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
               onChange={value => setAnonymous(value)}
               labelClass='anon-label'
             />
-            <Button styleName='submit-btn' onClick={submit} disabled={!isValid()}>
+            <Button styleName='submit-btn' onClick={submit} disabled={!isValid()} dataTip={t('Select an agreement and add an explanation for why you are flagging this post')} dataFor='flagging-submit-tt'>
               {t('Submit')}
             </Button>
+            <Tooltip
+              id='flagging-submit-tt'
+              delay={250}
+            />
           </div>
         </div>
       </div>

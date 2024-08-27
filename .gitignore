@@ -27,3 +27,5 @@ npm-debug.log
 yarn-error.log
 .idea
 yarn.lock
+.yarn
+.yarnrc.yml
