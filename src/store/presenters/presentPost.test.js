@@ -15,7 +15,8 @@ describe('presentPost', () => {
   Date.now = jest.fn(() => new Date(2024, 6, 23, 16, 30))
 
   it('matches the snapshot', () => {
-    const post = session.Post.withId(postId)
+    let post = session.Post.withId(postId)
+    post.editedAt = new Date(2025, 6, 23, 16, 30)
     const result = presentPost(post, groupId)
     expect(result).toMatchSnapshot()
   })

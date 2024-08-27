@@ -7,7 +7,7 @@ Object {
   "createdTimestamp": "Posted ",
   "createdTimestampForGrid": "",
   "creator": null,
-  "editedTimestamp": null,
+  "editedTimestamp": "Edited just now",
   "eventInvitations": Array [
     Object {
       "id": 0,
@@ -15,7 +15,8 @@ Object {
       "response": "yes",
     },
   ],
-  "exactTimestamp": "Tue, Jul 23, 2024 4:30 PM",
+  "exactCreatedTimestamp": "Tue, Jul 23, 2024 4:30 PM",
+  "exactEditedTimestamp": "Wed, Jul 23, 2025 4:30 PM",
   "fileAttachments": Array [],
   "groups": Array [],
   "id": 324,
