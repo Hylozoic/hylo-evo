@@ -17,16 +17,19 @@ const MultiSelect = ({ items, selected = [], hideAfter, handleSelect }) => {
       : items.slice(0, hideAfter)
 
     return itemsToRender.map((item, i) => (
-      <div key={item.id} styleName={cx('item', { selected: selected.includes(item.id) })}>
+      <div
+        onClick={(evt) => {
+          evt.stopPropagation()
+          handleSelect && handleSelect(item.id)
+        }}
+        key={item.id}
+        styleName={cx('item', { selected: selected.includes(item.id) })}
+      >
         <span>{item.text || item.title}</span>
         {handleSelect && (
           <input
             type='checkbox'
             checked={selected.includes(item.id)}
-            onChange={(evt) => {
-              evt.stopPropagation()
-              handleSelect && handleSelect(item.id)
-            }}
           />
         )}
       </div>
