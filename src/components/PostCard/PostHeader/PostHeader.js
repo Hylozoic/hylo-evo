@@ -157,7 +157,7 @@ class PostHeader extends PureComponent {
               </div>
             </div>
             <div styleName='upperRight'>
-              {isFlagged && <a href={moderationActionsGroupUrl}><Icon name='Flag' styleName='flagIcon' dataTip={t('See why this post was flagged')} dataTipFor='flag-tt' /></a>}
+              {isFlagged && <a href={moderationActionsGroupUrl} styleName='notALink'><Icon name='Flag' styleName='flagIcon' dataTip={t('See why this post was flagged')} dataTipFor='flag-tt' /></a>}
               <Tooltip
                 delay={250}
                 id='flag-tt'
