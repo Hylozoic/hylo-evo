@@ -6,7 +6,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import Button from 'components/Button'
 import CheckBox from 'components/CheckBox'
 import Icon from 'components/Icon'
-import MultiSelect from 'components/MultiSelect/MultiSelect'
+import MultiSelect from 'components/MultiSelect'
 import { createModerationAction } from 'store/actions/moderationActions'
 import { agreementsURL } from 'store/constants'
 import presentGroup from 'store/presenters/presentGroup'
@@ -90,7 +90,7 @@ const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
             onChange={(e) => setExplanation(e.target.value)}
             placeholder={subtitle}
           />
-          {group && (
+          {group && agreements.length > 0 && (
             <>
               <h3>{t('Not permitted in {{groupName}}', { groupName: group?.name })}</h3>
               <a href={groupAgreementsUrl} target='_blank' rel='noopener noreferrer' styleName='agreements-link'>{t('Link to group agreements')}</a>
