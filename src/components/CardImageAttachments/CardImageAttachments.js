@@ -7,7 +7,8 @@ import './CardImageAttachments.scss'
 
 export default function CardImageAttachments ({
   attachments,
-  className
+  className,
+  isFlagged
 }) {
   const imageAttachments = filter({ type: 'image' }, attachments)
 

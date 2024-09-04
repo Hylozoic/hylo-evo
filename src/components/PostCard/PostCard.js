@@ -94,7 +94,7 @@ export default function PostCard (props) {
           />
         </div>
         <div onClick={onClick}>
-          <CardImageAttachments attachments={post.attachments} className='post-card' />
+          <CardImageAttachments attachments={post.attachments} className='post-card' isFlagged={isFlagged && !post.clickthrough} />
         </div>
         {isEvent && (
           <div styleName='bodyWrapper'>

@@ -30,8 +30,7 @@ export default function PostBody (props) {
         <div styleName='clickthroughContainer'>
           <div>{t('clickthroughExplainer')}</div>
           <div styleName='clickthroughButton' onClick={() => dispatch(recordClickthrough({ postId: post.id }))}>{t('View post')}</div>
-        </div>
-      }
+        </div>}
       <div styleName={cx('body', { smallMargin: !expanded }, { constrained }, { isFlagged: isFlagged && !post.clickthrough })} className={className}>
 
         {post.type !== 'chat' && <PostTitle
