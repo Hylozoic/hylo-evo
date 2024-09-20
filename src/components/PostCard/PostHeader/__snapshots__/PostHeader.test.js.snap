@@ -60,7 +60,7 @@ exports[`matches announcement snapshot 1`] = `
           data-stylename="timestampRow"
         >
           <span
-            data-for="dateTip"
+            data-for="dateTip-undefined"
             data-stylename="timestamp"
           />
           <span
@@ -121,7 +121,7 @@ exports[`matches announcement snapshot 1`] = `
   />
   <Tooltip
     delay={550}
-    id="dateTip"
+    id="dateTip-undefined"
     position="left"
   />
 </div>
@@ -164,7 +164,7 @@ exports[`matches announcement snapshot 2`] = `
           data-stylename="timestampRow"
         >
           <span
-            data-for="dateTip"
+            data-for="dateTip-undefined"
             data-stylename="timestamp"
           />
           <span
@@ -229,7 +229,7 @@ exports[`matches announcement snapshot 2`] = `
   />
   <Tooltip
     delay={550}
-    id="dateTip"
+    id="dateTip-undefined"
     position="left"
   />
 </div>
@@ -272,7 +272,7 @@ exports[`matches announcement snapshot 3`] = `
           data-stylename="timestampRow"
         >
           <span
-            data-for="dateTip"
+            data-for="dateTip-undefined"
             data-stylename="timestamp"
           />
           <span
@@ -353,7 +353,7 @@ exports[`matches announcement snapshot 3`] = `
   />
   <Tooltip
     delay={550}
-    id="dateTip"
+    id="dateTip-undefined"
     position="left"
   />
 </div>
@@ -408,7 +408,7 @@ exports[`matches snapshot 1`] = `
           data-stylename="timestampRow"
         >
           <span
-            data-for="dateTip"
+            data-for="dateTip-undefined"
             data-stylename="timestamp"
           />
         </div>
@@ -451,7 +451,7 @@ exports[`matches snapshot 1`] = `
   />
   <Tooltip
     delay={550}
-    id="dateTip"
+    id="dateTip-undefined"
     position="left"
   />
 </div>
@@ -506,7 +506,7 @@ exports[`matches snapshot 2`] = `
           data-stylename="timestampRow"
         >
           <span
-            data-for="dateTip"
+            data-for="dateTip-undefined"
             data-stylename="timestamp"
           />
         </div>
@@ -553,7 +553,7 @@ exports[`matches snapshot 2`] = `
   />
   <Tooltip
     delay={550}
-    id="dateTip"
+    id="dateTip-undefined"
     position="left"
   />
 </div>
@@ -608,7 +608,7 @@ exports[`matches snapshot 3`] = `
           data-stylename="timestampRow"
         >
           <span
-            data-for="dateTip"
+            data-for="dateTip-undefined"
             data-stylename="timestamp"
           />
         </div>
@@ -671,7 +671,7 @@ exports[`matches snapshot 3`] = `
   />
   <Tooltip
     delay={550}
-    id="dateTip"
+    id="dateTip-undefined"
     position="left"
   />
 </div>
@@ -714,7 +714,7 @@ exports[`renders human readable dates 1`] = `
           data-stylename="timestampRow"
         >
           <span
-            data-for="dateTip"
+            data-for="dateTip-undefined"
             data-stylename="timestamp"
           />
         </div>
@@ -767,7 +767,7 @@ exports[`renders human readable dates 1`] = `
   />
   <Tooltip
     delay={550}
-    id="dateTip"
+    id="dateTip-undefined"
     position="left"
   />
 </div>
@@ -810,7 +810,7 @@ exports[`renders human readable dates 2`] = `
           data-stylename="timestampRow"
         >
           <span
-            data-for="dateTip"
+            data-for="dateTip-undefined"
             data-stylename="timestamp"
           />
         </div>
@@ -863,7 +863,7 @@ exports[`renders human readable dates 2`] = `
   />
   <Tooltip
     delay={550}
-    id="dateTip"
+    id="dateTip-undefined"
     position="left"
   />
 </div>
@@ -906,7 +906,7 @@ exports[`renders human readable dates 3`] = `
           data-stylename="timestampRow"
         >
           <span
-            data-for="dateTip"
+            data-for="dateTip-undefined"
             data-stylename="timestamp"
           />
         </div>
@@ -959,7 +959,7 @@ exports[`renders human readable dates 3`] = `
   />
   <Tooltip
     delay={550}
-    id="dateTip"
+    id="dateTip-undefined"
     position="left"
   />
 </div>

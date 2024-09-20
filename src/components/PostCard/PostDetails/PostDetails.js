@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { pick } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
@@ -8,7 +9,8 @@ import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
 import Feature from 'components/PostCard/Feature'
 import LinkPreview from 'components/LinkPreview'
-import cx from 'classnames'
+import Tooltip from 'components/Tooltip'
+
 import './PostDetails.scss'
 
 const MAX_DETAILS_LENGTH = 144
@@ -24,6 +26,7 @@ export default function PostDetails ({
   fileAttachments,
   onClick,
   editedTimestamp,
+  exactEditedTimestamp,
   ...post
 }) {
   const [isVideo, setIsVideo] = useState()
@@ -48,7 +51,7 @@ export default function PostDetails ({
             <HyloHTML styleName='details' html={details} />
           </ClickCatcher>
         )}
-        {editedTimestamp && (<div styleName='timestamp'>
+        {editedTimestamp && (<div styleName='timestamp' data-for={`editedTip-${post.id}`} data-tip={exactEditedTimestamp}>
           {editedTimestamp}
         </div>)}
         {linkPreview && !linkPreviewFeatured && (
@@ -57,6 +60,11 @@ export default function PostDetails ({
         {fileAttachments && (
           <CardFileAttachments attachments={fileAttachments} />
         )}
+        <Tooltip
+          delay={550}
+          id={`editedTip-${post.id}`}
+          position='left'
+        />
       </div>
     </Highlight>
   )

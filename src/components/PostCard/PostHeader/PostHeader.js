@@ -38,7 +38,7 @@ class PostHeader extends PureComponent {
       creator,
       detailHasImage,
       createdTimestamp,
-      exactTimestamp,
+      exactCreatedTimestamp,
       expanded,
       type,
       id,
@@ -142,7 +142,7 @@ class PostHeader extends PureComponent {
                 ))}
               </div>
               <div styleName='timestampRow'>
-                <span styleName='timestamp' data-for='dateTip' data-tip={exactTimestamp}>
+                <span styleName='timestamp' data-for={`dateTip-${id}`} data-tip={exactCreatedTimestamp}>
                   {createdTimestamp}
                 </span>
                 {announcement && <span styleName='announcementSection'>
@@ -210,7 +210,7 @@ class PostHeader extends PureComponent {
         />
         <Tooltip
           delay={550}
-          id='dateTip'
+          id={`dateTip-${id}`}
           position='left'
         />
       </div>

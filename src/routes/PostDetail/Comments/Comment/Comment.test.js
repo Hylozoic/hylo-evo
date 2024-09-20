@@ -40,7 +40,8 @@ describe('Comment', () => {
     updateComment: jest.fn(),
     deleteComment: jest.fn(),
     removeComment: jest.fn(),
-    onReplyComment: jest.fn()
+    onReplyComment: jest.fn(),
+    t: (str) => str
   }
 
   it('renders correctly', () => {

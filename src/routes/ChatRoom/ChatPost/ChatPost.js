@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { filter, isEmpty, isFunction, pick } from 'lodash/fp'
 import moment from 'moment-timezone'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactPlayer from 'react-player'
@@ -48,6 +49,7 @@ export default function ChatPost ({
     createdAt,
     creator,
     details,
+    editedAt,
     fileAttachments,
     groups,
     id,
@@ -59,6 +61,7 @@ export default function ChatPost ({
   } = post
 
   const dispatch = useDispatch()
+  const { t } = useTranslation()
   const history = useHistory()
   const ref = useRef()
   const editorRef = useRef()
@@ -235,7 +238,10 @@ export default function ChatPost ({
                 ))}
               </div>
             </div>
-            <div styleName='date'>{moment(createdAt).format('h:mm a')}</div>
+            <div styleName='date'>
+              {moment(createdAt).format('h:mm a')}
+              {editedAt && <span>&nbsp;({t('edited')} {moment(editedAt).format('h:mm a')})</span>}
+            </div>
           </div>
         )}
         {details && editing && (

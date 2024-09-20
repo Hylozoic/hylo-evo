@@ -98,7 +98,8 @@ export class Comment extends Component {
     const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId, post, t } = this.props
     const { id, creator, createdAt, editedAt, text, attachments } = comment
     const { editing, edited } = this.state
-    const timestamp = (editedAt || edited ? 'Edited ' : 'Commented ') + TextHelpers.humanDate(editedAt || createdAt)
+    const timestamp = t('commented') + ' ' + TextHelpers.humanDate(createdAt)
+    const editedTimestamp = (editedAt || edited) ? t('edited') + ' ' + TextHelpers.humanDate(editedAt) : false
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
     const dropdownItems = filter(item => isFunction(item.onClick), [
@@ -114,9 +115,11 @@ export class Comment extends Component {
           <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
           <span styleName='timestamp' data-for={`dateTip-${comment.id}`} data-tip={moment(createdAt).format('llll')}>
-            {editing && 'Editing now'}
-            {!editing && timestamp}
+            {timestamp}
           </span>
+          {(editedTimestamp) && <span styleName='timestamp' data-for={`dateTip-${comment.id}`} data-tip={moment(editedAt).format('llll')}>
+            ({editedTimestamp})
+          </span>}
           <div styleName='upperRight'>
             {editing && (
               <Icon name='Ex' styleName='cancelIcon' onClick={this.handleEditCancel} />
