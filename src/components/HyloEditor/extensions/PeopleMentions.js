@@ -40,7 +40,7 @@ export const PeopleMentions = ({ groupIds, maxSuggestions, onSelection, suggesti
       },
       suggestion: {
         char: '@',
-        allowSpaces: true,
+        allowSpaces: false,
         pluginKey: new PluginKey('mentionSuggestion'),
         render: () => suggestions.render(suggestionsThemeName),
         items: asyncDebounce(200, async ({ query, editor }) => {
