@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.9.2] - 2024-09-19
+
+### Added
+- Display a message when a post or comment has been edited that includes the time of the edit
+- Mousing over a post created or edited timestamp shows you the exact time the post was created or edited
+
+### Changed
+- Events show the summary of the event in the card, like other posts
+- prevent ImageCarousel opening from PostCard view
+
+### Fixed
+- Squished avatars in @ mention list
+- Move image carousel prev arrow into visible area
+
 ## [5.9.1] - 2024-07-31
 
 ### Fixed

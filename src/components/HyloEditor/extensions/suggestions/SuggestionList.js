@@ -59,7 +59,7 @@ export default forwardRef(({ items, command, ...everything }, ref) => {
             onClick={() => selectItem(index)}
           >
             {item.avatarUrl && (
-              <Avatar avatarUrl={item.avatarUrl} small className='suggestion-list-item-avatar' />
+              <Avatar avatarUrl={item.avatarUrl} tiny className='suggestion-list-item-avatar' />
             )}
             {item.suggestionLabel}
           </button>

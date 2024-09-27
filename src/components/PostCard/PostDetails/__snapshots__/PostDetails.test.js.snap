@@ -39,6 +39,11 @@ exports[`matches last snapshot 1`] = `
         ]
       }
     />
+    <Tooltip
+      delay={550}
+      id="editedTip-1"
+      position="left"
+    />
   </div>
 </Highlight>
 `;

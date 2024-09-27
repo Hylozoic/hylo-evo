@@ -969,6 +969,7 @@
   "description: text": "description: text",
   "discussion": "Discussion",
   "ecosystem services": "ecosystem services",
+  "edited": "edited",
   "end_date (optional): e.g. 20200731-12:23:12.000+00 (other date formats may work)": "end_date (optional): e.g. 20200731-12:23:12.000+00 (other date formats may work)",
   "environmental impact": "environmental impact",
   "equipment sharing": "equipment sharing",

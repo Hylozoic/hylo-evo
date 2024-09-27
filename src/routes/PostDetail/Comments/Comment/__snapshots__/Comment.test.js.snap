@@ -19,11 +19,11 @@ exports[`Comment displays image attachments 1`] = `
       Joe Smith
     </Link>
     <span
-      data-for="dateTip"
+      data-for="dateTip-undefined"
       data-stylename="timestamp"
       data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      Commented just now
+      commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -151,11 +151,11 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       Joe Smith
     </Link>
     <span
-      data-for="dateTip"
+      data-for="dateTip-undefined"
       data-stylename="timestamp"
       data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      Commented just now
+      commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -277,11 +277,11 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       Joe Smith
     </Link>
     <span
-      data-for="dateTip"
+      data-for="dateTip-undefined"
       data-stylename="timestamp"
       data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      Commented just now
+      commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -394,11 +394,11 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       Joe Smith
     </Link>
     <span
-      data-for="dateTip"
+      data-for="dateTip-undefined"
       data-stylename="timestamp"
       data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      Commented just now
+      commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -502,11 +502,11 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       Joe Smith
     </Link>
     <span
-      data-for="dateTip"
+      data-for="dateTip-undefined"
       data-stylename="timestamp"
       data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      Commented just now
+      commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -628,11 +628,11 @@ exports[`Comment renders correctly 1`] = `
       Joe Smith
     </Link>
     <span
-      data-for="dateTip"
+      data-for="dateTip-undefined"
       data-stylename="timestamp"
       data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      Commented just now
+      commented just now
     </span>
     <div
       data-stylename="upperRight"
@@ -736,11 +736,11 @@ exports[`Comment renders correctly when editing 1`] = `
       Joe Smith
     </Link>
     <span
-      data-for="dateTip"
+      data-for="dateTip-undefined"
       data-stylename="timestamp"
       data-tip="Sun, Jul 23, 2023 4:30 PM"
     >
-      Editing now
+      commented just now
     </span>
     <div
       data-stylename="upperRight"

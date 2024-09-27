@@ -44,6 +44,7 @@ export default function presentPost (post, groupId) {
     createdTimestampForGrid: createdAtHumanDate,
     createdTimestamp: `Posted ${createdAtHumanDate}`,
     editedTimestamp: post.editedAt ? `Edited ${editedAtHumanDate}` : null,
-    exactTimestamp: moment(post.createdAt).format('llll')
+    exactCreatedTimestamp: moment(post.createdAt).format('llll'),
+    exactEditedTimestamp: moment(post.editedAt).format('llll')
   }
 }
