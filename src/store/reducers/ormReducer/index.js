@@ -86,7 +86,6 @@ import clearCacheFor from './clearCacheFor'
 import { find, get, values } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
-import ModerationAction from 'store/models/ModerationAction'
 
 export default function ormReducer (state = orm.getEmptyState(), action) {
   const session = orm.session(state)
