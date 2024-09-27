@@ -86,6 +86,10 @@ exports[`matches announcement snapshot 1`] = `
       <div
         data-stylename="upperRight"
       >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
         <Dropdown
           alignRight={true}
           items={
@@ -190,6 +194,10 @@ exports[`matches announcement snapshot 2`] = `
       <div
         data-stylename="upperRight"
       >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
         <PostLabel
           data-stylename="label"
           type="request"
@@ -298,6 +306,10 @@ exports[`matches announcement snapshot 3`] = `
       <div
         data-stylename="upperRight"
       >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
         <PostLabel
           data-stylename="label"
           type="request"
@@ -416,6 +428,10 @@ exports[`matches snapshot 1`] = `
       <div
         data-stylename="upperRight"
       >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
         <Dropdown
           alignRight={true}
           items={
@@ -514,6 +530,10 @@ exports[`matches snapshot 2`] = `
       <div
         data-stylename="upperRight"
       >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
         <PostLabel
           data-stylename="label"
           type="request"
@@ -616,6 +636,10 @@ exports[`matches snapshot 3`] = `
       <div
         data-stylename="upperRight"
       >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
         <PostLabel
           data-stylename="label"
           type="request"
@@ -722,6 +746,10 @@ exports[`renders human readable dates 1`] = `
       <div
         data-stylename="upperRight"
       >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
         <PostLabel
           data-stylename="label"
           type="request"
@@ -818,6 +846,10 @@ exports[`renders human readable dates 2`] = `
       <div
         data-stylename="upperRight"
       >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
         <PostLabel
           data-stylename="label"
           type="request"
@@ -914,6 +946,10 @@ exports[`renders human readable dates 3`] = `
       <div
         data-stylename="upperRight"
       >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
         <PostLabel
           data-stylename="label"
           type="request"
