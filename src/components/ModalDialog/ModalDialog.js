@@ -74,7 +74,11 @@ class ModalDialog extends Component {
 
   componentDidMount () {
     if (this.modalRef.current) { // for testing via shallow render
-      this.modalRef.current.querySelector("[tabindex='-1']").focus()
+      // XXX: what is this doing? Ask Kevin
+      const element = this.modalRef.current.querySelector("[tabindex='-1']")
+      if (element) {
+        element.focus()
+      }
       this.modalRef.current.addEventListener('keydown', this.handleKeydown)
     }
     document.addEventListener('mousedown', this.handleMousedown)
