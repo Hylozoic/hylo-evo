@@ -15,7 +15,6 @@ import Button from 'components/Button/Button'
 import PostListRow from 'components/PostListRow'
 import './ModerationListItem.scss'
 
-
 const ModerationListItem = ({
   moderationAction,
   handleClearModerationAction,
@@ -26,8 +25,8 @@ const ModerationListItem = ({
   const { t } = useTranslation()
   const currentUser = useSelector(getMe)
   const router = useRouter()
-  const routeParams = router && structuredClone(router.query)
-  const location = router && router.location
+  const routeParams = router.query
+  const location = router.location
   const querystringParams = new URLSearchParams(location.search)
   const canModerate = useSelector((state) => hasResponsibilityForGroup(state, { groupId: group.id, responsibility: [RESP_MANAGE_CONTENT] }))
 

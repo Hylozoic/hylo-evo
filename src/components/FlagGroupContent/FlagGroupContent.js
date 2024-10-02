@@ -30,7 +30,7 @@ const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
 
   const [anonymous, setAnonymous] = useState(false)
   const [explanation, setExplanation] = useState('')
-  const [subtitle, setSubtitle] = useState(t('What was wrong?'))
+  const explanationPlaceholder = t('What was wrong?')
   const [agreementsSelected, setAgreementsSelected] = useState([])
   const [platformAgreementsSelected, setPlatformAgreementsSelected] = useState([])
 
@@ -88,7 +88,7 @@ const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
             minRows={6}
             value={explanation}
             onChange={(e) => setExplanation(e.target.value)}
-            placeholder={subtitle}
+            placeholder={explanationPlaceholder}
           />
           {group && agreements.length > 0 && (
             <>
