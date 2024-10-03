@@ -1,0 +1,75 @@
+{
+  "name": "hylo-shared",
+  "version": "5.2.5",
+  "description": "Code shared across Hylo applications for consistency of results",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hylozoic/hylo-shared.git"
+  },
+  "license": "AGPL-1.0",
+  "author": {
+    "name": "Hylo Devs",
+    "email": "dev@hylo.com",
+    "url": "https://hylo.com"
+  },
+  "source": "src/index.js",
+  "exports": {
+    "require": "./dist/index.js",
+    "default": "./dist/index.modern.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
+  "scripts": {
+    "build": "rm -fr dist/* && microbundle",
+    "start": "rm -fr dist/* && microbundle watch",
+    "start:native": "concurrently 'yarn start' 'wml start'",
+    "test": "jest"
+  },
+  "standard": {
+    "parser": "@babel/eslint-parser",
+    "global": [
+      "__DEV__",
+      "window",
+      "afterAll",
+      "afterEach",
+      "alert",
+      "beforeAll",
+      "beforeEach",
+      "expect",
+      "fetch",
+      "it",
+      "describe",
+      "jest",
+      "test"
+    ]
+  },
+  "dependencies": {
+    "coordinate-parser": "^1.0.7",
+    "html-to-text": "^8.1.0",
+    "lodash": "~4.17.21",
+    "marked": "^4.2.1",
+    "pretty-date": "^0.2.0",
+    "querystring": "^0.2.1",
+    "trunc-html": "^1.1.2",
+    "trunc-text": "^1.0.2",
+    "validator": "^13.7.0"
+  },
+  "peerDependencies": {
+    "moment-timezone": "^0.5.37"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^27.5.0",
+    "concurrently": "^7.0.0",
+    "eslint": "^8.8.0",
+    "jest": "^27.5.0",
+    "microbundle": "^0.15.1",
+    "moment-timezone": "^0.5.37",
+    "standard": "^16.0.4",
+    "wml": "^0.0.83"
+  }
+}
