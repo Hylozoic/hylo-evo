@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import './ReplaceComponent.scss'
+import classes from './ReplaceComponent.module.scss'
+
 const { string } = PropTypes
 
 export default class ReplaceComponent extends Component {
@@ -10,6 +11,6 @@ export default class ReplaceComponent extends Component {
 
   render () {
     const { example } = this.props
-    return <div styleName='exampleName'>{example}</div>
+    return <div className={classes.exampleName}>{example}</div>
   }
 }

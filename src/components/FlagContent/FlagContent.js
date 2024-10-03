@@ -1,11 +1,12 @@
+import { isEmpty, trim } from 'lodash'
 import React, { PureComponent } from 'react'
 import { withTranslation } from 'react-i18next'
-import { isEmpty, trim } from 'lodash'
-import './FlagContent.scss'
-import Select from 'components/Select'
+import TextareaAutosize from 'react-textarea-autosize'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
-import TextareaAutosize from 'react-textarea-autosize'
+import Select from 'components/Select'
+
+import classes from './FlagContent.module.scss'
 
 class FlagContent extends PureComponent {
   state = {
@@ -93,30 +94,32 @@ class FlagContent extends PureComponent {
       selectedCategory = '', explanation } = this.state
 
     return (
-      <div styleName='popup'>
-        <div styleName='popup-inner'>
+      <div className={classes.popup}>
+        <div className={classes.popupInner}>
           <h1>{t('Explanation for Flagging')}</h1>
-          <span onClick={this.closeModal} styleName='close-btn'>
-            <Icon name='Ex' styleName='icon' />
+          <span onClick={this.closeModal} className={classes.closeBtn}>
+            <Icon name='Ex' className={classes.icon} />
           </span>
 
-          <div styleName='content'>
-            <div styleName='reason'>
+          <div className={classes.content}>
+            <div className={classes.reason}>
               <Select
                 onChange={this.updateSelected}
                 fullWidth
-                styleName={reasonRequired ? t('reason-required') : ''}
+                className={cx({
+                  [classes.reasonRequired]: reasonRequired
+                })}
                 selected={selectedCategory}
                 placeholder={t('Select a reason')}
                 options={options} />
             </div>
             <TextareaAutosize
-              styleName='explanation-textbox'
+              className={classes.explanationTextbox}
               minRows={6}
               value={explanation}
               onChange={(e) => { this.setState({ explanation: e.target.value }) }}
               placeholder={subtitle} />
-            <Button styleName='submit-btn' onClick={this.submit} disabled={isEmpty(selectedCategory)}>{t('Submit')}</Button>
+            <Button className={classes.submitBtn} onClick={this.submit} disabled={isEmpty(selectedCategory)}>{t('Submit')}</Button>
           </div>
         </div>
       </div>

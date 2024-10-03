@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import './VisibilityToggle.scss'
+import classes from './VisibilityToggle.module.scss'
 import Icon from 'components/Icon'
 
 function VisibilityToggle ({ id, onChange, checked, disabled, backgroundColor, name }) {
@@ -8,12 +8,12 @@ function VisibilityToggle ({ id, onChange, checked, disabled, backgroundColor, n
     onChange({ id, isVisible: checked, name })
   }
   return (
-    <div styleName={cx('container', { containerDisabled: disabled }, { visible: checked })} onClick={disabled ? null : handleToggle}>
+    <div className={cx(classes.container, { [classes.containerDisabled]: disabled, [classes.visible]: checked })} onClick={disabled ? null : handleToggle}>
       <input type='hidden' name={name} defaultChecked={checked} />
-      <span styleName='track' />
-      <span styleName={cx('button', { buttonChecked: checked })} />
-      <Icon name='Eye' styleName='visibleIcon' />
-      <Icon name='Hidden' styleName='hiddenIcon' />
+      <span className={classes.track} />
+      <span className={cx(classes.button, { [classes.buttonChecked]: checked })} />
+      <Icon name='Eye' className={classes.visibleIcon} />
+      <Icon name='Hidden' className={classes.hiddenIcon} />
     </div>
   )
 }

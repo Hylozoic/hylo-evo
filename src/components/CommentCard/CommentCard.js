@@ -8,7 +8,7 @@ import HyloHTML from 'components/HyloHTML'
 import ClickCatcher from 'components/ClickCatcher'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
-import './CommentCard.scss'
+import classes from './CommentCard.module.scss'
 
 export default function CommentCard ({
   comment,
@@ -24,26 +24,26 @@ export default function CommentCard ({
   const { t } = useTranslation()
 
   return (
-    <span onClick={() => showDetails(comment.post.id)} styleName='link'>
-      <div styleName={cx('comment-card', { expanded })}>
-        <div styleName='comment-header'>
-          <RoundImage url={creator.avatarUrl} styleName='profileImage' />
+    <span onClick={() => showDetails(comment.post.id)} className={classes.link}>
+      <div className={cx(classes.commentCard, { [classes.expanded]: expanded })}>
+        <div className={classes.commentHeader}>
+          <RoundImage url={creator.avatarUrl} className={classes.profileImage} />
           <Highlight {...highlightProps}>
-            <div styleName='comment-meta'>
-              <span styleName='person-name'>{creator.name}</span> {t('commented on')}{' '}
-              <span styleName='post-title'>{postTitle}</span>
+            <div className={classes.commentMeta}>
+              <span className={classes.personName}>{creator.name}</span> {t('commented on')}{' '}
+              <span className={classes.postTitle}>{postTitle}</span>
             </div>
           </Highlight>
-          <span styleName='date'>{timestamp}</span>
+          <span className={classes.date}>{timestamp}</span>
         </div>
-        <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
-        <CardFileAttachments attachments={attachments} styleName='comment-files' />
+        <CardImageAttachments attachments={attachments} linked className={classes.commentImages} />
+        <CardFileAttachments attachments={attachments} className={classes.commentFiles} />
         <ClickCatcher groupSlug={slug}>
           <Highlight {...highlightProps}>
-            <HyloHTML styleName='comment-body' html={commentText} />
+            <HyloHTML className={classes.commentBody} html={commentText} />
           </Highlight>
         </ClickCatcher>
-        <div styleName='comment-footer' />
+        <div className={classes.commentFooter} />
       </div>
     </span>
   )

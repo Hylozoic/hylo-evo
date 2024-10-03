@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import './GroupHeader.scss'
+import classes from './GroupHeader.module.scss'
 import RoundImage from 'components/RoundImage'
 import {
   DEFAULT_BANNER,
@@ -12,18 +12,26 @@ import RoundImageRow from 'components/RoundImageRow'
 export default function GroupHeader ({ constrained = false, name, group }) {
   const members = group.members.toModelArray()
   const avatarUrls = members.map(member => member.avatarUrl)
-  return <div styleName={cx('header', { constrained })} >
-    <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='group-card-background'><div /></div>
-    <div styleName='header-main-row'>
-      <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' />
-      <div styleName='group-label'>
-        <div styleName='group-title'>{group.name}
+  return <div className={cx(classes.header, { [classes.constrained]: constrained })} >
+    <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} className={classes.groupCardBackground}><div /></div>
+    <div className={classes.headerMainRow}>
+      <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} className={classes.groupImage} size='50px' />
+      <div className={classes.groupLabel}>
+        <div className={classes.groupTitle}>{group.name}
         </div>
-        <div styleName='group-geo-descriptor'>
+        <div className={classes.groupGeoDescriptor}>
           {group.location}
         </div>
       </div>
-      <div styleName='group-member-flavor'><RoundImageRow imageUrls={avatarUrls.slice(0, 3)} inline styleName='people' blue count={group.memberCount} /></div>
+      <div className={classes.groupMemberFlavor}>
+        <RoundImageRow
+          imageUrls={avatarUrls.slice(0, 3)}
+          inline
+          className={classes.people}
+          blue
+          count={group.memberCount}
+        />
+      </div>
     </div>
   </div>
 }

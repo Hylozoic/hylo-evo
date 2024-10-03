@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import { connectRouter } from 'connected-react-router'
 
 import orm from './ormReducer'
 import returnToPath from 'store/reducers/returnToPath'
@@ -35,10 +34,10 @@ import SkillsToLearnSection from 'components/SkillsToLearnSection/SkillsToLearnS
 import TopicsSettings from 'routes/GroupSettings/TopicsSettingsTab/TopicsSettingsTab.store'
 import UserGroupsTab from 'routes/UserSettings/UserGroupsTab/UserGroupsTab.store'
 
-export const createCombinedReducers = history => combineReducers({
+export const createCombinedReducers = routerReducer => combineReducers({
   // Global store
   orm,
-  router: connectRouter(history),
+  router: routerReducer,
   returnToPath,
   pending,
   queryResults,
@@ -71,9 +70,9 @@ export const createCombinedReducers = history => combineReducers({
   UserGroupsTab
 })
 
-export default function createRootReducer (history) {
+export default function createRootReducer (routerReducer) {
   return composeReducers(
-    createCombinedReducers(history),
+    createCombinedReducers(routerReducer),
     /*
 
       DANGEROUS: These mutate and/or reset the entire state object

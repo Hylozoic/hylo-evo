@@ -12,7 +12,7 @@ import ScrollListener from 'components/ScrollListener'
 import TextInput from 'components/TextInput'
 import { TOPIC_VISIBILITY } from 'store/models/Topic'
 import { inflectedTotal } from 'util/index'
-import styles from './TopicsSettingsTab.scss'
+import styles from './TopicsSettingsTab.module.scss'
 
 const sortOptions = [
   { id: 'name', label: 'Name' },
@@ -104,15 +104,15 @@ class TopicsSettingsTab extends Component {
     const { totalTopicsCached } = this.state
 
     return (
-      <div styleName='wrapper'>
-        <div styleName='default-topics'>
-          <div styleName='title'>{t('Group Suggested Topics')}</div>
+      <div className={styles.wrapper}>
+        <div className={styles.defaultTopics}>
+          <div className={styles.title}>{t('Group Suggested Topics')}</div>
           <p>
             {t(`Set default topics for your group which will be suggested first when
             members are creating a new post.
             Every new member will also be subscribed to these topics when they join.`)}
           </p>
-          <div styleName='default-topic-list'>
+          <div className={styles.defaultTopicList}>
             {defaultTopics.map(topic =>
               <TopicListItem
                 key={topic.id}
@@ -123,7 +123,7 @@ class TopicsSettingsTab extends Component {
                 isSuggested
               />
             )}
-            <div styleName='default-topic-selector'>
+            <div className={styles.defaultTopicSelector}>
               <SingleTopicSelector
                 currentGroup={group}
                 placeholder={t('Add a suggested topic')}
@@ -134,14 +134,14 @@ class TopicsSettingsTab extends Component {
             </div>
           </div>
         </div>
-        <div styleName='all-topics'>
-          <div styleName='title'>{t('Topic List Editor')}</div>
+        <div className={styles.allTopics}>
+          <div className={styles.title}>{t('Topic List Editor')}</div>
           <p>
             {t(`Below is a list of every topic that any member of your group has used to date. You can choose to hide
             topics that you would prefer members of your group don't use, or pin topics to the top of the list
             to make sure people pay attention to posts in those topics.`)}
           </p>
-          <div styleName='controls'>
+          <div className={styles.controls}>
             <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending, totalTopicsCached }} />
             <CreateTopic
               buttonText={t('Add a Topic')}
@@ -149,7 +149,7 @@ class TopicsSettingsTab extends Component {
               groupSlug={group.slug}
               topics={topics} />
           </div>
-          <div styleName='topic-list' id={TOPIC_LIST_ID}>
+          <div className={styles.topicList} id={TOPIC_LIST_ID}>
             {topics.map(topic =>
               <TopicListItem
                 key={topic.id}
@@ -173,17 +173,17 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
   if (!selected) selected = sortOptions[0]
 
   return (
-    <div styleName='search-bar'>
+    <div className={styles.searchBar}>
       <TextInput
-        styleName='search-input'
+        className={styles.searchInput}
         value={search}
         placeholder={t('Search {{count}} topics', { count: totalTopicsCached || '' })}
         loading={fetchIsPending}
         noClearButton
         onChange={event => setSearch(event.target.value)} />
       <Dropdown
-        styleName='search-order'
-        toggleChildren={<span styleName='search-sorter-label'>
+        className={styles.searchOrder}
+        toggleChildren={<span className={styles.searchSorterLabel}>
           {t(selected.label)}
           <Icon name='ArrowDown' />
         </span>}
@@ -202,28 +202,28 @@ export function TopicListItem ({ topic, singleGroup, setGroupTopicVisibility, re
   const groupTopic = groupTopics.find(ct => ct.group.id === singleGroup.id)
 
   return (
-    <div styleName='topic'>
-      <div styleName='topic-name'>#{name}</div>
+    <div className={styles.topic}>
+      <div className={styles.topicName}>#{name}</div>
       {singleGroup &&
-        <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)}</div>}
+        <div className={styles.topicStats}>{inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)}</div>}
       {singleGroup && !isSuggested && (
         <Dropdown
           alignRight
-          styleName='visibility-dropdown'
-          toggleChildren={<span styleName={cx('visibility-dropdown-label', 'visibilityDropdown' + TOPIC_VISIBILITY[groupTopic.visibility])}>
+          className={styles.visibilityDropdown}
+          toggleChildren={<span className={cx(styles.visibilityDropdownLabel, styles[`visibilityDropdown${TOPIC_VISIBILITY[groupTopic.visibility]}`])}>
             <Icon name='Eye' />
-            <span styleName='label-content'>{TOPIC_VISIBILITY[groupTopic.visibility]}</span>
+            <span className={styles.labelContent}>{TOPIC_VISIBILITY[groupTopic.visibility]}</span>
             <Icon name='ArrowDown' />
           </span>}
           items={visibilityOptions.map(({ value, label }) => ({
             label,
             onClick: setGroupTopicVisibility(groupTopic.id, value),
-            styleName: styles['visibilityDropdown' + label]
+            className: styles[`visibilityDropdown${label}`]
           }))}
         />
       )}
       {singleGroup && isSuggested && (
-        <Icon name='Trash' onClick={removeSuggestedTopic(groupTopic.id)} styleName='remove-suggested-topic-button' />
+        <Icon name='Trash' onClick={removeSuggestedTopic(groupTopic.id)} className={styles.removeSuggestedTopicButton} />
       )}
     </div>
   )

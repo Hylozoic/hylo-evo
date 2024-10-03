@@ -5,7 +5,7 @@ import {
   UNLINK_ACCOUNT,
   VIEW_SAVED_SEARCH
 } from 'store/constants'
-import CreateSavedSearchMutation from 'graphql/mutations/CreateSavedSearchMutation.graphql'
+import CreateSavedSearchMutation from '@graphql/mutations/CreateSavedSearchMutation.graphql'
 
 export const MODULE_NAME = 'UserSettings'
 
@@ -31,18 +31,20 @@ export default function reducer (state = defaultState, action) {
         ...state,
         searches: payload.data.savedSearches.items
       }
-    case DELETE_SAVED_SEARCH:
+    case DELETE_SAVED_SEARCH: {
       const deletedId = payload.data.deleteSavedSearch
       return {
         ...state,
         searches: state.searches.filter(s => s.id !== deletedId)
       }
-    case VIEW_SAVED_SEARCH:
+    }
+    case VIEW_SAVED_SEARCH: {
       const search = payload.search
       return {
         ...state,
         selectedSearch: search
       }
+    }
     default:
       return state
   }
@@ -169,7 +171,7 @@ export function updateMembershipSettings (groupId, settings, acceptAgreements = 
           questionAnswers,
           settings
         },
-        groupId: groupId
+        groupId
       }
     },
     meta: {

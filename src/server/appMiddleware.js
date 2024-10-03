@@ -3,11 +3,11 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
-import { StaticRouter } from 'react-router'
+import { StaticRouter } from 'react-router-dom/server'
 import root from 'root-path'
 import { readFileSync } from 'fs'
 import { once } from 'lodash'
-import createStore from '../store'
+import store from '../store'
 import RootRouter from 'routes/RootRouter'
 
 /*
@@ -27,7 +27,8 @@ and change the last line of this function to be:
 */
 export default function appMiddleware (req, res, next) {
   // Note: Add async data loading here for more effective SSR
-  const store = createStore(createMemoryHistory())
+  // TODO: how to pass in different history with react router 6?
+  // const store = createStore(createMemoryHistory())
   const context = {}
   const markup = renderToString(
     <Provider store={store}>

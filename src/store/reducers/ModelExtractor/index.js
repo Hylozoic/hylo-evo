@@ -29,7 +29,7 @@ export default class ModelExtractor {
 
   walk (node, modelName, atRoot = true) {
     if (atRoot) {
-      if (node.hasOwnProperty(QUERY_SET_ITEMS_KEY) || Array.isArray(node)) {
+      if (Object.prototype.hasOwnProperty.call(node, QUERY_SET_ITEMS_KEY) || Array.isArray(node)) {
         return this._walkMany(node, modelName)
       }
     }
@@ -40,7 +40,7 @@ export default class ModelExtractor {
     }
 
     const normalized = omitBy(isUndefined, mapValues(node, (value, key) => {
-      var type = model.fields[key]
+      let type = model.fields[key]
 
       if (value && value.__typename) {
         const polymorphicChildId = this._walkOne(value, value.__typename)
@@ -124,7 +124,7 @@ function mergeDuplicates (nodes) {
   // duplicates for each one.
   return compact(nodes.map((node, index) => {
     // skip this node if it's already been merged with an earlier one
-    if (usedIndexes[index]) return
+    if (usedIndexes[index]) return null
     const { modelName, payload: { id } } = node
 
     // find nodes later in the list that have the same model name and ID,

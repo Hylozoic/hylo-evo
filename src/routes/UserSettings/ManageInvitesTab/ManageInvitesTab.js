@@ -8,7 +8,7 @@ import Loading from 'components/Loading'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 import { currentUserSettingsUrl, personUrl } from 'util/navigation'
 
-import './ManageInvitesTab.scss'
+import classes from './ManageInvitesTab.module.scss'
 
 const { array, bool, func } = PropTypes
 
@@ -43,16 +43,16 @@ class ManageInvitesTab extends Component {
     if (loading) return <Loading />
 
     return (
-      <div styleName='container'>
-        <h1 styleName='title'>{t('Group Invitations & Join Requests')}</h1>
+      <div className={classes.container}>
+        <h1 className={classes.title}>{t('Group Invitations & Join Requests')}</h1>
 
-        <div styleName='description'>
+        <div className={classes.description}>
           {t('This list contains all open requests and invitations to join groups.')}
           {t('To view all groups you are a part of go to your')}{' '}<Link to={currentUserSettingsUrl('groups')}>{t('Affiliations')}</Link>.
         </div>
 
-        <h2 styleName='subhead'>{t('Invitations to Join New Groups')}</h2>
-        <div styleName='requestList'>
+        <h2 className={classes.subhead}>{t('Invitations to Join New Groups')}</h2>
+        <div className={classes.requestList}>
           {pendingGroupInvites.map(invite =>
             <GroupInvite
               acceptInvite={acceptInvite}
@@ -63,8 +63,8 @@ class ManageInvitesTab extends Component {
           )}
         </div>
 
-        <h2 styleName='subhead'>{t('Your Open Requests to Join Groups')}</h2>
-        <div styleName='requestList'>
+        <h2 className={classes.subhead}>{t('Your Open Requests to Join Groups')}</h2>
+        <div className={classes.requestList}>
           {pendingJoinRequests.map((jr) =>
             <JoinRequest
               joinRequest={jr}
@@ -74,8 +74,8 @@ class ManageInvitesTab extends Component {
           )}
         </div>
 
-        <h2 styleName='subhead'>{t('Declined Invitations & Requests')}</h2>
-        <div styleName='requestList'>
+        <h2 className={classes.subhead}>{t('Declined Invitations & Requests')}</h2>
+        <div className={classes.requestList}>
           {rejectedJoinRequests.map((jr) =>
             <JoinRequest
               joinRequest={jr}
@@ -106,21 +106,21 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
   }
 
   return (
-    <div styleName='joinRequest'>
-      <div styleName='invitationDetail'>
-        <div styleName='invitationSource'>
+    <div className={classes.joinRequest}>
+      <div className={classes.invitationDetail}>
+        <div className={classes.invitationSource}>
           <div>
-            <Link to={personUrl(creator.id)} styleName='creator'>{creator.name}</Link>
+            <Link to={personUrl(creator.id)} className={classes.creator}>{creator.name}</Link>
             <span>{t('invited you to join')}</span>
           </div>
-          <div styleName='requestGroup'>
+          <div className={classes.requestGroup}>
             <GroupButton group={group} />
           </div>
         </div>
-        <div styleName='invitationResponse'>
-          <span styleName='createdDate'>{t('Sent')} {moment(createdAt).format('MM-DD-YYYY')}</span>
-          <span onClick={decline} styleName='cancelButton'>{t('Decline')}</span>
-          <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>{t('Join')}</span>
+        <div className={classes.invitationResponse}>
+          <span className={classes.createdDate}>{t('Sent')} {moment(createdAt).format('MM-DD-YYYY')}</span>
+          <span onClick={decline} className={classes.cancelButton}>{t('Decline')}</span>
+          <span onClick={() => acceptInvite(token, group.slug)} className={classes.joinButton}>{t('Join')}</span>
         </div>
       </div>
     </div>
@@ -138,20 +138,20 @@ function JoinRequest ({ joinRequest, cancelJoinRequest }) {
   }
 
   return (
-    <div styleName='joinRequest'>
-      <div styleName='requestGroup'>
+    <div className={classes.joinRequest}>
+      <div className={classes.requestGroup}>
         <GroupButton group={group} />
       </div>
-      <div styleName='requestDetail'>
-        <span styleName='createdDate joinRequestDate'>{t('Requested')} {moment(createdAt).format('YYYY-MM-DD')}</span>
+      <div className={classes.requestDetail}>
+        <span className={`${classes.createdDate} ${classes.joinRequestDate}`}>{t('Requested')} {moment(createdAt).format('YYYY-MM-DD')}</span>
         {joinRequest.status === JOIN_REQUEST_STATUS.Pending && (
-          <span onClick={cancel} styleName='cancelButton'>{t('Cancel')}</span>
+          <span onClick={cancel} className={classes.cancelButton}>{t('Cancel')}</span>
         )}
         {joinRequest.status === JOIN_REQUEST_STATUS.Rejected && (
-          <span styleName='declinedCanceled'>{t('Declined')}</span>
+          <span className={classes.declinedCanceled}>{t('Declined')}</span>
         )}
         {joinRequest.status === JOIN_REQUEST_STATUS.Canceled && (
-          <span styleName='declinedCanceled'>{t('Canceled')}</span>
+          <span className={classes.declinedCanceled}>{t('Canceled')}</span>
         )}
       </div>
     </div>

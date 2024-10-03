@@ -6,7 +6,7 @@ import ClickCatcher from 'components/ClickCatcher'
 import HyloHTML from 'components/HyloHTML'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
-import './Message.scss'
+import classes from './Message.module.scss'
 
 export default function Message ({ message, isHeader }) {
   const person = message.creator
@@ -20,16 +20,16 @@ export default function Message ({ message, isHeader }) {
   const sName = cx('message', { messageHeader: isHeader })
 
   return (
-    <div styleName={sName} data-message-id={message.id}>
-      <div styleName='avatar'>
+    <div className={cx(classes.message, { [classes.messageHeader]: isHeader })} data-message-id={message.id}>
+      <div className={classes.avatar}>
         {isHeader && <Avatar url={personUrl(person.id)} avatarUrl={person.avatarUrl} />}
       </div>
-      <div styleName='content'>
+      <div className={classes.content}>
         {isHeader && <div>
-          <span styleName='name'>{person.name}</span>
-          <span styleName='date'>{pending ? 'sending...' : TextHelpers.humanDate(message.createdAt)}</span>
+          <span className={classes.name}>{person.name}</span>
+          <span className={classes.date}>{pending ? 'sending...' : TextHelpers.humanDate(message.createdAt)}</span>
         </div>}
-        <div styleName='text'>
+        <div className={classes.text}>
           <ClickCatcher>
             <HyloHTML element='span' html={text} />
           </ClickCatcher>

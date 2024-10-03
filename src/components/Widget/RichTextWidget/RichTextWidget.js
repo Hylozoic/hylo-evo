@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next'
 import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloHTML from 'components/HyloHTML'
-import './RichText.scss'
+import classes from './RichText.module.scss'
 
 export default function RichTextWidget ({ group, settings }) {
   const { t } = useTranslation()
 
   return (
-    <div styleName='rich-text'>
+    <div className={classes.richText}>
       <GroupAboutVideoEmbed uri={settings.embeddedVideoURI} />
       <h2>{settings.title || t('Welcome to {{group.name}}!', { group })}</h2>
       {settings.richText && (

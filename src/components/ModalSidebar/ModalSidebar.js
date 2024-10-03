@@ -1,7 +1,9 @@
+import cx from 'classnames'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import './ModalSidebar.scss'
 import { bgImageStyle } from 'util/index'
+
+import classes from './ModalSidebar.module.scss'
 
 export default function ModalSidebar ({
   theme = {},
@@ -16,14 +18,14 @@ export default function ModalSidebar ({
 }) {
   const { t } = useTranslation()
 
-  return <div styleName={'sidebar'}>
-    <p styleName='gray-text close-button' onClick={onClick}>{t('CLOSE')}</p>
-    <p styleName={theme.sidebarHeader || 'sidebar-header'}>{header}</p>
-    <p styleName={theme.sidebarText || 'gray-text sidebar-text'}>{body}</p>
-    {secondParagraph && <p styleName={theme.sidebarText || 'gray-text sidebar-text'}>{secondParagraph}</p>}
-    {imageDialogOne && <div styleName='sidebar-dialog'>{imageDialogOne}</div>}
-    {imageDialogTwo && <div styleName='sidebar-dialog-two'>{imageDialogTwo}</div>}
-    {imageDialogOne && <div styleName='dialog-line' />}
-    {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='sidebar-image' />}
+  return <div className={classes.sidebar}>
+    <p className={cx(classes.grayText, classes.closeButton)} onClick={onClick}>{t('CLOSE')}</p>
+    <p className={cx(theme.sidebarHeader || classes.sidebarHeader)}>{header}</p>
+    <p className={cx(theme.sidebarText || classes.grayText, classes.sidebarText)}>{body}</p>
+    {secondParagraph && <p className={cx(theme.sidebarText || classes.grayText, classes.sidebarText)}>{secondParagraph}</p>}
+    {imageDialogOne && <div className={classes.sidebarDialog}>{imageDialogOne}</div>}
+    {imageDialogTwo && <div className={classes.sidebarDialogTwo}>{imageDialogTwo}</div>}
+    {imageDialogOne && <div className={classes.dialogLine} />}
+    {imageUrl && <div style={bgImageStyle(imageUrl)} className={classes.sidebarImage} />}
   </div>
 }

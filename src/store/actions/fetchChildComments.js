@@ -1,6 +1,6 @@
 import { FETCH_CHILD_COMMENTS } from 'store/constants'
 import { get } from 'lodash/fp'
-import SubCommentsQuery from 'graphql/queries/SubCommentsQuery.graphql'
+import SubCommentsQuery from '@graphql/queries/SubCommentsQuery.graphql'
 
 export default function fetchComments (id, opts = {}) {
   const { cursor } = opts

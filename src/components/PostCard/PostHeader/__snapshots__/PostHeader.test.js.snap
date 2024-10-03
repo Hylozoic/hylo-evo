@@ -46,7 +46,7 @@ exports[`matches announcement snapshot 1`] = `
           highlightClassName="highlight"
         >
           <Link
-            data-for="announcement-tt"
+            data-tooltip-id="announcement-tt"
             data-stylename="userName"
             to="/all/members/123"
           >
@@ -72,8 +72,8 @@ exports[`matches announcement snapshot 1`] = `
               •
             </span>
             <span
-              data-for="announcement-tt"
-              data-tip="Announcement"
+              data-tooltip-id="announcement-tt"
+              data-tooltip-content="Announcement"
             >
               <Icon
                 data-stylename="announcementIcon"
@@ -154,7 +154,7 @@ exports[`matches announcement snapshot 2`] = `
           highlightClassName="highlight"
         >
           <Link
-            data-for="announcement-tt"
+            data-tooltip-id="announcement-tt"
             data-stylename="userName"
             to="/all/members/123"
           >
@@ -180,8 +180,8 @@ exports[`matches announcement snapshot 2`] = `
               •
             </span>
             <span
-              data-for="announcement-tt"
-              data-tip="Announcement"
+              data-tooltip-id="announcement-tt"
+              data-tooltip-content="Announcement"
             >
               <Icon
                 data-stylename="announcementIcon"
@@ -266,7 +266,7 @@ exports[`matches announcement snapshot 3`] = `
           highlightClassName="highlight"
         >
           <Link
-            data-for="announcement-tt"
+            data-tooltip-id="announcement-tt"
             data-stylename="userName"
             to="/all/members/123"
           >
@@ -292,8 +292,8 @@ exports[`matches announcement snapshot 3`] = `
               •
             </span>
             <span
-              data-for="announcement-tt"
-              data-tip="Announcement"
+              data-tooltip-id="announcement-tt"
+              data-tooltip-content="Announcement"
             >
               <Icon
                 data-stylename="announcementIcon"
@@ -394,7 +394,7 @@ exports[`matches snapshot 1`] = `
           highlightClassName="highlight"
         >
           <Link
-            data-for="announcement-tt"
+            data-tooltip-id="announcement-tt"
             data-stylename="userName"
             to="/all/members/123"
           >
@@ -496,7 +496,7 @@ exports[`matches snapshot 2`] = `
           highlightClassName="highlight"
         >
           <Link
-            data-for="announcement-tt"
+            data-tooltip-id="announcement-tt"
             data-stylename="userName"
             to="/all/members/123"
           >
@@ -602,7 +602,7 @@ exports[`matches snapshot 3`] = `
           highlightClassName="highlight"
         >
           <Link
-            data-for="announcement-tt"
+            data-tooltip-id="announcement-tt"
             data-stylename="userName"
             to="/all/members/123"
           >
@@ -724,7 +724,7 @@ exports[`renders human readable dates 1`] = `
           highlightClassName="highlight"
         >
           <Link
-            data-for="announcement-tt"
+            data-tooltip-id="announcement-tt"
             data-stylename="userName"
             to="/all/members/123"
           >
@@ -824,7 +824,7 @@ exports[`renders human readable dates 2`] = `
           highlightClassName="highlight"
         >
           <Link
-            data-for="announcement-tt"
+            data-tooltip-id="announcement-tt"
             data-stylename="userName"
             to="/all/members/123"
           >
@@ -924,7 +924,7 @@ exports[`renders human readable dates 3`] = `
           highlightClassName="highlight"
         >
           <Link
-            data-for="announcement-tt"
+            data-tooltip-id="announcement-tt"
             data-stylename="userName"
             to="/all/members/123"
           >

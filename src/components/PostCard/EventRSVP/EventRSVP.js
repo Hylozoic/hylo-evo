@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import './EventRSVP.scss'
+import classes from './EventRSVP.module.scss'
 import DropdownButton from 'components/DropdownButton'
 import { RESPONSES } from 'store/models/EventInvitation'
 
@@ -28,7 +28,7 @@ export default function EventRSVP ({ myEventResponse, respondToEvent, position }
     { label: t('Not Going'), value: RESPONSES.NO }
   ]
 
-  return <div styleName='eventRSVP'>
+  return <div className={classes.eventRSVP}>
     <DropdownButton label={label}
       choices={choices}
       onChoose={response => respondToEvent(response)}

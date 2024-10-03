@@ -1,9 +1,10 @@
+import cx from 'classnames'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { filter, isEmpty } from 'lodash/fp'
 import ModalDialog from 'components/ModalDialog'
 import ImageCarousel from 'components/ImageCarousel'
-import './CardImageAttachments.scss'
+import classes from './CardImageAttachments.module.scss'
 
 export default function CardImageAttachments ({
   attachments,
@@ -37,18 +38,18 @@ export default function CardImageAttachments ({
 
   return (
     <>
-      <div className={className} styleName='image'>
+      <div className={cx(className, classes.image)}>
         <img
           src={firstImageUrl}
           alt='Attached image 1'
           data-index={0}
           onClick={toggleModal}
         />
-        <div styleName='others'>
-          <div styleName='others-inner'>
+        <div className={classes.others}>
+          <div className={classes.othersInner}>
             {!isEmpty(otherImageUrls) && otherImageUrls.map((url, index) =>
               <img
-                styleName='other'
+                className={classes.other}
                 data-index={index + 1}
                 src={url}
                 alt={`Attached image ${index + 2}`}

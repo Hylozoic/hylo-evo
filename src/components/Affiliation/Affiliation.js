@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import './Affiliation.scss'
+import classes from './Affiliation.module.scss'
 
 export default function Affiliation ({ affiliation, index, archive }) {
   const { role, preposition, orgName, url } = affiliation
@@ -13,12 +13,12 @@ export default function Affiliation ({ affiliation, index, archive }) {
   }
 
   return (
-    <div styleName={`affiliation ${index % 2 === 0 ? 'even' : 'odd'}`}>
-      <div styleName='role'>{role}</div>
+    <div className={`${classes.affiliation} ${index % 2 === 0 ? classes.even : classes.odd}`}>
+      <div className={classes.role}>{role}</div>
       <div>{preposition}</div>
-      <div styleName='orgName'>{url ? (<a href={url} target='new'>{orgName}</a>) : orgName}</div>
+      <div className={classes.orgName}>{url ? (<a href={url} target='new'>{orgName}</a>) : orgName}</div>
 
-      {archive && <span onClick={leave} styleName='leave-button'>{t('Delete')}</span>}
+      {archive && <span onClick={leave} className={classes.leaveButton}>{t('Delete')}</span>}
     </div>
   )
 }

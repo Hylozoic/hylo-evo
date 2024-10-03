@@ -11,7 +11,7 @@ import NoItems from 'routes/AuthLayoutRouter/components/TopNav/NoItems'
 import { bodyForNotification, titleForNotification } from 'store/models/Notification'
 import TopNavDropdown from '../TopNavDropdown'
 
-import './NotificationsDropdown.scss'
+import classes from './NotificationsDropdown.module.scss'
 
 class NotificationsDropdown extends Component {
   static propTypes = {
@@ -96,7 +96,7 @@ class NotificationsDropdown extends Component {
       body = <NoItems message={message} />
     } else {
       body = (
-        <div styleName='notifications' id='notifications-scroll-list'>
+        <div className={classes.notifications} id='notifications-scroll-list'>
           {notifications.map(notification => <Notification
             notification={notification}
             onClick={onClick}
@@ -117,14 +117,14 @@ class NotificationsDropdown extends Component {
         onToggle={this.onToggle}
         toggleChildren={renderToggleChildren(this.hasUnread())}
         header={
-          <div styleName='header-content'>
-            <span onClick={showRecent} styleName={cx('tab', { active: !showingUnread })}>
+          <div className={classes.headerContent}>
+            <span onClick={showRecent} className={cx(classes.tab, { [classes.active]: !showingUnread })}>
               {this.props.t('Recent')}
             </span>
-            <span onClick={showUnread} styleName={cx('tab', { active: showingUnread })}>
+            <span onClick={showUnread} className={cx(classes.tab, { [classes.active]: showingUnread })}>
               {this.props.t('Unread')}
             </span>
-            <span onClick={markAllActivitiesRead} styleName='mark-read'>{this.props.t('Mark all as read')}</span>
+            <span onClick={markAllActivitiesRead} className={classes.markRead}>{this.props.t('Mark all as read')}</span>
           </div>
         }
         body={body}
@@ -139,24 +139,24 @@ export function Notification ({ notification, onClick }) {
 
   return (
     <li
-      styleName={cx('notification', { unread })}
+      className={cx(classes.notification, { [classes.unread]: unread })}
       onClick={() => onClick(notification)}
     >
-      <div styleName='image-wraper'>
+      <div className={classes.imageWraper}>
         <RoundImage url={actor.avatarUrl} />
       </div>
-      <div styleName='content'>
-        <div styleName='header'>
+      <div className={classes.content}>
+        <div className={classes.header}>
           <span
             dangerouslySetInnerHTML={{ __html: titleForNotification(notification, t) }}
           />
         </div>
-        <div styleName='body'>
+        <div className={classes.body}>
           <span
             dangerouslySetInnerHTML={{ __html: bodyForNotification(notification, t) }}
           />
         </div>
-        <div styleName='date'>{TextHelpers.humanDate(notification.createdAt)}</div>
+        <div className={classes.date}>{TextHelpers.humanDate(notification.createdAt)}</div>
       </div>
     </li>
   )

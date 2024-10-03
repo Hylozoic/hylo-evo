@@ -1,4 +1,5 @@
 import React from 'react'
+import cx from 'classnames'
 import {
   RiBold, RiItalic, RiCodeBoxLine, RiStrikethrough,
   // RiH1, RiH2, RiH3,
@@ -7,7 +8,7 @@ import {
   RiArrowGoBackLine, RiArrowGoForwardLine, RiFormatClear
 } from 'react-icons/ri'
 // import { VscPreview } from 'react-icons/vsc'
-import './HyloEditor.scss'
+import classes from './HyloEditor.module.scss'
 
 // export function addIframe (editor) {
 //   const url = window.prompt('URL of video or content to embed')
@@ -21,112 +22,112 @@ export default function HyloEditorMenuBar ({ editor }) {
   if (!editor) return null
 
   return (
-    <div styleName='topMenuBar'>
+    <div className={classes.topMenuBar}>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
-        styleName={editor.isActive('bold') ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('bold') })}
       >
         <RiBold />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        styleName={editor.isActive('italic') ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('italic') })}
       >
         <RiItalic />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        styleName={editor.isActive('strike') ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('strike') })}
       >
         <RiStrikethrough />
       </button>
 
       <button
         onClick={() => editor.chain().focus().toggleCode().run()}
-        styleName={editor.isActive('code') ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('code') })}
       >
         <RiCodeView />
       </button>
 
-      <div styleName='divider' />
+      <div className={classes.divider} />
 
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        styleName={editor.isActive('bulletList') ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('bulletList') })}
       >
         <RiListUnordered />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        styleName={editor.isActive('orderedList') ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('orderedList') })}
       >
         <RiListOrdered />
       </button>
 
-      {/* <div styleName='divider' /> */}
+      {/* <div className={classes.divider} /> */}
 
       {/* <button
         onClick={() => editor.chain().focus().setParagraph().run()}
-        // styleName={editor.isActive('paragraph') ? 'is-active' : ''}
+        // className={cx({ isActive: editor.isActive('paragraph') })}
       >
         <VscPreview />
       </button> */}
 
       {/* <button
         onClick={() => editor.chain().focus().setParagraph().run()}
-        styleName={editor.isActive('paragraph') ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('paragraph') })}
       >
         <RiParagraph />
       </button> */}
       {/* <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        styleName={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('heading', { level: 1 }) })}
       >
         <RiH1 />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        styleName={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('heading', { level: 2 }) })}
       >
         <RiH2 />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        styleName={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('heading', { level: 3 }) })}
       >
         <RiH3 />
       </button> */}
       {/* <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        styleName={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('heading', { level: 4 }) })}
       >
         <RiH4 />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        styleName={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('heading', { level: 5 }) })}
       >
         <RiH5 />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        styleName={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('heading', { level: 6 }) })}
       >
         <RiH6 />
       </button> */}
 
-      <div styleName='divider' />
+      <div className={classes.divider} />
 
       <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        styleName={editor.isActive('blockquote') ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('blockquote') })}
       >
         <RiIndentIncrease />
       </button>
 
       <button
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        styleName={editor.isActive('codeBlock') ? 'is-active' : ''}
+        className={cx({ isActive: editor.isActive('codeBlock') })}
       >
         <RiCodeBoxLine />
       </button>
@@ -143,7 +144,7 @@ export default function HyloEditorMenuBar ({ editor }) {
         <RiFilmLine />
       </button> */}
 
-      <div styleName='divider' />
+      <div className={classes.divider} />
 
       <button onClick={() => editor.chain().focus().undo().run()}>
         <RiArrowGoBackLine />

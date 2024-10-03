@@ -1,3 +1,4 @@
+import { createBrowserHistory } from 'history'
 import React from 'react'
 import { MemoryRouter } from 'react-router'
 import { Provider } from 'react-redux'
@@ -11,11 +12,17 @@ import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
 // Note: This is ran by default via `customRender` below, but it's necessary to manually
 // generate the store when pre-populating the ReduxORM in a test. Search across tests to
 // for examples. Merges `provideState` over default app empty state
-export function generateStore (providedState, providedHistory = history) {
+export function generateStore (providedState) {
+  const {
+    createReduxHistory,
+    routerMiddleware,
+    routerReducer
+  } = createReduxHistoryContext({ history: createBrowserHistory() })
+
   return createStore(
-    createRootReducer(providedHistory),
+    createRootReducer(routerReducer),
     { ...getEmptyState(), ...providedState },
-    createMiddleware(providedHistory)
+    createMiddleware(routerMiddleware)
   )
 }
 

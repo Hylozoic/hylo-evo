@@ -4,7 +4,7 @@ import {
   ACCEPT_JOIN_REQUEST,
   DECLINE_JOIN_REQUEST
 } from 'store/constants'
-import fetchJoinRequestsQuery from 'graphql/queries/fetchJoinRequestsQuery'
+import fetchJoinRequestsQuery from '@graphql/queries/fetchJoinRequestsQuery'
 export const MODULE_NAME = 'MembershipRequestsTab'
 
 const defaultState = []
@@ -16,15 +16,18 @@ export default function reducer (state = defaultState, action) {
   switch (type) {
     case FETCH_JOIN_REQUESTS_PENDING:
       return null
-    case FETCH_JOIN_REQUESTS:
+    case FETCH_JOIN_REQUESTS: {
       const requests = payload.data.joinRequests.items || []
       return requests.filter(r => r.status === 0)
-    case ACCEPT_JOIN_REQUEST:
+    }
+    case ACCEPT_JOIN_REQUEST: {
       const { acceptJoinRequest } = payload.data
       return (state || []).filter(item => item.id !== acceptJoinRequest.id)
-    case DECLINE_JOIN_REQUEST:
+    }
+    case DECLINE_JOIN_REQUEST: {
       const { declineJoinRequest } = payload.data
       return (state || []).filter(item => item.id !== declineJoinRequest.id)
+    }
     default:
       return state
   }

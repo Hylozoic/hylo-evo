@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import cx from 'classnames'
-import './Icon.scss'
+import classes from './Icon.module.scss'
 
 function Icon ({
   name,
@@ -9,18 +9,17 @@ function Icon ({
   blue,
   children,
   onClick,
-  dataTip,
-  dataTipFor
+  tooltipContent,
+  tooltipId
 }) {
   const iconClassName = `icon-${name}`
 
   return (
     <span
-      styleName={cx('icon', { green, blue })}
-      className={cx(iconClassName, className)}
+      className={cx(classes.icon, { [classes.green]: green, [classes.blue]: blue }, iconClassName, className)}
       onClick={onClick}
-      data-tip={dataTip}
-      data-for={dataTipFor}
+      data-tooltip-content={tooltipContent}
+      data-tooltip-id={tooltipId}
     >
       {children}
     </span>
@@ -35,19 +34,18 @@ export const IconWithRef = forwardRef(({
   blue,
   children,
   onClick,
-  dataTip,
-  dataTipFor,
+  tooltipContent,
+  tooltipId,
   ...rest
 }, ref) => {
   const iconClassName = `icon-${name}`
 
   return (
     <span
-      styleName={cx('icon', { green, blue })}
-      className={cx(iconClassName, className)}
+      className={cx(classes.icon, { [classes.green]: green, [classes.blue]: blue }, iconClassName, className)}
       onClick={onClick}
-      data-tip={dataTip}
-      data-for={dataTipFor}
+      data-tooltip-content={tooltipContent}
+      data-tooltip-id={tooltipId}
       ref={ref}
       {...rest}
     >

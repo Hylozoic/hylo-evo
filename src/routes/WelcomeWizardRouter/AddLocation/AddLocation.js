@@ -7,7 +7,7 @@ import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationI
 import WelcomeWizardModalFooter from '../WelcomeWizardModalFooter'
 import Icon from 'components/Icon'
 
-import styles from '../WelcomeWizard.scss'
+import styles from '../WelcomeWizard.module.scss'
 
 class AddLocation extends Component {
   constructor () {
@@ -60,22 +60,22 @@ class AddLocation extends Component {
   render () {
     const { t } = this.props
     const inputClass = cx({
-      [styles['input']]: true,
-      [styles['padding']]: true,
-      [styles['large-input-text']]: true,
-      [styles['gray-bottom-border']]: true
+      [styles.input]: true,
+      [styles.padding]: true,
+      [styles.largeInputText]: true,
+      [styles.grayBottomBorder]: true
     })
 
     return (
-      <div styleName='flex-wrapper'>
-        <div styleName='panel'>
-          <span styleName='step-count'>{t('STEP 2/3')}</span>
+      <div className={styles.flexWrapper}>
+        <div className={styles.panel}>
+          <span className={styles.stepCount}>{t('STEP 2/3')}</span>
           <br />
-          <div styleName='center'>
-            <Icon name='Globe' styleName='globe-icon' />
+          <div className={styles.center}>
+            <Icon name='Globe' className={styles.globeIcon} />
           </div>
-          <div styleName='center location-input'>
-            <Icon name='Location' styleName='location-icon' />
+          <div className={cx(styles.center, styles.locationInput)}>
+            <Icon name='Location' className={styles.locationIcon} />
             <LocationInput
               saveLocationToDB
               inputClass={inputClass}
@@ -91,7 +91,7 @@ class AddLocation extends Component {
               autofocus
             />
           </div>
-          <div styleName='instructions'>
+          <div className={styles.instructions}>
             <p>{t('Add your location to see more relevant content, and find people and projects around you')}.</p>
           </div>
           <div>

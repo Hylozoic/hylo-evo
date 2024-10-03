@@ -1,7 +1,7 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
-import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import postsQueryFragment from '@graphql/fragments/postsQueryFragment'
 import presentPost from 'store/presenters/presentPost'
 import presentComment from 'store/presenters/presentComment'
 

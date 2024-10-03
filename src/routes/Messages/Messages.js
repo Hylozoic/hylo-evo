@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { withTranslation } from 'react-i18next'
 import { Helmet } from 'react-helmet'
 import { Link, Route } from 'react-router-dom'
@@ -17,164 +17,120 @@ import MessageSection from './MessageSection'
 import MessageForm from './MessageForm'
 import PeopleTyping from 'components/PeopleTyping'
 import SocketSubscriber from 'components/SocketSubscriber'
-import './Messages.scss'
+import classes from './Messages.module.scss'
 
 export const NEW_THREAD_ID = 'new'
 
-class Messages extends React.Component {
-  static defaultProps = {
-    participants: [],
-    threads: [],
-    messages: [],
-    socket: null
+const Messages = (props) => {
+  const {
+    messageThreadId,
+    participants: initialParticipants,
+    prompt,
+    fetchThreads,
+    fetchPeople,
+    changeQuerystringParam,
+    createMessage,
+    findOrCreateThread,
+    goToThread,
+    updateMessageText,
+    t
+  } = props
+
+  // TODO: figure out what was coming from the routeProps, and use useParams for them instead
+
+  const [forNewThread, setForNewThread] = useState(messageThreadId === NEW_THREAD_ID)
+  const [loading, setLoading] = useState(true)
+  const [peopleSelectorOpen, setPeopleSelectorOpen] = useState(false)
+  const [onCloseLocation] = useState(props.onCloseLocation)
+  const [participants, setParticipants] = useState([])
+
+  const form = useRef(null)
+
+  useEffect(() => {
+    const init = async () => {
+      await fetchThreads()
+      await fetchPeople({})
+      setLoading(false)
+      onThreadIdChange()
+
+      if (initialParticipants) {
+        initialParticipants.forEach(p => addParticipant(p))
+        changeQuerystringParam(props, 'participants', null)
+      }
+
+      if (prompt) {
+        updateMessageText(prompt)
+        changeQuerystringParam(props, 'prompt', null)
+        focusForm()
+      }
+    }
+    init()
+  }, [])
+
+  useEffect(() => {
+    if (messageThreadId && messageThreadId !== props.messageThreadId) {
+      onThreadIdChange()
+    }
+  }, [messageThreadId])
+
+  const onThreadIdChange = () => {
+    const newForNewThread = messageThreadId === NEW_THREAD_ID
+    setForNewThread(newForNewThread)
+    if (!newForNewThread) {
+      props.fetchThread()
+    }
+    focusForm()
   }
 
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      forNewThread: props.messageThreadId === NEW_THREAD_ID,
-      loading: true,
-      peopleSelectorOpen: false,
-      onCloseLocation: props.onCloseLocation,
-      participants: []
-    }
-    this.form = React.createRef()
-  }
-
-  async componentDidMount () {
-    await this.props.fetchThreads()
-    await this.props.fetchPeople({})
-    this.setState(() => ({ loading: false }))
-    this.onThreadIdChange()
-
-    const { participants, prompt } = this.props
-
-    if (participants) {
-      participants.forEach(p => this.addParticipant(p))
-      this.props.changeQuerystringParam(this.props, 'participants', null)
-    }
-
-    if (prompt) {
-      this.updateMessageText(prompt)
-      this.props.changeQuerystringParam(this.props, 'prompt', null)
-      this.focusForm()
-    }
-  }
-
-  componentDidUpdate (prevProps) {
-    if (this.props.messageThreadId && this.props.messageThreadId !== prevProps.messageThreadId) {
-      this.onThreadIdChange()
-    }
-  }
-
-  onThreadIdChange = () => {
-    const forNewThread = this.props.messageThreadId === NEW_THREAD_ID
-    this.setState(() => ({ forNewThread }))
-    if (!forNewThread) {
-      this.props.fetchThread()
-    }
-    this.focusForm()
-  }
-
-  sendMessage = () => {
-    if (!this.props.messageText || this.props.pending) return false
-    this.setState(() => ({ participants: [] }))
-    if (this.state.forNewThread) {
-      this.sendNewMessage()
+  const sendMessage = () => {
+    if (!props.messageText || props.pending) return false
+    setParticipants([])
+    if (forNewThread) {
+      sendNewMessage()
     } else {
-      this.sendForExisting()
+      sendForExisting()
     }
     return false
   }
 
-  sendForExisting () {
-    const { createMessage, messageThreadId, messageText } = this.props
-    createMessage(messageThreadId, TextHelpers.markdown(messageText)).then(() => this.focusForm())
+  const sendForExisting = () => {
+    createMessage(messageThreadId, TextHelpers.markdown(props.messageText)).then(() => focusForm())
   }
 
-  setPeopleSelectorOpen (val) {
-    this.setState({ peopleSelectorOpen: val })
-  }
-
-  async sendNewMessage () {
-    const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
-    const { participants } = this.state
+  const sendNewMessage = async () => {
     const participantIds = participants.map(p => p.id)
     const createThreadResponse = await findOrCreateThread(participantIds)
-    // * This is a Redux vs Apollo data structure thing
-    const messageThreadId = get('payload.data.findOrCreateThread.id', createThreadResponse) ||
+    const newMessageThreadId = get('payload.data.findOrCreateThread.id', createThreadResponse) ||
       get('data.findOrCreateThread.id', createThreadResponse)
-    await createMessage(messageThreadId, TextHelpers.markdown(messageText), true)
-    goToThread(messageThreadId)
+    await createMessage(newMessageThreadId, TextHelpers.markdown(props.messageText), true)
+    goToThread(newMessageThreadId)
   }
 
-  addParticipant = (participant) => {
-    this.setState(state => ({
-      participants: [...state.participants, participant]
-    }))
+  const addParticipant = (participant) => {
+    setParticipants(prevParticipants => [...prevParticipants, participant])
   }
 
-  removeParticipant = (participant) => {
-    this.setState(({ participants }) => ({
-      participants: !participant
-        ? participants.slice(0, participants.length - 1)
-        : [...participants.filter(p => p.id !== participant.id)]
-    }))
+  const removeParticipant = (participant) => {
+    setParticipants(prevParticipants =>
+      !participant
+        ? prevParticipants.slice(0, prevParticipants.length - 1)
+        : prevParticipants.filter(p => p.id !== participant.id)
+    )
   }
 
-  updateMessageText = messageText => {
-    this.props.updateMessageText(this.props.messageThreadId, messageText)
-  }
+  const focusForm = () => form.current && form.current.focus()
 
-  focusForm = () => this.form.current && this.form.current.focus()
-
-  render () {
-    const {
-      currentUser,
-      messageThread,
-      messageThreadId,
-      threadsPending,
-      threads,
-      threadSearch,
-      setThreadSearch,
-      fetchMoreThreads,
-      // MessageSection
-      socket,
-      messages,
-      hasMoreMessages,
-      messagesPending,
-      fetchMessages,
-      messageCreatePending,
-      updateThreadReadTime,
-      // MessageForm
-      messageText,
-      sendIsTyping,
-      // PeopleSelector
-      fetchRecentContacts,
-      fetchPeople,
-      setContactsSearch,
-      contacts,
-      t
-    } = this.props
-    const {
-      loading,
-      onCloseLocation,
-      participants,
-      peopleSelectorOpen
-    } = this.state
-    const { forNewThread } = this.state
-
-    return <div styleName={cx('modal', { messagesOpen: messageThreadId })}>
+  return (
+    <div className={cx(classes.modal, { [classes.messagesOpen]: messageThreadId })}>
       <Helmet>
         <title>Messages | Hylo</title>
       </Helmet>
-      <div styleName='content'>
-        <div styleName='messages-header'>
-          <div styleName='close-messages'>
+      <div className={classes.content}>
+        <div className={classes.messagesHeader}>
+          <div className={classes.closeMessages}>
             <CloseMessages onCloseLocation={onCloseLocation} />
           </div>
-          <div styleName='messages-title'>
+          <div className={classes.messagesTitle}>
             <Icon name='Messages' />
             { !forNewThread
               ? <h3>{t('Messages')}</h3>
@@ -183,95 +139,93 @@ class Messages extends React.Component {
           </div>
         </div>
         {loading
-          ? <div styleName='modal'><Loading /></div>
+          ? <div className={classes.modal}><Loading /></div>
           : <React.Fragment>
             <ThreadList
-              styleName='left-column'
-              setThreadSearch={setThreadSearch}
-              onScrollBottom={fetchMoreThreads}
-              currentUser={currentUser}
-              threadsPending={threadsPending}
-              threads={threads}
-              onFocus={() => this.setPeopleSelectorOpen(false)}
-              threadSearch={threadSearch}
+              className={classes.leftColumn}
+              setThreadSearch={props.setThreadSearch}
+              onScrollBottom={props.fetchMoreThreads}
+              currentUser={props.currentUser}
+              threadsPending={props.threadsPending}
+              threads={props.threads}
+              onFocus={() => setPeopleSelectorOpen(false)}
+              threadSearch={props.threadSearch}
             />
-            <Route path='/messages/:messageThreadId' exact>
-              {({ match }) => (
-
+            <Route path='/messages/:messageThreadId' element={
                 <CSSTransition
-                  in={match != null}
+                  // in={match != null}
                   appear
                   classNames='right-column'
                   timeout={{ appear: 300, enter: 300, exit: 200 }}
                   unmountOnExit
                 >
-                  <div styleName='right-column'>
-                    <div styleName='thread'>
+                  <div className={classes.rightColumn}>
+                    <div className={classes.thread}>
                       {forNewThread &&
                         <div>
-                          <div styleName='new-thread-header'>
-                            <Link to='/messages' styleName='back-button'>
-                              <Icon name='ArrowForward' styleName='close-messages-icon' />
+                          <div className={classes.newThreadHeader}>
+                            <Link to='/messages' className={classes.backButton}>
+                              <Icon name='ArrowForward' className={classes.closeMessagesIcon} />
                             </Link>
-                            <div styleName='messages-title'>
+                            <div className={classes.messagesTitle}>
                               <Icon name='Messages' />
                               <h3>{t('New Message')}</h3>
                             </div>
                           </div>
                           <PeopleSelector
-                            currentUser={currentUser}
-                            fetchPeople={fetchPeople}
-                            fetchDefaultList={fetchRecentContacts}
-                            focusMessage={this.focusForm}
-                            setPeopleSearch={setContactsSearch}
-                            people={contacts}
-                            onFocus={() => this.setPeopleSelectorOpen(true)}
+                            currentUser={props.currentUser}
+                            fetchPeople={props.fetchPeople}
+                            fetchDefaultList={props.fetchRecentContacts}
+                            focusMessage={focusForm}
+                            setPeopleSearch={props.setContactsSearch}
+                            people={props.contacts}
+                            onFocus={() => setPeopleSelectorOpen(true)}
                             selectedPeople={participants}
-                            selectPerson={this.addParticipant}
-                            removePerson={this.removeParticipant}
+                            selectPerson={addParticipant}
+                            removePerson={removeParticipant}
                             peopleSelectorOpen={peopleSelectorOpen}
                           />
                         </div>}
                       {!forNewThread && messageThreadId &&
                         <Header
-                          messageThread={messageThread}
-                          currentUser={currentUser}
-                          pending={messagesPending}
+                          messageThread={props.messageThread}
+                          currentUser={props.currentUser}
+                          pending={props.messagesPending}
                         />}
                       {!forNewThread &&
                         <MessageSection
-                          socket={socket}
-                          currentUser={currentUser}
-                          fetchMessages={fetchMessages}
-                          messages={messages}
-                          hasMore={hasMoreMessages}
-                          pending={messagesPending}
-                          updateThreadReadTime={updateThreadReadTime}
-                          messageThread={messageThread} />}
+                          socket={props.socket}
+                          currentUser={props.currentUser}
+                          fetchMessages={props.fetchMessages}
+                          messages={props.messages}
+                          hasMore={props.hasMoreMessages}
+                          pending={props.messagesPending}
+                          updateThreadReadTime={props.updateThreadReadTime}
+                          messageThread={props.messageThread} />}
                       {(!forNewThread || participants.length > 0) &&
-                        <div styleName='message-form'>
+                        <div className={classes.messageForm}>
                           <MessageForm
-                            onSubmit={this.sendMessage}
-                            onFocus={() => this.setPeopleSelectorOpen(false)}
-                            currentUser={currentUser}
-                            formRef={this.form}
-                            updateMessageText={this.updateMessageText}
-                            messageText={messageText}
-                            sendIsTyping={sendIsTyping}
-                            pending={messageCreatePending} />
+                            onSubmit={sendMessage}
+                            onFocus={() => setPeopleSelectorOpen(false)}
+                            currentUser={props.currentUser}
+                            formRef={form}
+                            updateMessageText={props.updateMessageText}
+                            messageText={props.messageText}
+                            sendIsTyping={props.sendIsTyping}
+                            pending={props.messageCreatePending} />
                         </div>}
-                      <PeopleTyping styleName='people-typing' />
-                      {socket && <SocketSubscriber type='post' id={messageThreadId} />}
+                      <PeopleTyping className={classes.peopleTyping} />
+                      {props.socket && <SocketSubscriber type='post' id={messageThreadId} />}
                     </div>
                   </div>
                 </CSSTransition>
-              )}
-            </Route>
+              }
+            />
           </React.Fragment>
         }
       </div>
     </div>
-  }
+  )
 }
 
 Messages.propTypes = {

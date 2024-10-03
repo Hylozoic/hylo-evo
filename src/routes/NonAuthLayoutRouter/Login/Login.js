@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { checkForStorageAccess, formatError } from '../util'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import checkLogin from 'store/actions/checkLogin'
@@ -10,14 +10,16 @@ import loginWithService from 'store/actions/loginWithService'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import GoogleButton from 'components/GoogleButton'
-import './Login.scss'
+import classes from './Login.module.scss'
 
 export default function Login (props) {
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const [error, setError] = useState(getQuerystringParam('error', props))
+  const location = useLocation()
+  const [error, setError] = useState(getQuerystringParam('error', { location }))
   const { t } = useTranslation()
+  const params = useParams()
   const DEFAULT_LOGIN_ERROR = t('Sorry, that Email and Password combination didn\'t work.')
 
   const handleEmailChange = event => {
@@ -77,8 +79,8 @@ export default function Login (props) {
 
   return (
     <div className={props.className}>
-      <div styleName='formWrapper'>
-        <h1 styleName='title'>{t('Sign in to Hylo')}</h1>
+      <div className={classes.formWrapper}>
+        <h1 className={classes.title}>{t('Sign in to Hylo')}</h1>
 
         {error && formatError(error, 'Login', t)}
 
@@ -87,7 +89,7 @@ export default function Login (props) {
           autoFocus
           internalLabel={t('Email')}
           onChange={handleEmailChange}
-          styleName='field'
+          className={classes.field}
           type='email'
           value={email || ''}
         />
@@ -97,18 +99,18 @@ export default function Login (props) {
           internalLabel={t('Password')}
           onChange={handlePasswordChange}
           onEnter={handleLogin}
-          styleName='field'
+          className={classes.field}
           type='password'
           value={password || ''}
         />
 
-        <Link to='/reset-password' styleName='forgot-password'>
-          <span styleName='forgot-password'>{t('Forgot password?')}</span>
+        <Link to='/reset-password' className={classes.forgotPassword}>
+          <span className={classes.forgotPassword}>{t('Forgot password?')}</span>
         </Link>
 
-        <Button styleName='submit' label={t('Sign in')} onClick={handleLogin} />
+        <Button className={classes.submit} label={t('Sign in')} onClick={handleLogin} />
       </div>
-      <div styleName='auth-buttons'>
+      <div className={classes.authButtons}>
         <GoogleButton onClick={() => handleLoginWithService('google')} />
       </div>
     </div>

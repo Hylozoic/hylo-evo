@@ -1,8 +1,8 @@
 import React from 'react'
-import './SettingsSection.scss'
+import classes from './SettingsSection.module.scss'
 
 const SettingsSection = ({ children }) => (
-  <div styleName='section'>
+  <div className={classes.section}>
     {children}
   </div>
 )

@@ -17,8 +17,8 @@ import { COLLECTION_SORT_OPTIONS, STREAM_SORT_OPTIONS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
 import SettingsSection from '../SettingsSection'
 
-import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
-import styles from './CustomViewsTab.scss' // eslint-disable-line no-unused-vars
+import general from '../GroupSettings.module.scss' // eslint-disable-line no-unused-vars
+import styles from './CustomViewsTab.module.scss' // eslint-disable-line no-unused-vars
 
 const emptyCustomView = {
   activePostsOnly: false,
@@ -188,10 +188,10 @@ class CustomViewsTab extends Component {
     const { changed, customViews, error } = this.state
 
     return (
-      <div styleName='general.groupSettings'>
+      <div className={classes.general.groupSettings}>
         <SettingsSection>
           <h3>{t('Custom Views')}</h3>
-          <div styleName='styles.help-text'>{t('Add custom links or filtered post views to your group\'s navigation')}</div>
+          <div className={styles.helpText}>{t('Add custom links or filtered post views to your group\'s navigation')}</div>
           {customViews.map((cv, i) => (
             <CustomViewRow
               addPostToCollection={addPostToCollection}
@@ -205,17 +205,17 @@ class CustomViewsTab extends Component {
               reorderPostInCollection={reorderPostInCollection}
             />
           ))}
-          <div styleName='styles.add-custom-view' onClick={this.addCustomView}>
+          <div className={styles.addCustomView} onClick={this.addCustomView}>
             <h4>{t('Create new custom view')}</h4>
-            <Icon name='Circle-Plus' styleName='styles.new-custom-view' />
+            <Icon name='Circle-Plus' className={styles.newCustomView} />
           </div>
         </SettingsSection>
 
         <br />
 
-        <div styleName='general.saveChanges'>
-          <span styleName={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>
-          <Button label={t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className='save-button' styleName='general.save-button' />
+        <div className={classes.general.saveChanges}>
+          <span className={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>
+          <Button label={t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className={cx('saveButton', general.saveButton)} />
         </div>
       </div>
     )
@@ -286,20 +286,20 @@ function CustomViewRow ({
   const defaultSortVal = defaultSort || (type === 'collection' ? 'order' : 'created')
   const viewCount = parseInt(index) + 1
   return (
-    <div styleName='styles.custom-view-container'>
+    <div className={styles.customViewContainer}>
       <h4>
         <div><strong>{t('Custom View')}{' '}#{viewCount}</strong>{' '}{name}</div>
         <Icon name='Trash' onClick={onDelete} />
       </h4>
-      <div styleName='styles.custom-view-row'>
-        <SettingsControl label={t('Icon')} controlClass={styles['icon-button']} onChange={onChange('icon')} value={icon} type='icon-selector' selectedIconClass={styles.selectedIcon} />
-        <SettingsControl label={t('Label')} controlClass={styles['settings-control']} onChange={onChange('name')} value={name} />
-        <SettingsControl label={t('Type')} controlClass={styles['settings-control']} renderControl={(props) => {
+      <div className={styles.customViewRow}>
+        <SettingsControl label={t('Icon')} controlClass={styles.iconButton} onChange={onChange('icon')} value={icon} type='icon-selector' selectedIconClass={styles.selectedIcon} />
+        <SettingsControl label={t('Label')} controlClass={styles.settingsControl} onChange={onChange('name')} value={name} />
+        <SettingsControl label={t('Type')} controlClass={styles.settingsControl} renderControl={(props) => {
           return (
             <Dropdown
-              styleName='styles.dropdown'
+              className={styles.dropdown}
               toggleChildren={
-                <span styleName='styles.dropdown-label'>
+                <span className={styles.dropdownLabel}>
                   {VIEW_TYPES[type || 'externalLink']}
                   <Icon name='ArrowDown' />
                 </span>
@@ -316,17 +316,17 @@ function CustomViewRow ({
       {type === 'externalLink' ? (
         <div>
           <SettingsControl label={t('External link')} onChange={onChange('externalLink')} value={externalLink || ''} placeholder={t('Will open this URL in a new tab')} />
-          {externalLink && !sanitizeURL(externalLink) && <div styleName='styles.warning'>{t('Must be a valid URL!')}</div>}
+          {externalLink && !sanitizeURL(externalLink) && <div className={styles.warning}>{t('Must be a valid URL!')}</div>}
         </div>)
         : (
-          <div styleName={cx('styles.custom-posts-view')}>
-            <div styleName='styles.custom-view-row'>
-              <SettingsControl label={t('Default Style')} controlClass={styles['settings-control']} renderControl={(props) => {
+          <div className={styles.customPostsView}>
+            <div className={styles.customViewRow}>
+              <SettingsControl label={t('Default Style')} controlClass={styles.settingsControl} renderControl={(props) => {
                 return (
                   <Dropdown
-                    styleName='styles.dropdown'
+                    className={styles.dropdown}
                     toggleChildren={
-                      <span styleName='styles.dropdown-label'>
+                      <span className={styles.dropdownLabel}>
                         {VIEW_MODES[defaultViewModeVal || 'cards']}
                         <Icon name='ArrowDown' />
                       </span>
@@ -340,13 +340,13 @@ function CustomViewRow ({
               }} />
               <SettingsControl
                 label={t('Default Sort')}
-                controlClass={styles['settings-control']}
+                controlClass={styles.settingsControl}
                 renderControl={(props) => {
                   return (
                     <Dropdown
-                      styleName='styles.dropdown'
+                      className={styles.dropdown}
                       toggleChildren={
-                        <span styleName='styles.dropdown-label'>
+                        <span className={styles.dropdownLabel}>
                           {t(sortOptions.find(o => o.id === defaultSortVal).label)}
                           <Icon name='ArrowDown' />
                         </span>
@@ -362,14 +362,14 @@ function CustomViewRow ({
             </div>
             {type === 'stream' ? (
               <>
-                <div styleName='styles.post-types styles.custom-view-row'>
-                  <label styleName='styles.label'>{t('What post types to display?')}</label>
-                  <div styleName='styles.post-types-chosen'>
+                <div className={cx(styles.postTypes, styles.customViewRow)}>
+                  <label className={styles.label}>{t('What post types to display?')}</label>
+                  <div className={styles.postTypesChosen}>
                     <span onClick={() => setPostTypesModalOpen(!postTypesModalOpen)}>
-                      {postTypes.length === 0 ? t('None') : postTypes.map((p, i) => <PostLabel key={p} type={p} styleName='styles.post-type' />)}
+                      {postTypes.length === 0 ? t('None') : postTypes.map((p, i) => <PostLabel key={p} type={p} className={styles.postType} />)}
                     </span>
-                    <div styleName={cx('styles.post-types-selector', { 'styles.open': postTypesModalOpen })}>
-                      <Icon name='Ex' styleName='styles.close-button' onClick={() => setPostTypesModalOpen(!postTypesModalOpen)} />
+                    <div className={cx(styles.postTypesSelector, { [styles.open]: postTypesModalOpen })}>
+                      <Icon name='Ex' className={styles.closeButton} onClick={() => setPostTypesModalOpen(!postTypesModalOpen)} />
                       {Object.keys(POST_TYPES).map(postType => {
                         if (postType === 'chat') {
                           return null
@@ -378,7 +378,7 @@ function CustomViewRow ({
                         return (
                           <div
                             key={postType}
-                            styleName='styles.post-type-switch'
+                            className={styles.postTypeSwitch}
                           >
                             <SwitchStyled
                               backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
@@ -394,22 +394,22 @@ function CustomViewRow ({
                   </div>
                 </div>
 
-                <div styleName='styles.custom-view-row'>
-                  <label styleName='styles.label'>{t('Include only active posts?')}</label>
+                <div className={styles.customViewRow}>
+                  <label className={styles.label}>{t('Include only active posts?')}</label>
                   <SwitchStyled
                     checked={activePostsOnly}
                     onChange={() => onChange('activePostsOnly')(!activePostsOnly)}
                     backgroundColor={activePostsOnly ? '#0DC39F' : '#8B96A4'}
                   />
                 </div>
-                <div styleName='styles.custom-view-last-row'>
-                  <label styleName='styles.label'>{t('Include only posts that match any of these topics:')}</label>
+                <div className={styles.customViewLastRow}>
+                  <label className={styles.label}>{t('Include only posts that match any of these topics:')}</label>
                   <TopicSelector currentGroup={group} selectedTopics={topics} onChange={onChange('topics')} />
                 </div>
               </>) : (
               <>
-                <div styleName='styles.post-types'>
-                  <label styleName='styles.label'>{t('Included Posts')}{' '}<span>{collection?.posts?.length || 0}</span> </label>
+                <div className={styles.postTypes}>
+                  <label className={styles.label}>{t('Included Posts')}<span>{collection?.posts?.length || 0}</span> </label>
                   <PostSelector
                     collection={collection}
                     group={group}

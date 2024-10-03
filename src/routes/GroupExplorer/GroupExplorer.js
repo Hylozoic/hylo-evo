@@ -4,7 +4,7 @@ import ExplorerBanner from './ExplorerBanner'
 import GroupViewFilter from './GroupViewFilter'
 import GroupSearch from './GroupSearch'
 import { ALL_VIEW } from 'util/constants'
-import './GroupExplorer.scss'
+import classes from './GroupExplorer.module.scss'
 
 export default function GroupExplorer ({
   currentUser,

@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import reducer, { ormSessionReducer } from './AuthLayoutRouter.store'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
-import { LOCATION_CHANGE } from 'connected-react-router'
+import { LOCATION_CHANGE } from 'redux-first-history'
 import rollbar from 'client/rollbar'
 import orm from 'store/models'
 

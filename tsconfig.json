@@ -8,9 +8,11 @@
     "module": "commonjs",
     "baseUrl": ".",
     "paths": {
-      "*": ["src/*"]
+      "*": ["src/*"],
+      "@/*": ["./src/*"]
     },
-    "outDir": "build"
+    "outDir": "build",
+    "types": ["node", "glob", "hoist-non-react-statics"]
   },
   "exclude": [
     "node_modules",

@@ -5,11 +5,13 @@ import { bgImageStyle } from 'util/index'
 import ModalDialog from 'components/ModalDialog'
 import CheckBox from 'components/CheckBox'
 import Button from 'components/Button'
-import styles from './EventInviteDialog.scss'
 import { humanResponse } from 'store/models/EventInvitation'
 import TextInput from 'components/TextInput'
-import useInView from 'react-cool-inview'
+import { useInView } from 'react-cool-inview'
 import Loading from 'components/Loading'
+
+import styles from './EventInviteDialog.module.scss'
+
 const pageSize = 30
 
 const EventInviteDialog = ({
@@ -79,9 +81,9 @@ const EventInviteDialog = ({
     showCancelButton={false}
     showSubmitButton={false}
     style={{ width: '100%', maxWidth: '620px' }}>
-    <div styleName='container'>
+    <div className={styles.container}>
       <Search onChange={onSearchChange} />
-      <div styleName='inviteSuggestions'>
+      <div className={styles.inviteSuggestions}>
         {filteredInviteSuggestions.map((invitee, idx) => <InviteeRow
           key={invitee.id}
           person={invitee}
@@ -89,15 +91,15 @@ const EventInviteDialog = ({
           selected={invitedIds.includes(invitee.id)}
           onClick={() => toggleInvite(invitee.id)}
         />)}
-        <div styleName={cx('row')}>
-          <div styleName='col' style={{ height: '40px' }}>
-            {pending && <div><Loading /></div> }
+        <div className={cx(styles.row)}>
+          <div className={cx(styles.col)} style={{ height: '40px' }}>
+            {pending && <div><Loading /></div>}
           </div>
         </div>
       </div>
 
-      <div styleName='alreadyInvitedLabel'>{t('Already Invited')}</div>
-      <div styleName='alreadyInvited'>
+      <div className={styles.alreadyInvitedLabel}>{t('Already Invited')}</div>
+      <div className={styles.alreadyInvited}>
         {eventInvitations.map(eventInvitation =>
           <InviteeRow
             person={eventInvitation}
@@ -107,7 +109,7 @@ const EventInviteDialog = ({
       </div>
       <Button
         small
-        styleName='inviteButton'
+        className={styles.inviteButton}
         label={inviteButtonLabel}
         onClick={submit}
         disabled={invitedIds.length === 0} />
@@ -118,17 +120,17 @@ const EventInviteDialog = ({
 export const InviteeRow = React.forwardRef((props, ref) => {
   const { person, selected, showResponse, onClick } = props
   const { name, avatarUrl, response } = person
-  return <div ref={ref} styleName={cx('row')} onClick={onClick}>
-    <div styleName='col'>
-      <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
+  return <div ref={ref} className={cx(styles.row)} onClick={onClick}>
+    <div className={styles.col}>
+      <div className={styles.avatar} style={bgImageStyle(avatarUrl)} />
     </div>
-    <div styleName='col'>
+    <div className={styles.col}>
       {name}
     </div>
-    {!showResponse && <div styleName='col check'>
+    {!showResponse && <div className={cx(styles.col, styles.check)}>
       <CheckBox checked={selected} noInput />
     </div>}
-    {showResponse && response && <div styleName='col response'>
+    {showResponse && response && <div className={cx(styles.col, styles.response)}>
       {humanResponse(response)}
     </div>}
   </div>
@@ -136,7 +138,7 @@ export const InviteeRow = React.forwardRef((props, ref) => {
 
 export function Search ({ onChange }) {
   const { t } = useTranslation()
-  return <div styleName='search'>
+  return <div className={styles.search}>
     <TextInput theme={styles}
       inputRef={x => x && x.focus()}
       placeholder={t('Search members')}

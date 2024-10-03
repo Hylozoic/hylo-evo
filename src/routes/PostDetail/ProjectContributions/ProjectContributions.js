@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import StripeCheckout from 'react-stripe-checkout'
 import { withTranslation } from 'react-i18next'
+import cx from 'classnames'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput'
-import './ProjectContributions.scss'
+import classes from './ProjectContributions.module.scss'
 
 class ProjectContributions extends Component {
   static defaultProps = {
@@ -53,9 +54,9 @@ class ProjectContributions extends Component {
     const valid = !isNaN(contributionAmountNumber) &&
       contributionAmount > 0
 
-    return <div styleName='project-contributions'>
-      {received && <div styleName='success-notification'>{t('Thanks for your contribution!')}</div>}
-      {error && <div styleName='error-notification'>{t('There was a problem processing your payment. Please check your card details and try again.')}</div>}
+    return <div className={classes.projectContributions}>
+      {received && <div className={classes.successNotification}>{t('Thanks for your contribution!')}</div>}
+      {error && <div className={classes.errorNotification}>{t('There was a problem processing your payment. Please check your card details and try again.')}</div>}
       {!expanded && !received && <Button
         color='green'
         onClick={this.toggleExpanded}
@@ -63,8 +64,8 @@ class ProjectContributions extends Component {
         small
         narrow />}
       {expanded && <div>
-        <div styleName='amount-row'>
-          <span styleName='amount-label'>{t('Amount')}</span>
+        <div className={classes.amountRow}>
+          <span className={classes.amountLabel}>{t('Amount')}</span>
           <TextInput
             onChange={this.setAmount}
             inputRef={input => { this.amountInput = input }}
@@ -78,14 +79,14 @@ class ProjectContributions extends Component {
           stripeKey={stripeKey}
           amount={Number(contributionAmount)} />
         <Button
-          styleName='cancel-button'
+          className={classes.cancelButton}
           color='gray'
           onClick={this.toggleExpanded}
           label={t('Cancel')}
           small
           narrow />
       </div>}
-      <div styleName='project-contributions-total'>{t(`Contributions so far: {{totalContributions}}`, { totalContributions })}</div>
+      <div className={classes.projectContributionsTotal}>{t(`Contributions so far: {{totalContributions}}`, { totalContributions })}</div>
     </div>
   }
 }

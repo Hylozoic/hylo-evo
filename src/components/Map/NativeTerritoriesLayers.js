@@ -3,7 +3,7 @@ import { Layer, Source } from 'react-map-gl'
 import { useTranslation } from 'react-i18next'
 import { uniqBy } from 'lodash/fp'
 
-import './Map.scss'
+import classes from './Map.module.scss'
 
 export default function NativeTerritoriesLayer (props) {
   const { cursorLocation, hoveredLayerFeatures, visibility } = props
@@ -12,7 +12,7 @@ export default function NativeTerritoriesLayer (props) {
     const displayFeatures = hoveredLayerFeatures && uniqBy('properties.Name', hoveredLayerFeatures.filter(f => f.layer.id === 'native_territories'))
     return (
       displayFeatures && displayFeatures.length > 0 && (
-        <div styleName='tooltip' style={{ left: cursorLocation.x + 10, top: cursorLocation.y + 10 }}>
+        <div className={classes.tooltip} style={{ left: cursorLocation.x + 10, top: cursorLocation.y + 10 }}>
           <h3>{t('Native Territories')}</h3>
           <div>{displayFeatures.reduce((acc, f) => [...acc, <div key={f.properties.Name}>{f.properties.Name}</div>], [])}</div>
         </div>

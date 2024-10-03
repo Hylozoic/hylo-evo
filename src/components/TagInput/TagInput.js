@@ -9,7 +9,7 @@ import Icon from 'components/Icon'
 import KeyControlledItemList from 'components/KeyControlledList/KeyControlledItemList'
 import RoundImage from 'components/RoundImage'
 import { accessibilityIcon, visibilityIcon, accessibilityString, accessibilityDescription, visibilityString, visibilityDescription } from 'store/models/Group'
-import styles from './TagInput.scss'
+import styles from './TagInput.module.scss'
 
 const { object, array, bool, string, func } = PropTypes
 
@@ -123,15 +123,15 @@ class TagInput extends Component {
         <span className={theme.selectedTagName}>
           {optionalHashtag}{t.label || t.name}
           {tagType && tagType === 'groups' && this.props.groupSettings && <span>
-            <span styleName='privacyIcon'>
-              <Icon name={accessibilityIcon(t.accessibility)} styleName='tagInputPrivacyIcon' />
-              <div styleName='privacy-tooltip'>
+            <span className={styles.privacyIcon}>
+              <Icon name={accessibilityIcon(t.accessibility)} className={styles.tagInputPrivacyIcon} />
+              <div className={styles.privacyTooltip}>
                 <div><strong>{this.props.t(accessibilityString(t.accessibility))}</strong> - {this.props.t(accessibilityDescription(t.accessibility))}</div>
               </div>
             </span>
-            <span styleName='privacyIcon'>
-              <Icon name={visibilityIcon(t.visibility)} styleName='tagInputPrivacyIcon' />
-              <div styleName='privacy-tooltip'>
+            <span className={styles.privacyIcon}>
+              <Icon name={visibilityIcon(t.visibility)} className={styles.tagInputPrivacyIcon} />
+              <div className={styles.privacyTooltip}>
                 <div><strong>{this.props.t(visibilityString(t.visibility))}</strong> - {this.props.t(visibilityDescription(t.visibility))}</div>
               </div>
             </span>

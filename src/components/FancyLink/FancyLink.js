@@ -1,15 +1,15 @@
 import React from 'react'
 import Icon from 'components/Icon'
-import './FancyLink.scss'
+import classes from './FancyLink.module.scss'
 
 export default function FancyLink ({ linkUrl, title = '', description = '', iconName, target = null }) {
   return (
-    <a href={linkUrl} target={target} styleName='fancy-link-container'>
-      <Icon styleName='icon' name={iconName} />
-      <div styleName='text-container'>
+    <a href={linkUrl} target={target} className={classes.fancyLinkContainer}>
+      <Icon className={classes.icon} name={iconName} />
+      <div className={classes.textContainer}>
         <h4>{title}</h4>
-        <div styleName='url'>{linkUrl}</div>
-        <div styleName='description'>{description}</div>
+        <div className={classes.url}>{linkUrl}</div>
+        <div className={classes.description}>{description}</div>
       </div>
     </a>
   )

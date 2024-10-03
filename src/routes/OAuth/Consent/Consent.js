@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { isEmpty } from 'lodash/fp'
 import { formatError } from 'routes/NonAuthLayoutRouter/util'
 import Button from 'components/Button'
-import './Consent.scss'
+import classes from './Consent.module.scss'
 
 export default function Consent (props) {
   const [error, setError] = useState(null)
@@ -32,8 +32,8 @@ export default function Consent (props) {
 
   return (
     <div className={className}>
-      <div styleName='formWrapper'>
-        <h1 styleName='title'>{t('{{appName}} wants access to your Hylo account', { appName })}</h1>
+      <div className={classes.formWrapper}>
+        <h1 className={classes.title}>{t('{{appName}} wants access to your Hylo account', { appName })}</h1>
         {error && formatError(error, 'Login')}
 
         <div>
@@ -96,7 +96,7 @@ export default function Consent (props) {
 
         <Button label={t('Cancel')} color='dark-gray' narrow onClick={cancel} />
 
-        <Button styleName='submit' label={t('Allow')} onClick={submit} />
+        <Button className={classes.submit} label={t('Allow')} onClick={submit} />
       </div>
     </div>
   )

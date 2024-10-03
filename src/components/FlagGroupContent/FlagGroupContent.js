@@ -13,8 +13,9 @@ import presentGroup from 'store/presenters/presentGroup'
 import getGroupForDetail from 'store/selectors/getGroupForDetails'
 import getPlatformAgreements from 'store/selectors/getPlatformAgreements'
 import { groupUrl } from 'util/navigation'
-import './FlagGroupContent.scss'
 import Tooltip from 'components/Tooltip'
+
+import classes from './FlagGroupContent.module.scss'
 
 const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
   const { t } = useTranslation()
@@ -69,22 +70,22 @@ const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
   }
 
   return (
-    <div styleName='popup' onClick={(e) => e.stopPropagation()}>
-      <div styleName='popup-inner'>
+    <div className={classes.popup} onClick={(e) => e.stopPropagation()}>
+      <div className={classes.popupInner}>
         <h1>{t('Explanation for Flagging')}</h1>
-        <span onClick={closeModal} styleName='close-btn'>
-          <Icon name='Ex' styleName='icon' />
+        <span onClick={closeModal} className={classes.closeBtn}>
+          <Icon name='Ex' className={classes.icon} />
         </span>
 
-        <div styleName='content'>
-          <div styleName='explainer'>
+        <div className={classes.content}>
+          <div className={classes.explainer}>
             {t('flaggingExplainer')}
           </div>
-          <div styleName='explainer reason-required'>
+          <div className={classes.explainer + ' ' + classes.reasonRequired}>
             {t('flagsNeedACategory')}
           </div>
           <TextareaAutosize
-            styleName='explanation-textbox'
+            className={classes.explanationTextbox}
             minRows={6}
             value={explanation}
             onChange={(e) => setExplanation(e.target.value)}
@@ -93,24 +94,24 @@ const FlagGroupContent = ({ onClose, linkData, type = 'content' }) => {
           {group && agreements.length > 0 && (
             <>
               <h3>{t('Not permitted in {{groupName}}', { groupName: group?.name })}</h3>
-              <a href={groupAgreementsUrl} target='_blank' rel='noopener noreferrer' styleName='agreements-link'>{t('Link to group agreements')}</a>
+              <a href={groupAgreementsUrl} target='_blank' rel='noopener noreferrer' className={classes.agreementsLink}>{t('Link to group agreements')}</a>
               <MultiSelect items={agreements} selected={agreementsSelected} handleSelect={handleAgreementsSelect} />
             </>
           )}
           <h3>{t('Violations of platform agreements')}</h3>
-          <a href={agreementsURL} target='_blank' rel='noopener noreferrer' styleName='agreements-link'>{t('Link to platform agreements')}</a>
+          <a href={agreementsURL} target='_blank' rel='noopener noreferrer' className={classes.agreementsLink}>{t('Link to platform agreements')}</a>
           <h5>{t('Not permitted in Public Spaces')}</h5>
           <MultiSelect items={platformAgreements.filter((ag) => ag.type !== 'anywhere')} selected={platformAgreementsSelected} handleSelect={handlePlatformAgreementsSelect} />
           <h5>{t('Not permitted anywhere on the platform')}</h5>
           <MultiSelect items={platformAgreements.filter((ag) => ag.type === 'anywhere')} selected={platformAgreementsSelected} handleSelect={handlePlatformAgreementsSelect} />
-          <div styleName='submission'>
+          <div className={classes.submission}>
             <CheckBox
               checked={anonymous}
               label={t('Anonymous (moderators will see your name)')}
               onChange={value => setAnonymous(value)}
-              labelClass='anon-label'
+              labelClass={classes.anonLabel}
             />
-            <Button styleName='submit-btn' onClick={submit} disabled={!isValid()} dataTip={t('Select an agreement and add an explanation for why you are flagging this post')} dataFor='flagging-submit-tt'>
+            <Button className={classes.submitBtn} onClick={submit} disabled={!isValid()} dataTip={t('Select an agreement and add an explanation for why you are flagging this post')} dataFor='flagging-submit-tt'>
               {t('Submit')}
             </Button>
             <Tooltip

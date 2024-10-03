@@ -16,7 +16,7 @@ import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import { inIframe } from 'util/index'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
 
-import './CommentForm.scss'
+import classes from './CommentForm.module.scss'
 
 class CommentForm extends Component {
   static propTypes = {
@@ -76,22 +76,19 @@ class CommentForm extends Component {
     const placeholder = this.props.placeholder || this.props.t('Add a comment...')
 
     return (
-      <div
-        styleName='commentForm'
-        className={className}
-      >
+      <div className={cx(classes.commentForm, className)}>
         {currentUser && (
           <AttachmentManager type='comment' id='new' />
         )}
-        <div styleName={cx('prompt', { disabled: !currentUser })}>
+        <div className={cx(classes.prompt, { [classes.disabled]: !currentUser })}>
           {currentUser
-            ? <RoundImage url={currentUser.avatarUrl} small styleName='image' />
-            : <Icon name='Person' styleName='anonymous-image' />
+            ? <RoundImage url={currentUser.avatarUrl} small className={classes.image} />
+            : <Icon name='Person' className={classes.anonymousImage} />
           }
           <HyloEditor
             contentHTML={editorContent}
             onEnter={this.handleOnEnter}
-            styleName='editor'
+            className={classes.editor}
             readOnly={!currentUser}
             onUpdate={this.startTyping}
             placeholder={placeholder}
@@ -102,17 +99,17 @@ class CommentForm extends Component {
             ? <Link
               to={`/login?returnToUrl=${encodeURIComponent(window.location.pathname)}`}
               target={inIframe() ? '_blank' : ''}
-              styleName='signupButton'
+              className={classes.signupButton}
             >
               {this.prop.t('Sign up to reply')}
             </Link>
             : (
               <>
-                <div styleName='send-message-container'>
+                <div className={classes.sendMessageContainer}>
                   <Button
                     borderRadius='6px'
                     onClick={() => this.handleOnEnter(this.editor.current.getHTML())}
-                    styleName='send-message-button'
+                    className={classes.sendMessageButton}
                     dataTip={t('You need to include text to post a comment')}
                     dataFor='comment-submit-tt'
                   >
@@ -131,7 +128,7 @@ class CommentForm extends Component {
                   allowMultiple
                   onSuccess={addAttachment}
                   customRender={renderProps => (
-                    <UploadButton {...renderProps} styleName='upload-button' />
+                    <UploadButton {...renderProps} className={classes.uploadButton} />
                   )}
                 />
               </>
@@ -150,8 +147,8 @@ export function UploadButton ({
 }) {
   return (
     <div onClick={onClick} className={className}>
-      {loading && <Loading type='inline' styleName='upload-button-loading' />}
-      {!loading && <Icon name='AddImage' styleName='upload-button-icon' />}
+      {loading && <Loading type='inline' className={classes.uploadButtonLoading} />}
+      {!loading && <Icon name='AddImage' className={classes.uploadButtonIcon} />}
     </div>
   )
 }

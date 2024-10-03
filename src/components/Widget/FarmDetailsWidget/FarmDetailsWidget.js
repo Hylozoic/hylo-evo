@@ -17,7 +17,7 @@ import {
   getUnitPreference
 } from 'store/selectors/farmExtensionSelectors'
 import { ANIMAL_LIST, CLIMATE_ZONES, FARM_PRODUCT_LIST, MANAGEMENT_PLANS, FARM_TYPES } from 'util/constants'
-import './FarmDetailsWidget.scss'
+import classes from './FarmDetailsWidget.module.scss'
 
 const animalListLookup = keyBy(ANIMAL_LIST, 'value')
 const productLookup = keyBy(FARM_PRODUCT_LIST, 'value')
@@ -68,11 +68,11 @@ export default function FarmDetailsWidget ({ group }) {
 
   return (
     <>
-      <div styleName={cx('farm-details-container', { showless: !showMore })}>
-        <div styleName='group-tags'>
+      <div className={cx(classes.farmDetailsContainer, { [classes.showless]: !showMore })}>
+        <div className={classes.groupTags}>
           {overviewLabels.map((attribute, index) => (
             <Pill
-              styleName='tag-pill'
+              className={classes.tagPill}
               darkText
               label={attribute}
               id={attribute}
@@ -86,9 +86,9 @@ export default function FarmDetailsWidget ({ group }) {
       </div>
       {isThereMoreToShow &&
         <div>
-          <div styleName='separator-bg' />
-          <div styleName='separator' />
-          <Pill styleName='green-pill' onClick={() => setShowMore(!showMore)} label={showMore ? 'Show Less' : 'Show More'} />
+          <div className={classes.separatorBg} />
+          <div className={classes.separator} />
+          <Pill className={classes.greenPill} onClick={() => setShowMore(!showMore)} label={showMore ? 'Show Less' : 'Show More'} />
         </div>}
     </>
   )
@@ -98,17 +98,17 @@ export function FarmDetailSection ({ title, items }) {
   return (
     <div>
       {title &&
-        <div styleName='header'>
+        <div className={classes.header}>
           <h4>
             {title}
           </h4>
         </div>}
-      <div styleName='group-tags'>
+      <div className={classes.groupTags}>
         {items.map((attribute, index) => {
           return (
             attribute &&
               <Pill
-                styleName='tag-pill'
+                className={classes.tagPill}
                 darkText
                 label={attribute}
                 id={attribute}

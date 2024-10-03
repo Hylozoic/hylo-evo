@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import cx from 'classnames'
 import { validateEmail } from 'util/index'
 import { checkForStorageAccess, formatError } from '../util'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -11,12 +12,13 @@ import loginWithService from 'store/actions/loginWithService'
 import Button from 'components/Button'
 import GoogleButton from 'components/GoogleButton'
 import TextInput from 'components/TextInput'
-import './Signup.scss'
+import classes from './Signup.module.scss'
 
 export default function Signup (props) {
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
-  const [error, setError] = useState(getQuerystringParam('error', props))
+  const location = useLocation()
+  const [error, setError] = useState(getQuerystringParam('error',{ location }))
   const [redirectTo, setRedirectTo] = useState()
   const { t } = useTranslation()
 
@@ -79,38 +81,42 @@ export default function Signup (props) {
 
   const canSubmit = email?.length > 0
 
-  if (redirectTo) return <Redirect to={redirectTo} />
+  if (redirectTo) return <Navigate to={redirectTo} replace />
 
   return (
-    <div styleName='form'>
-      <div styleName='formWrapper'>
-        <h1 styleName='title'>{t('Welcome to Hylo')}</h1>
-        <p styleName='blurb'>{t('Stay connected, organized, and engaged with your group.')}</p>
-        <p styleName='or'>{t('Enter your email to get started:')}</p>
+    <div className={classes.form}>
+      <div className={classes.formWrapper}>
+        <h1 className={classes.title}>{t('Welcome to Hylo')}</h1>
+        <p className={classes.blurb}>{t('Stay connected, organized, and engaged with your group.')}</p>
+        <p className={classes.or}>{t('Enter your email to get started:')}</p>
 
         {error && formatError(error, 'Signup', t)}
 
         <TextInput
-          aria-label='email' label='email' name='email' id='email'
+          aria-label='email'
+          label='email'
+          name='email'
+          id='email'
           autoComplete='off'
           autoFocus
           internalLabel={t('Email')}
           onChange={handleEmailChange}
           onEnter={submit}
-          styleName='field'
+          className={classes.field}
           type='text'
           value={email || ''}
         />
 
         <Button
-          styleName='submit' label={t('Continue')} color={canSubmit ? 'green' : 'gray'}
+          className={cx(classes.submit, { [classes.green]: canSubmit, [classes.gray]: !canSubmit })}
+          label={t('Continue')}
           onClick={canSubmit ? () => submit() : null}
         />
       </div>
 
-      <p styleName='or'>{t('Or sign in with an existing account')}: </p>
+      <p className={classes.or}>{t('Or sign in with an existing account')}: </p>
 
-      <div styleName='auth-buttons'>
+      <div className={classes.authButtons}>
         <GoogleButton onClick={() => handleSignupWithService('google')} />
       </div>
     </div>

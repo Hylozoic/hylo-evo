@@ -13,7 +13,7 @@ import PostTitle from '../PostTitle'
 import PostDetails from '../PostDetails'
 import PeopleInfo from 'components/PostCard/PeopleInfo'
 import { RESPONSES } from 'store/models/EventInvitation'
-import '../PostBody/PostBody.scss'
+import classes from '../PostBody/PostBody.module.scss'
 
 class EventBody extends Component {
   state = {
@@ -33,29 +33,28 @@ class EventBody extends Component {
     const eventAttendees = filter(ei => ei.response === RESPONSES.YES, eventInvitations)
 
     return (
-      <div styleName={cx('body', 'eventBody', { smallMargin: !expanded, eventImage: attachmentType === 'image' }, { constrained }, { isFlagged: isFlagged && !event.clickthrough })} className={className}>
-
-        <div styleName='eventTop'>
-          <div styleName='calendarDate' onClick={onClick}>
+      <div className={cx(classes.body, classes.eventBody, { [classes.smallMargin]: !expanded, [classes.eventImage]: attachmentType === 'image', [classes.constrained]: constrained, [classes.isFlagged]: isFlagged && !event.clickthrough }, className)}>
+        <div className={classes.eventTop}>
+          <div className={cx(classes.calendarDate)} onClick={onClick}>
             <EventDate {...event} />
           </div>
-          {currentUser && <div styleName='eventResponseTop'>
-            <div styleName='rsvp'>
+          {currentUser && <div className={classes.eventResponseTop}>
+            <div className={classes.rsvp}>
               <EventRSVP {...event} respondToEvent={respondToEvent} />
             </div>
-            <Button label={t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+            <Button label={t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' className={classes.inviteButton} />
           </div>}
         </div>
 
-        <div styleName={cx('eventBodyColumn', { constrained })}>
+        <div className={cx(classes.eventBodyColumn, { [classes.constrained]: constrained })}>
           <PostTitle {...event} constrained={constrained} onClick={onClick} />
-          <div styleName={cx('eventData', { constrained })} onClick={onClick}>
-            <Icon name='Clock' styleName='icon' /> {TextHelpers.formatDatePair(startTime, endTime)}
+          <div className={cx(classes.eventData, { [classes.constrained]: constrained })} onClick={onClick}>
+            <Icon name='Clock' className={classes.icon} /> {TextHelpers.formatDatePair(startTime, endTime)}
           </div>
-          {!!location && <div styleName='eventData eventLocation' onClick={onClick}>
-            <Icon name='Location' styleName='icon' /> {location}
+          {!!location && <div className={cx(classes.eventData, classes.eventLocation)} onClick={onClick}>
+            <Icon name='Location' className={classes.icon} /> {location}
           </div>}
-          <div styleName={cx('eventDetails', { constrained })}>
+          <div className={cx(classes.eventDetails, { [classes.constrained]: constrained })}>
             <PostDetails
               {...event}
               onClick={onClick}
@@ -66,9 +65,9 @@ class EventBody extends Component {
           </div>
         </div>
 
-        <div styleName='eventAttendance'>
-          <div styleName='people' onClick={onClick}>
-            <div styleName='fade' />
+        <div className={classes.eventAttendance}>
+          <div className={classes.people} onClick={onClick}>
+            <div className={classes.fade} />
             <PeopleInfo
               people={eventAttendees}
               peopleTotal={eventAttendees.length}
@@ -83,11 +82,11 @@ class EventBody extends Component {
             />
           </div>
 
-          {currentUser && <div styleName='eventResponse'>
-            <div styleName='rsvp'>
+          {currentUser && <div className={classes.eventResponse}>
+            <div className={classes.rsvp}>
               <EventRSVP {...event} respondToEvent={respondToEvent} />
             </div>
-            <Button label={t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+            <Button label={t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' className={classes.inviteButton} />
           </div>}
         </div>
         <EmojiRow

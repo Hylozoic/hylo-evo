@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { DEFAULT_AVATAR } from 'store/models/Group'
 import RoundImage from 'components/RoundImage'
-import './RemovableListItem.scss'
+import classes from './RemovableListItem.module.scss'
 
 export default function RemovableListItem ({ item, removeItem, skipConfirm = false, square, size, confirmMessage, url }) {
   const { t } = useTranslation()
@@ -16,18 +16,18 @@ export default function RemovableListItem ({ item, removeItem, skipConfirm = fal
     }
   }
 
-  const avatar = item.avatarUrl ? <RoundImage url={item.avatarUrl || DEFAULT_AVATAR} medium square={square} size={size} styleName='avatar' /> : null
+  const avatar = item.avatarUrl ? <RoundImage url={item.avatarUrl || DEFAULT_AVATAR} medium square={square} size={size} className={classes.avatar} /> : null
   const title = item.name || item.title
 
   return (
-    <div styleName='item'>
+    <div className={classes.item}>
       {url && <Link to={url}>{avatar}</Link>}
       {!url && avatar}
 
-      {url && <Link to={url} styleName='name'>{title}</Link>}
+      {url && <Link to={url} className={classes.name}>{title}</Link>}
       {!url && <span>{title}</span>}
 
-      {removeItem && <span onClick={remove} className='remove-button' styleName='remove-button'>{t('Remove')}</span>}
+      {removeItem && <span onClick={remove} className={classes.removeButton}>{t('Remove')}</span>}
     </div>
   )
 }

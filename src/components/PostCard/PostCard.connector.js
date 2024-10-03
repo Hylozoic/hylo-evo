@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
+import { push } from "redux-first-history";
 import { postUrl, editPostUrl } from 'util/navigation'
 import respondToEvent from 'store/actions/respondToEvent'
 import getMe from 'store/selectors/getMe'

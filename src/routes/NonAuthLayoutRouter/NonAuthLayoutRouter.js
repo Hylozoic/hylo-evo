@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route, Redirect, Link, Switch } from 'react-router-dom'
+import { Route, Link, useLocation, useNavigate, Navigate, Routes } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Helmet } from 'react-helmet'
 import Div100vh from 'react-div-100vh'
@@ -19,9 +19,9 @@ import PasswordReset from 'routes/NonAuthLayoutRouter/PasswordReset'
 import SignupRouter from 'routes/NonAuthLayoutRouter/Signup/SignupRouter'
 import OAuthConsent from 'routes/OAuth/Consent'
 import OAuthLogin from 'routes/OAuth/Login'
-
-import './NonAuthLayoutRouter.scss'
 import { localeLocalStorageSync, localeToFlagEmoji } from 'util/locale'
+
+import classes from './NonAuthLayoutRouter.module.scss'
 
 const particlesStyle = {
   position: 'fixed',
@@ -33,10 +33,11 @@ const particlesStyle = {
 
 export default function NonAuthLayoutRouter (props) {
   const { t } = useTranslation()
-  const { location } = props
+  const location = useLocation()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const isAuthenticated = useSelector(getAuthenticated)
-  const returnToPathFromQueryString = getQuerystringParam('returnToUrl', props)
+  const returnToPathFromQueryString = getQuerystringParam('returnToUrl', { location })
   const returnToNavigationState = props.location?.state?.from
   const returnToPath = returnToNavigationState
     ? returnToNavigationState.pathname + returnToNavigationState.search
@@ -48,74 +49,63 @@ export default function NonAuthLayoutRouter (props) {
   useEffect(() => {
     if (returnToPath && returnToPath !== '/') {
       // Clears location state on page reload
-      props.history.replace({ state: null })
+      navigate('.', { replace: true, state: null })
       dispatch(setReturnToPath(returnToPath))
     }
 
     // XXX: skipAuthCheck is kind of a hack for when we are doing the oAuth login flow
     //      and we want to still show the oAuth login/consent pages even when someone is logged into Hylo
     if (!props.skipAuthCheck && isAuthenticated) {
-      props.history.replace('/signup')
+      navigate('/signup', { replace: true })
     }
   }, [dispatch, setReturnToPath, returnToPath])
 
   return (
-    <Div100vh styleName='nonAuthContainer'>
+    <Div100vh className={classes.nonAuthContainer}>
       <Helmet>
         <title>Hylo</title>
         <meta name='description' content='Prosocial Coordination for a Thriving Planet' />
       </Helmet>
-      <div styleName='background'>
-        <div styleName='particlesBackgroundWrapper'>
+      <div className={classes.background}>
+        <div className={classes.particlesBackgroundWrapper}>
           <Particles options={particlesjsConfig} style={particlesStyle} />
         </div>
-        <div styleName='topRow'>
+        <div className={classes.topRow}>
           <a href='/'>
-            <img styleName='logo' src='/assets/hylo.svg' alt={t('Hylo logo')} />
+            <img className={classes.logo} src='/assets/hylo.svg' alt={t('Hylo logo')} />
           </a>
-          <LocaleDropdown renderToggleChildren={<span styleName='locale'>{t('Locale')}: {locale} {localeDisplay}</span>} />
+          <LocaleDropdown renderToggleChildren={<span className={classes.locale}>{t('Locale')}: {locale} {localeDisplay}</span>} />
         </div>
-        <div styleName='signupRow'>
-          <Switch>
+        <div className={classes.signupRow}>
+          <Routes>
             <Route
               path='/login'
-              component={routeProps => (
-                <Login {...props} {...routeProps} styleName='form' />
-              )}
+              element={<Login {...props} className={classes.form} />}
             />
             <Route
               path='/signup'
-              component={routeProps => (
-                <SignupRouter {...props} {...routeProps} styleName='form' />
-              )}
+              element={<SignupRouter {...props} className={classes.form} />}
             />
             <Route
               path='/reset-password'
-              component={routeProps => (
-                <PasswordReset {...props} {...routeProps} styleName='form' />
-              )}
+              element={<PasswordReset {...props} className={classes.form} />}
             />
             <Route
               path='/notifications'
-              component={routeProps => (
-                <ManageNotifications {...props} {...routeProps} styleName='form' />
-              )}
+              element={<ManageNotifications {...props} className={classes.form} />}
             />
             <Route
-              path={[
-                '/:context(groups)/:groupSlug/join/:accessCode',
-                '/h/use-invitation'
-              ]}
-              component={JoinGroup}
+              path='/:context(groups)/:groupSlug/join/:accessCode'
+              element={<JoinGroup />}
             />
-            <Route path='/oauth/login/:uid'>
-              <OAuthLogin styleName='form' />
-            </Route>
+            <Route
+              path='/h/use-invitation'
+              element={<JoinGroup />}
+            />
+            <Route path='/oauth/login/:uid' element={<OAuthLogin className={classes.form} />} />
             <Route
               path='/oauth/consent/:uid'
-              component={routeProps => (
-                <OAuthConsent {...routeProps} styleName='form' />
-              )}
+              element={<OAuthConsent {...props} className={classes.form} />}
             />
             {/*
               Default route
@@ -125,68 +115,66 @@ export default function NonAuthLayoutRouter (props) {
               with the static pages as those routes are first use `path='/(.+)'` to match
               anything BUT root if there is any issue.
             */}
-            <Redirect to={{ pathname: '/login', state: { from: location } }} />
-          </Switch>
+            <Route path='*' element={<Navigate to='/login' state={{ from: location }} replace />} />
+          </Routes>
         </div>
 
         {/* The below-container content for each route */}
-        <Switch>
+        <Routes>
           <Route
             path='/signup'
-            exact
-            component={() => (
-              <div styleName='below-container'>
+            element={
+              <div className={classes.belowContainer}>
                 <Link to='/login'>
-                  {t('Already have an account?')} <Button styleName='signupButton' color='green-white-green-border'>{t('Sign in')}</Button>
+                  {t('Already have an account?')} <Button className={classes.signupButton} color='green-white-green-border'>{t('Sign in')}</Button>
                 </Link>
               </div>
-            )}
+            }
           />
           <Route
             path='/reset-password'
-            component={() => (
-              <div styleName='below-container'>
-                <div styleName='resetPasswordBottom'>
+            element={
+              <div className={classes.belowContainer}>
+                <div className={classes.resetPasswordBottom}>
                   <Link tabIndex={-1} to='/signup'>
-                    <Button styleName='signupButton' color='green-white-green-border'>{t('Sign Up')}</Button>
+                    <Button className={classes.signupButton} color='green-white-green-border'>{t('Sign Up')}</Button>
                   </Link>
                   or
                   <Link to='/login'>
-                    <Button styleName='signupButton' color='green-white-green-border'>{t('Log In')}</Button>
+                    <Button className={classes.signupButton} color='green-white-green-border'>{t('Log In')}</Button>
                   </Link>
                 </div>
               </div>
-            )}
+            }
           />
           <Route
             path='/login'
-            exact
-            component={() => (
-              <div styleName='below-container'>
+            element={
+              <div className={classes.belowContainer}>
                 <Link tabIndex={-1} to='/signup'>
-                  {t('Not a member of Hylo?')} <Button styleName='signupButton' color='green-white-green-border'>{t('Sign Up')}</Button>
+                  {t('Not a member of Hylo?')} <Button className={classes.signupButton} color='green-white-green-border'>{t('Sign Up')}</Button>
                 </Link>
               </div>
-            )}
+            }
           />
           <Route
             path='/oauth/login'
-            component={(props) => (
-              <div styleName='below-container'>
-                <p>{t(`Use your Hylo account to access {{name}}.`, { name: getQuerystringParam('name', props) || thisApplicationText })}</p>
+            element={
+              <div className={classes.belowContainer}>
+                <p>{t(`Use your Hylo account to access {{name}}.`, { name: getQuerystringParam('name', { location }) || thisApplicationText })}</p>
               </div>
-            )}
+            }
           />
           <Route
             path='/oauth/consent'
-            component={(props) => (
-              <div styleName='below-container'>
-                <p>{t(`Make sure you trust {{name}} with your information.`, { name: getQuerystringParam('name', props) || thisApplicationText })}</p>
+            element={
+              <div className={classes.belowContainer}>
+                <p>{t(`Make sure you trust {{name}} with your information.`, { name: getQuerystringParam('name', { location }) || thisApplicationText })}</p>
               </div>
-            )}
+            }
           />
-        </Switch>
-        <div styleName='below-container'>
+        </Routes>
+        <div className={classes.belowContainer}>
           <a href='https://hylo.com/terms/' target='_blank' rel='noreferrer'>{t('Terms of Service')}</a> +&nbsp;
           <a href='https://hylo.com/terms/privacy' target='_blank' rel='noreferrer'>{t('Privacy Policy')}</a>
         </div>

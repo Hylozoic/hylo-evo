@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { postUrl, createPostUrl } from 'util/navigation'
 import RoundImage from '../../RoundImage'
 
-import './OffersAndRequestsWidget.scss'
+import classes from './OffersAndRequestsWidget.module.scss'
 
 const { array, bool, object } = PropTypes
 
@@ -19,29 +19,28 @@ class OffersAndRequestsWidget extends Component {
 
   render () {
     const { isMember, items, routeParams, t } = this.props
-
     return (
-      <div styleName='offers-and-requests'>
+      <div className={classes.offersAndRequests}>
         {items.map(p => <Link to={postUrl(p.id, routeParams)} key={p.id}>
-          <div styleName='item'>
-            <div styleName='meta'>
-              <span styleName='type'>{t(p.type)}</span>{' '}{t('from')}{' '}{p.creator.name}
-              <span styleName={cx('num-comments', p.type)}>{p.commentsTotal} <div styleName='tail' /></span>
+          <div className={classes.item}>
+            <div className={classes.meta}>
+              <span className={classes.type}>{t(p.type)}</span>{' '}{t('from')}{' '}{p.creator.name}
+              <span className={cx(classes.numComments, classes[p.type])}>{p.commentsTotal} <div className={classes.tail} /></span>
             </div>
-            <div styleName='title'>{p.title}</div>
-            <RoundImage url={p.creator.avatarUrl} styleName='author-image' />
+            <div className={classes.title}>{p.title}</div>
+            <RoundImage url={p.creator.avatarUrl} className={classes.authorImage} />
           </div>
         </Link>)}
-        {items.length < 3 && isMember ? <div styleName='item create-offer-request'>
-          <div styleName='meta'>
-            <span styleName='type'>{t('Create a request or offer!')}</span>
+        {items.length < 3 && isMember ? <div className={cx(classes.item, classes.createOfferRequest)}>
+          <div className={classes.meta}>
+            <span className={classes.type}>{t('Create a request or offer!')}</span>
           </div>
-          <div styleName='title'> {t('What do you need? What are you offering?')}</div>
-          <div styleName='ask-offer-cta'>
-            <Link to={createPostUrl(routeParams, { newPostType: 'offer' })} styleName='offer-link'>{t('+ New')} <span styleName='offer'>{t('Offer')}</span></Link>
-            <Link to={createPostUrl(routeParams, { newPostType: 'request' })} styleName='request-link'>{t('+ New')} <span styleName='request'>{t('Request')}</span></Link>
+          <div className={classes.title}>{t('What do you need? What are you offering?')}</div>
+          <div className={classes.askOfferCta}>
+            <Link to={createPostUrl(routeParams, { newPostType: 'offer' })} className={classes.offerLink}>{t('+ New')} <span className={classes.offer}>{t('Offer')}</span></Link>
+            <Link to={createPostUrl(routeParams, { newPostType: 'request' })} className={classes.requestLink}>{t('+ New')} <span className={classes.request}>{t('Request')}</span></Link>
           </div>
-          <RoundImage url='/gift.png' styleName='author-image' />
+          <RoundImage url='/gift.png' className={classes.authorImage} />
         </div> : ' '}
       </div>
     )

@@ -1,4 +1,4 @@
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { connect } from 'react-redux'
 import useInvitation from 'store/actions/useInvitation'
 import { FETCH_MY_REQUESTS_AND_INVITES } from 'store/constants'

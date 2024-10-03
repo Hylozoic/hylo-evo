@@ -3,7 +3,7 @@ import Picker from '@emoji-mart/react'
 import React, { useState, useEffect } from 'react'
 import Icon from 'components/Icon'
 
-import './EmojiPicker.scss'
+import classes from './EmojiPicker.module.scss'
 
 const PICKER_DEFAULT_WIDTH = 373
 const PICKER_DEFAULT_HEIGHT = 435
@@ -51,21 +51,21 @@ export default function EmojiPicker (props) {
 
   return forReactions
     ? (
-      <div styleName='emoji-picker-container' className={props.className}>
-        <div styleName='emoji-picker-toggle' onClick={toggleModalOpen}>
-          <Icon name='Smiley' styleName='picker-icon' />
+      <div className={cx(classes.emojiPickerContainer, props.className)}>
+        <div className={classes.emojiPickerToggle} onClick={toggleModalOpen}>
+          <Icon name='Smiley' className={classes.pickerIcon} />
         </div>
         {modalOpen &&
-          <div style={{ top: modalY, left: modalX }} styleName={cx('emoji-options')}>
+          <div style={{ top: modalY, left: modalX }} className={cx(classes.emojiOptions)}>
             <EmojiPickerContent {...props} onClickOutside={toggleModalOpen} onEmojiSelect={handleClick} />
           </div>}
       </div>
     )
     : (
-      <div onClick={toggleModalOpen} styleName='emoji-picker-container' className={props.className}>
+      <div onClick={toggleModalOpen} className={cx(classes.emojiPickerContainer, props.className)}>
         {emoji || '?'}
         {modalOpen &&
-          <div style={{ top: modalY, left: modalX }} styleName={cx('emoji-options')}>
+          <div style={{ top: modalY, left: modalX }} className={cx(classes.emojiOptions)}>
             <EmojiPickerContent {...props} onClickOutside={toggleModalOpen} onEmojiSelect={handleSelection} />
           </div>}
       </div>

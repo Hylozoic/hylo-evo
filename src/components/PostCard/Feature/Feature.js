@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactPlayer from 'react-player'
-import './Feature.scss'
+import classes from './Feature.module.scss'
 
 export default function Feature ({ url }) {
   return (
@@ -8,7 +8,7 @@ export default function Feature ({ url }) {
       url={url}
       controls
       width='100%'
-      styleName='video'
+      className={classes.video}
     />
   )
 }

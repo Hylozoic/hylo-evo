@@ -7,7 +7,7 @@ import { groupUrl, messagePersonUrl, personUrl } from 'util/navigation'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import './MembersWidget.scss'
+import classes from './MembersWidget.module.scss'
 
 const settings = {
   dots: true,
@@ -37,26 +37,30 @@ export default ({ items, group }) => {
   const { t } = useTranslation()
 
   return (
-    <div styleName='active-users'>
+    <div className={classes.activeUsers}>
       <Slider {...settings} onSwipe={handleSwiped}>
-        {items.map(m => <div key={m.id} styleName='active-user'>
-          <div styleName='user-name'>{m.name.split(' ')[0]}</div>
-          <div styleName='user-controls'>
-            <div styleName='buttons'>
-              <Link to={messagePersonUrl(m)} onClickCapture={handleOnItemClick}><Icon name='Messages' styleName='user-message-icon' /></Link>
-              <Link to={personUrl(m.id, group.slug)} onClickCapture={handleOnItemClick}><Icon name='Person' styleName='user-profile-icon' /></Link>
+        {items.map(m => <div key={m.id} className={classes.activeUser}>
+          <div className={classes.userName}>{m.name.split(' ')[0]}</div>
+          <div className={classes.userControls}>
+            <div className={classes.buttons}>
+              <Link to={messagePersonUrl(m)} onClickCapture={handleOnItemClick}>
+                <Icon name='Messages' className={classes.userMessageIcon} />
+              </Link>
+              <Link to={personUrl(m.id, group.slug)} onClickCapture={handleOnItemClick}>
+                <Icon name='Person' className={classes.userProfileIcon} />
+              </Link>
             </div>
           </div>
-          <div styleName='user-background' />
-          <div styleName='user-image' style={{ backgroundImage: `url(${m.avatarUrl})` }} />
+          <div className={classes.userBackground} />
+          <div className={classes.userImage} style={{ backgroundImage: `url(${m.avatarUrl})` }} />
         </div>)}
-        <div styleName='members-link'>
+        <div className={classes.membersLink}>
           <div>
             <Link to={groupUrl(group.slug, 'members')}>{t('All')}</Link>
           </div>
         </div>
       </Slider>
-      <div styleName='right-fade' />
+      <div className={classes.rightFade} />
     </div>
   )
 }

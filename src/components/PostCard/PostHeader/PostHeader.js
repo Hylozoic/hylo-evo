@@ -3,22 +3,22 @@ import { filter, isFunction } from 'lodash'
 import React, { PureComponent } from 'react'
 import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import ReactTooltip from 'react-tooltip'
 import moment from 'moment-timezone'
+import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import BadgeEmoji from 'components/BadgeEmoji'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
 import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
+import FlagGroupContent from 'components/FlagGroupContent/FlagGroupContent'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
 import PostCompletion from '../PostCompletion'
-import { personUrl, topicUrl } from 'util/navigation'
-import { TextHelpers } from 'hylo-shared'
-import './PostHeader.scss'
 import { PROPOSAL_STATUS_CASUAL, PROPOSAL_STATUS_COMPLETED } from 'store/models/Post'
-import FlagGroupContent from 'components/FlagGroupContent/FlagGroupContent'
+import { personUrl, topicUrl } from 'util/navigation'
+
+import classes from './PostHeader.module.scss'
 
 class PostHeader extends PureComponent {
   static defaultProps = {
@@ -107,9 +107,12 @@ class PostHeader extends PureComponent {
     const actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
 
     const { from, to } = TextHelpers.formatDatePair(startTime, actualEndTime, true)
-    const startString = fulfilledAt ? false
-      : TextHelpers.isDateInTheFuture(startTime) ? t('Starts: {{from}}', { from })
-        : TextHelpers.isDateInTheFuture(endTime) ? t('Started: {{from}}', { from })
+    const startString = fulfilledAt
+      ? false
+      : TextHelpers.isDateInTheFuture(startTime)
+        ? t('Starts: {{from}}', { from })
+        : TextHelpers.isDateInTheFuture(endTime)
+          ? t('Started: {{from}}', { from })
           : false
 
     let endString = false
@@ -131,44 +134,47 @@ class PostHeader extends PureComponent {
 
     const showNormal = ((canBeCompleted && canEdit && expanded) && (topics?.length > 0 || (canHaveTimes && timeWindow.length > 0))) || false
     return (
-      <div styleName={cx('header', { constrained }, { detailHasImage })} className={className}>
-        <div styleName='headerMainRow'>
-          <div styleName='headerTopRow'>
-            <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
-            <div styleName='headerText'>
+      <div className={cx(classes.header, { [classes.constrained]: constrained, [classes.detailHasImage]: detailHasImage }, className)}>
+        <div className={classes.headerMainRow}>
+          <div className={classes.headerTopRow}>
+            <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} className={classes.avatar} />
+            <div className={classes.headerText}>
               <Highlight {...highlightProps}>
-                <Link to={creatorUrl} styleName='userName' data-tip={creator.tagline} data-for='announcement-tt'>{creator.name}</Link>
+                <Link to={creatorUrl} className={cx(classes.userName)} data-tooltip-content={creator.tagline} data-tooltip-id={`announcement-tt-${id}`}>{creator.name}</Link>
               </Highlight>
-              <div styleName='badgeRow'>
+              <div className={classes.badgeRow}>
                 {roles.map(role => (
                   <BadgeEmoji key={role.id + role.common} expanded {...role} responsibilities={role.responsibilities} id={id} />
                 ))}
               </div>
-              <div styleName='timestampRow'>
-                <span styleName='timestamp' data-for={`dateTip-${id}`} data-tip={exactCreatedTimestamp}>
+              <div className={classes.timestampRow}>
+                <span className={classes.timestamp} data-tooltip-id={`dateTip-${id}`} data-tooltip-content={exactCreatedTimestamp}>
                   {createdTimestamp}
                 </span>
-                {announcement && <span styleName='announcementSection'>
-                  <span styleName='announcementSpacer'>•</span>
-                  <span data-tip='Announcement' data-for='announcement-tt'>
-                    <Icon name='Announcement' styleName='announcementIcon' />
+                {announcement && (
+                  <span className={classes.announcementSection}>
+                    <span className={classes.announcementSpacer}>•</span>
+                    <span data-tooltip-content='Announcement' data-tooltip-id={`announcement-tt-${id}`}>
+                      <Icon name='Announcement' className={classes.announcementIcon} />
+                    </span>
                   </span>
-                </span>}
+                )}
               </div>
             </div>
-            <div styleName='upperRight'>
-              {isFlagged && <Link to={moderationActionsGroupUrl} styleName='notALink'><Icon name='Flag' styleName='flagIcon' dataTip={t('See why this post was flagged')} dataTipFor='flag-tt' /></Link>}
+
+            <div className={classes.upperRight}>
+              {isFlagged && <Link to={moderationActionsGroupUrl} className={classes.notALink}><Icon name='Flag' className={classes.flagIcon} dataTip={t('See why this post was flagged')} data-tooltip-id='flag-tt' /></Link>}
               <Tooltip
                 delay={250}
                 id='flag-tt'
               />
-              {pinned && <Icon name='Pin' styleName='pinIcon' />}
-              {fulfilledAt && <div data-tip='Completed' data-for='announcement-tt'><PostLabel type='completed' styleName='label' /></div>}
-              {type && <PostLabel type={type} styleName='label' />}
+              {pinned && <Icon name='Pin' className={classes.pinIcon} />}
+              {fulfilledAt && <div data-tooltip-content='Completed' data-tooltip-id={`announcement-tt-${id}`}><PostLabel type='completed' className={classes.label} /></div>}
+              {type && <PostLabel type={type} className={classes.label} />}
               {dropdownItems.length > 0 &&
                 <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
               {close &&
-                <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
+                <a className={cx(classes.close)} onClick={close}><Icon name='Ex' /></a>}
             </div>
           </div>
           {flaggingVisible && !group &&
@@ -184,11 +190,13 @@ class PostHeader extends PureComponent {
               onClose={() => this.setState({ flaggingVisible: false })}
             />}
         </div>
-        <div styleName={cx('subheader', { hasImage }, { showNormal })}>
+        <div className={cx(classes.subheader, { [classes.hasImage]: hasImage, [classes.showNormal]: showNormal })}>
           {topics?.length > 0 && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
-          {canHaveTimes && timeWindow.length > 0 && <div styleName='timeWindow'>
-            {timeWindow}
-          </div>}
+          {canHaveTimes && timeWindow.length > 0 && (
+            <div className={classes.timeWindow}>
+              {timeWindow}
+            </div>
+          )}
         </div>
         {canBeCompleted && canEdit && expanded && (
           <PostCompletion
@@ -202,10 +210,10 @@ class PostHeader extends PureComponent {
         )}
         {
           canEdit && expanded && fulfilledAt && type === 'proposal' && (
-            <div styleName='outcomeContainer'>
+            <div className={classes.outcomeContainer}>
               <input
                 type='text'
-                styleName='outcomeInput'
+                className={classes.outcomeInput}
                 placeholder='Summarize the outcome'
                 value={proposalOutcome || ''}
                 onChange={(value) => updateProposalOutcome(value.target.value)}
@@ -215,11 +223,11 @@ class PostHeader extends PureComponent {
           )
         }
 
-        <ReactTooltip
-          backgroundColor='rgba(35, 65, 91, 1.0)'
-          effect='solid'
+        <Tooltip
+          className={classes.tooltip}
           delayShow={0}
-          id='announcement-tt'
+          id={`announcement-tt-${id}`}
+          position='top'
         />
         <Tooltip
           delay={550}
@@ -233,9 +241,9 @@ class PostHeader extends PureComponent {
 
 export function TopicsLine ({ topics, slug, newLine }) {
   return (
-    <div styleName={cx('topicsLine', { newLineForTopics: newLine })}>
+    <div className={cx(classes.topicsLine, { [classes.newLineForTopics]: newLine })}>
       {topics.slice(0, 3).map(t =>
-        <Link styleName='topic' to={topicUrl(t.name, { groupSlug: slug })} key={t.name}>#{t.name}</Link>)}
+        <Link className={classes.topic} to={topicUrl(t.name, { groupSlug: slug })} key={t.name}>#{t.name}</Link>)}
     </div>
   )
 }

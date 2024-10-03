@@ -1,4 +1,4 @@
-import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
+import postFieldsFragment from '@graphql/fragments/postFieldsFragment'
 
 // When includeChildGroupPosts is true we query for viewPosts,
 // which shows all the aggregate posts from current group and any

@@ -5,7 +5,8 @@ import { indexOf, omit } from 'lodash/fp'
 import Icon from 'components/Icon'
 import { accessibilityIcon, visibilityIcon } from 'store/models/Group'
 import KeyControlledList from './KeyControlledList'
-import './KeyControlledItemList.scss'
+import classes from './KeyControlledItemList.module.scss'
+import cx from 'classnames'
 
 const { array, func, object, bool, string } = PropTypes
 
@@ -56,7 +57,7 @@ class KeyControlledItemList extends React.Component {
           <div>
             <span>{item.name || item.title}</span>
           </div>
-          {tagType && tagType === 'groups' && <div styleName='keyListMemberCount'><div><Icon name='Members' styleName='keyListPrivacyIcon' /> {item.memberCount} {this.props.t('Member', { count: item.memberCount })}</div><div><Icon name={accessibilityIcon(item.accessibility)} styleName='keyListPrivacyIcon' /> <Icon name={visibilityIcon(item.visibility)} styleName='keyListPrivacyIcon' /></div></div>}
+          {tagType && tagType === 'groups' && <div className={classes.keyListMemberCount}><div><Icon name='Members' className={classes.keyListPrivacyIcon} /> {item.memberCount} {this.props.t('Member', { count: item.memberCount })}</div><div><Icon name={accessibilityIcon(item.accessibility)} className={classes.keyListPrivacyIcon} /> <Icon name={visibilityIcon(item.visibility)} className={classes.keyListPrivacyIcon} /></div></div>}
         </a>
       </li>
 

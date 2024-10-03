@@ -1,6 +1,6 @@
 import React from 'react'
 import { withTranslation } from 'react-i18next'
-import './ErrorBoundary.scss'
+import classes from './ErrorBoundary.module.scss'
 import rollbar from 'client/rollbar'
 
 class ErrorBoundary extends React.Component {
@@ -21,12 +21,12 @@ class ErrorBoundary extends React.Component {
     const message = this.props.message || this.props.t('Oops! Something went wrong.  Try reloading the page.')
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return <div styleName='container'>
-        <div styleName='speech-bubble'>
-          <div styleName='arrow' />
+      return <div className={classes.container}>
+        <div className={classes.speechBubble}>
+          <div className={classes.arrow} />
           <span>{message}</span>
         </div>
-        <div styleName='axolotl' />
+        <div className={classes.axolotl} />
       </div>
     }
     return this.props.children

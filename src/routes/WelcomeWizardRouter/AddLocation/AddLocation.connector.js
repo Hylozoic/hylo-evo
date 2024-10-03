@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push, goBack } from 'connected-react-router'
+import { push, goBack } from 'redux-first-history'
 import getMe from 'store/selectors/getMe'
 import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import updateUserSettings from 'store/actions/updateUserSettings'

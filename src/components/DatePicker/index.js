@@ -1,4 +1,4 @@
-import './datePicker.scss'
+import classes from './datePicker.module.scss'
 import Datetime from 'react-datetime'
 import React from 'react'
 
@@ -12,7 +12,7 @@ function DatePicker (props) {
   return (
     <Datetime
       {...props}
-      styleName='datePicker'
+      className={classes.datePicker}
       isValidDate={isValidDate}
       inputProps={{ placeholder }}
       className={props.className}

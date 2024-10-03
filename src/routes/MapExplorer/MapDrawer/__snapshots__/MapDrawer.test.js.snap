@@ -44,8 +44,8 @@ exports[`MapDrawer renders correctly (with min props) 1`] = `
       data-stylename="postsHeader"
     >
       <span
-        data-for="childgroup-toggle-tt"
-        data-tip="Show posts from child groups"
+        data-tooltip-id="childgroup-toggle-tt"
+        data-tooltip-content="Show posts from child groups"
         onClick={[Function]}
       >
         <Icon
@@ -134,7 +134,7 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
       >
         "
         hello
-        " 
+        "
         <Icon
           name="Ex"
         />
@@ -149,7 +149,7 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
         />
          #
         food
-         
+
         <Icon
           name="Ex"
         />
@@ -175,8 +175,8 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
       data-stylename="postsHeader"
     >
       <span
-        data-for="childgroup-toggle-tt"
-        data-tip="Show posts from child groups"
+        data-tooltip-id="childgroup-toggle-tt"
+        data-tooltip-content="Show posts from child groups"
         onClick={[Function]}
       >
         <Icon
@@ -288,7 +288,7 @@ exports[`MapDrawer searching updates map filters 1`] = `
         <span
           data-stylename="topicCount"
         />
-         
+
         DOAs
       </span>
     </div>
@@ -315,8 +315,8 @@ exports[`MapDrawer searching updates map filters 1`] = `
       data-stylename="postsHeader"
     >
       <span
-        data-for="childgroup-toggle-tt"
-        data-tip="Show posts from child groups"
+        data-tooltip-id="childgroup-toggle-tt"
+        data-tooltip-content="Show posts from child groups"
         onClick={[Function]}
       >
         <Icon
@@ -385,7 +385,7 @@ exports[`TabBar renders tabs 1`] = `
     onClick={[Function]}
   >
     Posts
-     
+
     <span
       data-stylename="tabCount"
     >
@@ -398,7 +398,7 @@ exports[`TabBar renders tabs 1`] = `
     onClick={[Function]}
   >
     Groups
-     
+
     <span
       data-stylename="tabCount"
     >
@@ -418,7 +418,7 @@ exports[`TabBar renders tabs 2`] = `
     onClick={[Function]}
   >
     Posts
-     
+
     <span
       data-stylename="tabCount"
     >
@@ -431,7 +431,7 @@ exports[`TabBar renders tabs 2`] = `
     onClick={[Function]}
   >
     Groups
-     
+
     <span
       data-stylename="tabCount"
     >

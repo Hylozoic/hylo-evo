@@ -8,7 +8,7 @@ import {
 } from './NotificationsDropdown.store'
 import getMe from 'store/selectors/getMe'
 import { urlForNotification } from 'store/models/Notification'
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { FETCH_NOTIFICATIONS } from 'store/constants'
 
 const NOTIFICATIONS_PAGE_SIZE = 20

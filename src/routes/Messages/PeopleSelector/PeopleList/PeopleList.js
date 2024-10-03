@@ -1,12 +1,12 @@
 import { any, arrayOf, func, object, shape, string } from 'prop-types'
 import React from 'react'
 import PeopleListItem from '../PeopleListItem'
-import './PeopleList.scss'
+import classes from './PeopleList.module.scss'
 
 export default function PeopleList ({ currentMatch, onClick, onMouseOver, people }) {
-  return <div styleName='people-list-container' className='people-list-container'>
+  return <div className={classes.peopleListContainer}>
     {people && people.length > 0 &&
-      <ul styleName='people-list'>
+      <ul className={classes.peopleList}>
         {people.map(person =>
           <PeopleListItem
             key={person.id}

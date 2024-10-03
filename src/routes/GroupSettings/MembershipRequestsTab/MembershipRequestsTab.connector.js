@@ -1,4 +1,4 @@
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { groupUrl } from 'util/navigation'

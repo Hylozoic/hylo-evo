@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import RoundImageRow from 'components/RoundImageRow'
 
-import './PeopleInfo.scss'
+import classes from './PeopleInfo.module.scss'
 
 export default function PeopleInfo ({
   className,
@@ -60,9 +60,9 @@ export default function PeopleInfo ({
     avatarUrls = people.map(p => p.avatarUrl)
   }
   return (
-    <span styleName={cx('people-container', { constrained })} className={className}>
-      <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} small={small} tiny={tiny} />
-      <span styleName='caption' onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
+    <span className={cx(classes.peopleContainer, { [classes.constrained]: constrained }, className)}>
+      <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} className={classes.people} onClick={onClick} small={small} tiny={tiny} />
+      <span className={cx(classes.caption)} onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
         {caption}
       </span>
     </span>

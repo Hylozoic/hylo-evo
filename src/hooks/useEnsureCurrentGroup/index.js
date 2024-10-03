@@ -1,23 +1,23 @@
 import { useEffect } from 'react'
-import fetchGroupDetails from 'store/actions/fetchGroupDetails'
 import { useSelector, useDispatch } from 'react-redux'
+import useRouterParams from 'hooks/useRouterParams'
+import fetchGroupDetails from 'store/actions/fetchGroupDetails'
 import presentGroup from 'store/presenters/presentGroup'
-import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
-import useRouter from 'hooks/useRouter'
+import getGroupForSlug from 'store/selectors/getGroupForSlug'
 import { createSelector } from 'reselect'
 import isPendingFor from 'store/selectors/isPendingFor'
 import { FETCH_GROUP_DETAILS } from 'store/constants'
 
 const selectAndPresentGroup = createSelector(
-  (state, router) => getGroupForCurrentRoute(state, router),
+  (state, slug) => getGroupForSlug(state, slug),
   (group) => presentGroup(group)
 )
 
 export default function useEnsureCurrentGroup () {
-  const router = useRouter()
-  const groupSlug = router.query.detailGroupSlug || router.query.groupSlug
+  const routerParams = useRouterParams()
+  const groupSlug = routerParams.detailGroupSlug || routerParams.groupSlug
 
-  const group = useSelector(state => selectAndPresentGroup(state, router))
+  const group = useSelector(state => selectAndPresentGroup(state, groupSlug))
   const pending = useSelector(state => isPendingFor(FETCH_GROUP_DETAILS, state))
   const dispatch = useDispatch()
 
@@ -25,7 +25,7 @@ export default function useEnsureCurrentGroup () {
     if (!pending && (!group || !group.id)) {
       dispatch(fetchGroupDetails({ slug: groupSlug, withWidgets: true }))
     }
-  }, [dispatch, groupSlug])
+  }, [dispatch, group, groupSlug, pending])
 
   return { group, pending }
 }

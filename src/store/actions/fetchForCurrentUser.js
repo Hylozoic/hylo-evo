@@ -1,6 +1,6 @@
 import { get } from 'lodash/fp'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
-import MeQuery from 'graphql/queries/MeQuery'
+import MeQuery from '@graphql/queries/MeQuery'
 
 export default function fetchForCurrentUser () {
   return {

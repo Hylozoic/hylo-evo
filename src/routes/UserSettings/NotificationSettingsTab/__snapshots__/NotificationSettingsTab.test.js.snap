@@ -127,7 +127,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
       data-stylename="prompt"
     >
       How would you like to receive notifications about
-       
+
       new comments on posts you're following?
     </div>
     <div
@@ -207,7 +207,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
       data-stylename="help-paragraph"
     >
       Download our
-       
+
       <a
         href="https://itunes.apple.com/app/appName/id1002185140"
         rel="noreferrer"
@@ -215,9 +215,9 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
       >
         iOS
       </a>
-       
+
       or
-       
+
       <a
         href="https://play.google.com/store/apps/details?id=com.hylo.hyloandroid"
         rel="noreferrer"
@@ -238,9 +238,9 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
 
 exports[`SettingsIcon renders correctly 1`] = `
 <div
-  data-for="helpTip"
+  data-tooltip-id="helpTip"
   data-stylename="setting-controls highlightIcon"
-  data-tip="Turn Email Notifications Off"
+  data-tooltip-content="Turn Email Notifications Off"
   onClick={[Function]}
 >
   <Icon

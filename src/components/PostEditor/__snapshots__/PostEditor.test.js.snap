@@ -132,7 +132,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
               <span>
                 request
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-request"
                 name="ArrowDown"
@@ -375,7 +375,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
               <span>
                 request
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-request"
                 name="ArrowDown"
@@ -838,7 +838,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
               <span>
                 discussion
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-discussion"
                 name="ArrowDown"
@@ -999,7 +999,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
               <span>
                 offer
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-offer"
                 name="ArrowDown"
@@ -1188,7 +1188,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
               <span>
                 request
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-request"
                 name="ArrowDown"
@@ -1377,7 +1377,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
               <span>
                 resource
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-resource"
                 name="ArrowDown"
@@ -1566,7 +1566,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
               <span>
                 discussion
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-discussion"
                 name="ArrowDown"
@@ -1775,7 +1775,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
               <span>
                 discussion
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-discussion"
                 name="ArrowDown"
@@ -1937,7 +1937,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
               <span>
                 discussion
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-discussion"
                 name="ArrowDown"
@@ -2107,8 +2107,8 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       />
     </Connect(UploadAttachmentButton)>
     <span
-      data-for="announcement-tt"
-      data-tip="Send Announcement"
+      data-tooltip-id="announcement-tt"
+      data-tooltip-content="Send Announcement"
     >
       <Icon
         data-stylename="action-icon"
@@ -2172,7 +2172,7 @@ exports[`PostEditor renders contribution button 1`] = `
               <span>
                 discussion
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-discussion"
                 name="ArrowDown"
@@ -2419,7 +2419,7 @@ exports[`PostEditor renders with min props 1`] = `
               <span>
                 discussion
               </span>
-               
+
               <Icon
                 data-stylename="icon icon-discussion"
                 name="ArrowDown"

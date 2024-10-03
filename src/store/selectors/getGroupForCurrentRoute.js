@@ -1,10 +1,11 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { getSlugFromLocation } from './isGroupRoute'
+
+// TODO: change to just be getGroupFromSlug
 
 const getGroupForCurrentRoute = ormCreateSelector(
   orm,
-  getSlugFromLocation,
+  (state, slug) => slug,
   (session, slug) => session.Group.safeGet({ slug })
 )
 

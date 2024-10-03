@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { CSSTransition } from 'react-transition-group'
+import cx from 'classnames'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import CreateModalChooser from './CreateModalChooser'
 import CreateGroup from 'components/CreateGroup'
 import Icon from 'components/Icon'
 import PostEditor from 'components/PostEditor'
-import './CreateModal.scss'
+import classes from './CreateModal.module.scss'
 
 const CreateModal = (props) => {
   const location = useLocation()
-  const history = useHistory()
+  const navigate = useNavigate()
   const previousLocation = useSelector(getPreviousLocation)
   const [returnToLocation] = useState(previousLocation)
   const [isDirty, setIsDirty] = useState()
@@ -27,7 +28,7 @@ const CreateModal = (props) => {
     // `closePath` is currently only passed in the case of arriving here
     // from the `WelcomeModal` when we want to go back on close or cancel.
     const closePathFromParam = querystringParams.get('closePath')
-    history.push(closePathFromParam || returnToLocation)
+    navigate(closePathFromParam || returnToLocation)
   }
 
   const confirmClose = () => {
@@ -40,35 +41,46 @@ const CreateModal = (props) => {
 
   return (
     <CSSTransition
-      classNames='create-modal'
+      classNames="createModal"
       appear
       in
       timeout={{ appear: 400, enter: 400, exit: 300 }}
     >
-      <div styleName='create-modal'>
-        <div styleName='create-modal-wrapper' className='create-modal-wrapper'>
-          <span styleName='close-button' onClick={confirmClose}>
+      <div className={classes.createModal}>
+        <div className={classes.createModalWrapper}>
+          <span className={classes.closeButton} onClick={confirmClose}>
             <Icon name='Ex' />
           </span>
-          <Switch>
-            <Route path={['(.*)/create/post', '(.*)/edit']}>
-              <PostEditor
-                {...props}
-                selectedLocation={mapLocation}
-                onClose={closeModal}
-                onCancel={confirmClose}
-                setIsDirty={setIsDirty}
-              />
-            </Route>
-            <Route path='(.*)/create/group'>
-              <CreateGroup {...props} />
-            </Route>
-            <Route>
-              <CreateModalChooser {...props} />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route
+              path={'edit'}
+              element={
+                <PostEditor
+                  {...props}
+                  selectedLocation={mapLocation}
+                  onClose={closeModal}
+                  onCancel={confirmClose}
+                  setIsDirty={setIsDirty}
+                />
+              }
+            />
+            <Route
+              path={'create/post'}
+              element={
+                <PostEditor
+                  {...props}
+                  selectedLocation={mapLocation}
+                  onClose={closeModal}
+                  onCancel={confirmClose}
+                  setIsDirty={setIsDirty}
+                />
+              }
+            />
+            <Route path='create/group' element={<CreateGroup {...props} />} />
+            <Route element={<CreateModalChooser {...props} />} />
+          </Routes>
         </div>
-        <div styleName='create-modal-bg' onClick={confirmClose} />
+        <div className={classes.createModalBg} onClick={confirmClose} />
       </div>
     </CSSTransition>
   )

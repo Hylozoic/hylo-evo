@@ -1,0 +1,348 @@
+.header {
+  position: relative;
+}
+
+.headerMainRow {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.headerTopRow {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px;
+  border-bottom: 1px solid rgba(235, 235, 235, 1.0);
+  border-radius: 5px 5px 0 0;
+}
+
+.outcomeInput {
+  composes: hdr-subheadline from 'css/typography.scss';
+  // margin-bottom: $space-2x;
+  padding-left: 12;
+  height: $space-9x;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  &:disabled {
+    color: $color-rhino-80;
+  }
+  &::placeholder {
+    color: $color-rhino-30;
+  }
+}
+
+.outcomeContainer {
+  background-color: #F2F2F2;
+  color: $color-regent;
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 8px;
+  padding: 10px;
+  background: rgba(213, 236, 250, .3);
+  border: 1px dashed rgba(213, 236, 250, 1);
+  border-radius: 5px;
+
+  // div { line-height: 29px; }
+}
+
+.detailHasImage .subheader {
+  position: absolute;
+  z-index: 11;
+  width: 100%;
+
+  &.showNormal {
+    position: relative;
+  }
+}
+
+.subheader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hasImage {
+  position: absolute;
+  z-index: 11;
+  width: 100%;
+}
+
+.authorName {
+  /* !empty */
+}
+
+.avatar {
+  margin-right: 8px;
+
+  div {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.constrained .avatar {
+  margin-right: 5px;
+}
+
+.headerText {
+  display: flex;
+  line-height: 15px;
+}
+
+.constrained.header {
+  margin-bottom: 0;
+  height: 50px;
+  padding: 0 10px;
+}
+
+.userName {
+  // Extract typography?
+  @include font-bold;
+  color: $color-rhino-80;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.constrained .userName {
+  font-size: 12px;
+}
+
+.userTitle {
+  // Extract typography? this one is very close to bdy-drk-sm
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 14px;
+}
+
+.date {
+  line-height: 12px;
+}
+
+.spacer {
+  composes: timestamp from 'css/typography.scss';
+  margin: 0 7px;
+  font-size: 8px;
+  position: relative;
+  top: -2px;
+}
+
+.announcementSpacer {
+  composes: timestamp from 'css/typography.scss';
+  margin: 0 7px;
+  font-size: 8px;
+  position: relative;
+  top: -6px;
+}
+
+.timestampRow {
+  align-items: center;
+  display: flex;
+  margin-left: 10px;
+}
+
+.timestamp {
+  composes: timestamp from 'css/typography.scss';
+  white-space: nowrap;
+}
+
+.timeWindow {
+  color: rgba(201, 89, 172, 1.0);
+  font-size: 12px;
+  font-weight: bold;
+  width: auto;
+  text-align: center;
+  border: 1px solid rgba(235, 186, 221, 1.0);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+  margin: 8px;
+  padding: 5px 8px;
+}
+
+.constrained .timeWindow {
+  display: none;
+}
+
+.context {
+  // Extract typography?
+  @include font-regular;
+  color: $color-caribbean-green;
+  font-size: 12px;
+  &:hover {
+    color: $color-gossamer;
+    text-decoration: none;
+  }
+}
+
+.upperRight {
+  margin-left: auto;
+  display: flex;
+  vertical-align: top;
+  justify-content: right;
+  align-items: center;
+}
+
+.constrained .upperRight {
+  display: none;
+}
+
+.pinIcon {
+  top: 1px;
+  margin-right: 12px;
+  font-size: 24px;
+}
+
+.flagIcon {
+  top: 1px;
+  margin-right: 12px;
+  font-size: 24px;
+  color: $color-persimmon;
+  font-weight: bolder;
+
+}
+
+.notALink {
+  text-decoration: none;
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+.announcementIcon {
+  top: 1px;
+  margin-right: -3px;
+  margin-left: -4px;
+  font-size: 24px;
+  color: $color-caribbean-green;
+}
+
+.announcementSection {
+  margin-top: -2px;
+}
+
+.label {
+  margin-right: 6px;
+}
+
+.menuLink:hover {
+  text-decoration: none;
+}
+
+.menuLink:hover > span {
+  color: $color-rhino-80;
+}
+
+.close {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+  padding: 0 3px;
+
+  span {
+    font-size: 30px;
+  }
+}
+
+.topicsLine {
+  composes: text-button from 'css/typography.scss';
+  font-size: 12px;
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  padding-bottom: 8px;
+
+  a {
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+    margin: 8px 0 0 8px;
+    background-color: rgba(255,255,255,1);
+  }
+}
+
+.constrained .topicsLine {
+  display: none;
+}
+
+.topic {
+  composes: text-button from 'css/typography.scss';
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.newLineForTopics {
+  overflow: initial;
+  text-overflow: initial;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 450px;
+}
+
+@media screen and (max-width: 425px) {
+
+  .subheader {
+    flex-direction: column;
+  }
+
+  .timeWindow {
+    margin: 8px 8px 8px 8px;
+  }
+
+  .headerText {
+    max-width: calc(100% - 160px);
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .userTitle {
+    font-size: 10px;
+    opacity: .5;
+    display: block;
+    overflow: hidden;
+    height: 14px;
+  }
+
+  .topicsLine {
+    width: 100%;
+    padding-bottom: 0;
+
+    a {
+      font-size: 10px;
+      padding: 3px 5px;
+    }
+  }
+
+  .userName {
+    white-space: nowrap;
+  }
+
+  .label {
+    margin-right: 5px;
+  }
+}
+
+.badgeRow {
+  display: flex;
+  margin-left: 4px;
+  grid-gap: 2px;
+}
+
+.tooltip {
+  z-index: 1000;
+  background-color: rgba(35, 65, 91, 1.0);
+}

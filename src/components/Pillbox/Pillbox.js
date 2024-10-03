@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
-import ReactTooltip from 'react-tooltip'
+import { Tooltip } from 'react-tooltip'
 import isMobile from 'ismobilejs'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { debounce, includes, isEmpty, delay } from 'lodash'
@@ -8,7 +8,7 @@ import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
 import KeyControlledItemList from 'components/KeyControlledList/KeyControlledItemList'
 import Pill from 'components/Pill'
-import styles from './Pillbox.scss'
+import styles from './Pillbox.module.scss'
 
 // keys that can be pressed to create a new pill
 const creationKeyCodes = [keyMap.ENTER]
@@ -88,8 +88,8 @@ class Pillbox extends Component {
       this.resetInput()
     }
 
-    return <div styleName='styles.root'>
-      <div styleName='styles.pill-container'>
+    return <div className={styles.root}>
+      <div className={styles.pillContainer}>
         <TransitionGroup>
           {pills.map(pill =>
             <CSSTransition
@@ -112,22 +112,22 @@ class Pillbox extends Component {
             </CSSTransition>
           )}
         </TransitionGroup>
-        {editable && <span styleName='styles.add-btn' onClick={addOnClick}>
+        {editable && <span className={styles.addBtn} onClick={addOnClick}>
           {addLabel}
         </span>}
       </div>
-      {adding && <div styleName={cx('styles.adding-root')}>
-        <div styleName='styles.search-wrapper'>
+      {adding && <div className={styles.addingRoot}>
+        <div className={styles.searchWrapper}>
           <input
             ref={this.input}
             type='text'
-            styleName='styles.search'
+            className={styles.search}
             maxLength='30'
             placeholder={placeholder}
             spellCheck={false}
             onChange={event => this.handleChange(event.target.value)}
             onKeyDown={this.handleKeys} />
-          <button styleName='styles.close-icon' onClick={reset} type='reset' />
+          <button className={styles.closeIcon} onClick={reset} type='reset' />
         </div>
         {!isEmpty(suggestions) &&
         <KeyControlledItemList
@@ -143,7 +143,7 @@ class Pillbox extends Component {
         }
       </div>}
       {!isMobile.any && (
-        <ReactTooltip place='top'
+        <Tooltip place='top'
           type='dark'
           id='pill-label'
           effect='solid'

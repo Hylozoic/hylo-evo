@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactCodeInput from 'react-code-input'
 import { formatError } from '../../util'
@@ -8,7 +8,7 @@ import getMe from 'store/selectors/getMe'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { sendEmailVerification as sendEmailVerificationAction, verifyEmail } from '../Signup.store'
 import Loading from 'components/Loading'
-import '../Signup.scss'
+import classes from '../Signup.module.scss'
 
 export default function VerifyEmail (props) {
   const dispatch = useDispatch()
@@ -34,7 +34,7 @@ export default function VerifyEmail (props) {
     if (token) submit()
   }, [])
 
-  if (!email) return <Redirect to='/signup' />
+  if (!email) return <Navigate to='/signup' replace />
 
   const submit = async value => {
     try {
@@ -60,22 +60,22 @@ export default function VerifyEmail (props) {
     setCode(value)
   }
 
-  if (redirectTo) return <Redirect to={redirectTo} />
+  if (redirectTo) return <Navigate to={redirectTo} replace />
 
   if (loading) return <Loading />
 
   return (
-    <div styleName='form'>
-      <Link to='/signup' styleName='back-button'>&#8592; {t('back')}</Link>
-      <div styleName='formWrapper'>
-        <h1 styleName='title'>{t('Check your email')}</h1>
-        <p styleName='sub-header'>{t("We've sent a 6 digit code to {{email}}. The code will expire shortly, so please enter it here soon.", { email })}</p>
+    <div className={classes.form}>
+      <Link to='/signup' className={classes.backButton}>&#8592; {t('back')}</Link>
+      <div className={classes.formWrapper}>
+        <h1 className={classes.title}>{t('Check your email')}</h1>
+        <p className={classes.sub-header}>{t("We've sent a 6 digit code to {{email}}. The code will expire shortly, so please enter it here soon.", { email })}</p>
         {error && formatError(error, 'Signup', t)}
-        <div styleName='codeWrapper'>
+        <div className={classes.codeWrapper}>
           <ReactCodeInput type='text' fields={6} onChange={handleChange} />
         </div>
       </div>
-      <div onClick={() => sendEmailVerification(email)} styleName='resend'>{t('Resend code')}</div>
+      <div onClick={() => sendEmailVerification(email)} className={classes.resend}>{t('Resend code')}</div>
     </div>
   )
 }

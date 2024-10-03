@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './DropdownButton.scss'
+import classes from './DropdownButton.module.scss'
 import cx from 'classnames'
 
 export default class DropdownButton extends Component {
@@ -29,14 +29,19 @@ export default class DropdownButton extends Component {
     return <div>
       <div
         role='button'
-        styleName='dropdownButton green narrow small'
-        className={className}
+        className={cx(
+          classes.dropdownButton,
+          classes.green,
+          classes.narrow,
+          classes.small,
+          className
+        )}
         onClick={this.toggleExpanded}>
         {label}&nbsp;&nbsp;|&nbsp;&nbsp;▾
       </div>
-      <div styleName={cx('dropdown', { expanded, top: position === 'top' })}>
+      <div className={cx(classes.dropdown, { [classes.expanded]: expanded, [classes.top]: position === 'top' })}>
         {choices.map(({ label, value }) =>
-          <span styleName='choice' key={value} onClick={(e) => { e.preventDefault(); e.stopPropagation(); this.onChoose(value, label) }}>{label}</span>)}
+          <span className={classes.choice} key={value} onClick={(e) => { e.preventDefault(); e.stopPropagation(); this.onChoose(value, label) }}>{label}</span>)}
       </div>
     </div>
   }

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import cheerio from 'cheerio'
+import * as cheerio from 'cheerio'
 import { flatten } from 'lodash/fp'
 
 export default class Highlight extends React.Component {
@@ -22,10 +22,10 @@ export default class Highlight extends React.Component {
     const terms = this.props.terms.map(term =>
       term.replace(/\W/g, ''))
 
-    let matches = []
-    for (var i in terms) {
+    const matches = []
+    for (const i in terms) {
       const regex = new RegExp(`\\b${terms[i]}\\b`, 'ig')
-      var match
+      let match
       while ((match = regex.exec(string)) !== null) {
         matches.push(match)
       }
@@ -35,7 +35,7 @@ export default class Highlight extends React.Component {
 
   parseString (string) {
     // takes a plain string and returns react elements
-    let elements = []
+    const elements = []
     if (string === '') {
       return elements
     }
@@ -50,7 +50,7 @@ export default class Highlight extends React.Component {
         elements.push(string.substring(lastIndex, index))
       }
 
-      let props = {
+      const props = {
         key: `parse${this.parseCounter}match${i}`,
         className: this.props.highlightClassName
       }
@@ -87,15 +87,17 @@ export default class Highlight extends React.Component {
   domParseElement (el) {
     // takes an element and returns an element or an array of elements
     switch (el.type) {
-      case 'text':
+      case 'text': {
         const parsed = this.domParseString(el.data)
         return parsed
-      case 'tag':
+      }
+      case 'tag': {
         const children = flatten(el.children.map(child => this.domParseElement(child)))
         return {
           ...el,
           children
         }
+      }
     }
     return null
   }
@@ -106,7 +108,7 @@ export default class Highlight extends React.Component {
 
     const matches = this.getMatches(string)
 
-    var elements = []
+    const elements = []
 
     let lastIndex = 0
     matches.forEach((match, i) => {
@@ -174,7 +176,7 @@ export default class Highlight extends React.Component {
   render () {
     const { children, className, terms = [] } = this.props
 
-    var parsedChildren = children
+    let parsedChildren = children
 
     if (terms.length === 0) {
       return children

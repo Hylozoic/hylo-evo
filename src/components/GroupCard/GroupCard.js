@@ -6,7 +6,7 @@ import ClickCatcher from 'components/ClickCatcher'
 import GroupHeader from './GroupHeader'
 import HyloHTML from 'components/HyloHTML'
 import cx from 'classnames'
-import './GroupCard.scss'
+import classes from './GroupCard.module.scss'
 
 /*
   Each card needs
@@ -37,11 +37,10 @@ export default function GroupCard ({
     : groupDetailUrl(group.slug, routeParams)
 
   return (
-    <Link to={linkTo} styleName='group-link'>
+    <Link to={linkTo} className={classes.groupLink}>
       <div
         onClick={onClick}
-        styleName={cx('card', { expanded }, { constrained })}
-        className={className}>
+        className={cx(classes.card, { [classes.expanded]: expanded, [classes.constrained]: constrained }, className)}>
         <GroupHeader
           {...group}
           group={group}
@@ -49,21 +48,20 @@ export default function GroupCard ({
           highlightProps={highlightProps}
           constrained={constrained}
         />
-        {group.description
-          ? <div styleName='group-description'>
+        {group.description && (
+          <div className={classes.groupDescription}>
             <ClickCatcher>
               <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
             </ClickCatcher>
           </div>
-          : ''
-        }
+        )}
 
         {/* XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
          {topics.length > 0
-           ? <div styleName='group-tags'>
+           ? <div className={classes.groupTags}>
              {topics.map((topic, index) => (
                <Pill
-                 styleName='tag-pill'
+                 className={classes.tagPill}
                  darkText
                  label={capitalize(topic.topic.name.toLowerCase())}
                  id={topic.id}

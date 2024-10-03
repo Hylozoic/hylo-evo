@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
-import { replace } from 'connected-react-router'
+import { replace } from 'redux-first-history'
 import logout from 'store/actions/logout'
 import { toggleDrawer, toggleGroupMenu } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 

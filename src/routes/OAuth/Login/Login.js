@@ -1,13 +1,14 @@
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import cx from 'classnames'
 import { formatError } from 'routes/NonAuthLayoutRouter/util'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import { login } from './Login.store'
-import './Login.scss'
+import classes from './Login.module.scss'
 
 export default function Login (props) {
   const dispatch = useDispatch()
@@ -59,37 +60,43 @@ export default function Login (props) {
   return authenticated ? <div>{t('Already logged in, redirecting...')}</div>
     : (
       <div className={className}>
-        <div styleName='formWrapper'>
-          <h1 styleName='title'>{t('Sign in to Hylo')}</h1>
+        <div className={classes.formWrapper}>
+          <h1 className={classes.title}>{t('Sign in to Hylo')}</h1>
           {error && formatError(error, 'Login')}
 
           <TextInput
-            aria-label='email' label='email' name='email' id='email'
+            aria-label='email'
+            label='email'
+            name='email'
+            id='email'
             autoFocus
             internalLabel='Email'
             onChange={handleSetEmail}
-            styleName='field'
+            className={classes.field}
             type='text'
             value={email}
           />
 
           <TextInput
-            aria-label='password' label='password' name='password' id='password'
+            aria-label='password'
+            label='password'
+            name='password'
+            id='password'
             internalLabel='Password'
             onChange={handleSetPassword}
             onEnter={submit}
-            styleName='field'
+            className={classes.field}
             type='password'
             value={password}
           />
-          <Link to='/reset-password' styleName='forgot-password'>
-            <span styleName='forgot-password'>{t('Forgot password?')}</span>
+          <Link to='/reset-password' className={classes.forgotPassword}>
+            <span className={classes.forgotPassword}>{t('Forgot password?')}</span>
           </Link>
 
-          <Button styleName='submit' label='Sign in' onClick={submit} />
+          <Button className={classes.submit} label='Sign in' onClick={submit} />
         </div>
 
-        {/* <div styleName='auth-buttons'>
+        {/* <div className={classes.authButtons}>
           <GoogleButton onClick={() => this.loginAndRedirect('google')} />
         </div> */}
       </div>

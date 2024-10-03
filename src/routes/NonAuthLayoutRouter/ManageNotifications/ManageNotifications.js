@@ -1,9 +1,10 @@
+import cx from 'classnames'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { useTranslation } from 'react-i18next'
-import useRouter from 'hooks/useRouter'
+import useRouterParams from 'hooks/useRouterParams'
 
 import Button from 'components/Button'
 import CheckBox from 'components/CheckBox'
@@ -11,14 +12,14 @@ import Select from 'components/Select'
 import fetchNotificationSettings from 'store/actions/fetchNotificationSettings'
 import updateNotificationSettings from 'store/actions/updateNotificationSettings'
 
-import styles from './ManageNotifications.scss'
+import styles from './ManageNotifications.module.scss'
 
 export default function ManageNotifications (props) {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const router = useRouter()
-  const userName = router.query.name
-  const token = router.query.token
+  const routerParams = useRouterParams()
+  const userName = routerParams.name
+  const token = routerParams.token
 
   const [settings, setSettings] = useState({ allGroupNotifications: 'keep' })
   const [unsubscribeAll, setUnsubscribeAll] = useState(false)
@@ -47,15 +48,15 @@ export default function ManageNotifications (props) {
   const groupNotificationOptions = [{ id: 'keep', label: t('Existing per Group Settings') }, ...notificationOptions]
 
   return (
-    <div className={props.className} styleName='wrapper'>
+    <div className={cx(props.className, styles.wrapper)}>
       <h1>{t('Hi {{userName}}', { userName })}</h1>
       <p>{t('You can change your Hylo notification settings here')}</p>
       {isEmpty(settings)
         ? t('Loading...')
         : (
-          <div styleName='form-wrapper'>
-            <div styleName='setting-wrapper'>
-              <label styleName='setting-explanation'>{t('Send me a digest of new posts')}</label><br />
+          <div className={styles.formWrapper}>
+            <div className={styles.settingWrapper}>
+              <label className={styles.settingExplanation}>{t('Send me a digest of new posts')}</label><br />
               <Select
                 disabled={unsubscribeAll}
                 onChange={updateSetting('digestFrequency')}
@@ -67,8 +68,8 @@ export default function ManageNotifications (props) {
                 selected={unsubscribeAll ? 'never' : digestFrequency}
               />
             </div>
-            <div styleName='setting-wrapper'>
-              <label styleName='setting-explanation'>{t('Send notifications for each new post in your group?')}</label>
+            <div className={styles.settingWrapper}>
+              <label className={styles.settingExplanation}>{t('Send notifications for each new post in your group?')}</label>
               <Select
                 disabled={unsubscribeAll}
                 onChange={updateSetting('postNotifications')}
@@ -80,8 +81,8 @@ export default function ManageNotifications (props) {
                 selected={unsubscribeAll ? 'none' : postNotifications}
               />
             </div>
-            <div styleName='setting-wrapper'>
-              <label styleName='setting-explanation'>{t('Send notifications about comments on posts you are following via')}</label>
+            <div className={styles.settingWrapper}>
+              <label className={styles.settingExplanation}>{t('Send notifications about comments on posts you are following via')}</label>
               <Select
                 disabled={unsubscribeAll}
                 onChange={updateSetting('commentNotifications')}
@@ -89,8 +90,8 @@ export default function ManageNotifications (props) {
                 selected={unsubscribeAll ? 'none' : commentNotifications}
               />
             </div>
-            <div styleName='setting-wrapper'>
-              <label styleName='setting-explanation'>{t('Send notifications for direct messages via')}</label>
+            <div className={styles.settingWrapper}>
+              <label className={styles.settingExplanation}>{t('Send notifications for direct messages via')}</label>
               <Select
                 disabled={unsubscribeAll}
                 onChange={updateSetting('dmNotifications')}
@@ -99,8 +100,8 @@ export default function ManageNotifications (props) {
               />
             </div>
 
-            <div styleName='setting-wrapper'>
-              <label styleName='setting-explanation'>{t('Send notifications for announcements and topic posts for all my groups via')}</label>
+            <div className={styles.settingWrapper}>
+              <label className={styles.settingExplanation}>{t('Send notifications for announcements and topic posts for all my groups via')}</label>
               <Select
                 disabled={unsubscribeAll}
                 onChange={updateSetting('allGroupNotifications')}
@@ -117,7 +118,9 @@ export default function ManageNotifications (props) {
             />
 
             <Button
-              styleName='submit' label={t('Save Settings')} color='green'
+              className={styles.submit}
+              label={t('Save Settings')}
+              color='green'
               onClick={submit}
             />
           </div>)}

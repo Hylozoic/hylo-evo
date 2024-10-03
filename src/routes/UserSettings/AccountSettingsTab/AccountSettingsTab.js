@@ -2,13 +2,14 @@ import { trim, pick, keys, omit, find, isEmpty } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
+import cx from 'classnames'
 
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import SettingsControl from 'components/SettingsControl'
 import { validateEmail } from 'util/index'
 
-import './AccountSettingsTab.scss'
+import classes from './AccountSettingsTab.module.scss'
 
 import ModalDialog from 'components/ModalDialog'
 const { object, func } = PropTypes
@@ -134,21 +135,21 @@ class AccountSettingsTab extends Component {
 
     return (
       <div>
-        <div styleName='title'>{t('Update Account')}</div>
+        <div className={classes.title}>{t('Update Account')}</div>
         {formErrors.map((formErrorText, i) =>
-          <div styleName='error' key={i}>{formErrorText}</div>)}
+          <div className={classes.error} key={i}>{formErrorText}</div>)}
         <SettingsControl label={t('Email')} onChange={this.updateSetting('email')} value={email} />
         <SettingsControl label={t('New Password')} onChange={this.updateSetting('password')} value={password} type='password' />
         <SettingsControl label={t('New Password (Confirm)')} onChange={this.updateSetting('confirm')} value={confirm} type='password' />
-        <div styleName='help'>
+        <div className={classes.help}>
           {t('Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.')}
         </div>
-        <div styleName='button-row'><Button onClick={() => this.setState({ showDeactivateModal: true })} label={t('Deactivate Account')} color={'purple'} /></div>
-        <div styleName='button-row'><Button onClick={() => this.setState({ showDeleteModal: true })} label={t('Delete Account')} color={'purple'} /></div>
+        <div className={classes.buttonRow}><Button onClick={() => this.setState({ showDeactivateModal: true })} label={t('Deactivate Account')} color='purple' /></div>
+        <div className={classes.buttonRow}><Button onClick={() => this.setState({ showDeleteModal: true })} label={t('Delete Account')} color='purple' /></div>
 
-        <div styleName='saveChanges'>
-          <span styleName={canSave ? 'settingChanged' : ''}>{canSave ? 'Changes not saved' : 'Current settings up to date'}</span>
-          <Button label={t('Save Changes')} color={canSave ? 'green' : 'gray'} onClick={canSave ? this.save : null} styleName='save-button' />
+        <div className={classes.saveChanges}>
+          <span className={cx({ [classes.settingChanged]: canSave })}>{canSave ? 'Changes not saved' : 'Current settings up to date'}</span>
+          <Button label={t('Save Changes')} color={canSave ? 'green' : 'gray'} onClick={canSave ? this.save : null} className={classes.saveButton} />
         </div>
         {showDeactivateModal &&
           <ModalDialog key='deactviate-user-dialog'
@@ -162,7 +163,7 @@ class AccountSettingsTab extends Component {
             <p>
               {t('This action is reversible, just log back in')}
             </p>
-            <div styleName='modal-container'>
+            <div className={classes.modalContainer}>
               <h4>
                 {t('If you deactivate your account:')}
               </h4>
@@ -187,7 +188,7 @@ class AccountSettingsTab extends Component {
             <p>
               {t('This action is')}{' '}<strong style={{ color: 'red' }}>{t('NOT')}</strong>{' '}{t('reversible')}
             </p>
-            <div styleName='modal-container'>
+            <div className={classes.modalContainer}>
               <h4>
                 {t('If you delete your account:')}
               </h4>

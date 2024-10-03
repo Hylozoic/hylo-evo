@@ -14,7 +14,7 @@ import {
   isGroupsView,
   origin
 } from './navigation'
-import { host } from 'config'
+import { host } from 'config/index'
 
 describe('postUrl', () => {
   it('should default to displaying the all groups context', () => {

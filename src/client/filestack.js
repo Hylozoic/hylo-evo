@@ -1,4 +1,4 @@
-import { filestackKey, isTest } from 'config'
+import { filestackKey, isTest } from 'config/index'
 import * as Filestack from 'filestack-js'
 
 const filestack = Filestack.init(isTest ? 'dummykey' : filestackKey)

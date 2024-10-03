@@ -1,6 +1,7 @@
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { get, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
@@ -35,6 +36,8 @@ export function mapStateToProps (state, props) {
   let group, topic, groupTopic
   let groupId = 0
 
+  props.location = state.router.location
+  props.match = state.router.match
   const groupSlug = getRouteParam('groupSlug', props)
 
   if (groupSlug) {
@@ -42,7 +45,7 @@ export function mapStateToProps (state, props) {
     groupId = group.id
   }
 
-  const routeParams = get('match.params', props)
+  const routeParams = useParams()
   const customView = getCustomView(state, props)
   const customViewType = customView?.type
   const customPostTypes = customViewType === 'stream' ? customView?.postTypes : null

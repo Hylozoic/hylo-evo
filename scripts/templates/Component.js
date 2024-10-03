@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import './ReplaceComponent.scss'
+import classes from './ReplaceComponent.module.scss'
 
 const { string } = PropTypes
 
 export default function ReplaceComponent ({ example }) {
-  return <div styleName='exampleName'>{example}</div>
+  return <div className={classes.exampleName}>{example}</div>
 }
 ReplaceComponent.propTypes = {
   example: string

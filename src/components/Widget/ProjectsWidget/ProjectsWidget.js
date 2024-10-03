@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { postUrl, createPostUrl } from 'util/navigation'
 import RoundImage from '../../RoundImage'
 
-import './ProjectsWidget.scss'
+import classes from './ProjectsWidget.module.scss'
 
 const { array, bool, object } = PropTypes
 
@@ -21,31 +21,38 @@ class ProjectsWidget extends Component {
     const { isMember, items, routeParams, t } = this.props
 
     return (
-      <div styleName='projects'>
-        {items && items.map(p => <Link to={postUrl(p.id, routeParams)} key={p.id}>
-          <div styleName='project'>
-            <div styleName='meta'>
-              <div styleName='title'>{p.title}</div>
-              <div styleName='last-activity'>{moment(p.updatedAt).fromNow()}</div>
-            </div>
-            <div styleName='created-by'>
-              <RoundImage url={p.creator.avatarUrl} />
-            </div>
-          </div>
-        </Link>)}
-        {items.length < 3 && isMember ? <Link to={createPostUrl(routeParams, { newPostType: 'project' })} styleName='new-project'>
-          <div styleName='project'>
-            <div styleName='meta'>
-              <div>
-                <div styleName='title'>{t('What are you doing together?')}</div>
-                <div styleName='last-activity'>{t('Projects help you and your group accomplish shared goals.')}</div>
+      <div className={classes.projects}>
+        {items && items.map(p => (
+          <Link to={postUrl(p.id, routeParams)} key={p.id}>
+            <div className={classes.project}>
+              <div className={classes.meta}>
+                <div className={classes.title}>{p.title}</div>
+                <div className={classes.lastActivity}>{moment(p.updatedAt).fromNow()}</div>
               </div>
-              <div styleName='create-project-cta'>{t('+ New project')}</div>
+              <div className={classes.createdBy}>
+                <RoundImage url={p.creator.avatarUrl} />
+              </div>
             </div>
-          </div>
-        </Link> : '' }
+          </Link>
+        ))}
+        {items.length < 3 && isMember ? (
+          <Link to={createPostUrl(routeParams, { newPostType: 'project' })} className={classes.newProject}>
+            <div className={classes.project}>
+              <div className={classes.meta}>
+                <div>
+                  <div className={classes.title}>{t('What are you doing together?')}</div>
+                  <div className={classes.lastActivity}>{t('Projects help you and your group accomplish shared goals.')}</div>
+                </div>
+                <div className={classes.createProjectCta}>{t('+ New project')}</div>
+              </div>
+            </div>
+          </Link>
+        ) : (
+          ''
+        )}
       </div>
     )
   }
 }
+
 export default withTranslation()(ProjectsWidget)

@@ -8,7 +8,7 @@ import Highlight from 'components/Highlight'
 import HyloHTML from 'components/HyloHTML'
 import RoundImage from 'components/RoundImage'
 
-import './ChatCard.scss'
+import classes from './ChatCard.module.scss'
 
 export default function ChatCard ({
   expanded,
@@ -21,24 +21,24 @@ export default function ChatCard ({
   const firstGroup = post.groups[0].name
 
   return (
-    <span onClick={() => showDetails(post.id)} styleName='link'>
-      <div styleName={cx('chat-card', { expanded })}>
-        <div styleName='post-header'>
-          <RoundImage url={post.creator.avatarUrl} styleName='profile-image' />
+    <span onClick={() => showDetails(post.id)} className={classes.link}>
+      <div className={cx(classes.chatCard, { [classes.expanded]: expanded })}>
+        <div className={classes.postHeader}>
+          <RoundImage url={post.creator.avatarUrl} className={classes.profileImage} />
           <Highlight {...highlightProps}>
-            <div styleName='post-meta'>
-              <span styleName='person-name'>{post.creator.name}</span> chatted in&nbsp;
-              <span styleName='post-topic'>#{firstTopic}</span>
-              {!slug && <span>in&nbsp; <span styleName='group-name'>{firstGroup}</span></span>}
+            <div className={classes.postMeta}>
+              <span className={classes.personName}>{post.creator.name}</span> chatted in&nbsp;
+              <span className={classes.postTopic}>#{firstTopic}</span>
+              {!slug && <span>in&nbsp; <span className={classes.groupName}>{firstGroup}</span></span>}
             </div>
           </Highlight>
-          <span styleName='date'>{moment(post.createdAt).format('YYY HH:MMa')}</span>
+          <span className={classes.date}>{moment(post.createdAt).format('YYY HH:MMa')}</span>
         </div>
-        <CardImageAttachments attachments={post.attachments} linked styleName='post-images' />
-        <CardFileAttachments attachments={post.attachments} styleName='post-files' />
+        <CardImageAttachments attachments={post.attachments} linked className={classes.postImages} />
+        <CardFileAttachments attachments={post.attachments} className={classes.postFiles} />
         <ClickCatcher groupSlug={slug}>
           <Highlight {...highlightProps}>
-            <HyloHTML styleName='post-body' html={post.details} />
+            <HyloHTML className={classes.postBody} html={post.details} />
           </Highlight>
         </ClickCatcher>
       </div>

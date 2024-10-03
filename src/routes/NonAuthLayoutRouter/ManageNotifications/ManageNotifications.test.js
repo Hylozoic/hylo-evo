@@ -4,11 +4,9 @@ import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibrar
 import { act } from '@testing-library/react'
 import ManageNotifications from './ManageNotifications'
 
-jest.mock('hooks/useRouter', () => () => {
+jest.mock('hooks/useRouterParams', () => () => {
   return {
-    query: {
-      name: 'Philharmonic'
-    }
+    name: 'Philharmonic'
   }
 })
 

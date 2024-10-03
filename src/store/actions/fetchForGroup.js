@@ -1,7 +1,7 @@
 import { get } from 'lodash/fp'
 import { FETCH_FOR_GROUP } from 'store/constants'
-import groupQueryFragment from 'graphql/fragments/groupQueryFragment'
-import groupTopicsQueryFragment from 'graphql/fragments/groupTopicsQueryFragment'
+import groupQueryFragment from '@graphql/fragments/groupQueryFragment'
+import groupTopicsQueryFragment from '@graphql/fragments/groupTopicsQueryFragment'
 
 export default function (slug) {
   const query = slug

@@ -15,7 +15,7 @@
 }
 
 .title {
-  composes: cardPadding;
+  // composes: cardPadding;
   margin-bottom: 12px;
 }
 
@@ -82,14 +82,14 @@
 
 .file-name {
   @include font-regular;
-  color: $color-caribbean-green;
-  &:hover {
-    color: $color-gossamer;
-  }
   font-size: 12px;
   max-width: 155px;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: $color-caribbean-green;
+  &:hover {
+    color: $color-gossamer;
+  }
 }
 
 @media screen and (max-width: 425px) {

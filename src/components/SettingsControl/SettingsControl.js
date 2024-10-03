@@ -3,7 +3,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import LocationInput from 'components/LocationInput'
 import IconSelector from 'components/IconSelector'
 import cx from 'classnames'
-import './SettingsControl.scss'
+import classes from './SettingsControl.module.scss'
 
 export default function SettingsControl (props) {
   const { helpText, label, value = '', onChange, renderControl, type, error, controlClass, ...otherProps } = props
@@ -19,7 +19,7 @@ export default function SettingsControl (props) {
             minRows={1}
             maxRows={100}
             onChange={onChange}
-            styleName='control-input'
+            className={classes.controlInput}
             value={value}
             {...otherProps}
           />
@@ -41,7 +41,7 @@ export default function SettingsControl (props) {
             autoCorrect='off'
             onChange={onChange}
             spellCheck='off'
-            styleName='control-input'
+            className={classes.controlInput}
             type='password'
             value={value}
             {...otherProps}
@@ -61,7 +61,7 @@ export default function SettingsControl (props) {
         control = (
           <input
             onChange={onChange}
-            styleName='control-input'
+            className={classes.controlInput}
             type='text'
             value={value}
             {...otherProps}
@@ -72,11 +72,11 @@ export default function SettingsControl (props) {
   }
 
   return (
-    <div styleName={cx('control', { error })} className={controlClass}>
-      <label styleName={cx('control-label', { error })}>
+    <div className={cx(classes.control, { [classes.error]: error }, controlClass)}>
+      <label className={cx(classes.controlLabel, { [classes.error]: error })}>
         {label}
         {helpText
-          ? <div styleName='help'>?<div styleName='helpTooltip'>{helpText}</div></div>
+          ? <div className={classes.help}>?<div className={classes.helpTooltip}>{helpText}</div></div>
           : ''
         }
       </label>

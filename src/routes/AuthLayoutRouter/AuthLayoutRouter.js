@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
+import { matchPath, Route, Routes, Navigate, useLocation, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { IntercomProvider } from 'react-use-intercom'
 import { Helmet } from 'react-helmet'
@@ -8,7 +8,7 @@ import { get, some } from 'lodash/fp'
 import { useResizeDetector } from 'react-resize-detector'
 import cx from 'classnames'
 import mixpanel from 'mixpanel-browser'
-import config, { isTest } from 'config'
+import config, { isTest } from 'config/index'
 import isWebView from 'util/webView'
 import { localeLocalStorageSync } from 'util/locale'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
@@ -19,7 +19,7 @@ import fetchPlatformAgreements from 'store/actions/fetchPlatformAgreements'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
 import getMe from 'store/selectors/getMe'
-import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import getGroupForSlug from 'store/selectors/getGroupForSlug'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import getMyGroupMembership from 'store/selectors/getMyGroupMembership'
 import { getSignupInProgress } from 'store/selectors/getAuthState'
@@ -30,7 +30,6 @@ import {
   POST_DETAIL_MATCH, GROUP_DETAIL_MATCH, REQUIRED_EDIT_POST_MATCH, postUrl
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
-import RedirectRoute from 'router/RedirectRoute'
 import AllTopics from 'routes/AllTopics'
 import ChatRoom from 'routes/ChatRoom'
 import CreateModal from 'components/CreateModal'
@@ -62,7 +61,7 @@ import TopNav from './components/TopNav'
 
 import UserSettings from 'routes/UserSettings'
 import { GROUP_TYPES } from 'store/models/Group'
-import './AuthLayoutRouter.scss'
+import classes from './AuthLayoutRouter.module.scss'
 
 export default function AuthLayoutRouter (props) {
   const resizeRef = useRef()
@@ -71,37 +70,49 @@ export default function AuthLayoutRouter (props) {
   const { hideNavLayout } = useLayoutFlags()
   const withoutNav = isWebView() || hideNavLayout
 
-  // Setup `pathMatchParams` and `queryParams` (`matchPath` best only used in this section)
-  const location = props.location
-  const pathMatchParams = useMemo(() => (
-    matchPath(location.pathname, [
-      `/${POST_DETAIL_MATCH}`,
-      '/groups/:joinGroupSlug/join/:accessCode',
-      '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|proposals|settings|stream|topics|custom)?',
-      '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
-      '/:context(all|welcome|my)'
-    ])?.params || { context: 'all' }
-  ), [location.pathname])
-  const hasDetail = !!matchPath(location.pathname, [
-    `/(.*)/${POST_DETAIL_MATCH}`,
-    `/(.*)/${GROUP_DETAIL_MATCH}`
-  ])
+  const params = useParams()
 
-  const paramPostId = matchPath(location.pathname, [
-    `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`,
-    `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|proposals|topics|custom)/${POST_DETAIL_MATCH}`,
-    `/:context(my)/:view(mentions|interactions|posts|announcements)/${POST_DETAIL_MATCH}`
-  ])?.params?.postId
+  // Setup `pathMatchParams` and `queryParams` (`matchPath` best only used in this section)
+  const location = useLocation()
+  const pathMatchParams = useMemo(() => {
+    const matches = [
+      { path: `${POST_DETAIL_MATCH}` },
+      { path: 'groups/:joinGroupSlug/join/:accessCode' },
+      { path: 'groups/:groupSlug/:view/*' },
+      { path: 'groups/:groupSlug/*' },
+      { path: 'all' },
+      { path: 'public' },
+      { path: 'welcome' },
+      { path: 'my/*' },
+      { path: 'all/:view/*' },
+      { path: 'public/:view/*' }
+    ]
+    const match = matches.find(match => matchPath(match, location.pathname))
+    const matchResult = match ? matchPath(match, location.pathname) : null
+    return matchResult?.params || { context: 'all' }
+  }, [location.pathname])
+
+  const hasDetail = useMemo(() => {
+    const detailRegex = /\/(group|post)\/([a-zA-Z0-9-]+)/
+    return detailRegex.test(location.pathname)
+  }, [location.pathname])
+
+  const paramPostId = useMemo(() => {
+    const match = location.pathname.match(/\/post\/(\d+)/)
+    return match ? match[1] : null
+  }, [location.pathname])
+
   const currentGroupSlug = pathMatchParams?.groupSlug
   const isMapView = pathMatchParams?.view === 'map'
   const hideSidebar = isMapView || pathMatchParams?.view === 'topics'
   const isWelcomeContext = pathMatchParams?.context === 'welcome'
   const queryParams = Object.fromEntries(new URLSearchParams(location.search))
   const hideDrawer = queryParams?.hideDrawer !== 'true'
+
   // Store
   const dispatch = useDispatch()
-  const currentGroup = useSelector(state => getGroupForCurrentRoute(state, { match: { params: pathMatchParams } }))
-  const currentGroupMembership = useSelector(state => getMyGroupMembership(state, { match: { params: pathMatchParams } }))
+  const currentGroup = useSelector(state => getGroupForSlug(state, currentGroupSlug))
+  const currentGroupMembership = useSelector(state => getMyGroupMembership(state, currentGroupSlug))
   const currentUser = useSelector(getMe)
   const isDrawerOpen = useSelector(state => get('AuthLayoutRouter.isDrawerOpen', state))
   const isGroupMenuOpen = useSelector(state => get('AuthLayoutRouter.isGroupMenuOpen', state))
@@ -133,7 +144,7 @@ export default function AuthLayoutRouter (props) {
 
       if (currentUser?.settings?.locale) localeLocalStorageSync(currentUser?.settings?.locale)
     }
-  }, [currentUser?.id])
+  }, [currentUser?.email, currentUser?.id, currentUser?.location, currentUser?.name, currentUser?.settings?.locale])
 
   useEffect(() => {
     // Add all current group membershps to mixpanel user
@@ -147,7 +158,7 @@ export default function AuthLayoutRouter (props) {
         type: currentGroup.type
       })
     }
-  }, [currentGroup?.id])
+  }, [currentGroup?.id, currentGroup?.location, currentGroup?.name, currentGroup?.type, memberships])
 
   useEffect(() => {
     (async function () {
@@ -157,7 +168,7 @@ export default function AuthLayoutRouter (props) {
         setCurrentGroupLoading(false)
       }
     })()
-  }, [currentGroupSlug])
+  }, [dispatch, currentGroupSlug])
 
   // Scroll to top of center column when context, groupSlug, or view changes (from `pathMatchParams`)
   useEffect(() => {
@@ -167,7 +178,7 @@ export default function AuthLayoutRouter (props) {
 
   if (currentUserLoading) {
     return (
-      <div styleName='container' data-testid='loading-screen'>
+      <div className={classes.container} data-testid='loading-screen'>
         <Loading type='loading-fullscreen' />
       </div>
     )
@@ -185,7 +196,7 @@ export default function AuthLayoutRouter (props) {
   const showMenuBadge = some(m => m.newPostCount > 0, memberships)
   const collapsedState = hasDetail || (isMapView && hideDrawer)
   const isSingleColumn = (currentGroupSlug && !currentGroupMembership) ||
-    matchPath(location.pathname, '/members/:personId')
+    matchPath({ path: '/members/:personId' }, location.pathname)
   // When joining a group by invitation Group Welcome Modal (join form)
   const showTourPrompt = !signupInProgress &&
     !get('settings.alreadySeenTour', currentUser) &&
@@ -199,19 +210,19 @@ export default function AuthLayoutRouter (props) {
     if (location.pathname === returnToPathName) {
       dispatch(setReturnToPath())
     } else {
-      return <Redirect push to={returnToPath} />
+      return <Navigate to={returnToPath} />
     }
   }
 
   if (signupInProgress && !isWelcomeContext) {
-    return <Redirect to='/welcome' />
+    return <Navigate to='/welcome' replace />
   }
 
   if (!currentGroupMembership && hasDetail && paramPostId && currentGroupSlug) {
     /* There are times when users will be send to a path where they have access to the POST on that path but not to the GROUP on that path
       This redirect replaces the non-accessible groupSlug from the path with '/all', for a better UI experience
     */
-    return <Redirect push to={postUrl(paramPostId, { context: 'all', groupSlug: null })} />
+    return <Navigate to={postUrl(paramPostId, { context: 'all', groupSlug: null })} />
   }
 
   if (currentGroupSlug && !currentGroup && !currentGroupLoading) {
@@ -224,207 +235,242 @@ export default function AuthLayoutRouter (props) {
         <title>{currentGroup ? `${currentGroup.name} | ` : ''}Hylo</title>
         <meta name='description' content='Prosocial Coordination for a Thriving Planet' />
         <script id='greencheck' type='application/json'>
-          {`{ "id": "${currentUser.id}", "fullname": "${currentUser.name}", "description": "${currentUser.tagline}", "image": "${currentUser.avatarUrl}" }`}
+          {`{ 'id': '${currentUser.id}', 'fullname': '${currentUser.name}', 'description': '${currentUser.tagline}', 'image': '${currentUser.avatarUrl}' }`}
         </script>
       </Helmet>
-      {/* Redirects for switching into global contexts, since these pages don't exist yet */}
-      <RedirectRoute exact path='/:context(public)/(members|settings)' to='/public' />
-      <RedirectRoute exact path='/:context(all)/(members|settings)' to='/all' />
-      {/* Redirect manage notifications page to settings page when logged in */}
-      <RedirectRoute exact path='/notifications)' to='/settings/notifications' />
-      {/* First time viewing a group redirect to explore page */}
-      {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) && (
-        <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupSlug}/explore`} />
-      )}
 
-      {!isWebView() && (
-        <>
-          <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} />} />
+      <Routes>
+        {/* Redirects for switching into global contexts, since these pages don't exist yet */}
+        <Route path='/:context(public)/(members|settings)' element={<Navigate to='/public' replace />} />
+        <Route path='/:context(all)/(members|settings)' element={<Navigate to='/all' replace />} />
+        {/* Redirect manage notifications page to settings page when logged in */}
+        <Route path='/notifications)' element={<Navigate to='/settings/notifications' replace />} />
 
-          {showTourPrompt && (
-            <Route path='/:context(all|public|groups)' render={() => <SiteTour windowWidth={width} />} />
-          )}
-        </>
-      )}
+        {/* First time viewing a group redirect to explore page */}
+        {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) && (
+          <Route path='/:context(groups)/:groupSlug' element={<Navigate to={`/groups/${currentGroupSlug}/explore`} replace />} />
+        )}
+
+        {!isWebView() && (
+          <>
+            <Route path='/:context(groups)/:groupSlug/*' element={<GroupWelcomeModal />} />
+
+            {showTourPrompt && (
+              <Route path='/:context(all|public|groups)/*' element={<SiteTour windowWidth={width} />} />
+            )}
+          </>
+        )}
+      </Routes>
 
       {!withoutNav && (
         <>
           {/* Depends on `pathMatchParams` */}
-          <TopNav styleName='top' onClick={handleCloseDrawer} {...{ group: currentGroup, currentUser, routeParams: pathMatchParams, showMenuBadge, width }} />
-          {isDrawerOpen && (
-            <Route
-              path={[
-                // NOTE: These routes can likely be reduced to: [`(.*)/${OPTIONAL_POST_MATCH}`, `(.*)/${OPTIONAL_GROUP_MATCH}`, ...]`
-                `/:context(all|public)/:view(events|explore|map|projects|stream|proposals)/${OPTIONAL_POST_MATCH}`,
-                `/:context(public)/:view(group)/${OPTIONAL_GROUP_MATCH}`,
-                `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`,
-                `/:context(all|public)/${OPTIONAL_POST_MATCH}`,
-                '/:context(all)/:view(topics)/:topicName',
-                '/:context(all)/:view(topics)',
-                `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
-                `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`,
-                `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`,
-                `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics|proposals)/${OPTIONAL_POST_MATCH}`,
-                `/:context(groups)/:groupSlug/:view(custom)/:customViewId/${OPTIONAL_POST_MATCH}`,
-                `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`,
-                `/:context(my)/:view(mentions|interactions|posts|announcements)/${OPTIONAL_POST_MATCH}`,
-                `/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
-                `/${POST_DETAIL_MATCH}`,
-                '/messages',
-                '/settings',
-                '/search',
-                '/confirm-group-delete'
-              ]}
-              component={routeProps => (
-                <Drawer {...routeProps} styleName={cx('drawer')} group={currentGroup} />
-              )}
-            />
-          )}
+          <TopNav className={classes.top} onClick={handleCloseDrawer} {...{ group: currentGroup, currentUser, routeParams: pathMatchParams, showMenuBadge, width }} />
+          {isDrawerOpen && <Drawer className={cx(classes.drawer)} group={currentGroup} />}
         </>
       )}
 
-      <Route
-        path={[
-          '/:context(groups)/:groupSlug/:view(topics)/:topicName/create',
-          '/:context(groups)/:groupSlug/:view(map|events|projects|proposals)/create',
-          '/:context(groups)/:groupSlug/create',
-          '/:context(groups)/:groupSlug/(.*)/create',
-          '/:context(public|all)/:view(topics)/:topicName/create',
-          '/:context(public|all|my)/:view(map|events|projects|mentions|interactions|posts|announcements|proposals)/create',
-          '/:context(public|all)/create',
-          '/:context(public|all)/(.*)/create',
-          `(.*)/${REQUIRED_EDIT_POST_MATCH}`
-        ]}
-        component={CreateModal}
-      />
+      <Routes>
+        <Route path='/groups/:groupSlug/topics/:topicName/create' element={<CreateModal />} />
+        <Route path='/groups)/:groupSlug/:view(map|events|projects|proposals)/create' element={<CreateModal />} />
+        <Route path='/groups)/:groupSlug/create' element={<CreateModal />} />
+        <Route path='/groups)/:groupSlug/*' element={<CreateModal />} />
+        <Route path='/public/topics/:topicName/create' element={<CreateModal />} />
+        <Route path='/all/topics/:topicName/create' element={<CreateModal />} />
+        <Route path='/public/:view/create' element={<CreateModal />} />
+        <Route path='/all)/:view/create' element={<CreateModal />} />
+        <Route path='/my/:view/create' element={<CreateModal />} />
+        <Route path='/public/create' element={<CreateModal />} />
+        <Route path='/all/create' element={<CreateModal />} />
+        {/* <Route path='/:context(public|all)/*' element={<CreateModal />} /> */}
+        {/* TODO route: how? <Route path={`(.*)/${REQUIRED_EDIT_POST_MATCH}`} element={<CreateModal />} /> */}
+      </Routes>
 
-      <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
-        <div ref={resizeRef} styleName={cx('main', { 'map-view': isMapView, withoutNav, 'main-pad': !withoutNav })} onClick={handleCloseDrawer}>
+      <Div100vh className={cx(classes.container, { [classes.mapView]: isMapView, [classes.singleColumn]: isSingleColumn, [classes.detailOpen]: hasDetail })}>
+        <div ref={resizeRef} className={cx(classes.main, { [classes.mapView]: isMapView, [classes.withoutNav]: withoutNav, [classes.mainPad]: !withoutNav })} onClick={handleCloseDrawer}>
           {/* View navigation menu */}
-          <Route
-            path={[
-              '/:context(groups)/:groupSlug/:view?',
-              '/:context(all|public|my)/:view?'
-            ]}
-            component={routeProps => {
-              if (routeProps.match.params.context === 'groups' && (!currentGroup || !currentGroupMembership)) return null
-
-              return (
-                <Navigation
-                  {...routeProps}
-                  group={currentGroup}
-                  collapsed={collapsedState}
-                  styleName={cx('left', { 'map-view': isMapView }, { hidden: !isGroupMenuOpen })}
-                  mapView={isMapView}
-                />
-              )
-            }}
-          />
-          <div styleName={cx('center', { 'full-width': hideSidebar, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
-            {/* NOTE: It could be more clear to group the following switched routes by component  */}
-            <Switch>
-              {/* **** Member Routes **** */}
+          {(params.context !== 'groups' || (currentGroup && !currentGroupMembership)) && (
+            <Routes>
               <Route
-                path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`}
-                render={routeProps => (
-                  <MemberProfile {...routeProps} isSingleColumn={isSingleColumn} />
-                )}
+                path='groups/:groupSlug/*'
+                element={
+                  <Navigation
+                    group={currentGroup}
+                    collapsed={collapsedState}
+                    className={cx(classes.left, { [classes.mapView]: isMapView, [classes.hidden]: !isGroupMenuOpen })}
+                    mapView={isMapView}
+                  />
+                }
               />
-              <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+              <Route
+                path='all/*'
+                element={
+                  <Navigation
+                    group={currentGroup}
+                    collapsed={collapsedState}
+                    className={cx(classes.left, { [classes.mapView]: isMapView, [classes.hidden]: !isGroupMenuOpen })}
+                    mapView={isMapView}
+                  />
+                }
+              />
+              <Route
+                path='public/*'
+                element={
+                  <Navigation
+                    group={currentGroup}
+                    collapsed={collapsedState}
+                    className={cx(classes.left, { [classes.mapView]: isMapView, [classes.hidden]: !isGroupMenuOpen })}
+                    mapView={isMapView}
+                  />
+                }
+              />
+              <Route
+                path='my/*'
+                element={
+                  <Navigation
+                    group={currentGroup}
+                    collapsed={collapsedState}
+                    className={cx(classes.left, { [classes.mapView]: isMapView, [classes.hidden]: !isGroupMenuOpen })}
+                    mapView={isMapView}
+                  />
+                }
+              />
+            </Routes>
+          )}
+          <div className={cx(classes.center, { [classes.fullWidth]: hideSidebar, [classes.collapsedState]: collapsedState, [classes.withoutNav]: withoutNav })} id={CENTER_COLUMN_ID}>
+            {/* NOTE: It could be more clear to group the following switched routes by component  */}
+            <Routes>
+              {/* **** Member Routes **** */}
+              <Route path='/members/:personId/*' element={<MemberProfile isSingleColumn={isSingleColumn} />} />
+              <Route path='/all/members/:personId/*' element={<MemberProfile />} />
               {/* **** All and Public Routes **** */}
-              <Route path={`/:context(all|public)/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              <Route path={`/:context(all|public)/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              <Route path={`/:context(all|public)/:view(proposals)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              <Route path={`/:context(all|public)/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
-              <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
-              <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
-              <Route path={`/:context(public)/:view(groups)/${OPTIONAL_GROUP_MATCH}`} component={GroupExplorer} />
-              <Route path={`/:context(public)/:view(groups)/${OPTIONAL_POST_MATCH}`} component={GroupExplorer} />
-              <Route path='/:context(all|public)/:view(topics)/:topicName' component={Stream} />
-              <Route path='/:context(all)/:view(topics)' component={AllTopics} />
-              <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={returnDefaultRouteForGroup(currentGroup)} />
+              <Route path='all/stream/*' element={<Stream context='all' />} />
+              <Route path='public/stream/*' element={<Stream context='public' />} />
+              <Route path='all/projects/*' element={<Stream context='all' view='projects' />} />
+              <Route path='public/projects/*' element={<Stream context='public' view='projects' />} />
+              <Route path='all/proposals/*' element={<Stream context='all' view='proposals' />} />
+              <Route path='public/proposals/*' element={<Stream context='public' view='proposals' />} />
+              <Route path='all/events/*' element={<Events context='all' />} />
+              <Route path='public/events/*' element={<Events context='public' />} />
+              <Route path='all/map/*' element={<MapExplorer context='all' />} />
+              <Route path='public/map/*' element={<MapExplorer context='public' />} />
+              <Route path='public/groups/*' element={<GroupExplorer />} />
+              <Route path='all/topics/:topicName' element={<Stream context='all' />} />
+              <Route path='public/topics/:topicName' element={<Stream context='public' />} />
+              <Route path='all/topics' element={<AllTopics />} />
+              <Route path='all/*' element={returnDefaultView(false, 'all')} />
+              <Route path='public/*' element={returnDefaultView(false, 'public')} />
               {/* **** Group Routes **** */}
-              <Route path={['/groups/:joinGroupSlug/join/:accessCode', '/h/use-invitation']} component={JoinGroup} />
+              <Route path='groups/:joinGroupSlug/join/:accessCode' element={<JoinGroup />} />
+              <Route path='h/use-invitation' element={<JoinGroup />} />
               {currentGroupLoading && (
-                <Route path='/:context(groups)/:groupSlug' component={Loading} />
+                <Route path='groups/:groupSlug' element={<Loading />} />
               )}
               {/* When viewing a group you are not a member of show group detail page */}
               {currentGroupSlug && !currentGroupMembership && (
-                <Route
-                  path='/:context(groups)/:groupSlug'
-                  render={routeProps => (
-                    <GroupDetail {...routeProps} group={currentGroup} />
-                  )}
-                />
+                <Route path='groups/:groupSlug' element={<GroupDetail context='groups' group={currentGroup} />} />
               )}
-              <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
-              <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
-              <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug/:view(stream)/${GROUP_DETAIL_MATCH}`} component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug/:view(proposals)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug/:view(explore)/${GROUP_DETAIL_MATCH}`} exact component={LandingPage} />
-              <Route path={`/:context(groups)/:groupSlug/:view(explore)/${OPTIONAL_POST_MATCH}`} component={LandingPage} />
-              <Route path={`/:context(groups)/:groupSlug/:view(projects)/${GROUP_DETAIL_MATCH}`} component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${GROUP_DETAIL_MATCH}`} component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug/:view(events)/${GROUP_DETAIL_MATCH}`} component={Events} />
-              <Route path={`/:context(groups)/:groupSlug/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
-              <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
-              <Route path='/:context(groups)/:groupSlug/:view(members)/create' component={Members} />
-              <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
-              <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
-              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={ChatRoom} />
-              <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
-              <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
-              <Route path={`/:context(groups)/:groupSlug/${GROUP_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
-              <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
-              <Route path='/:context(groups)/:groupSlug' component={returnDefaultRouteForGroup(currentGroup)} />
-              <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
+              <Route path='groups/:groupSlug/map/*' element={<MapExplorer context='groups' view='map' />} />
+              <Route path='groups/:groupSlug/stream/*' element={<Stream context='groups' view='stream' />} />
+              <Route path='groups/:groupSlug/proposals/*' element={<Stream context='groups' view='proposals' />} />
+              <Route path='groups/:groupSlug/explore/*' element={<LandingPage context='groups' />} />
+              <Route path='groups/:groupSlug/projects/*' element={<Stream context='groups' view='projects' />} />
+              <Route path='groups/:groupSlug/custom/:customViewId/*' element={<Stream context='groups' view='custom' />} />
+              <Route path='groups/:groupSlug/events/*' element={<Events context='groups' view='events' />} />
+              <Route path='groups/:groupSlug/groups' element={<Groups context='groups' />} />
+              <Route path='groups/:groupSlug/members/create' element={<Members context='groups' />} />
+              <Route path='groups/:groupSlug/members/:personId/*' element={<MemberProfile context='groups' />} />
+              <Route path='groups/:groupSlug/members' element={<Members context='groups' />} />
+              <Route path='groups/:groupSlug/topics/:topicName/*' element={<ChatRoom context='groups' />} />
+              <Route path='groups/:groupSlug/topics' element={<AllTopics context='groups' />} />
+              <Route path='groups/:groupSlug/settings' element={<GroupSettings context='groups' />} />
+              <Route path='groups/:groupSlug/*' element={returnDefaultView('groups', currentGroup)} />
+              <Route path='post/:postId/*' element={<PostDetail />} />
               {/* **** My Routes **** */}
-              <Route path='/:context(my)/:view(mentions|interactions|posts|announcements)' component={Stream} />
-              <RedirectRoute exact path='/my' to='/my/posts' />
+              <Route path='my/:view' element={<Stream />} />
+              <Route path='my' render={props => <Navigate to='/my/posts' replace />} />
               {/* **** Other Routes **** */}
-              <Route path='/welcome' component={WelcomeWizardRouter} />
-              <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />
-              <Route path='/settings' component={UserSettings} />
-              <Route path='/search' component={Search} />
+              <Route path='welcome' element={<WelcomeWizardRouter />} />
+              <Route path='messages/:messageThreadId' element={<Messages />} />
+              <Route path='settings' element={<UserSettings />} />
+              <Route path='search' element={<Search />} />
               {/* **** Default Route (404) **** */}
-              <Redirect to={lastViewedGroup ? `/groups/${lastViewedGroup.slug}` : '/all'} />
-            </Switch>
+              <Route path='*' element={<Navigate to={lastViewedGroup ? `/groups/${lastViewedGroup.slug}` : '/all'} replace />} />
+            </Routes>
           </div>
           {(currentGroup && currentGroupMembership) && (
-            <div styleName={cx('sidebar', { hidden: (hasDetail || hideSidebar) })}>
-              <Route
-                path={[
-                  `/:context(groups)/:groupSlug/:view(events|explore|map|groups|projects|proposals|stream)/${OPTIONAL_NEW_POST_MATCH}`,
-                  `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`,
-                  `/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`
-                ]}
-                component={GroupSidebar}
-              />
+            <div className={cx(classes.sidebar, { [classes.hidden]: (hasDetail || hideSidebar) })}>
+              <Routes>
+                <Route
+                  path='groups/:groupSlug/:view/*'
+                  element={<GroupSidebar />}
+                />
+                <Route
+                  path='groups/:groupSlug/topics/:topicName/*'
+                  element={<GroupSidebar />}
+                />
+                <Route
+                  path='groups/:groupSlug/*'
+                  element={<GroupSidebar />}
+                />
+              </Routes>
             </div>
           )}
-          <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
-            {/* NOTE: These routes could potentially be simply: `(.*)/${POST_DETAIL_MATCH}` and`(.*)/${GROUP_DETAIL_MATCH}` */}
-            <Switch>
-              <Route path={`/:context(all|public)/:view(events|explore|groups|map|projects|stream)/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(my)/:view(mentions|interactions|posts|announcements)/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(all|public)/:view(topics)/:topicName/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
-              <Route path={`/:context(public)/:view(groups)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
-              <Route path={`/:context(all)/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(all|public)/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(groups)/:groupSlug/:view(events|explore|map|projects|stream|proposals)/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
-              <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(groups)/:groupSlug/:view(events|explore|groups|map|projects|stream)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
-              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(groups)/:groupSlug/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
-              <Route path={`/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />
-            </Switch>
+          <div className={cx(classes.detail, { [classes.hidden]: !hasDetail })} id={DETAIL_COLUMN_ID}>
+            <Routes>
+              {/* All context routes */}
+              <Route path={`/all/events/${POST_DETAIL_MATCH}`} element={<PostDetail context='all' />} />
+              <Route path={`/all/explore/${POST_DETAIL_MATCH}`} element={<PostDetail context='all' />} />
+              <Route path={`/all/groups/${POST_DETAIL_MATCH}`} element={<PostDetail context='all' />} />
+              <Route path={`/all/map/${POST_DETAIL_MATCH}`} element={<PostDetail context='all' />} />
+              <Route path={`/all/projects/${POST_DETAIL_MATCH}`} element={<PostDetail context='all' />} />
+              <Route path={`/all/stream/${POST_DETAIL_MATCH}`} element={<PostDetail context='all' />} />
+              <Route path={`/all/topics/:topicName/${POST_DETAIL_MATCH}`} element={<PostDetail context='all' />} />
+              <Route path={`/all/map/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='all' />} />
+              <Route path={`/all/members/:personId/${POST_DETAIL_MATCH}`} element={<PostDetail context='all' />} />
+              <Route path={`/all/${POST_DETAIL_MATCH}`} element={<PostDetail context='all' />} />
+
+              {/* Public context routes */}
+              <Route path={`/public/events/${POST_DETAIL_MATCH}`} element={<PostDetail context='public' />} />
+              <Route path={`/public/explore/${POST_DETAIL_MATCH}`} element={<PostDetail context='public' />} />
+              <Route path={`/public/groups/${POST_DETAIL_MATCH}`} element={<PostDetail context='public' />} />
+              <Route path={`/public/map/${POST_DETAIL_MATCH}`} element={<PostDetail context='public' />} />
+              <Route path={`/public/projects/${POST_DETAIL_MATCH}`} element={<PostDetail context='public' />} />
+              <Route path={`/public/stream/${POST_DETAIL_MATCH}`} element={<PostDetail context='public' />} />
+              <Route path={`/public/topics/:topicName/${POST_DETAIL_MATCH}`} element={<PostDetail context='public' />} />
+              <Route path={`/public/map/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='public' />} />
+              <Route path={`/public/groups/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='public' />} />
+              <Route path={`/public/${POST_DETAIL_MATCH}`} element={<PostDetail context='public' />} />
+
+              {/* My context routes */}
+              <Route path={`/my/mentions/${POST_DETAIL_MATCH}`} element={<PostDetail context='my' />} />
+              <Route path={`/my/interactions/${POST_DETAIL_MATCH}`} element={<PostDetail context='my' />} />
+              <Route path={`/my/posts/${POST_DETAIL_MATCH}`} element={<PostDetail context='my' />} />
+              <Route path={`/my/announcements/${POST_DETAIL_MATCH}`} element={<PostDetail context='my' />} />
+
+              {/* Groups context routes */}
+              <Route path={`/groups/:groupSlug/events/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/explore/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/map/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/projects/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/stream/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/proposals/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/custom/:customViewId/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/custom/:customViewId/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/members/:personId/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/events/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/explore/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/groups/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/map/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/projects/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/stream/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/topics/:topicName/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/${POST_DETAIL_MATCH}`} element={<PostDetail context='groups' />} />
+              <Route path={`/groups/:groupSlug/${GROUP_DETAIL_MATCH}`} element={<GroupDetail context='groups' />} />
+
+              {/* Other routes */}
+              <Route path={`/members/:personId/${POST_DETAIL_MATCH}`} element={<PostDetail />} />
+            </Routes>
           </div>
           <SocketListener location={location} groupSlug={currentGroupSlug} />
           <SocketSubscriber type='group' id={get('slug', currentGroup)} />
@@ -434,13 +480,13 @@ export default function AuthLayoutRouter (props) {
   )
 }
 
-export function returnDefaultRouteForGroup (group) {
-  if (!group) return Stream
+export function returnDefaultView (group, context) {
+  if (!group) return <Stream context={context} />
 
   switch (group.type) {
     case GROUP_TYPES.farm:
-      return LandingPage
+      return <LandingPage />
     default:
-      return Stream
+      return <Stream context='groups' />
   }
 }

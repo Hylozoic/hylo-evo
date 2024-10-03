@@ -1,0 +1,171 @@
+.post {
+  background-color: white;
+  overflow-x: hidden;
+  max-width: 960px;
+}
+
+.header {
+  margin-bottom: 0;
+}
+
+.donate, .project-management-tool, .join-project {
+  padding: 15px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 15px rgba(17, 39, 64, 0.20);
+  border-radius: 5px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: $color-regent;
+  line-height: 30px;
+  font-size: 14px;
+  text-align: left;
+  align-items: center;
+
+  .join-project-button {
+    background-color: #0cc39f;
+    padding: 0 10px;
+    text-decoration: none;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    line-height: 30px;
+    height: 30px;
+    display: inline-block;
+  }
+
+  img {
+    height: 18px;
+  }
+}
+
+.headerPad {
+
+  .header-sticky .header > div:nth-child(2) {
+    padding-right: 0;
+  }
+
+  &> .header > div:nth-child(2) {
+    opacity: 0;
+  }
+}
+
+.project-actions-wrapper {
+  padding-bottom: 5px;
+}
+
+.header-sticky {
+  position: fixed;
+  top: 56px;
+  z-index: 15;
+  padding-right: 5px;
+  opacity: 1;
+}
+
+.header-sticky > div > div:nth-child(2) {
+  transition: all .25s ease;
+  opacity: 1;
+}
+
+
+@keyframes append-animate {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+.header-sticky.at-activity > div > div:nth-child(2) {
+  opacity: 0;
+}
+
+.noUser .header-sticky {
+  top: 0;
+}
+
+.noUser .header > div:nth-child(2) {
+  position: relative;
+}
+
+.activity-sticky {
+  z-index: 50;
+  position: fixed;
+  top: 30px;
+  background: $color-white;
+  border-bottom: 1px solid rgba(235, 235, 235, 1.0);
+  animation: append-animate .3s ease;
+}
+
+.body {
+  padding: 20px 20px 0 20px;
+}
+
+.join-project-button-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.join-project-button {
+  margin: 0px;
+}
+
+// PostTag
+
+.tags {
+  padding: 0px 25px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  // Extract typography?
+  @include font-regular;
+  color: $color-caribbean-green;
+  font-size: 12px;
+  margin-right: 7px;
+  &:hover {
+    text-decoration: none;
+    color: $color-gossamer;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header-sticky {
+    top: 0;
+  }
+
+  .header {
+    width: 100%;
+    padding: 0 0 0 0;
+  }
+
+  .body {
+    padding: 10px 10px 0 10px;
+    margin-bottom: 10px;
+  }
+
+  .donate, .project-management-tool, .join-project {
+    line-height: 18px;
+
+    div {
+      display: flex;
+      align-items: center;
+
+      img {
+        margin-left: 5px;
+      }
+    }
+
+    .join-project-button {
+      margin-left: 10px;
+    }
+  }
+
+
+  .activity-sticky {
+    top: -25px;
+  }
+}

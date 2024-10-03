@@ -2,7 +2,7 @@ import { get, compact } from 'lodash/fp'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { Redirect } from 'react-router'
+import { Navigate } from 'react-router'
 import AgreementsTab from './AgreementsTab'
 import CustomViewsTab from './CustomViewsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
@@ -18,11 +18,11 @@ import TopicsSettingsTab from './TopicsSettingsTab'
 import ExportDataTab from './ExportDataTab'
 import Loading from 'components/Loading'
 import FullPageModal from 'routes/FullPageModal'
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { groupUrl } from 'util/navigation'
 import { RESP_ADD_MEMBERS, RESP_ADMINISTRATION } from 'store/constants'
 
-import './GroupSettings.scss'
+import classes from './GroupSettings.module.scss'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 
 // NOTE: This area is also rendered and shared with the mobile app.
@@ -56,7 +56,7 @@ export default function GroupSettings ({
 
   const responsibilities = useSelector(state => getResponsibilitiesForGroup(state, { person: currentUser, groupId: group?.id })).map(r => r.title)
   if (!group) return <Loading />
-  if (!responsibilities.includes(RESP_ADMINISTRATION) && !responsibilities.includes(RESP_ADD_MEMBERS)) return <Redirect to={groupUrl(slug)} />
+  if (!responsibilities.includes(RESP_ADMINISTRATION) && !responsibilities.includes(RESP_ADD_MEMBERS)) return <Navigate to={groupUrl(slug)} replace />
   useEffect(() => {
     if (!responsibilities.includes(RESP_ADMINISTRATION) && responsibilities.includes(RESP_ADD_MEMBERS)) push(groupUrl(slug, 'settings/invite'))
   }, [])

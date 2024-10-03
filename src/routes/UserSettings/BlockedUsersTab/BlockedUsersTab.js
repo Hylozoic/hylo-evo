@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { useTranslation, withTranslation } from 'react-i18next'
-import './BlockedUsersTab.scss'
+import classes from './BlockedUsersTab.module.scss'
 import Loading from 'components/Loading'
 
 const { array, func } = PropTypes
@@ -30,10 +30,10 @@ export function UnBlockUserControl ({ blockedUser, unBlockUser }) {
   const unBlockUserFun = () => unBlockUser(blockedUser.id)
   const { t } = useTranslation()
 
-  return <div styleName='unblock-user-control'>
-    <div styleName='row'>
-      <div styleName='name'>{blockedUser.name}</div>
-      <div onClick={unBlockUserFun} styleName='unblock-button'>{t('Unblock')}</div>
+  return <div className={classes.unblockUserControl}>
+    <div className={classes.row}>
+      <div className={classes.name}>{blockedUser.name}</div>
+      <div onClick={unBlockUserFun} className={classes.unblockButton}>{t('Unblock')}</div>
     </div>
   </div>
 }

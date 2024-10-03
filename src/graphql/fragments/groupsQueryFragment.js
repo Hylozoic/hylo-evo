@@ -1,4 +1,4 @@
-import groupFieldsFragment from 'graphql/fragments/groupFieldsFragment'
+import groupFieldsFragment from '@graphql/fragments/groupFieldsFragment'
 
 const groupsQueryFragment = `
 groups(

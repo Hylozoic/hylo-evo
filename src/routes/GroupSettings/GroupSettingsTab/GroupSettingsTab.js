@@ -22,8 +22,8 @@ import {
 import { bgImageStyle } from 'util/index'
 import SettingsSection from '../SettingsSection'
 
-import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
-import styles from './GroupSettingsTab.scss' // eslint-disable-line no-unused-vars
+import general from '../GroupSettings.module.scss' // eslint-disable-line no-unused-vars
+import styles from './GroupSettingsTab.module.scss' // eslint-disable-line no-unused-vars
 
 const { object, func } = PropTypes
 
@@ -146,27 +146,31 @@ class GroupSettingsTab extends Component {
     t('Display only nearest city and dont show on the map')
 
     return (
-      <div styleName='general.groupSettings'>
-        <span styleName='styles.nameBox'>
-          <label styleName='styles.label'>{t('Group Name')}</label>
-          <input type='text' styleName='styles.name' onChange={this.updateSetting('name')} value={name || ''} />
+      <div className={general.groupSettings}>
+        <span className={styles.nameBox}>
+          <label className={styles.label}>{t('Group Name')}</label>
+          <input type='text' className={styles.name} onChange={this.updateSetting('name')} value={name || ''} />
         </span>
-        <label styleName='styles.label'>{t('Banner and Avatar Images')}</label>
+        <label className={styles.label}>{t('Banner and Avatar Images')}</label>
         <UploadAttachmentButton
           type='groupBanner'
           id={group.id}
           onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
-          styleName='styles.change-banner'
+          className={styles.changeBanner}
         >
-          <div style={bgImageStyle(bannerUrl)} styleName='styles.banner-image'><Icon name='AddImage' styleName='styles.uploadIcon' /></div>
+          <div style={bgImageStyle(bannerUrl)} className={styles.bannerImage}>
+            <Icon name='AddImage' className={styles.uploadIcon} />
+          </div>
         </UploadAttachmentButton>
         <UploadAttachmentButton
           type='groupAvatar'
           id={group.id}
           onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-          styleName='styles.change-avatar'
+          className={styles.changeAvatar}
         >
-          <div style={bgImageStyle(avatarUrl)} styleName='styles.avatar-image'><Icon name='AddImage' styleName='styles.uploadIcon' /></div>
+          <div style={bgImageStyle(avatarUrl)} className={styles.avatarImage}>
+            <Icon name='AddImage' className={styles.uploadIcon} />
+          </div>
         </UploadAttachmentButton>
         <SettingsControl
           helpText={t('purposeHelpText')}
@@ -185,10 +189,10 @@ class GroupSettingsTab extends Component {
           locationObject={group.locationObject}
           type='location'
         />
-        <label styleName='styles.label'>{t('Location Privacy:')}</label>
+        <label className={styles.label}>{t('Location Privacy:')}</label>
         <Dropdown
-          styleName='styles.location-obfuscation-dropdown'
-          toggleChildren={<span styleName='styles.location-obfuscation-dropdown-label'>
+          className={styles.locationObfuscationDropdown}
+          toggleChildren={<span className={styles.locationObfuscationDropdownLabel}>
             {LOCATION_PRECISION[locationDisplayPrecision || 'precise']}
             <Icon name='ArrowDown' />
           </span>}
@@ -197,7 +201,7 @@ class GroupSettingsTab extends Component {
             onClick: () => this.updateSettingDirectly('settings.locationDisplayPrecision')(value)
           }))}
         />
-        <p styleName='general.detailText'>{t('Note: with Administration rights you will always see the exact location displayed')}</p>
+        <p className={general.detailText}>{t('Note: with Administration rights you will always see the exact location displayed')}</p>
         <br />
 
         <SettingsControl
@@ -216,17 +220,17 @@ class GroupSettingsTab extends Component {
 
         <SettingsSection>
           <h3>{t('Relevant skills & interests')}</h3>
-          <p styleName='general.detailText'>{t('What skills and interests are particularly relevant to this group?')}</p>
-          <div styleName={'styles.skillsSetting' + ' ' + cx({ 'general.on': showSuggestedSkills })}>
-            <div styleName='general.switchContainer'>
+          <p className={general.detailText}>{t('What skills and interests are particularly relevant to this group?')}</p>
+          <div className={cx(styles.skillsSetting, { [general.on]: showSuggestedSkills })}>
+            <div className={general.switchContainer}>
               <SwitchStyled
                 checked={showSuggestedSkills}
                 onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
                 backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
-              <span styleName='general.toggleDescription'>{t('Ask new members whether they have these skills and interests?')}</span>
-              <div styleName='general.onOff'>
-                <div styleName='general.off'>{t('OFF')}</div>
-                <div styleName='general.on'>{t('ON')}</div>
+              <span className={general.toggleDescription}>{t('Ask new members whether they have these skills and interests?')}</span>
+              <div className={general.onOff}>
+                <div className={general.off}>{t('OFF')}</div>
+                <div className={general.on}>{t('ON')}</div>
               </div>
             </div>
           </div>
@@ -245,7 +249,7 @@ class GroupSettingsTab extends Component {
           type='text'
           value={geoShape || ''}
         />
-        <div styleName='styles.editable-map-container'>
+        <div className={styles.editableMapContainer}>
           { this.state.isModal
             ? <EditableMapModal group={group} toggleModal={this.toggleModal}>
               <EditableMap
@@ -264,9 +268,9 @@ class GroupSettingsTab extends Component {
         </div>
         <br />
 
-        <div styleName='general.saveChanges'>
-          <span styleName={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>
-          <Button label={t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className='save-button' styleName='general.save-button' />
+        <div className={general.saveChanges}>
+          <span className={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>
+          <Button label={t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className={cx('saveButton', general.saveButton)} />
         </div>
       </div>
     )

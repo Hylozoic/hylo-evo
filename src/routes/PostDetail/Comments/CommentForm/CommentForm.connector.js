@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
-import { sendIsTyping } from 'client/websockets'
+import { sendIsTyping } from 'client/websockets.mjs'
 import { addAttachment, getAttachments, clearAttachments } from 'components/AttachmentManager/AttachmentManager.store'
 
 export function mapStateToProps (state, props) {

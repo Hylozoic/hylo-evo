@@ -1,9 +1,8 @@
 import mixpanel from 'mixpanel-browser'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route, Switch } from 'react-router'
-import { POST_DETAIL_MATCH } from 'util/navigation'
-import config, { isProduction, isTest } from 'config'
+import { Route, Routes } from 'react-router-dom'
+import config, { isProduction, isTest } from 'config/index'
 import Loading from 'components/Loading'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter'
 import NonAuthLayoutRouter from 'routes/NonAuthLayoutRouter'
@@ -29,7 +28,7 @@ export default function RootRouter () {
       await dispatch(checkLogin())
       setLoading(false)
     }())
-  }, [dispatch, checkLogin, setLoading])
+  }, [dispatch, setLoading])
 
   if (loading) {
     return (
@@ -39,40 +38,48 @@ export default function RootRouter () {
 
   if (isAuthorized) {
     return (
-      <Switch>
+      <Routes>
         {/* If authenticated and trying to do an oAuth login we need to still get an auth code from the server and redirect to redirect_url */}
-        <Route path='/oauth/login/:uid'>
-          <OAuthLogin authenticated />
-        </Route>
+        <Route path='/oauth/login/:uid' element={<OAuthLogin authenticated />} />
         {/* If authenticated and need to ask for oAuth consent again do so */}
         <Route
           path='/oauth/consent/:uid'
-          component={routeProps => (
-            <NonAuthLayoutRouter {...routeProps} skipAuthCheck />
-          )}
+          element={<NonAuthLayoutRouter skipAuthCheck />}
         />
 
-        <Route component={AuthLayoutRouter} />
-      </Switch>
+        <Route path='*' element={<AuthLayoutRouter />} />
+      </Routes>
     )
   }
   if (!isAuthorized) {
     return (
-      <Switch>
+      <Routes>
         <Route
           path='/:context(groups)/:groupSlug/join/:accessCode'
-          component={NonAuthLayoutRouter}
+          element={<NonAuthLayoutRouter />}
         />
         <Route
-          path={[
-            '/:context(public)/:view(map|groups)?',
-            `(.*)/${POST_DETAIL_MATCH}`,
-            '/:context(groups)/:groupSlug?'
-          ]}
-          component={PublicLayoutRouter}
+          path='/:context(public)'
+          element={<PublicLayoutRouter />}
         />
-        <Route component={NonAuthLayoutRouter} />
-      </Switch>
+        <Route
+          path='/:context(public)/:view(map|groups)'
+          element={<PublicLayoutRouter />}
+        />
+        {/* TODO route: how to do this? know each route that is possible? <Route
+          path={`(.*)/${POST_DETAIL_MATCH}`}
+          element={<PublicLayoutRouter />}
+        /> */}
+        <Route
+          path='/:context(groups)'
+          element={<PublicLayoutRouter />}
+        />
+        <Route
+          path='/:context(groups)/:groupSlug'
+          element={<PublicLayoutRouter />}
+        />
+        <Route path='*' element={<NonAuthLayoutRouter />} />
+      </Routes>
     )
   }
 }

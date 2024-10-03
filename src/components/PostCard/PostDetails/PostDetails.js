@@ -11,7 +11,7 @@ import Feature from 'components/PostCard/Feature'
 import LinkPreview from 'components/LinkPreview'
 import Tooltip from 'components/Tooltip'
 
-import './PostDetails.scss'
+import classes from './PostDetails.module.scss'
 
 const MAX_DETAILS_LENGTH = 144
 
@@ -41,17 +41,17 @@ export default function PostDetails ({
 
   return (
     <Highlight {...highlightProps}>
-      <div onClick={onClick} styleName={cx('postDetails', { constrained })}>
-        <div styleName='fade' />
+      <div onClick={onClick} className={cx(classes.postDetails, { [classes.constrained]: constrained })}>
+        <div className={classes.fade} />
         {linkPreview?.url && linkPreviewFeatured && isVideo && (
           <Feature url={linkPreview.url} />
         )}
         {details && (
           <ClickCatcher groupSlug={slug}>
-            <HyloHTML styleName='details' html={details} />
+            <HyloHTML className={classes.details} html={details} />
           </ClickCatcher>
         )}
-        {editedTimestamp && (<div styleName='timestamp' data-for={`editedTip-${post.id}`} data-tip={exactEditedTimestamp}>
+        {editedTimestamp && (<div className={classes.timestamp} data-for={`editedTip-${post.id}`} data-tip={exactEditedTimestamp}>
           {editedTimestamp}
         </div>)}
         {linkPreview && !linkPreviewFeatured && (

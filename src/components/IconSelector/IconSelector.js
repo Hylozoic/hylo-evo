@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Icon from 'components/Icon'
 
-import './IconSelector.scss'
+import classes from './IconSelector.module.scss'
 
 const iconList = [
   'Public',
@@ -118,14 +118,14 @@ export default function IconSelector ({ selectedIcon, updateIcon, selectedIconCl
   const { t } = useTranslation()
 
   return (
-    <div styleName='icon-selector-container'>
-      <div styleName='selected-icon' onClick={toggleModalOpen}>
-        {selectedIcon ? <Icon green name={selectedIcon} className={selectedIconClass} /> : <div styleName='text'>{t('No icon selected')}</div>}
+    <div className={classes.iconSelectorContainer}>
+      <div className={classes.selectedIcon} onClick={toggleModalOpen}>
+        {selectedIcon ? <Icon green name={selectedIcon} className={selectedIconClass} /> : <div className={classes.text}>{t('No icon selected')}</div>}
         <Icon name='ArrowDown' />
       </div>
-      <div styleName={cx('icon-options', { open: modalOpen })}>
+      <div className={cx(classes.iconOptions, { [classes.open]: modalOpen })}>
         {iconList.map((icon) => (
-          <Icon key={icon} styleName='icon' name={icon} onClick={() => { updateIcon(icon); setModalOpen(false) }} green={icon === selectedIcon} />
+          <Icon key={icon} className={cx(classes.icon, { [classes.green]: icon === selectedIcon })} name={icon} onClick={() => { updateIcon(icon); setModalOpen(false) }} />
         ))}
       </div>
     </div>

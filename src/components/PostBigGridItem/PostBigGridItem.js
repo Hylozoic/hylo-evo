@@ -1,23 +1,23 @@
+import cx from 'classnames'
 import React from 'react'
 import Clamp from 'react-multiline-clamp'
 import { useTranslation } from 'react-i18next'
-import cx from 'classnames'
-import Tooltip from 'components/Tooltip'
-
+import { useParams } from 'react-router-dom'
+import Avatar from 'components/Avatar'
+import EmojiRow from 'components/EmojiRow'
 import EventDate from 'components/PostCard/EventDate'
 import EventRSVP from 'components/PostCard/EventRSVP'
 import HyloHTML from 'components/HyloHTML'
-import { personUrl } from 'util/navigation'
-import Avatar from 'components/Avatar'
-import EmojiRow from 'components/EmojiRow'
 import Icon from 'components/Icon'
-import './PostBigGridItem.scss'
+import Tooltip from 'components/Tooltip'
+import { personUrl } from 'util/navigation'
+
+import classes from './PostBigGridItem.module.scss'
 
 export default function PostBigGridItem (props) {
   const {
     childPost,
     currentGroupId,
-    routeParams,
     post,
     respondToEvent,
     showDetails,
@@ -32,11 +32,12 @@ export default function PostBigGridItem (props) {
     attachments
   } = post
   const { t } = useTranslation()
+  const routeParams = useParams()
 
   const numAttachments = attachments.length || 0
   const firstAttachment = attachments[0] || 0
   // XXX: we should figure out what to actually do with 'video' type attachments, which are almost never used
-  let attachmentType = (firstAttachment.type === 'video' ? 'file' : firstAttachment.type) || 0
+  const attachmentType = (firstAttachment.type === 'video' ? 'file' : firstAttachment.type) || 0
   const attachmentUrl = firstAttachment.url || 0
   const isFlagged = post.flaggedGroups && post.flaggedGroups.includes(currentGroupId)
 
@@ -66,89 +67,93 @@ export default function PostBigGridItem (props) {
     return attachmentType === 'image' || post.type === 'event' ? showDetails() : null
   }
   return (
-    <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType, detailClass, post.type)} onClick={attachmentType !== 'image' && post.type !== 'event' ? showDetails : null}>
-      <div styleName='content-summary'>
-        {childPost &&
+    <div className={cx(classes.postGridItemContainer, { [classes.unread]: unread, [classes.expanded]: expanded }, classes[attachmentType], classes[detailClass], classes[post.type])} onClick={attachmentType !== 'image' && post.type !== 'event' ? showDetails : null}>
+      <div className={classes.contentSummary}>
+        {childPost && (
           <div
-            styleName='icon-container'
-            data-tip={t('Post from child group')}
-            data-for='childgroup-tt'
+            className={classes.iconContainer}
+            data-tooltip-content={t('Post from child group')}
+            data-tooltip-id='childgroup-tt'
           >
             <Icon
               name='Subgroup'
-              styleName='icon'
+              className={classes.icon}
             />
             <Tooltip
               delay={250}
               id='childgroup-tt'
             />
-          </div>}
-        {post.type === 'event' &&
-          <div styleName='date' onClick={showDetailsTargeted}>
+          </div>
+        )}
+        {post.type === 'event' && (
+          <div className={classes.date} onClick={showDetailsTargeted}>
             <EventDate {...post} />
           </div>
-        }
-        <h3 styleName={cx('title', { isFlagged: isFlagged && !post.clickthrough })} onClick={showDetailsTargeted}>{title}</h3>
+        )}
+        <h3 className={classes.title} onClick={showDetailsTargeted}>{title}</h3>
+
         {attachmentType === 'image'
-          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName={cx('first-image', { isFlagged: isFlagged && !post.clickthrough })} onClick={showDetails} />
-          : ' '
+          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} className={classes.firstImage} onClick={showDetails} />
+          : null
         }
-        {isFlagged && <Icon name='Flag' styleName='flagIcon' />}
-        <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
-        <div styleName='grid-meta'>
-          <div styleName='grid-meta-row-1'>
-            {post.type === 'event' &&
-              <div styleName='date' onClick={showDetailsTargeted}>
+        {isFlagged && <Icon name='Flag' className={classes.flagIcon} />}
+        <HyloHTML className={classes.details} html={details} onClick={showDetailsTargeted} />
+        <div className={classes.gridMeta}>
+          <div className={classes.gridMetaRow1}>
+            {post.type === 'event' && (
+              <div className={classes.date} onClick={showDetailsTargeted}>
                 <EventDate {...post} />
-              </div>}
-            <h3 styleName='title' onClick={showDetails}>{title}</h3>
-            <div styleName='content-snippet'>
+              </div>
+            )}
+            <h3 className={classes.title} onClick={showDetails}>{title}</h3>
+            <div className={classes.contentSnippet}>
               <Clamp lines={2}>
-                <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
+                <HyloHTML className={classes.details} html={details} onClick={showDetailsTargeted} />
               </Clamp>
-              <div styleName='fade' />
+              <div className={classes.fade} />
             </div>
-            <div styleName='project-actions'>
-              {post.donationsLink && donationService &&
-                <div styleName='donate'>
-                  <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
-                  <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
-                </div>}
-              {post.donationsLink && !donationService &&
-                <div styleName='donate'>
+            <div className={classes.projectActions}>
+              {post.donationsLink && donationService && (
+                <div className={classes.donate}>
+                  <div><img src={`/assets/payment-services/${donationService}.svg`} alt={donationService} /></div>
+                  <div><a className={classes.projectButton} rel='noreferrer' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
+                </div>
+              )}
+              {post.donationsLink && !donationService && (
+                <div className={classes.donate}>
                   <div>{t('Support this project')}</div>
-                  <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
-                </div>}
-              {attachmentType === 'file'
-                ? <div styleName='file-attachment'>
-                  {numAttachments > 1
-                    ? <div styleName='attachment-number'>{numAttachments} {t('attachments')}</div>
-                    : ' '
-                  }
-                  <div styleName='attachment'>
-                    <Icon name='Document' styleName='file-icon' />
-                    <div styleName='attachment-name'>{attachmentUrl.substring(firstAttachment.url.lastIndexOf('/') + 1)}</div>
+                  <div><a className={classes.projectButton} rel='noreferrer' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
+                </div>
+              )}
+              {attachmentType === 'file' && (
+                <div className={classes.fileAttachment}>
+                  {numAttachments > 1 ? (
+                    <div className={classes.attachmentNumber}>{numAttachments} {t('attachments')}</div>
+                  ) : null}
+                  <div className={classes.attachment}>
+                    <Icon name='Document' className={classes.fileIcon} />
+                    <div className={classes.attachmentName}>{attachmentUrl.substring(firstAttachment.url.lastIndexOf('/') + 1)}</div>
                   </div>
                 </div>
-                : ' '}
-              {post.type === 'event' &&
-                <div styleName='event-response'>
+              )}
+              {post.type === 'event' && (
+                <div className={classes.eventResponse}>
                   <div>{t('Can you go?')}</div>
                   <EventRSVP {...post} respondToEvent={respondToEvent(post)} position='top' />
                 </div>
-              }
+              )}
             </div>
-            <div styleName='author' onClick={showDetails}>
-              <div styleName='type-author'>
-                <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
+            <div className={classes.author} onClick={showDetails}>
+              <div className={classes.typeAuthor}>
+                <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} className={classes.avatar} tiny />
                 {creator.name}
               </div>
-              <div styleName='timestamp'>
+              <div className={classes.timestamp}>
                 {createdTimestamp}
               </div>
             </div>
           </div>
-          <div styleName='reactions'>
+          <div className={classes.reactions}>
             <EmojiRow
               currentUser={currentUser}
               myReactions={post.myReactions}

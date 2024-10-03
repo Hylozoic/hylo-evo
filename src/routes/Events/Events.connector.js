@@ -1,5 +1,5 @@
 import { get, isEmpty } from 'lodash/fp'
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { connect } from 'react-redux'
 import fetchPosts from 'store/actions/fetchPosts'
 import {

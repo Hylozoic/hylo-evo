@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 import orm from 'store/models'
 import { isEmpty, includes, get } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
+import postFieldsFragment from '@graphql/fragments/postFieldsFragment'
 import presentPost from 'store/presenters/presentPost'
 import presentComment from 'store/presenters/presentComment'
 
@@ -140,7 +140,7 @@ export function presentSearchResult (searchResult, session) {
   const contentRaw = searchResult.getContent(session)
   const type = contentRaw.constructor.modelName
 
-  var content = contentRaw
+  let content = contentRaw
 
   if (type === 'Post') {
     content = presentPost(content)

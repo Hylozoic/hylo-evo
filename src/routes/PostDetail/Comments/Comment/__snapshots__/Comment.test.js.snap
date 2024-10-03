@@ -32,9 +32,9 @@ exports[`Comment displays image attachments 1`] = `
         data-stylename="commentActions"
       >
         <div
-          data-for="reply-tip-undefined"
+          data-tooltip-id="reply-tip-undefined"
           data-stylename="commentAction"
-          data-tip="Reply"
+          data-tooltip-content="Reply"
           onClick={[MockFunction]}
         >
           <Icon
@@ -164,9 +164,9 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
         data-stylename="commentActions"
       >
         <div
-          data-for="reply-tip-undefined"
+          data-tooltip-id="reply-tip-undefined"
           data-stylename="commentAction"
-          data-tip="Reply"
+          data-tooltip-content="Reply"
           onClick={[MockFunction]}
         >
           <Icon
@@ -290,9 +290,9 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
         data-stylename="commentActions"
       >
         <div
-          data-for="reply-tip-undefined"
+          data-tooltip-id="reply-tip-undefined"
           data-stylename="commentAction"
-          data-tip="Reply"
+          data-tooltip-content="Reply"
           onClick={[MockFunction]}
         >
           <Icon
@@ -407,9 +407,9 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
         data-stylename="commentActions"
       >
         <div
-          data-for="reply-tip-undefined"
+          data-tooltip-id="reply-tip-undefined"
           data-stylename="commentAction"
-          data-tip="Reply"
+          data-tooltip-content="Reply"
           onClick={[MockFunction]}
         >
           <Icon
@@ -515,9 +515,9 @@ exports[`Comment does not display the remove menu when removeComment is not defi
         data-stylename="commentActions"
       >
         <div
-          data-for="reply-tip-undefined"
+          data-tooltip-id="reply-tip-undefined"
           data-stylename="commentAction"
-          data-tip="Reply"
+          data-tooltip-content="Reply"
           onClick={[MockFunction]}
         >
           <Icon
@@ -641,9 +641,9 @@ exports[`Comment renders correctly 1`] = `
         data-stylename="commentActions"
       >
         <div
-          data-for="reply-tip-undefined"
+          data-tooltip-id="reply-tip-undefined"
           data-stylename="commentAction"
-          data-tip="Reply"
+          data-tooltip-content="Reply"
           onClick={[MockFunction]}
         >
           <Icon
@@ -754,9 +754,9 @@ exports[`Comment renders correctly when editing 1`] = `
         data-stylename="commentActions"
       >
         <div
-          data-for="reply-tip-undefined"
+          data-tooltip-id="reply-tip-undefined"
           data-stylename="commentAction"
-          data-tip="Reply"
+          data-tooltip-content="Reply"
           onClick={[MockFunction]}
         >
           <Icon

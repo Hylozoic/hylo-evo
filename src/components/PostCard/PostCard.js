@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { get } from 'lodash/fp'
 import React, { useCallback, useEffect, useRef } from 'react'
+import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -12,9 +13,10 @@ import PostFooter from './PostFooter'
 import PostHeader from './PostHeader'
 import PostGroups from './PostGroups'
 
-import './PostCard.scss'
+import classes from './PostCard.module.scss'
 
 export { PostHeader, PostFooter, PostBody, PostGroups, EventBody }
+
 export default function PostCard (props) {
   const {
     childPost,
@@ -29,12 +31,13 @@ export default function PostCard (props) {
     intersectionObserver,
     post,
     respondToEvent,
-    routeParams,
     showDetails
   } = props
 
   const postCardRef = forwardedRef || useRef()
   const { t } = useTranslation()
+  const routeParams = useParams()
+
   // TODO: dupe of clickcatcher?
   const shouldShowDetails = useCallback(element => {
     if (element === postCardRef) return true
@@ -70,16 +73,21 @@ export default function PostCard (props) {
   return (
     <>
       {childPost &&
-        <div styleName='child-post-label-wrapper'>
-          <div styleName='child-post-label'>
-            <Icon name='Subgroup' styleName='icon' />
+        <div className={classes.childPostLabelWrapper}>
+          <div className={classes.childPostLabel}>
+            <Icon name='Subgroup' className={classes.icon} />
             <span>{t('Post from')} <b>{t('child group')}</b></span>
           </div>
         </div>}
       <div
         ref={postCardRef}
-        styleName={cx('card', postType, { expanded }, { constrained })}
-        className={className}
+        className={cx(
+          classes.card,
+          classes[postType],
+          { [classes.expanded]: expanded },
+          { [classes.constrained]: constrained },
+          className
+        )}
       >
         <div onClick={onClick}>
           <PostHeader
@@ -97,7 +105,7 @@ export default function PostCard (props) {
           <CardImageAttachments attachments={post.attachments} className='post-card' isFlagged={isFlagged && !post.clickthrough} />
         </div>
         {isEvent && (
-          <div styleName='bodyWrapper'>
+          <div className={classes.bodyWrapper}>
             <EventBody
               onClick={onClick}
               currentUser={currentUser}
@@ -151,8 +159,4 @@ PostCard.propTypes = {
   expanded: PropTypes.bool,
   constrained: PropTypes.bool,
   className: PropTypes.string
-}
-
-PostCard.defaultProps = {
-  routeParams: {}
 }

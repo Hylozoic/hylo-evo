@@ -1,7 +1,4 @@
-// Copied from https://github.com/kmwhelan93/react-geocoder-autocomplete because babel was not working with the npm module
-
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useState, useEffect, useRef } from 'react'
 import FlipMove from 'react-flip-move'
 import PropTypes from 'prop-types'
 import xhr from 'xhr'
@@ -11,35 +8,51 @@ import xhr from 'xhr'
  * and provides an autocompleting interface for finding locations.
  */
 
-class Geocoder extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      results: [],
-      focus: null,
-      loading: false,
-      searchTime: new Date(),
-      showList: false,
-      inputValue: this.props.defaultInputValue,
-      typedInput: ''
+const GeocoderAutocomplete = ({
+  accessToken,
+  endpoint = 'https://api.tiles.mapbox.com',
+  defaultInputValue = '',
+  inputClass = '',
+  resultClass = '',
+  resultsClass = '',
+  resultFocusClass = 'strong',
+  inputPosition = 'top',
+  inputPlaceholder = 'Search',
+  showLoader = false,
+  source = 'mapbox.places',
+  proximity = '',
+  bbox = '',
+  types = '',
+  onInputChange = () => {},
+  onSelect = () => {},
+  onSuggest = () => {},
+  focusOnMount = true
+}) => {
+  const [state, setState] = useState({
+    results: [],
+    focus: null,
+    loading: false,
+    searchTime: new Date(),
+    showList: false,
+    inputValue: defaultInputValue,
+    typedInput: ''
+  })
+
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    if (focusOnMount && inputRef.current) {
+      inputRef.current.focus()
     }
-    this.handleBlur = this.handleBlur.bind(this)
-    this.onInput = this.onInput.bind(this)
-    this.onKeyDown = this.onKeyDown.bind(this)
-    this.onResult = this.onResult.bind(this)
-  }
+  }, [focusOnMount])
 
-  componentDidMount () {
-    if (this.props.focusOnMount) ReactDOM.findDOMNode(this.refs.input).focus()
-  }
-
-  componentDidUpdate (prevProps) {
-    if (this.props.defaultInputValue !== prevProps.defaultInputValue) {
-      this.setState({ inputValue: this.props.defaultInputValue })
+  useEffect(() => {
+    if (defaultInputValue !== state.inputValue) {
+      setState(prevState => ({ ...prevState, inputValue: defaultInputValue }))
     }
-  }
+  }, [defaultInputValue, state.inputValue])
 
-  search (
+  const search = (
     endpoint,
     source,
     accessToken,
@@ -48,9 +61,9 @@ class Geocoder extends Component {
     types,
     query,
     callback
-  ) {
-    var searchTime = new Date()
-    var uri =
+  ) => {
+    const searchTime = new Date()
+    const uri =
       endpoint +
       '/geocoding/v5/' +
       source +
@@ -64,7 +77,7 @@ class Geocoder extends Component {
       (types ? '&types=' + encodeURIComponent(types) : '')
     xhr(
       {
-        uri: uri,
+        uri,
         json: true
       },
       function (err, res, body) {
@@ -73,125 +86,128 @@ class Geocoder extends Component {
     )
   }
 
-  onInput (e) {
-    var value = e.target.value
-    this.setState({
+  const onInput = (e) => {
+    const value = e.target.value
+    setState(prevState => ({
+      ...prevState,
       loading: true,
       showList: true,
       inputValue: value,
       typedInput: value
-    })
-    this.props.onInputChange(value)
+    }))
+    onInputChange(value)
     if (value === '') {
-      this.setState({
+      setState(prevState => ({
+        ...prevState,
         results: [],
         focus: null,
         loading: false,
         showList: false
-      })
+      }))
     } else {
-      this.search(
-        this.props.endpoint,
-        this.props.source,
-        this.props.accessToken,
-        this.props.proximity,
-        this.props.bbox,
-        this.props.types,
+      search(
+        endpoint,
+        source,
+        accessToken,
+        proximity,
+        bbox,
+        types,
         value,
-        this.onResult
+        onResult
       )
     }
   }
-  moveFocus (dir) {
-    if (this.state.loading) return
-    var focus =
-      this.state.focus === null
+
+  const moveFocus = (dir) => {
+    if (state.loading) return
+    const focus =
+      state.focus === null
         ? 0
         : Math.max(
           -1,
-          Math.min(this.state.results.length - 1, this.state.focus + dir)
+          Math.min(state.results.length - 1, state.focus + dir)
         )
-    var inputValue =
+    const inputValue =
       focus === -1
-        ? this.state.typedInput
-        : this.state.results[focus].place_name
-    this.setState({
-      focus: focus,
-      inputValue: inputValue,
+        ? state.typedInput
+        : state.results[focus].place_name
+    setState(prevState => ({
+      ...prevState,
+      focus,
+      inputValue,
       showList: true
-    })
-    this.props.onInputChange(inputValue)
+    }))
+    onInputChange(inputValue)
   }
-  acceptFocus () {
-    if (this.state.focus !== null && this.state.focus !== -1) {
-      var inputValue = this.state.results[this.state.focus].place_name
-      this.setState({ showList: false, inputValue: inputValue })
-      this.props.onInputChange(inputValue)
-      this.props.onSelect(this.state.results[this.state.focus])
+
+  const acceptFocus = () => {
+    if (state.focus !== null && state.focus !== -1) {
+      const inputValue = state.results[state.focus].place_name
+      setState(prevState => ({ ...prevState, showList: false, inputValue }))
+      onInputChange(inputValue)
+      onSelect(state.results[state.focus])
     }
   }
-  onKeyDown (e) {
+
+  const onKeyDown = (e) => {
     switch (e.which) {
-      // up
-      case 38:
+      case 38: // up
         e.preventDefault()
-        this.moveFocus(-1)
+        moveFocus(-1)
         break
-      // down
-      case 40:
+      case 40: // down
         e.preventDefault()
-        this.moveFocus(1)
+        moveFocus(1)
         break
-      // tab
-      case 9:
-        this.acceptFocus()
+      case 9: // tab
+        acceptFocus()
         break
-      // esc
-      case 27:
-        this.setState({ showList: false, results: [] })
+      case 27: // esc
+        setState(prevState => ({ ...prevState, showList: false, results: [] }))
         break
-      // accept
-      case 13:
-        if (this.state.results.length > 0 && this.state.focus == null) {
-          this.clickOption(this.state.results[0], 0)
+      case 13: // enter
+        if (state.results.length > 0 && state.focus == null) {
+          clickOption(state.results[0], 0)
         }
-        this.acceptFocus()
+        acceptFocus()
         e.preventDefault()
         break
       default:
         break
     }
   }
-  onResult (err, res, body, searchTime) {
-    // searchTime is compared with the last search to set the state
-    // to ensure that a slow xhr response does not scramble the
-    // sequence of autocomplete display.
-    if (!err && body && body.features && this.state.searchTime <= searchTime) {
-      this.setState({
-        searchTime: searchTime,
+
+  const onResult = (err, res, body, searchTime) => {
+    if (!err && body && body.features && state.searchTime <= searchTime) {
+      setState(prevState => ({
+        ...prevState,
+        searchTime,
         loading: false,
         results: body.features,
         focus: body.features.length > 0 ? 0 : -1
-      })
-      this.props.onSuggest(this.state.results)
+      }))
+      onSuggest(body.features)
     }
   }
-  clickOption (place, listLocation, e) {
-    // debugger
-    this.props.onInputChange(place.place_name)
-    this.props.onSelect(place)
-    this.setState({
+
+  const clickOption = (place, listLocation, e) => {
+    onInputChange(place.place_name)
+    onSelect(place)
+    setState(prevState => ({
+      ...prevState,
       focus: listLocation,
       showList: false,
       inputValue: place.place_name
-    })
-    // focus on the input after click to maintain key traversal
-    ReactDOM.findDOMNode(this.refs.input).focus()
+    }))
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
     if (e) {
       e.preventDefault()
     }
   }
-  handleBlur (e) {
+
+  const handleBlur = (e) => {
     if (
       !e ||
       !e.relatedTarget ||
@@ -199,97 +215,70 @@ class Geocoder extends Component {
       !e.relatedTarget.parentElement.parentElement ||
       e.relatedTarget.parentElement.parentElement.id !== 'react-geo-list'
     ) {
-      this.setState({ showList: false })
+      setState(prevState => ({ ...prevState, showList: false }))
     }
   }
-  render () {
-    var _this = this
 
-    var input = React.createElement('input', {
-      ref: 'input',
-      className: this.props.inputClass,
-      // onInput: this.onInput,
-      onKeyDown: this.onKeyDown,
-      placeholder: this.props.inputPlaceholder,
-      onBlur: this.handleBlur,
-      type: 'text',
-      // defaultValue: this.state.inputValue
-      value: this.state.inputValue || undefined,
-      onChange: this.onInput
-    })
-    return React.createElement(
-      'div',
-      null,
-      this.props.inputPosition === 'top' && input,
-      React.createElement(
-        FlipMove,
-        {
-          delay: 0,
-          duration: 200,
-          enterAnimation: 'accordionVertical',
-          leaveAnimation: 'accordionVertical',
-          maintainContainerHeight: true
-        },
-        this.state.results.length > 0 &&
-          this.state.showList &&
-          React.createElement(
-            'ul',
-            {
-              key: 'needed-for-flip-move',
-              id: 'react-geo-list',
-              className:
-                (this.props.showLoader && this.state.loading ? 'loading' : '') +
+  const input = (
+    <input
+      ref={inputRef}
+      className={inputClass}
+      onKeyDown={onKeyDown}
+      placeholder={inputPlaceholder}
+      onBlur={handleBlur}
+      type='text'
+      value={state.inputValue || undefined}
+      onChange={onInput}
+    />
+  )
+
+  return (
+    <div>
+      {inputPosition === 'top' && input}
+      <FlipMove
+        delay={0}
+        duration={200}
+        enterAnimation='accordionVertical'
+        leaveAnimation='accordionVertical'
+        maintainContainerHeight
+      >
+        {state.results.length > 0 &&
+          state.showList &&
+            <ul
+              key='needed-for-flip-move'
+              id='react-geo-list'
+              className={
+                (showLoader && state.loading ? 'loading' : '') +
                 ' ' +
-                this.props.resultsClass
-            },
-            this.state.results.map(function (result, i) {
-              return React.createElement(
-                'li',
-                { key: result.id },
-                React.createElement(
-                  'a',
-                  {
-                    href: '#',
-                    onClick: _this.clickOption.bind(_this, result, i),
-                    tabIndex: '-1',
-                    className:
-                      _this.props.resultClass +
+                resultsClass
+              }
+            >
+              {state.results.map((result, i) => (
+                <li key={result.id}>
+                  <a
+                    href='#'
+                    onClick={(e) => clickOption(result, i, e)}
+                    tabIndex='-1'
+                    className={
+                      resultClass +
                       ' ' +
-                      (i === _this.state.focus
-                        ? _this.props.resultFocusClass
-                        : ''),
-                    key: result.id
-                  },
-                  result.place_name
-                )
-              )
-            })
-          )
-      ),
-      this.props.inputPosition === 'bottom' && input
-    )
-  }
-}
-Geocoder.defaultProps = {
-  endpoint: 'https://api.tiles.mapbox.com',
-  defaultInputValue: '',
-  inputClass: '',
-  resultClass: '',
-  resultsClass: '',
-  resultFocusClass: 'strong',
-  inputPosition: 'top',
-  inputPlaceholder: 'Search',
-  showLoader: false,
-  source: 'mapbox.places',
-  proximity: '',
-  bbox: '',
-  types: '',
-  onSuggest: function onSuggest () {},
-  onInputChange: function onInputChange () {},
-  focusOnMount: true
+                      (i === state.focus
+                        ? resultFocusClass
+                        : '')
+                    }
+                  >
+                    {result.place_name}
+                  </a>
+                </li>
+              ))}
+            </ul>}
+      </FlipMove>
+      {inputPosition === 'bottom' && input}
+    </div>
+  )
 }
 
-Geocoder.propTypes = {
+GeocoderAutocomplete.propTypes = {
   endpoint: PropTypes.string,
   defaultInputValue: PropTypes.string,
   source: PropTypes.string,
@@ -309,4 +298,5 @@ Geocoder.propTypes = {
   focusOnMount: PropTypes.bool,
   types: PropTypes.string
 }
-export default Geocoder
+
+export default GeocoderAutocomplete

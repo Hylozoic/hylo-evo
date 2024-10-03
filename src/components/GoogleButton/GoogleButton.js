@@ -1,7 +1,7 @@
+import cx from 'classnames'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import cx from 'classnames'
-import './GoogleButton.scss'
+import classes from './GoogleButton.module.scss'
 
 export default function GoogleButton ({
   onClick,
@@ -14,10 +14,10 @@ export default function GoogleButton ({
   return <a
     aria-label={label}
     tabIndex={0}
-    styleName={cx('google-button', className)}
+    className={cx(classes.googleButton, className)}
     onClick={onClick}
   >
-    <div styleName='google-icon'><img src='assets/btn_google_light_normal_ios.svg' /></div>
+    <div className={classes.googleIcon}><img src='assets/btn_google_light_normal_ios.svg' /></div>
     {label}
   </a>
 }

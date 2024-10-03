@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { goBack, push } from 'connected-react-router'
+import { goBack, push } from 'redux-first-history'
 import { get } from 'lodash/fp'
 import { RESP_ADMINISTRATION } from 'store/constants'
 import { GROUP_ACCESSIBILITY } from 'store/models/Group'

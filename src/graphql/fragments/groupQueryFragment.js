@@ -1,4 +1,4 @@
-import groupTopicsQueryFragment from 'graphql/fragments/groupTopicsQueryFragment'
+import groupTopicsQueryFragment from '@graphql/fragments/groupTopicsQueryFragment'
 
 // TODO: dont load all this unless looking at the explore page
 

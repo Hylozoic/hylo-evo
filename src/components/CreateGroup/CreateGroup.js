@@ -16,7 +16,7 @@ import {
   visibilityDescription,
   visibilityIcon
 } from 'store/models/Group'
-import styles from './CreateGroup.scss'
+import styles from './CreateGroup.module.scss'
 
 const slugValidatorRegex = /^[0-9a-z-]{2,40}$/
 
@@ -134,12 +134,12 @@ class CreateGroup extends Component {
     if (!match) return null
 
     return (
-      <div styleName='wrapper'>
-        <div styleName='header'>
-          <button onClick={goBack}><Icon name='Back' styleName='backIcon' /></button>
-          <span styleName='headerHeadline'>{t('Create Group')}</span>
+      <div className={styles.wrapper}>
+        <div className={styles.header}>
+          <button onClick={goBack}><Icon name='Back' className={styles.backIcon} /></button>
+          <span className={styles.headerHeadline}>{t('Create Group')}</span>
         </div>
-        <div styleName='nameAndSlug'>
+        <div className={styles.nameAndSlug}>
           <TextInput
             autoFocus
             type='text'
@@ -151,12 +151,12 @@ class CreateGroup extends Component {
             noClearButton
             maxLength='60'
             onEnter={this.onSubmit}
-            styleName='groupNameInput'
+            className={styles.groupNameInput}
           />
-          <span styleName='characterCounter'>{nameCharacterCount} / 60</span>
-          {errors.name && <span styleName='nameError'>{errors.name}</span>}
-          <span styleName='slug'>
-            <button tabIndex='-1' styleName='slugButton' onClick={this.focusSlug}>
+          <span className={styles.characterCounter}>{nameCharacterCount} / 60</span>
+          {errors.name && <span className={styles.nameError}>{errors.name}</span>}
+          <span className={styles.slug}>
+            <button tabIndex='-1' className={styles.slugButton} onClick={this.focusSlug}>
               <Icon name='SmallEdit' />
               https://hylo.com/groups/
             </button>
@@ -173,34 +173,34 @@ class CreateGroup extends Component {
               inputRef={this.slugRef}
             />
           </span>
-          {errors.slug && <span styleName='slugError'>{errors.slug}</span>}
+          {errors.slug && <span className={styles.slugError}>{errors.slug}</span>}
         </div>
 
-        <div styleName='privacy'>
-          <div styleName='dropdownContainer'>
+        <div className={styles.privacy}>
+          <div className={styles.dropdownContainer}>
             <Dropdown
-              styleName='privacyDropdown'
+              className={styles.privacyDropdown}
               toggleChildren={(
                 <span>
-                  <div styleName='dropdownItemSelected'>
-                    <Icon name={visibilityIcon(visibility)} styleName='selectedIcon' />
+                  <div className={styles.dropdownItemSelected}>
+                    <Icon name={visibilityIcon(visibility)} className={styles.selectedIcon} />
                     <div>
-                      <div styleName='dropdownDescription'>{t('WHO CAN SEE THIS GROUP?')}</div>
-                      <div styleName='selectedString'>
+                      <div className={styles.dropdownDescription}>{t('WHO CAN SEE THIS GROUP?')}</div>
+                      <div className={styles.selectedString}>
                         <b>{t(visibilityString(visibility))}</b>
                         <span>{t(visibilityDescription(visibility))}</span>
                       </div>
                     </div>
                   </div>
-                  <Icon name='ArrowDown' styleName='openDropdown' />
+                  <Icon name='ArrowDown' className={styles.openDropdown} />
                 </span>
               )}
               items={Object.keys(GROUP_VISIBILITY).map(label => ({
                 key: label,
                 label: (
-                  <div styleName='dropdownItem'>
+                  <div className={styles.dropdownItem}>
                     <Icon name={visibilityIcon(GROUP_VISIBILITY[label])} />
-                    <div styleName='selectedString'>
+                    <div className={styles.selectedString}>
                       <b>{t(label)}</b>
                       <span> {t(visibilityDescription(GROUP_VISIBILITY[label]))}</span>
                     </div>
@@ -210,30 +210,30 @@ class CreateGroup extends Component {
               }))}
             />
           </div>
-          <div styleName='dropdownContainer'>
+          <div className={styles.dropdownContainer}>
             <Dropdown
-              styleName='privacyDropdown'
+              className={styles.privacyDropdown}
               toggleChildren={(
                 <span>
-                  <div styleName='dropdownItemSelected'>
-                    <Icon name={accessibilityIcon(accessibility)} styleName='selectedIcon' />
+                  <div className={styles.dropdownItemSelected}>
+                    <Icon name={accessibilityIcon(accessibility)} className={styles.selectedIcon} />
                     <div>
-                      <div styleName='dropdownDescription'>{t('WHO CAN JOIN THIS GROUP?')}</div>
-                      <div styleName='selectedString'>
+                      <div className={styles.dropdownDescription}>{t('WHO CAN JOIN THIS GROUP?')}</div>
+                      <div className={styles.selectedString}>
                         <b>{t(accessibilityString(accessibility))}</b>
                         <span>{t(accessibilityDescription(accessibility))}</span>
                       </div>
                     </div>
                   </div>
-                  <Icon name='ArrowDown' styleName='openDropdown' />
+                  <Icon name='ArrowDown' className={styles.openDropdown} />
                 </span>
               )}
               items={Object.keys(GROUP_ACCESSIBILITY).map(label => ({
                 key: label,
                 label: (
-                  <div styleName='dropdownItem' key={label}>
+                  <div className={styles.dropdownItem} key={label}>
                     <Icon name={accessibilityIcon(GROUP_ACCESSIBILITY[label])} />
-                    <div styleName='selectedString'>
+                    <div className={styles.selectedString}>
                       <b>{t(label)}</b>
                       <span> {t(accessibilityDescription(GROUP_ACCESSIBILITY[label]))}</span>
                     </div>
@@ -245,9 +245,9 @@ class CreateGroup extends Component {
           </div>
         </div>
 
-        {/* TODO: turn this on when finished <div styleName='inviteMembers'>
-          <div styleName='memberSelector'>
-            <span styleName='title'>INVITE MEMBERS</span>
+        {/* TODO: turn this on when finished <div className={styles.inviteMembers}>
+          <div className={styles.memberSelector}>
+            <span className={styles.title}>INVITE MEMBERS</span>
             <TextInput
               type='text'
               name='memberInvites'
@@ -256,13 +256,13 @@ class CreateGroup extends Component {
           </div>
         </div> */}
 
-        <div styleName='purposeContainer'>
-          <div styleName='purposeField'>
-            <span styleName='title'>{t('GROUP PURPOSE')}</span>
-            <span styleName='characterCounter'>{purposeCharacterCount} / 500</span>
-            <div styleName='purposeHelp'>
+        <div className={styles.purposeContainer}>
+          <div className={styles.purposeField}>
+            <span className={styles.title}>{t('GROUP PURPOSE')}</span>
+            <span className={styles.characterCounter}>{purposeCharacterCount} / 500</span>
+            <div className={styles.purposeHelp}>
               ?
-              <div styleName='purposeTooltip'>{t('purposeHelpText')}</div>
+              <div className={styles.purposeTooltip}>{t('purposeHelpText')}</div>
             </div>
             <textarea
               maxLength={500}
@@ -273,12 +273,12 @@ class CreateGroup extends Component {
         </div>
 
         {parentGroupOptions && parentGroupOptions.length > 0 && (
-          <div styleName='parentGroups'>
-            <div styleName='parentSelector'>
-              <span styleName='title'>{t('IS THIS GROUP A MEMBER OF OTHER GROUPS?')}</span>
-              <div styleName='parentGroupInfo'>
+          <div className={styles.parentGroups}>
+            <div className={styles.parentSelector}>
+              <span className={styles.title}>{t('IS THIS GROUP A MEMBER OF OTHER GROUPS?')}</span>
+              <div className={styles.parentGroupInfo}>
                 ?
-                <div styleName='parentGroupTooltip'>{t('You may add parent groups if you are an Administrator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it')}</div>
+                <div className={styles.parentGroupTooltip}>{t('You may add parent groups if you are an Administrator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it')}</div>
               </div>
               {/* TODO: somehow show groups that are restricted and will be a join request differently */}
               <GroupsSelector
@@ -292,16 +292,16 @@ class CreateGroup extends Component {
           </div>
         )}
 
-        <div styleName='createGroupBottom'>
+        <div className={styles.createGroupBottom}>
           <Button
             color='green-white-green-border'
             key='create-button'
             narrow
             disabled={!edited || !this.isValid()}
             onClick={this.onSubmit}
-            styleName='submit-button'
+            className={styles.submitButton}
           >
-            <Icon name='Plus' green={edited && this.isValid()} styleName='create-group-icon' />{t('Create Group')}
+            <Icon name='Plus' green={edited && this.isValid()} className={styles.createGroupIcon} />{t('Create Group')}
           </Button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Loading from 'components/Loading'
 import PostCard from 'components/PostCard'
-import './MemberVotes.scss'
+import classes from './MemberVotes.module.scss'
 
 export default class MemberVotes extends React.Component { // TODO REACTIONS: switch this to reactions
   static defaultProps = {
@@ -21,7 +21,7 @@ export default class MemberVotes extends React.Component { // TODO REACTIONS: sw
 
     return <div>
       {posts && posts.map(post =>
-        <div styleName='activity-item' key={post.id}>
+        <div className={classes.activityItem} key={post.id}>
           <PostCard
             routeParams={routeParams}
             post={post}

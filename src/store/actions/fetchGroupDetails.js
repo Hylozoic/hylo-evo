@@ -1,5 +1,5 @@
 import { FETCH_GROUP_DETAILS } from 'store/constants'
-import groupFieldsFragment from 'graphql/fragments/groupFieldsFragment'
+import groupFieldsFragment from '@graphql/fragments/groupFieldsFragment'
 
 export default function fetchGroupDetails ({
   slug,

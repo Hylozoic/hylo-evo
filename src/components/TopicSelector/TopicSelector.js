@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import AsyncCreatableSelect from 'react-select/async-creatable'
-import styles from './TopicSelector.scss'
+import styles from './TopicSelector.module.scss'
 import { isEmpty, isEqual, uniqBy, orderBy, get, includes } from 'lodash/fp'
 import { Validators } from 'hylo-shared'
 import Icon from 'components/Icon'
@@ -196,7 +196,7 @@ class TopicSelector extends Component {
         }}
         formatOptionLabel={(item, { context }) => {
           if (context === 'value') {
-            return <div styleName='topicLabel'>#{item.name}</div>
+            return <div className={classes.topicLabel}>#{item.name}</div>
           }
 
           if (item.__isNew__) {
@@ -213,10 +213,10 @@ class TopicSelector extends Component {
 
           return (
             <div className={styles.item}>
-              <div styleName='menuTopicLabel'>#{name}</div>
-              <div styleName='suggestionMeta'>
-                <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} {t('subscribers')}</span>
-                <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} {t('posts')}</span>
+              <div className={classes.menuTopicLabel}>#{name}</div>
+              <div className={classes.suggestionMeta}>
+                <span className={cx(classes.column, classes.icon)}><Icon name='Star' className={classes.icon} />{formatCount(followersTotal)} {t('subscribers')}</span>
+                <span className={cx(classes.column, classes.icon)}><Icon name='Events' className={classes.icon} />{formatCount(postsTotal)} {t('posts')}</span>
               </div>
             </div>
           )

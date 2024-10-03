@@ -1,15 +1,16 @@
 import React from 'react'
-import './Switch.scss'
+import cx from 'classnames'
+import classes from './Switch.module.scss'
 
 export default function Switch ({
   value,
   onClick,
   className
 }) {
-  return <div className={className} styleName='switch-container' onClick={onClick}>
-    <div styleName='circle-gray-1' />
-    <div styleName='connect-gray' />
-    <div styleName='circle-gray-2' />
-    <div styleName={value ? 'switch-on' : 'switch-off'} />
+  return <div className={cx(className, classes.switchContainer)} onClick={onClick}>
+    <div className={classes.circleGray1} />
+    <div className={classes.connectGray} />
+    <div className={classes.circleGray2} />
+    <div className={cx(classes[value ? 'switchOn' : 'switchOff'])} />
   </div>
 }

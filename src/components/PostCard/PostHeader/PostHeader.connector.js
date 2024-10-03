@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
+import { push } from "redux-first-history";
 import { RESP_MANAGE_CONTENT } from 'store/constants'
 import { removePostFromUrl, editPostUrl, duplicatePostUrl, postUrl, groupUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'

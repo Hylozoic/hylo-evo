@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Switch, useLocation, useHistory } from 'react-router-dom'
+import { Route, useLocation, useNavigate } from 'react-router-dom'
 import getAuthState, { AuthState } from 'store/selectors/getAuthState'
 import Signup from './Signup'
 import VerifyEmail from './VerifyEmail'
 import FinishRegistration from './FinishRegistration'
-import './Signup.scss'
+import classes from './Signup.module.scss'
 import Loading from 'components/Loading'
 
 export default function SignupRouter (props) {
   const location = useLocation()
-  const history = useHistory()
+  const navigate = useNavigate()
   const authState = useSelector(getAuthState)
   const [loading, setLoading] = useState(true)
 
@@ -21,7 +21,7 @@ export default function SignupRouter (props) {
 
     const redirectTo = path => {
       if (path && (path !== location.pathname)) {
-        history.push(path)
+        navigate(path)
         return null
       }
     }
@@ -55,22 +55,19 @@ export default function SignupRouter (props) {
   if (loading) return <Loading />
 
   return (
-    <Switch>
+    <Routes>
       <Route
-        exact
         path='/signup'
-        component={() => <Signup {...props} />}
+        element={<Signup {...props} />}
       />
       <Route
-        exact
         path='/signup/verify-email'
-        component={() => <VerifyEmail {...props} />}
+        element={<VerifyEmail {...props} />}
       />
       <Route
-        exact
         path='/signup/finish'
-        component={() => <FinishRegistration {...props} />}
+        element={<FinishRegistration {...props} />}
       />
-    </Switch>
+    </Routes>
   )
 }

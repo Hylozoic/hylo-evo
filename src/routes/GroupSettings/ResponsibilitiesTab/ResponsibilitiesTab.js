@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import cx from 'classnames'
 import Loading from 'components/Loading'
 import Icon from 'components/Icon'
 import SettingsControl from 'components/SettingsControl'
 import { fetchResponsibilitiesForGroup, addGroupResponsibility, deleteGroupResponsibility, updateGroupResponsibility } from 'store/actions/responsibilities'
 import SettingsSection from '../SettingsSection'
-import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
-import styles from './ResponsibilitiesTab.scss' // eslint-disable-line no-unused-vars
+
+import general from '../GroupSettings.module.scss' // eslint-disable-line no-unused-vars
+import styles from './ResponsibilitiesTab.module.scss' // eslint-disable-line no-unused-vars
 
 const emptyResponsiblity = {
   description: '',
@@ -110,9 +112,9 @@ export default function ResponsibilitiesTab ({ group }) {
       <h1>{t('Responsibilities and permissions')}</h1>
       <h2>{t('Platform Responsibilities')}</h2>
       {/* Is this i18n weirdly busted? */}
-      <span styleName='styles.description'>{t('adminResponsibilitiesHelpText')}</span>
+      <span className={styles.description}>{t('adminResponsibilitiesHelpText')}</span>
       <SettingsSection>
-        {/* <div styleName='styles.help-text'>{t('Each of these responsibilities gives access to specific functionality related to the platform')}</div> */}
+        {/* <div className={styles.helpText}>{t('Each of these responsibilities gives access to specific functionality related to the platform')}</div> */}
         {responsibilities && responsibilities.map((role, i) => (
           <ResponsibilityRow
             group={group}
@@ -125,7 +127,7 @@ export default function ResponsibilitiesTab ({ group }) {
         ))}
       </SettingsSection>
       <h4>{t('Custom Responsibilities')}</h4>
-      <span styleName='styles.description'>{t('adminResponsibilitiesCustomHelpText')}</span>
+      <span className={styles.description}>{t('adminResponsibilitiesCustomHelpText')}</span>
       <SettingsSection>
         {responsibilities && responsibilities.map((role, i) => (
           <ResponsibilityRow
@@ -144,9 +146,9 @@ export default function ResponsibilitiesTab ({ group }) {
           />
         ))}
         {!unsavedRolePresent && (
-          <div styleName='styles.add-role' onClick={handleAddResponsibility}>
+          <div className={cx(styles.addRole)} onClick={handleAddResponsibility}>
             <h4>{t('Create new responsibility')}</h4>
-            <Icon name='Circle-Plus' styleName='styles.new-role' />
+            <Icon name='Circle-Plus' className={styles.newRole} />
           </div>
         )}
       </SettingsSection>
@@ -169,29 +171,29 @@ function ResponsibilityRow ({
   type,
   t
 }) {
-  const inactiveStyle = (draft) ? 'styles.inactive' : ''
+  const inactiveStyle = draft ? styles.inactive : ''
   if (showType !== type) return null
   return (
-    <div styleName={`styles.responsibility-container ${inactiveStyle}`}>
-      <div styleName='styles.action-container'>
-        {draft && (<span onClick={onDelete} styleName='styles.action'><Icon name='CircleEx' /> {t('Cancel')}</span>)}
-        {!draft && type !== 'system' && !changed && (<span styleName='styles.action' onClick={onServerDelete}><Icon name='Trash' /> {t('Delete')}</span>)}
-        {draft && <span styleName='styles.action' onClick={onSave}><Icon name='Plus' /> {t('Create')}</span>}
-        {!draft && changed && (<span styleName='styles.action' onClick={onUpdate}><Icon name='Unlock' /> {t('Save')}</span>)}
-        {!draft && changed && (<span styleName='styles.action' onClick={onReset}><Icon name='Back' /> {t('Revert')}</span>)}
+    <div className={cx(styles.responsibilityContainer, inactiveStyle)}>
+      <div className={styles.actionContainer}>
+        {draft && (<span onClick={onDelete} className={styles.action}><Icon name='CircleEx' /> {t('Cancel')}</span>)}
+        {!draft && type !== 'system' && !changed && (<span className={styles.action} onClick={onServerDelete}><Icon name='Trash' /> {t('Delete')}</span>)}
+        {draft && <span className={styles.action} onClick={onSave}><Icon name='Plus' /> {t('Create')}</span>}
+        {!draft && changed && (<span className={styles.action} onClick={onUpdate}><Icon name='Unlock' /> {t('Save')}</span>)}
+        {!draft && changed && (<span className={styles.action} onClick={onReset}><Icon name='Back' /> {t('Revert')}</span>)}
       </div>
       {type === 'group' &&
-        <div styleName='styles.responsibility-row'>
-          <div styleName='styles.responsibility-stack'>
-            <SettingsControl label='Title' controlClass={styles['settings-control']} onChange={onChange('title')} value={title} />
-            <SettingsControl label='Description' controlClass={styles['settings-control']} onChange={onChange('description')} value={description} type='textarea' />
+        <div className={styles.responsibilityRow}>
+          <div className={styles.responsibilityStack}>
+            <SettingsControl label='Title' controlClass={styles.settingsControl} onChange={onChange('title')} value={title} />
+            <SettingsControl label='Description' controlClass={styles.settingsControl} onChange={onChange('description')} value={description} type='textarea' />
           </div>
         </div>}
       {type === 'system' &&
-        <div styleName='styles.responsibility-row'>
-          <div styleName='styles.system-responsibility-stack'>
+        <div className={styles.responsibilityRow}>
+          <div className={styles.systemResponsibilityStack}>
             <h5>{title}</h5>
-            <span styleName='styles.description'>{description}</span>
+            <span className={styles.description}>{description}</span>
           </div>
         </div>}
     </div>

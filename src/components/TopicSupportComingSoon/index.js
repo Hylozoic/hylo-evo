@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Button from 'components/Button'
 import { axolotlDigging } from 'util/assets'
-import './TopicSupportComingSoon.scss'
+import classes from './TopicSupportComingSoon.module.scss'
 
 export default function TopicSupportComingSoon () {
   const { t } = useTranslation()
-  return <div styleName='container'>
+  return <div className={classes.container}>
     <h1>{t(`We're working on expanding\n#topics to more places`)}</h1>
-    <p styleName='gray-text'>{t('In the meantime, click a topic from an individual\ngroup to see posts from that group.')}</p>
+    <p className={classes.grayText}>{t('In the meantime, click a topic from an individual\ngroup to see posts from that group.')}</p>
     <Link to='/all'>
-      <Button styleName='back-button'>{t('Return to All Groups')}</Button>
+      <Button className={classes.backButton}>{t('Return to All Groups')}</Button>
     </Link>
-    <img styleName='axolotl-digging-image' src={axolotlDigging} />
+    <img className={classes.axolotlDiggingImage} src={axolotlDigging} />
   </div>
 }

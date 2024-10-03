@@ -1,7 +1,8 @@
+import cx from 'classnames'
+import { get, intersection } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { useTranslation } from 'react-i18next'
-import styles from './Search.scss'
 import FullPageModal from 'routes/FullPageModal'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
@@ -11,7 +12,8 @@ import RoundImage from 'components/RoundImage'
 import Highlight from 'components/Highlight'
 import Loading from 'components/Loading'
 import Pill from 'components/Pill'
-import { get, intersection } from 'lodash/fp'
+
+import classes from './Search.module.scss'
 
 const { arrayOf, bool, func, shape, string, object } = PropTypes
 const SEARCH_RESULTS_ID = 'search-results'
@@ -62,22 +64,27 @@ export default class Search extends Component {
       filter
     } = this.props
 
-    return <FullPageModal leftSideBarHidden>
-      <div styleName='search'>
-        <SearchBar {...{ searchForInput, searchFromQueryString, setSearchTerm, updateQueryParam, setSearchFilter, filter }} />
-        <div styleName='search-results'
-          id={SEARCH_RESULTS_ID}>
-          {searchResults.map(sr =>
-            <SearchResult key={sr.id}
-              searchResult={sr}
-              term={searchForInput}
-              showPerson={showPerson} />)}
-          {pending && <Loading type='bottom' />}
-          <ScrollListener onBottom={() => fetchMoreSearchResults()}
-            elementId={SEARCH_RESULTS_ID} />
+    return (
+      <FullPageModal leftSideBarHidden>
+        <div className={classes.search}>
+          <SearchBar {...{ searchForInput, searchFromQueryString, setSearchTerm, updateQueryParam, setSearchFilter, filter }} />
+          <div
+            className={classes.searchResults}
+            id={SEARCH_RESULTS_ID}
+          >
+            {searchResults.map(sr =>
+              <SearchResult
+                key={sr.id}
+                searchResult={sr}
+                term={searchForInput}
+                showPerson={showPerson}
+              />)}
+            {pending && <Loading type='bottom' />}
+            <ScrollListener onBottom={() => fetchMoreSearchResults()} elementId={SEARCH_RESULTS_ID} />
+          </div>
         </div>
-      </div>
-    </FullPageModal>
+      </FullPageModal>
+    )
   }
 }
 
@@ -95,14 +102,18 @@ export function SearchBar ({
     setSearchTerm(value) // no debounce
     updateQueryParam(value) // debounced
   }
-  return <div styleName='search-bar'>
-    <TabBar setSearchFilter={setSearchFilter} filter={filter} />
-    <TextInput theme={styles}
-      inputRef={x => x && x.focus()}
-      value={searchForInput || searchFromQueryString}
-      placeholder={t('Search by keyword for people, posts and groups')}
-      onChange={onSearchChange} />
-  </div>
+  return (
+    <div className={classes.searchBar}>
+      <TabBar setSearchFilter={setSearchFilter} filter={filter} />
+      <TextInput
+        theme={classes}
+        inputRef={x => x && x.focus()}
+        value={searchForInput || searchFromQueryString}
+        placeholder={t('Search by keyword for people, posts and groups')}
+        onChange={onSearchChange}
+      />
+    </div>
+  )
 }
 
 export function TabBar ({ filter, setSearchFilter }) {
@@ -114,14 +125,20 @@ export function TabBar ({ filter, setSearchFilter }) {
     { id: 'comment', label: t('Comments') }
   ]
 
-  return <div styleName='tabs'>
-    <h1>{t('Search')}</h1>
-    {tabs.map(({ id, label }) => <span key={id}
-      styleName={id === filter ? 'tab-active' : 'tab'}
-      onClick={() => setSearchFilter(id)}>
-      {label}
-    </span>)}
-  </div>
+  return (
+    <div className={classes.tabs}>
+      <h1>{t('Search')}</h1>
+      {tabs.map(({ id, label }) => (
+        <span
+          key={id}
+          className={cx(classes.tab, { [classes.tabActive]: id === filter })}
+          onClick={() => setSearchFilter(id)}
+        >
+          {label}
+        </span>
+      ))}
+    </div>
+  )
 }
 
 export function SearchResult ({
@@ -137,34 +154,45 @@ export function SearchResult ({
 
   const highlightProps = {
     terms: term.split(' '),
-    highlightClassName: styles.highlight
+    highlightClassName: classes.highlight
   }
 
-  var component
+  let component
   switch (type) {
     case 'Person':
-      component = <PersonCard
-        person={content}
-        showPerson={showPerson}
-        highlightProps={highlightProps} />
+      component = (
+        <PersonCard
+          person={content}
+          showPerson={showPerson}
+          highlightProps={highlightProps}
+        />
+      )
       break
     case 'Post':
-      component = <PostCard
-        styleName='postcard-expand'
-        post={content}
-        highlightProps={highlightProps} />
+      component = (
+        <PostCard
+          className={classes.postcardExpand}
+          post={content}
+          highlightProps={highlightProps}
+        />
+      )
       break
     case 'Comment':
-      component = <CommentCard
-        comment={content}
-        expanded={false}
-        highlightProps={highlightProps} />
+      component = (
+        <CommentCard
+          comment={content}
+          expanded={false}
+          highlightProps={highlightProps}
+        />
+      )
       break
   }
   if (!component) return null
-  return <div styleName='search-result'>
-    {component}
-  </div>
+  return (
+    <div className={classes.searchResult}>
+      {component}
+    </div>
+  )
 }
 
 export function PersonCard ({ person, showPerson, highlightProps }) {
@@ -175,14 +203,16 @@ export function PersonCard ({ person, showPerson, highlightProps }) {
     highlightProps.terms.map(t => t.toLowerCase())
   ))
 
-  return <div styleName='person-card' onClick={() => showPerson(person.id)}>
-    <RoundImage url={person.avatarUrl} styleName='person-image' large />
-    <div styleName='person-details'>
-      <Highlight {...highlightProps}>
-        <div styleName='person-name'>{person.name}</div>
-      </Highlight>
-      <div styleName='person-location'>{person.location}</div>
+  return (
+    <div className={classes.personCard} onClick={() => showPerson(person.id)}>
+      <RoundImage url={person.avatarUrl} className={classes.personImage} large />
+      <div className={classes.personDetails}>
+        <Highlight {...highlightProps}>
+          <div className={classes.personName}>{person.name}</div>
+        </Highlight>
+        <div className={classes.personLocation}>{person.location}</div>
+      </div>
+      {matchingSkill && <Pill label={matchingSkill} className={classes.personSkill} small />}
     </div>
-    {matchingSkill && <Pill label={matchingSkill} styleName='person-skill' small />}
-  </div>
+  )
 }

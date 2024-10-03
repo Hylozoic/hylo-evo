@@ -29,7 +29,7 @@ export default {
         return tippy('body', {
           ...tippyOptions,
           onShown: () => {
-            const suggestionsElement = document.querySelector('[data-tippy-root]')
+            const suggestionsElement = document.querySelector('[data-tooltip-contentpy-root]')
             const suggestionsHeight = parseInt(window.getComputedStyle(suggestionsElement).height) || 0
             const proseMirrorElement = document.querySelector('.ProseMirror')
             const proseMirrorElementHeight = parseInt(window.getComputedStyle(proseMirrorElement).height)

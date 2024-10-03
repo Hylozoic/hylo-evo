@@ -2,10 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { isEmpty, filter, get, map } from 'lodash/fp'
+import cx from 'classnames'
 import Icon from 'components/Icon'
 import { personUrl } from 'util/navigation'
 import { others } from 'store/models/MessageThread'
-import '../Messages.scss'
+import classes from '../Messages.module.scss'
 
 const MAX_CHARACTERS = 60
 
@@ -59,18 +60,18 @@ export default class Header extends React.Component {
     const { displayNames, andOthers } = generateDisplayNames(maxShown, participants, currentUser)
     const showArrow = !!andOthers
 
-    return <div styleName='header' id='thread-header'>
-      <Link to='/messages' styleName='close-thread'>
+    return <div className={cx(classes.header)} id='thread-header'>
+      <Link to='/messages' className={classes.closeThread}>
         <Icon name='ArrowForward' />
       </Link>
-      <div styleName='header-text'>
+      <div className={classes.headerText}>
         {!pending && <React.Fragment>
           <div>{displayNames}</div>
-          {andOthers && 'and' && <span styleName='toggle-link' onClick={this.toggleShowAll}>{andOthers}</span>}
+          {andOthers && 'and' && <span className={classes.toggleLink} onClick={this.toggleShowAll}>{andOthers}</span>}
         </React.Fragment>}
       </div>
-      {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
-      {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
+      {showArrow && !showAll && <Icon name='ArrowDown' className={classes.arrowDown} onClick={this.toggleShowAll} />}
+      {showAll && <Icon name='ArrowUp' className={classes.arrowUp} onClick={this.toggleShowAll} />}
     </div>
   }
 }

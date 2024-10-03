@@ -6,8 +6,8 @@ import {
   SAVE_SEARCH
 } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
-import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
-import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import groupViewPostsQueryFragment from '@graphql/fragments/groupViewPostsQueryFragment'
+import postsQueryFragment from '@graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 import { STREAM_SORT_OPTIONS } from 'util/constants'
 
@@ -210,7 +210,7 @@ const groupsQuery = `query (
 
 // actions
 export function fetchPostsForMap ({ activePostsOnly, childPostInclusion = 'yes', context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs, types }) {
-  var query, extractModel, getItems
+  let query, extractModel, getItems
 
   if (context === 'groups') {
     query = groupPostsQuery(`${childPostInclusion === 'yes' ? 'posts: viewPosts(' : 'posts('}
@@ -338,7 +338,7 @@ export function fetchPostsForMap ({ activePostsOnly, childPostInclusion = 'yes',
 }
 
 export function fetchPostsForDrawer ({ activePostsOnly, childPostInclusion = 'yes', context, currentBoundingBox, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics, types }) {
-  var query, extractModel, getItems
+  let query, extractModel, getItems
 
   if (context === 'groups') {
     query = groupPostsQuery(groupViewPostsQueryFragment(childPostInclusion === 'yes'))
@@ -385,7 +385,7 @@ export function fetchPostsForDrawer ({ activePostsOnly, childPostInclusion = 'ye
 }
 
 export function fetchMembers ({ boundingBox, context, slug, sortBy, search, groupSlugs }) {
-  var query, extractModel, getItems
+  let query, extractModel, getItems
 
   if (context === 'groups') {
     query = groupMembersQuery
@@ -551,8 +551,10 @@ export const getSortedFilteredPostsForDrawer = createSelector(
   getFilteredPostsForDrawer,
   sortBySelector,
   (posts, sortBy) => {
-    return posts.sort((a, b) => sortBy === 'reactions' ? b.peopleReactedTotal - a.peopleReactedTotal
-      : sortBy === 'updated' ? new Date(b.updatedAt) - new Date(a.updatedAt)
+    return posts.sort((a, b) => sortBy === 'reactions'
+      ? b.peopleReactedTotal - a.peopleReactedTotal
+      : sortBy === 'updated'
+        ? new Date(b.updatedAt) - new Date(a.updatedAt)
         : new Date(b.createdAt) - new Date(a.createdAt))
   }
 )
@@ -560,16 +562,18 @@ export const getSortedFilteredPostsForDrawer = createSelector(
 export const getCurrentTopics = createSelector(
   getFilteredPostsForMap,
   (posts) => {
-    const topics = (posts ? posts.reduce((topics, post) => {
-      post.topics.toModelArray().forEach((topic) => {
-        const count = topics[topic.name] ? topics[topic.name].count + 1 : 1
-        topics[topic.name] = { count, id: topic.id }
-      })
-      return topics
-    }, {}) : {})
+    const topics = (posts
+      ? posts.reduce((topics, post) => {
+        post.topics.toModelArray().forEach((topic) => {
+          const count = topics[topic.name] ? topics[topic.name].count + 1 : 1
+          topics[topic.name] = { count, id: topic.id }
+        })
+        return topics
+      }, {})
+      : {})
     const orderedTopics = []
     Object.keys(topics).forEach(key => {
-      orderedTopics.push({ 'id': topics[key].id, 'name': key, 'count': topics[key].count })
+      orderedTopics.push({ id: topics[key].id, name: key, count: topics[key].count })
     })
     return orderedTopics.sort((a, b) => b.count - a.count)
   }
@@ -586,7 +590,7 @@ export const getMembersFilteredByType = createSelector(
   getMembers,
   filterContentTypesSelector,
   (members, filterContentTypes) => {
-    return filterContentTypes['member'] ? members : []
+    return filterContentTypes.member ? members : []
   }
 )
 
@@ -595,7 +599,8 @@ export const getMembersFilteredBySearch = createSelector(
   searchTextSelector,
   (members, searchText) => {
     const searchLower = isEmpty(searchText) ? null : searchText.toLowerCase()
-    return searchLower ? members.filter(m => m.name.toLowerCase().includes(searchLower) ||
+    return searchLower
+      ? members.filter(m => m.name.toLowerCase().includes(searchLower) ||
                             (m.tagline && m.tagline.toLowerCase().includes(searchLower)) ||
                             (m.skills && m.skills.toModelArray().find(s => s.name.toLowerCase() === searchLower)))
       : members
@@ -606,7 +611,8 @@ export const getMembersFilteredByTopics = createSelector(
   getMembersFilteredBySearch,
   filterTopicsSelector,
   (members, filterTopics) => {
-    return isEmpty(filterTopics) ? members
+    return isEmpty(filterTopics)
+      ? members
       : members.filter(m => filterTopics.find(ft => (m.tagline && m.tagline.toLowerCase().includes(ft.name.toLowerCase())) ||
                                                     (m.skills && m.skills.toModelArray().find(s => s.name.toLowerCase() === ft.name.toLowerCase()))
       ))
@@ -624,7 +630,7 @@ export const getGroupsFilteredByType = createSelector(
   getGroups,
   filterContentTypesSelector,
   (groups, filterContentTypes) => {
-    return filterContentTypes['group'] ? groups : []
+    return filterContentTypes.group ? groups : []
   }
 )
 
@@ -633,8 +639,9 @@ export const getGroupsFilteredBySearch = createSelector(
   searchTextSelector,
   (groups, searchText) => {
     const searchLower = isEmpty(searchText) ? false : searchText.toLowerCase()
-    return searchLower ? groups.filter(g => g.name.toLowerCase().includes(searchLower) ||
-                           (g.description && g.description.toLowerCase().includes(searchLower)))
+    return searchLower
+      ? groups.filter(g => g.name.toLowerCase().includes(searchLower) ||
+        (g.description && g.description.toLowerCase().includes(searchLower)))
       : groups
   }
 )

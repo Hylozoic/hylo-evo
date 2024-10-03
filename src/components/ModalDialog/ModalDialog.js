@@ -1,12 +1,13 @@
 import React, { Component, createRef } from 'react'
 import { withTranslation } from 'react-i18next'
 import { bool, func, node, string } from 'prop-types'
+import cx from 'classnames'
 
 import { bgImageStyle } from 'util/index'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 
-import './ModalDialog.scss'
+import classes from './ModalDialog.module.scss'
 
 class ModalDialog extends Component {
   static propTypes = {
@@ -131,37 +132,37 @@ class ModalDialog extends Component {
     const showControls = showCancelButton || showSubmitButton
 
     return (
-      <div styleName='popup' tabIndex='-1'>
-        <div styleName='popup-inner' style={innerStyle} ref={this.modalRef}>
-          <span onClick={this.cancel} styleName='close-btn'>
-            <Icon name='Ex' styleName='icon' />
+      <div className={classes.popup} tabIndex='-1'>
+        <div className={classes.popupInner} style={innerStyle} ref={this.modalRef}>
+          <span onClick={this.cancel} className={classes.closeBtn}>
+            <Icon name='Ex' className={classes.icon} />
           </span>
 
-          <div styleName='title-block'>
+          <div className={classes.titleBlock}>
             {useNotificationFormat &&
-              <Icon green name={notificationIconName} styleName='notification-icon' />}
-            {showModalTitle && <h1 styleName={useNotificationFormat ? 'notification-title' : ''}>
+              <Icon green name={notificationIconName} className={classes.notificationIcon} />}
+            {showModalTitle && <h1 className={cx({ [classes.notificationTitle]: useNotificationFormat })}>
               {modalTitle}
             </h1>}
           </div>
 
-          <div styleName='content'>
+          <div className={classes.content}>
             {children}
           </div>
 
           {showControls &&
-            <div styleName='controls'>
+            <div className={classes.controls}>
               {showCancelButton &&
                 <Button
                   color='green-white-green-border'
-                  styleName='cancel-btn'
+                  className={classes.cancelBtn}
                   onClick={this.cancel}
                 >
                   {this.props.t('Cancel')}
                 </Button>}
               {showSubmitButton &&
                 <Button
-                  styleName='submit-btn'
+                  className={classes.submitBtn}
                   onClick={this.submit}
                   disabled={submitButtonIsDisabled()}
                 >

@@ -1,4 +1,4 @@
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { get, includes, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'

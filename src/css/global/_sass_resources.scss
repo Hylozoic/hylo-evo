@@ -287,17 +287,17 @@ $color-badge-special-border: #ffd192;
   display: inline-block;
   position: relative;
 
-  &:after {
-    content: '';
-    display: block;
-    margin-top: $percent;
-  }
-
   > div {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    margin-top: $percent;
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 import Tooltip from 'components/Tooltip'
-import './badgeEmoji.scss'
+import classes from './badgeEmoji.module.scss'
 
 export default function Badge ({ emoji, expanded, className, common, border, onClick, name, id, responsibilities = [] }) {
   if (!emoji) return null
@@ -15,21 +15,24 @@ export default function Badge ({ emoji, expanded, className, common, border, onC
   return (
     <>
       <span
-        className={className}
+        className={cx(
+          className,
+          expanded ? classes.badge : classes.badgeCollapsed,
+          { [classes.border]: border, [classes.common]: common }
+        )}
         onClick={onClick}
-        data-tip='hello'
-        data-for={`${id}-${name}-badge-tt`}
-        styleName={cx(expanded ? 'badge' : 'badge-collapsed', { border, common })}
+        data-tooltip-content='hello'
+        data-tooltip-id={`${id}-${name}-badge-tt`}
       >
-        <span styleName={expanded ? 'badgeSymbol' : 'badgeSymbol-collapsed'}>{emoji}</span>
+        <span className={expanded ? classes.badgeSymbol : classes.badgeSymbolCollapsed}>{emoji}</span>
       </span>
       <Tooltip
         delay={150}
         position='bottom'
         offset={{ top: 0, right: 3 }}
         id={`${id}-${name}-badge-tt`}
-        getContent={() => (
-          <div styleName='tipContent'>
+        content={() => (
+          <div className={classes.tipContent}>
             <span>{name}</span>
             {responsibilities.length > 0 && (
               <ul>

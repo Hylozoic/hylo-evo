@@ -46,6 +46,7 @@ export function formatParamPreview (search) {
 }
 
 export function generateViewParams (search) {
+  console.log('generateViewParams', search)
   const { boundingBox, context, group, postTypes, searchText, topics } = search
 
   let mapPath, groupSlug

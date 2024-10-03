@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import useRouter from 'hooks/useRouter'
 import { createSelector } from 'reselect'
+import useRouterParams from 'hooks/useRouterParams'
 import fetchPosts from 'store/actions/fetchPosts'
 import { FETCH_POSTS_FOR_WIDGETS } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
@@ -14,9 +14,8 @@ const selectAndPresentPosts = createSelector(
 )
 
 export default function useEnsurePosts ({ context, sortBy, currentUser }) {
-  if (!currentUser) return { posts: [], pending: false }
-  const router = useRouter()
-  const groupSlug = router.query.groupSlug || router.query.detailGroupSlug
+  const routerParams = useRouterParams()
+  const groupSlug = routerParams.groupSlug || routerParams.detailGroupSlug
   const fetchPostsParam = {
     slug: groupSlug,
     context,
@@ -40,7 +39,9 @@ export default function useEnsurePosts ({ context, sortBy, currentUser }) {
     if (!pending && (!posts || !posts.length > 0)) {
       dispatch(fetchPosts({ slug: groupSlug, sortBy, context }))
     }
-  }, [dispatch, groupSlug])
+  }, [groupSlug])
+
+  if (!currentUser) return { posts: [], pending: false }
 
   return { posts, pending }
 }

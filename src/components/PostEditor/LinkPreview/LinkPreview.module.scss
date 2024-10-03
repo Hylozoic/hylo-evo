@@ -1,0 +1,81 @@
+$preview-image-dimension: $space-20x;
+
+.container {
+  composes: container from 'components/LinkPreview/LinkPreview.module.scss';
+  margin-left: $space-14x;
+  margin-right: $space-5x;
+  margin-top: $space-2x;
+}
+
+.feature-button {
+  text-align: right;
+  color: $color-rhino-60;
+  font-size: 14px;
+  border-radius: 0.1em;
+  color: $color-caribbean-green;
+  cursor: pointer;
+}
+
+.featured:not(.feature-button) {
+  display: flex;
+  align-items: center;
+  font-size: 0.75em;
+  border-radius: 0.5em 0.5em 0 0;
+  padding: 0.5em;
+  background-color: $color-regent;
+  color: white;
+}
+
+.header {
+  display: flex;
+}
+
+.close {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.link-preview {
+  composes: link-preview from 'components/LinkPreview/LinkPreview.module.scss';
+}
+
+.image {
+  composes: image from 'components/LinkPreview/LinkPreview.module.scss';
+  &:has(.feature-button) {
+    .feature-button {
+      display: none;
+    }
+    &:hover {
+      box-shadow: inset 0 0 0 1000px rgba(0,0,0,.3);
+      transition: box-shadow 0.1s ease-in-out;
+      .feature-button {
+        display: initial;
+        transition: display 0.2s ease-in-out;
+        color: ghostwhite;
+        width: 100%;
+        height: 100%;
+        padding: 30px;
+      }
+    }
+  }
+}
+
+.text {
+  composes: text from 'components/LinkPreview/LinkPreview.module.scss';
+}
+
+.title {
+  composes: title from 'components/LinkPreview/LinkPreview.module.scss';
+}
+
+.description {
+  composes: description from 'components/LinkPreview/LinkPreview.module.scss';
+}
+
+.domain {
+  composes: domain from 'components/LinkPreview/LinkPreview.module.scss';
+}

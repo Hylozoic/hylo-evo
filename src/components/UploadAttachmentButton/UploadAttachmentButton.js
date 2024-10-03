@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { ID_FOR_NEW } from 'components/AttachmentManager/AttachmentManager.store'
 import Icon from 'components/Icon'
 import cx from 'classnames'
-import './UploadAttachmentButton.scss'
+import classes from './UploadAttachmentButton.module.scss'
 import {
   uploadedFileToAttachment,
   filestackPicker
@@ -12,13 +12,14 @@ import {
 
 export default function UploadAttachmentButton ({
   type,
-  id,
+  id = ID_FOR_NEW,
   attachmentType,
   onSuccess,
-  onError,
+  onError = () => {},
   customRender,
   allowMultiple,
   disable,
+  maxFiles = 1,
   // provided by connector
   uploadAttachment,
   // passed to customRender
@@ -78,18 +79,12 @@ export default function UploadAttachmentButton ({
   return <UploadButton {...renderProps} />
 }
 
-UploadAttachmentButton.defaultProps = {
-  id: ID_FOR_NEW,
-  maxFiles: 1,
-  onError: () => {}
-}
-
 UploadAttachmentButton.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   attachmentType: PropTypes.string, // for useFilestackLibrary
   onSuccess: PropTypes.func.isRequired,
-  onError: PropTypes.func.isRequired,
+  onError: PropTypes.func,
   customRender: PropTypes.func,
   allowMultiple: PropTypes.bool,
   disable: PropTypes.bool,
@@ -109,6 +104,6 @@ export function UploadButton ({
 
   return <div onClick={onClick} className={className}>
     {children && children}
-    {!children && <Icon name={loadingIconName} styleName={cx('icon')} />}
+    {!children && <Icon name={loadingIconName} className={cx(classes.icon)} />}
   </div>
 }

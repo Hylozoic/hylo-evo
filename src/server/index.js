@@ -20,7 +20,7 @@ export default function () {
   server.use(express.static('build'))
   // Note: Server-side Rendering
   // ref: https://github.com/Hylozoic/hylo-evo/issues/1069
-  server.use(appMiddleware)
+  // server.use(appMiddleware)
 
   const listener = server.listen(port, err => {
     if (err) throw err

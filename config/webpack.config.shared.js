@@ -4,19 +4,19 @@ module.exports = {
   tsLoader: {
     test: /\.tsx?$/,
     exclude: /node_modules/,
-    loader: 'ts-loader'
+    use: 'ts-loader'
   },
   graphqlLoader: {
     test: /\.(graphql|gql)$/,
     exclude: /node_modules/,
-    loader: 'graphql-tag/loader'
+    use: 'graphql-tag/loader'
   },
   cssLoader: {
     loader: 'css-loader',
     options: {
-      modules: true,
-      context: paths.rootPath,
-      localIdentName: '[name]__[local]___[hash:base64:5]',
+      modules: {
+        localIdentName: '[name]__[local]___[hash:base64:5]',
+      },
       importLoaders: 3
     }
   },
@@ -39,6 +39,6 @@ module.exports = {
   },
   fileLoader: {
     test: /\.(ttf|eot|woff|woff2|svg)$/,
-    loader: 'file-loader'
+    type: 'asset/resource'
   }
 }

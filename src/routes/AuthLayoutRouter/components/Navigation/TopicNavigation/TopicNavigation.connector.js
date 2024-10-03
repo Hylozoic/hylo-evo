@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { get } from 'lodash/fp'
 import { getTopicsFromSubscribedGroupTopics } from './TopicNavigation.store'
 import resetNewPostCount from 'store/actions/resetNewPostCount'

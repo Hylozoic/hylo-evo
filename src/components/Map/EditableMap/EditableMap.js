@@ -4,10 +4,11 @@ import MapGL from 'react-map-gl'
 import { Editor, DrawPolygonMode, EditingMode } from 'react-map-gl-draw'
 import centroid from '@turf/centroid'
 import Icon from 'components/Icon'
-import { mapbox } from 'config'
+import { mapbox } from 'config/index'
+import cx from 'classnames'
 
 import { getEditHandleStyle, getFeatureStyle } from './EditableMapStyles'
-import './EditableMap.scss'
+import classes from './EditableMap.module.scss'
 
 export default function EditableMap (props) {
   const { locationObject, polygon, savePolygon, toggleModal } = props
@@ -121,16 +122,16 @@ export default function EditableMap (props) {
 
   const drawTools = (
     <div className='mapboxgl-ctrl-top-left'>
-      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
+      <div className={cx(classes.mapboxglCtrlGroup, classes.mapboxglCtrl, classes.mapControl)}>
         <button
-          styleName={`mapbox-gl-draw_polygon${isModeDrawing ? ' active' : ''}`}
+          className={cx(classes.mapboxGlGrawPolygon, { active: isModeDrawing })}
           title='New Polygon'
           onClick={toggleMode}
         ><Icon name='Drawing' /></button>
       </div>
-      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
+      <div className={cx(classes.mapboxglCtrlGroup, classes.mapboxglCtrl, classes.mapControl)}>
         <button
-          styleName='mapbox-gl-draw_circle-ex'
+          className={classes.mapboxGlDrawCircleEx}
           title='Delete selected polygon, click polygon to select'
           onClick={onDelete}
           disabled={!isPolygonSelected}
@@ -139,9 +140,9 @@ export default function EditableMap (props) {
         </button>
       </div>
       {/* We may implement this later
-       <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
+       <div className={cx('mapboxgl-ctrl-group mapboxgl-ctrl', classes.mapControl)}>
         <button
-          styleName='mapbox-gl-draw_reset'
+          className={classes.mapboxGlDrawReset}
           title='Reset Drawing'
           onClick={() => setMode(new EditingMode())}
         ><Icon name='CircleArrow' /></button>
@@ -151,16 +152,16 @@ export default function EditableMap (props) {
 
   const zoomTools = (
     <div className='mapboxgl-ctrl-top-right'>
-      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
+      <div className={cx(classes.mapboxglCtrlGroup, classes.mapboxglCtrl, classes.mapControl)}>
         <button
-          styleName='mapbox-gl-draw_plus'
+          className={classes.mapboxGlDrawPlus}
           title='Zoom In'
           onClick={zoomIn}
         >
           <Icon name='Plus' />
         </button>
         <button
-          styleName='mapbox-gl-draw_minus'
+          className={classes.mapboxGlDrawMinus}
           title='Zoom Out'
           onClick={zoomOut}
         >
@@ -172,9 +173,9 @@ export default function EditableMap (props) {
 
   const expandTools = (
     <div className='mapboxgl-ctrl-bottom-left'>
-      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
+      <div className={cx(classes.mapboxglCtrlGroup, classes.mapboxglCtrl, classes.mapControl)}>
         <button
-          styleName='mapbox-gl-expand'
+          className={classes.mapboxGlExpand}
           title='Expand'
           onClick={expand}
         >
@@ -195,7 +196,7 @@ export default function EditableMap (props) {
       onViewportChange={setViewport}
       width='100%'
     >
-      <span styleName={`editable-map${isModeDrawing ? ' drawing-mode' : ''}`}>
+      <span className={cx(classes.editableMap, { [classes.drawingMode]: isModeDrawing })}>
         <Editor
           clickRadius={12}
           editHandleShape={'circle'}

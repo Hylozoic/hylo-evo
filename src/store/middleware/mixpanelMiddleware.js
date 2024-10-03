@@ -13,7 +13,7 @@ export default function mixpanelMiddleware (store) {
       // a required key).
       const state = store.getState()
 
-      if (!process.env.MIXPANEL_TOKEN || !mixpanel) return next(action)
+      if (!import.meta.env.VITE_MIXPANEL_TOKEN || !mixpanel) return next(action)
 
       const isLoggedIn = getAuthenticated(state)
       const { analytics } = meta

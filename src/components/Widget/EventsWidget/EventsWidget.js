@@ -9,7 +9,7 @@ import { postUrl, createPostUrl } from 'util/navigation'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import './EventsWidget.scss'
+import classes from './EventsWidget.module.scss'
 
 const settings = {
   dots: true,
@@ -40,29 +40,32 @@ export default ({ items, group, routeParams, isMember }) => {
   const { t } = useTranslation()
 
   return (
-    <div styleName='events'>
+    <div className={classes.events}>
       <Slider {...settings} onSwipe={handleSwiped}>
-        {items.map(e => <div styleName={cx('event', { narrow: items.length > 1 })} key={e.id}>
-          <Link to={postUrl(e.id, routeParams)} onClickCapture={handleOnItemClick}>
-            <div styleName='content'>
-              <div styleName='time'>{moment(e.startTime).format('MMM D YYYY')}</div>
-              <div styleName='title'>{e.title}</div>
-              <div styleName='location'>{e.location}</div>
-            </div>
-          </Link>
-          <div styleName='background' style={{ backgroundImage: `url(${e.primaryImage || '/default-event.png'})` }} />
-        </div>)}
-        {isMember &&
-          <div styleName='event create-new'>
-            <div styleName='events-cta'>
+        {items.map(e => (
+          <div className={cx(classes.event, { [classes.narrow]: items.length > 1 })} key={e.id}>
+            <Link to={postUrl(e.id, routeParams)} onClickCapture={handleOnItemClick}>
+              <div className={classes.content}>
+                <div className={classes.time}>{moment(e.startTime).format('MMM D YYYY')}</div>
+                <div className={classes.title}>{e.title}</div>
+                <div className={classes.location}>{e.location}</div>
+              </div>
+            </Link>
+            <div className={classes.background} style={{ backgroundImage: `url(${e.primaryImage || '/default-event.png'})` }} />
+          </div>
+        ))}
+        {isMember && (
+          <div className={cx(classes.event, classes.createNew)}>
+            <div className={classes.eventsCta}>
               <Link to={createPostUrl(routeParams, { newPostType: 'event' })}>
-                <Icon name='Calendar' styleName='event-icon' />
+                <Icon name='Calendar' className={classes.eventIcon} />
                 <h4>{t('Bring your group together')}</h4>
                 <p>{t('What you will do at your next event?')}</p>
-                <div styleName='button'>{t('+ Create an event')}</div>
+                <div className={classes.button}>{t('+ Create an event')}</div>
               </Link>
             </div>
-          </div>}
+          </div>
+        )}
       </Slider>
     </div>
   )

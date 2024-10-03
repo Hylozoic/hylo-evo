@@ -3,7 +3,7 @@ import { filter, isEmpty, isFunction, pick } from 'lodash/fp'
 import moment from 'moment-timezone'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactPlayer from 'react-player'
 import { useLongPress } from 'use-long-press'
@@ -28,10 +28,11 @@ import removePost from 'store/actions/removePost'
 import { bgImageStyle } from 'util/index'
 import isWebView from 'util/webView'
 import { personUrl } from 'util/navigation'
-import styles from './ChatPost.scss'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 import getRolesForGroup from 'store/selectors/getRolesForGroup'
 import { RESP_MANAGE_CONTENT } from 'store/constants'
+
+import styles from './ChatPost.module.scss'
 
 export default function ChatPost ({
   className,
@@ -62,7 +63,7 @@ export default function ChatPost ({
 
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const history = useHistory()
+  const navigate = useNavigate()
   const ref = useRef()
   const editorRef = useRef()
   const isPressDevice = !window.matchMedia('(hover: hover) and (pointer: fine)').matches
@@ -99,7 +100,7 @@ export default function ChatPost ({
     } else if (
       !editing &&
       !(event.target.getAttribute('target') === '_blank') &&
-      !event.target.className.includes(styles['image-inner']) &&
+      !event.target.className.includes(styles['imageInner']) &&
       !event.target.className.includes('icon-Smiley')
     ) {
       showPost()
@@ -121,7 +122,7 @@ export default function ChatPost ({
 
   const showCreator = event => {
     event.stopPropagation()
-    history.push(personUrl(creator.id))
+    navigate(personUrl(creator.id))
   }
 
   const editPost = event => {
@@ -195,25 +196,24 @@ export default function ChatPost ({
   return (
     <Highlight {...highlightProps}>
       <div
-        className={className}
+        className={cx(className, styles.container, { [styles.longPressed]: isLongPress })}
         ref={ref}
-        styleName={cx('container', { 'long-pressed': isLongPress })}
         {...bindLongPress()}
       >
-        <div styleName='action-bar'>
+        <div className={styles.actionBar}>
           {actionItems.map(item => (
             <Button
               key={item.label}
               noDefaultStyles
               borderRadius='0'
               onClick={item.onClick}
-              className={styles['action-item']}
+              className={styles.actionItem}
             >
               <Icon name={item.icon} />
             </Button>
           ))}
           <EmojiPicker
-            className={styles['action-item']}
+            className={styles.actionItem}
             handleReaction={handleReaction}
             handleRemoveReaction={handleRemoveReaction}
             myEmojis={myEmojis}
@@ -228,17 +228,17 @@ export default function ChatPost ({
         </div>
 
         {post.header && (
-          <div styleName='header' onClick={handleClick}>
-            <div onClick={showCreator} styleName='author'>
+          <div className={styles.header} onClick={handleClick}>
+            <div onClick={showCreator} className={styles.author}>
               <Avatar avatarUrl={creator.avatarUrl} className={styles.avatar} />
-              <div styleName='name'>{creator.name}</div>
-              <div styleName='badgeRow'>
+              <div className={styles.name}>{creator.name}</div>
+              <div className={styles.badgeRow}>
                 {creatorRoles.map(role => (
                   <BadgeEmoji key={role.id + role.common} expanded {...role} responsibilities={role.responsibilities} id={post.id} />
                 ))}
               </div>
             </div>
-            <div styleName='date'>
+            <div className={styles.date}>
               {moment(createdAt).format('h:mm a')}
               {editedAt && <span>&nbsp;({t('edited')} {moment(editedAt).format('h:mm a')})</span>}
             </div>
@@ -253,14 +253,13 @@ export default function ChatPost ({
             placeholder='Edit Post'
             ref={editorRef}
             showMenu={!isWebView()}
-            containerClassName={cx({ [styles.postContentContainer]: true, [styles.editing]: true })}
-            styleName={cx({ postContent: true, editing })}
+            className={cx(styles.postContentContainer, styles.editing, styles.postContent)}
           />
         )}
         {details && !editing && (
           <ClickCatcher groupSlug={group.slug} onClick={handleClick}>
-            <div styleName='postContentContainer'>
-              <HyloHTML styleName='postContent' html={details} />
+            <div className={styles.postContentContainer}>
+              <HyloHTML className={styles.postContent} html={details} />
             </div>
           </ClickCatcher>
         )}
@@ -268,14 +267,14 @@ export default function ChatPost ({
           <Feature url={linkPreview.url} />
         )}
         {linkPreview && !linkPreviewFeatured && (
-          <LinkPreview {...pick(['title', 'description', 'imageUrl', 'url'], linkPreview)} className={styles['link-preview']} />
+          <LinkPreview {...pick(['title', 'description', 'imageUrl', 'url'], linkPreview)} className={styles.linkPreview} />
         )}
         {!isEmpty(imageAttachments) && (
-          <div styleName='images' onClick={handleClick}>
-            <div styleName='images-inner'>
+          <div className={styles.images} onClick={handleClick}>
+            <div className={styles.imagesInner}>
               {imageAttachments.map(image =>
-                <a href={image.url} styleName='image' target='_blank' rel='noreferrer' key={image.url}>
-                  <div styleName='image-inner' style={bgImageStyle(image.url)} />
+                <a href={image.url} className={styles.image} target='_blank' rel='noreferrer' key={image.url}>
+                  <div className={styles.imageInner} style={bgImageStyle(image.url)} />
                 </a>)}
             </div>
           </div>)}
@@ -283,14 +282,14 @@ export default function ChatPost ({
           <CardFileAttachments attachments={fileAttachments} />
         )}
         <EmojiRow
-          className={cx({ [styles.emojis]: true, [styles.noEmojis]: !postReactions || postReactions.length === 0 })}
+          className={cx(styles.emojis, { [styles.noEmojis]: !postReactions || postReactions.length === 0 })}
           post={post}
           currentUser={currentUser}
         />
         {commentsTotal > 0 && (
-          <span styleName='comments-container'>
-            <RoundImageRow imageUrls={commenterAvatarUrls.slice(0, 3)} styleName='commenters' onClick={handleClick} small />
-            <span styleName='comments-caption' onClick={handleClick}>
+          <span className={styles.commentsContainer}>
+            <RoundImageRow imageUrls={commenterAvatarUrls.slice(0, 3)} className={styles.commenters} onClick={handleClick} small />
+            <span className={styles.commentsCaption} onClick={handleClick}>
               {commentsTotal} {commentsTotal === 1 ? 'reply' : 'replies'}
             </span>
           </span>

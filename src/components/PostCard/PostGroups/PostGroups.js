@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { groupUrl } from 'util/navigation'
 import GroupsList from 'components/GroupsList'
 import Icon from 'components/Icon'
-import './PostGroups.scss'
+import classes from './PostGroups.module.scss'
 
 class PostGroups extends Component {
   static defaultState = {
@@ -31,12 +31,12 @@ class PostGroups extends Component {
     // don't show if there are no groups or this isn't cross posted
     if (isEmpty(groups) || (groups.length === 1 && get('0.slug', groups) === slug)) return null
 
-    return <div styleName={cx('groups', { constrained, expanded, bottomBorder: showBottomBorder })} onClick={expanded ? this.toggleExpanded : undefined}>
-      <div styleName='row'>
-        <span styleName='label'>{`${this.props.t('Posted In:')} `}</span>
+    return <div className={cx(classes.groups, { [classes.constrained]: constrained, [classes.expanded]: expanded, [classes.bottomBorder]: showBottomBorder })} onClick={expanded ? this.toggleExpanded : undefined}>
+      <div className={classes.row}>
+        <span className={classes.label}>{`${this.props.t('Posted In:')} `}</span>
         {!expanded &&
           <LinkedGroupNameList t={t} groups={groups} maxShown={2} expandFunc={this.toggleExpanded} />}
-        <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} styleName='expandIcon' /></a>
+        <a onClick={this.toggleExpanded} className={classes.expandLink}><Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} className={classes.expandIcon} /></a>
       </div>
 
       {expanded && <GroupsList groups={groups} />}
@@ -50,7 +50,7 @@ export function LinkedGroupNameList ({ groups, maxShown = 2, expandFunc, t }) {
     : groups
   const othersCount = groups.length - groupsToDisplay.length
 
-  return <span styleName='groupList'>
+  return <span className={classes.groupList}>
     {groupsToDisplay.map((group, i) =>
       <LinkedGroupName group={group} key={i}>
         <Separator currentIndex={i} displayCount={groupsToDisplay.length} t={t} othersCount={othersCount} />
@@ -62,7 +62,7 @@ export function LinkedGroupNameList ({ groups, maxShown = 2, expandFunc, t }) {
 
 export function LinkedGroupName ({ group, children }) {
   return <span key={group.id}>
-    <Link to={groupUrl(group.slug)} styleName='groupLink'>{group.name === 'Public' && <Icon name='Public' styleName='publicGroupIcon' />} {group.name}</Link>
+    <Link to={groupUrl(group.slug)} className={classes.groupLink}>{group.name === 'Public' && <Icon name='Public' className={classes.publicGroupIcon} />} {group.name}</Link>
     {children}
   </span>
 }
@@ -86,7 +86,7 @@ export function Others ({ othersCount, expandFunc }) {
 
   return <React.Fragment>
     <span key='and'> {t('and')} </span>
-    <a key='others' styleName='groupLink' onClick={expandFunc}>{phrase}</a>
+    <a key='others' className={classes.groupLink} onClick={expandFunc}>{phrase}</a>
   </React.Fragment>
 }
 

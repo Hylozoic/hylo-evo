@@ -1,5 +1,5 @@
 import React from 'react'
-import './SliderInput.scss'
+import classes from './SliderInput.module.scss'
 
 const SliderInput = ({ percentage = 0, setPercentage = () => {} }) => {
   const handleChange = (e) => {
@@ -12,14 +12,14 @@ const SliderInput = ({ percentage = 0, setPercentage = () => {} }) => {
   }
 
   return (
-    <div styleName='percentage-slider-container'>
+    <div className={classes.percentageSliderContainer}>
       <input
         type='range'
         min='0'
         max='100'
         value={percentage}
         onChange={handleChange}
-        styleName='percentage-slider'
+        className={classes.percentageSlider}
         style={sliderStyle}
       />
       <span>{percentage}%</span>

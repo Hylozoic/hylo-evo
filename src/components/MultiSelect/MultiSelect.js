@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
 import cx from 'classnames'
-import './MultiSelect.scss'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import classes from './MultiSelect.module.scss'
 
 const MultiSelect = ({ items, selected = [], hideAfter, handleSelect }) => {
   const { t } = useTranslation()
@@ -23,13 +24,14 @@ const MultiSelect = ({ items, selected = [], hideAfter, handleSelect }) => {
           handleSelect && handleSelect(item.id)
         }}
         key={item.id}
-        styleName={cx('item', { selected: selected.includes(item.id) })}
+        className={cx(classes.item, { [classes.selected]: selected.includes(item.id) })}
       >
         <span>{item.text || item.title}</span>
         {handleSelect && (
           <input
             type='checkbox'
             checked={selected.includes(item.id)}
+            readOnly
           />
         )}
       </div>
@@ -37,10 +39,10 @@ const MultiSelect = ({ items, selected = [], hideAfter, handleSelect }) => {
   }
 
   return (
-    <ul styleName='multi-select'>
+    <ul className={classes.multiSelect}>
       {renderItems()}
       {hideAfter && items.length > hideAfter && !showAll && (
-        <div styleName='show-more' onClick={handleShowMore}>
+        <div className={classes.showMore} onClick={handleShowMore}>
           <span>{t('Show more')}</span>
         </div>
       )}

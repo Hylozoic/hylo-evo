@@ -2,14 +2,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import './MatchingPeopleListItem.scss'
+import classes from './MatchingPeopleListItem.module.scss'
 
 export default function MatchingPeopleListItem ({ avatarUrl, name, onClick }) {
-  return <div styleName='selector-matched-item'>
-    <RoundImage url={avatarUrl} small styleName='avatar' />
-    <span styleName='name'>{name}</span>
+  return <div className={cx(classes.selectorMatchedItem)}>
+    <RoundImage url={avatarUrl} small className={cx(classes.avatar)} />
+    <span className={cx(classes.name)}>{name}</span>
     <span onClick={onClick}>
-      <Icon name='Ex' styleName='delete-match' />
+      <Icon name='Ex' className={cx(classes.deleteMatch)} />
     </span>
   </div>
 }

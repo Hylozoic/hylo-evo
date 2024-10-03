@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
-import { Redirect } from 'react-router'
 import { any, arrayOf, func, object, string, bool } from 'prop-types'
 import { debounce, has, get, isEmpty, trim } from 'lodash/fp'
 import { Validators } from 'hylo-shared'
@@ -9,8 +8,9 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
+import cx from 'classnames'
 
-import './CreateTopic.scss'
+import classes from './CreateTopic.module.scss'
 
 class CreateTopic extends Component {
   static propTypes = {
@@ -46,13 +46,13 @@ class CreateTopic extends Component {
       key='create-button'
       narrow
       onClick={this.toggleTopicModal}
-      styleName='create-topic'>
-      <Icon name='Plus' green styleName='plus' />{this.props.buttonText}</Button>
+      className={classes.createTopic}>
+      <Icon name='Plus' green className={classes.plus} />{this.props.buttonText}</Button>
     : <Icon
       key='create-button'
       name='Plus'
       onClick={this.toggleTopicModal}
-      styleName='create-button' />
+      className={classes.createButton} />
 
   componentDidUpdate (prevProps) {
     const { groupSlug } = this.props
@@ -162,7 +162,7 @@ class CreateTopic extends Component {
 
     if (redirectTopic && subscribeAfterCreate) {
       const url = topicUrl(encodeURI(redirectTopic), { groupSlug: this.props.groupSlug })
-      if (url !== window.location.pathname) return <Redirect to={url} />
+      if (url !== window.location.pathname) return <Navigate to={url} replace />
     }
 
     return <React.Fragment>
@@ -180,7 +180,7 @@ class CreateTopic extends Component {
         submitButtonText={submitButtonText}
         useNotificationFormat={useNotificationFormat}>
         {useNotificationFormat
-          ? (subscribeAfterCreate ? <div styleName='dialog-content'>{t('you\'re subscribed to #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div> : <div styleName='dialog-content'>{t('Created topic #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div>)
+          ? (subscribeAfterCreate ? <div className={classes.dialogContent}>{t('you\'re subscribed to #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div> : <div className={classes.dialogContent}>{t('Created topic #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div>)
           : <div>
             <TextInput
               aria-label='topic-name'
@@ -191,7 +191,7 @@ class CreateTopic extends Component {
               loading={loading}
               placeholder={t('Enter a topic name:')}
               value={this.state.topicName} />
-            {nameError && <div styleName='topic-error'>{nameError}</div>}
+            {nameError && <div className={classes.topicError}>{nameError}</div>}
           </div>}
       </ModalDialog>}
     </React.Fragment>

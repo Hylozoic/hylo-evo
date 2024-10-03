@@ -2,14 +2,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
-import './PeopleListItem.scss'
+import classes from './PeopleListItem.module.scss'
 
 export default function PeopleListItem ({ active, onClick, onMouseOver, person }) {
-  return <li styleName={cx('person-list-item', { active })} onClick={onClick} onMouseOver={onMouseOver}>
-    <RoundImage url={person.avatarUrl} styleName='avatar' medium />
+  return <li className={cx(classes.personListItem, { [classes.active]: active })} onClick={onClick} onMouseOver={onMouseOver}>
+    <RoundImage url={person.avatarUrl} className={classes.avatar} medium />
     <div>
-      <span styleName='name'>{person.name}</span>
-      <span styleName='group'>{person.group}</span>
+      <span className={classes.name}>{person.name}</span>
+      <span className={classes.group}>{person.group}</span>
     </div>
   </li>
 }

@@ -1,12 +1,13 @@
+import cx from 'classnames'
 import React from 'react'
 import { bgImageStyle } from 'util/index'
-import './LoadingItems.scss'
+import classes from './LoadingItems.module.scss'
 
 export default function LoadingItems () {
   return (
-    <div styleName='loader'>
-      <div styleName='loader-image' style={bgImageStyle('/assets/thinking-axolotl.png')} />
-      <div styleName='loader-animation'>
+    <div className={classes.loader}>
+      <div className={cx(classes.loaderImage)} style={bgImageStyle('/assets/thinking-axolotl.png')} />
+      <div className={cx(classes.loaderAnimation)}>
         <svg version='1.1' viewBox='0 0 100 100' enableBackground='new 0 0 0 0'>
           <circle fill='#BBB' stroke='none' cx='6' cy='6' r='6'>
             <animate

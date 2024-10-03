@@ -1,0 +1,108 @@
+// EditProfile
+.label {
+  composes: tag from 'css/typography.scss';
+}
+
+.name {
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  composes: hdr-display from 'css/typography.scss';
+  background-color: $color-catskill-white;
+  border: none;
+  width: 100%;
+}
+
+.name-validation {
+  color: red;
+  position: absolute;
+  top: 30px;
+}
+
+.change-banner {
+  cursor: pointer;
+}
+
+.banner-image {
+  width: 100%;
+  height: 165px;
+  border-radius: 4px;
+  background-position: center;
+  background-size: cover;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.change-avatar {
+  display: block;
+  margin: -70px auto $space-8x auto;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+}
+
+.avatar-image {
+  display: flex;
+  align-items: flex-end;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  margin: -70px auto $space-8x auto;
+  cursor: pointer;
+
+  .uploadIcon {
+    margin: 0 auto;
+  }
+}
+
+.uploadIcon {
+  cursor: pointer;
+  opacity: 0.5;
+  font-size: 30px;
+  color: $color-white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.social-label {
+  composes: control-label from 'components/SettingsControl/SettingsControl.module.scss';
+  margin-top: $space-9x;
+}
+
+.button-row {
+  display: flex;
+  width: 100%;
+  margin-top: $space-9x;
+  margin-bottom: 100px;
+}
+
+.saveChanges {
+  position: fixed;
+  bottom: 10px;
+  padding: 10px;
+  background: rgba(255,255,255,1);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  width: inherit;
+  margin-top: $space-9x;
+
+  span {
+    display: inline-block;
+    color: rgba(35, 64, 91, .5);
+    margin-right: 30px;
+    font-size: 14px;
+  }
+
+  span.settingChanged {
+    color: rgba(35, 64, 91, 1);
+  }
+}
+
+.save-button {
+  margin: 0 auto;
+}

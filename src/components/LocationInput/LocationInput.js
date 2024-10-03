@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { LocationHelpers } from 'hylo-shared'
 import Geocoder from 'components/GeocoderAutocomplete'
-import { mapbox } from 'config'
-import styles from './LocationInput.scss'
+import { mapbox } from 'config/index'
+import styles from './LocationInput.module.scss'
 import { withTranslation } from 'react-i18next'
 
 class LocationInput extends Component {

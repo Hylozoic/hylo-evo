@@ -11,7 +11,7 @@ import EmojiRow from 'components/EmojiRow'
 import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
-import './PostListRow.scss'
+import classes from './PostListRow.module.scss'
 
 // :SHONK: no idea why React propagates events from child elements but NOT IN OTHER COMPONENTS
 const stopEvent = (e) => e.stopPropagation()
@@ -50,19 +50,19 @@ const PostListRow = (props) => {
   const { t } = useTranslation()
 
   return (
-    <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
-      <div styleName='content-summary'>
-        <div styleName='type-author'>
-          {isFlagged && <Icon name='Flag' styleName='flagIcon' />}
-          <div styleName={cx('post-type', post.type)}>
+    <div className={cx(classes.postRow, { [classes.unread]: unread, [classes.expanded]: expanded })} onClick={showDetails}>
+      <div className={classes.contentSummary}>
+        <div className={classes.typeAuthor}>
+          {isFlagged && <Icon name='Flag' className={classes.flagIcon} />}
+          <div className={cx(classes.postType, classes[post.type])}>
             <Icon name={typeName} />
           </div>
-          <div styleName='participants'>
-            {post.type === 'event' ? <div styleName='date'>
+          <div className={classes.participants}>
+            {post.type === 'event' ? <div className={classes.date}>
               <span>{startTimeMoment.format('MMM')}</span>
               <span>{startTimeMoment.format('D')}</span>
             </div> : <div>
-              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
+              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} className={classes.avatar} tiny />
               {creator.name} {
                 numOtherCommentors > 1
                   ? (<span> {t('and')} <strong>{numOtherCommentors} {t('others')}</strong></span>)
@@ -72,13 +72,13 @@ const PostListRow = (props) => {
           </div>
           {childPost &&
             <div
-              styleName='icon-container'
-              data-tip={t('Post from child group')}
-              data-for='childgroup-tt'
+              className={classes.iconContainer}
+              data-tooltip-content={t('Post from child group')}
+              data-tooltip-id='childgroup-tt'
             >
               <Icon
                 name='Subgroup'
-                styleName='icon'
+                className={classes.icon}
               />
               <Tooltip
                 delay={250}
@@ -86,19 +86,19 @@ const PostListRow = (props) => {
                 position='bottom'
               />
             </div>}
-          <div styleName={cx('timestamp', { 'push-to-right': !childPost })}>
+          <div className={cx(classes.timestamp, { [classes.pushToRight]: !childPost })}>
             {createdTimestamp}
           </div>
         </div>
         {!isEmpty(topics) && (
-          <div styleName='topics'>
+          <div className={classes.topics}>
             {topics.slice(0, 3).map(t =>
-              <Link styleName='topic' to={topicUrl(t.name, { groupSlug: routeParams.slug })} key={t.name} onClick={stopEvent}>#{t.name}</Link>)}
+              <Link className={classes.topic} to={topicUrl(t.name, { groupSlug: routeParams.slug })} key={t.name} onClick={stopEvent}>#{t.name}</Link>)}
           </div>
         )}
-        <h3 styleName={cx('title', { isFlagged: isFlagged && !post.clickthrough })}>{title}</h3>
-        <HyloHTML styleName='details' html={details} />
-        <div styleName='reactions'>
+        <h3 className={cx(classes.title, { [classes.isFlagged]: isFlagged && !post.clickthrough })}>{title}</h3>
+        <HyloHTML className={classes.details} html={details} />
+        <div className={classes.reactions}>
           <EmojiRow
             post={post}
             currentUser={currentUser}

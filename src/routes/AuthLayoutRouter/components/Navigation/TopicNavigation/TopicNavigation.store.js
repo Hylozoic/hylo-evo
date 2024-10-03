@@ -11,15 +11,15 @@ export const getTopicsFromSubscribedGroupTopics = (state, props) => {
   const { routeParams, location } = props
   const groupTopics = getSubscribedGroupTopics(state, props)
 
-  let topics = groupTopics.map(groupTopic => {
+  const topics = groupTopics.map(groupTopic => {
     return {
       ...groupTopic.ref,
       ...groupTopic.topic.ref,
       groupTopicId: groupTopic.id, // Needed for the reset new post count code
       url: topicUrl(groupTopic.topic.name, routeParams),
       current: matchPath(
-        location.pathname,
-        { path: topicUrl(groupTopic.topicName, routeParams) }
+        { path: topicUrl(groupTopic.topicName, routeParams) },
+        location.pathname
       )
     }
   })
@@ -44,7 +44,7 @@ export const getSubscribedGroupTopics = ormCreateSelector(
       return sortBy(getTopicName, pinnedGroupTopics).concat(sortBy(getTopicName, groupTopics))
     }
 
-    let allGroupTopics = session.GroupTopic
+    const allGroupTopics = session.GroupTopic
       .filter({ isSubscribed: true })
       .toModelArray()
       .map(ct => omit(['visibility'], { ...ct.ref, topic: ct.topic })) // remove visibility tracking at all topics level

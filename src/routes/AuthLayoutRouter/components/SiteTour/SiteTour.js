@@ -1,11 +1,11 @@
+import cx from 'classnames'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Joyride from 'react-joyride'
 import { useDispatch, useSelector } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import updateUserSettings from 'store/actions/updateUserSettings'
-import cx from 'classnames'
-import 'routes/AuthLayoutRouter/AuthLayoutRouter.scss'
+import classes from 'routes/AuthLayoutRouter/AuthLayoutRouter.module.scss'
 
 export default function SiteTour ({ currentSiteWidth }) {
   const dispatch = useDispatch()
@@ -58,20 +58,20 @@ export default function SiteTour ({ currentSiteWidth }) {
 
   return (
     <>
-      <div styleName={cx('tourWrapper', { tourClosed: closeTheTour })}>
-        <div styleName='tourPrompt'>
-          <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
-          <div styleName='tourExplanation'>
-            <p><strong>{t('Welcome to Hylo')}{' '}{currentUser.name}</strong>{' '}{t('I’d love to show you how things work, would you like a quick tour?')}</p>
-            <p>{t('To follow the tour look for the pulsing beacons!')} <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
+      <div className={cx(classes.tourWrapper, { [classes.tourClosed]: closeTheTour })}>
+        <div className={classes.tourPrompt}>
+          <div className={classes.tourGuide}><img src='/axolotl-tourguide.png' /></div>
+          <div className={classes.tourExplanation}>
+            <p><strong>{t('Welcome to Hylo')} {currentUser.name}</strong> {t('I\'d love to show you how things work, would you like a quick tour?')}</p>
+            <p>{t('To follow the tour look for the pulsing beacons!')} <span className={classes.beaconExample}><span className={classes.beaconA} /><span className={classes.beaconB} /></span></p>
             <div>
-              <button styleName='skipTour' onClick={handleCloseTour}>{t('No thanks')}</button>
-              <button styleName='startTour' onClick={handleClickStartTour}>{t('Show me Hylo')}</button>
+              <button className={classes.skipTour} onClick={handleCloseTour}>{t('No thanks')}</button>
+              <button className={classes.startTour} onClick={handleClickStartTour}>{t('Show me Hylo')}</button>
             </div>
-            <div styleName='speechIndicator' />
+            <div className={classes.speechIndicator} />
           </div>
         </div>
-        <div styleName='tourBg' onClick={handleCloseTour} />
+        <div className={classes.tourBg} onClick={handleCloseTour} />
       </div>
       <Joyride
         run={run}
@@ -96,22 +96,22 @@ function TourTooltip ({
 }) {
   const { t } = useTranslation()
   return (
-    <div {...tooltipProps} styleName='tooltipWrapper'>
-      <div styleName='tooltipContent'>
-        <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+    <div {...tooltipProps} className={classes.tooltipWrapper}>
+      <div className={classes.tooltipContent}>
+        <div className={classes.tourGuide}><img src='/axolotl-tourguide.png' /></div>
         <div>
-          {step.title && <div styleName='stepTitle'>{step.title}</div>}
+          {step.title && <div className={classes.stepTitle}>{step.title}</div>}
           <div>{step.content}</div>
         </div>
       </div>
-      <div styleName='tooltipControls'>
+      <div className={classes.tooltipControls}>
         {index > 0 && (
-          <button styleName='backButton' {...backProps}>
+          <button className={classes.backButton} {...backProps}>
             {t('Back')}
           </button>
         )}
         {continuous && (
-          <button styleName='nextButton' {...primaryProps}>
+          <button className={classes.nextButton} {...primaryProps}>
             {t('Next')}
           </button>
         )}

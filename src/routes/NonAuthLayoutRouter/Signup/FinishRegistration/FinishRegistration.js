@@ -8,7 +8,7 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import { formatError } from '../../util'
-import '../Signup.scss'
+import classes from '../Signup.module.scss'
 
 export default function FinishRegistration () {
   const { t } = useTranslation()
@@ -55,11 +55,11 @@ export default function FinishRegistration () {
   }
 
   return (
-    <div styleName='form'>
-      <Icon name='Ex' styleName='closeIcon' onClick={handleCancel} />
-      <div styleName='formWrapper'>
-        <h1 styleName='title'>{t('One more step!')}</h1>
-        <p styleName='blurb'>{t(`Hi {{email}} we just need to know your name and password and you're in.`, { email })}</p>
+    <div className={classes.form}>
+      <Icon name='Ex' className={classes.closeIcon} onClick={handleCancel} />
+      <div className={classes.formWrapper}>
+        <h1 className={classes.title}>{t('One more step!')}</h1>
+        <p className={classes.blurb}>{t(`Hi {{email}} we just need to know your name and password and you're in.`, { email })}</p>
         {error && formatError(error, 'Signup', t)}
         <TextInput
           aria-label='name'
@@ -69,7 +69,7 @@ export default function FinishRegistration () {
           label='name'
           name='name'
           onChange={handleChange}
-          styleName='field'
+          className={classes.field}
           type='text'
           value={formValues.name}
         />
@@ -81,7 +81,7 @@ export default function FinishRegistration () {
           label='password'
           name='password'
           onChange={handleChange}
-          styleName='field'
+          className={classes.field}
           type='password'
           value={formValues.password}
         />
@@ -94,12 +94,12 @@ export default function FinishRegistration () {
           name='passwordConfirmation'
           onChange={handleChange}
           onEnter={handleSubmit}
-          styleName='field'
+          className={classes.field}
           type='password'
           value={formValues.passwordConfirmation}
         />
         <Button
-          styleName='submit'
+          className={classes.submit}
           label={t('Jump in to Hylo!')}
           color={canSubmit ? 'green' : 'gray'}
           onClick={canSubmit ? () => handleSubmit() : null}

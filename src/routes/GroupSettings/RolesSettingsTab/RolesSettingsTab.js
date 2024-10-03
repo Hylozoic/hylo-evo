@@ -12,7 +12,8 @@ import { personUrl } from 'util/navigation'
 import SettingsControl from 'components/SettingsControl'
 import SettingsSection from '../SettingsSection'
 import EmojiPicker from 'components/EmojiPicker'
-import styles from './RolesSettingsTab.scss' // eslint-disable-line no-unused-vars
+import styles from './RolesSettingsTab.module.scss' // eslint-disable-line no-unused-vars
+import cx from 'classnames'
 
 const { array, func, string, object, bool } = PropTypes
 
@@ -166,7 +167,7 @@ class RolesSettingsTab extends Component {
       <>
         <SettingsSection>
           <h3>{t('Common Roles')}</h3>
-          <div styleName='styles.help-text'>{t('adminRolesHelpText')}</div>
+          <div className={styles.helpText}>{t('adminRolesHelpText')}</div>
           {commonRoles.map((role, i) => (
             <RoleRow
               {...this.props}
@@ -180,7 +181,7 @@ class RolesSettingsTab extends Component {
         </SettingsSection>
         <SettingsSection>
           <h3>{t('Custom Roles & Badges')}</h3>
-          <div styleName='styles.help-text'>{t('Create additional roles or badges for your group')}</div>
+          <div className={styles.helpText}>{t('Create additional roles or badges for your group')}</div>
           {roles.map((role, i) => (
             <RoleRow
               {...this.props}
@@ -197,9 +198,9 @@ class RolesSettingsTab extends Component {
             />
           ))}
           {!unsavedRolePresent && (
-            <div styleName='styles.add-role' onClick={this.handleAddRole}>
+            <div className={styles.addRole} onClick={this.handleAddRole}>
               <h4>{t('Create new role/badge')}</h4>
-              <Icon name='Circle-Plus' styleName='styles.new-role' />
+              <Icon name='Circle-Plus' className={styles.newRole} />
             </div>
           )}
         </SettingsSection>
@@ -234,28 +235,28 @@ function RoleRowUntranslated ({
   t
 }) {
   const isDraftRole = active === ''
-  const inactiveStyle = (!active && !isDraftRole && !isCommonRole) ? 'styles.inactive' : ''
+  const inactiveStyle = (!active && !isDraftRole && !isCommonRole) ? styles.inactive : ''
   return (
-    <div styleName={`styles.role-container ${inactiveStyle}`}>
+    <div className={cx(styles.roleContainer, inactiveStyle)}>
       {!isCommonRole &&
-        <div styleName='styles.action-container'>
-          {isDraftRole && (<span onClick={onDelete} styleName='styles.action'><Icon name='Trash' /> {t('Delete')}</span>)}
-          {!isDraftRole && changed && (<span styleName='styles.action' onClick={onUpdate}><Icon name='Unlock' /> {t('Save')}</span>)}
-          {!isDraftRole && changed && (<span styleName='styles.action' onClick={onReset}><Icon name='Back' /> {t('Revert')}</span>)}
-          {!isDraftRole && !changed && (<span styleName='styles.action' onClick={onToggleActivation}><Icon name={active ? 'CircleEx' : 'CircleArrow'} /> {active ? t('Deactivate') : t('Reactivate')}</span>)}
+        <div className={styles.actionContainer}>
+          {isDraftRole && (<span onClick={onDelete} className={styles.action}><Icon name='Trash' /> {t('Delete')}</span>)}
+          {!isDraftRole && changed && (<span className={styles.action} onClick={onUpdate}><Icon name='Unlock' /> {t('Save')}</span>)}
+          {!isDraftRole && changed && (<span className={styles.action} onClick={onReset}><Icon name='Back' /> {t('Revert')}</span>)}
+          {!isDraftRole && !changed && (<span className={styles.action} onClick={onToggleActivation}><Icon name={active ? 'CircleEx' : 'CircleArrow'} /> {active ? t('Deactivate') : t('Reactivate')}</span>)}
         </div>}
-      <div styleName='styles.role-row'>
-        <EmojiPicker forReactions={false} emoji={emoji} handleReaction={onChange('emoji')} className={styles['emoji-picker']} />
-        <div styleName='styles.role-stack'>
-          <SettingsControl label='Name' controlClass={styles['settings-control']} onChange={onChange('name')} value={name} />
-          <SettingsControl label='Description' controlClass={styles['settings-control']} onChange={onChange('description')} value={description} type='textarea' />
+      <div className={styles.roleRow}>
+        <EmojiPicker forReactions={false} emoji={emoji} handleReaction={onChange('emoji')} className={styles.emojiPicker} />
+        <div className={styles.roleStack}>
+          <SettingsControl label='Name' controlClass={styles.settingsControl} onChange={onChange('name')} value={name} />
+          <SettingsControl label='Description' controlClass={styles.settingsControl} onChange={onChange('description')} value={description} type='textarea' />
         </div>
       </div>
       {
         isDraftRole
           ? (
-            <div styleName='styles.role-row styles.reverse-flex'>
-              <div styleName='styles.create-button' onClick={onSave}>{t('Create Role')}</div>
+            <div className={cx(styles.roleRow, styles.reverseFlex)}>
+              <div className={styles.createButton} onClick={onSave}>{t('Create Role')}</div>
             </div>
           )
           : (active || isCommonRole) && (
@@ -341,11 +342,11 @@ class AddMemberToRoleUntranslated extends Component {
 
     if (adding) {
       return (
-        <div styleName='styles.adding'>
-          <div styleName='styles.help-text'>{t('Search here for members to grant this role too')}</div>
-          <div styleName='styles.input-row'>
+        <div className={styles.adding}>
+          <div className={styles.helpText}>{t('Search here for members to grant this role too')}</div>
+          <div className={styles.inputRow}>
             <input
-              styleName='styles.input'
+              className={styles.input}
               placeholder='Type...'
               type='text'
               onChange={onInputChange}
@@ -353,8 +354,8 @@ class AddMemberToRoleUntranslated extends Component {
               ref={this.inputRef}
               data-testid='add-member-input'
             />
-            <span styleName='styles.cancel-button' onClick={toggle}>{t('Cancel')}</span>
-            <span styleName='styles.add-button' onClick={chooseCurrentItem}>{t('Add')}</span>
+            <span className={styles.cancelButton} onClick={toggle}>{t('Cancel')}</span>
+            <span className={styles.addButton} onClick={chooseCurrentItem}>{t('Add')}</span>
           </div>
           {!isEmpty(memberSuggestions) && <div style={listWidth}>
             <KeyControlledItemList
@@ -368,7 +369,7 @@ class AddMemberToRoleUntranslated extends Component {
       )
     } else {
       return (
-        <div styleName='styles.add-new' onClick={toggle} data-testid='add-new'>
+        <div className={styles.addNew} onClick={toggle} data-testid='add-new'>
           + {t('Add Member to Role')}
         </div>
       )
@@ -427,18 +428,18 @@ class AddResponsibilityToRoleUntranslated extends Component {
     const listWidth = { width: get('inputRef.current.clientWidth', this, 0) + 4 }
     if (adding) {
       return (
-        <div styleName='styles.adding'>
-          <div styleName='styles.help-text'>{t('Search here for responsibilities to add to this role')}</div>
-          <div styleName='styles.input-row'>
+        <div className={styles.adding}>
+          <div className={styles.helpText}>{t('Search here for responsibilities to add to this role')}</div>
+          <div className={styles.inputRow}>
             <input
-              styleName='styles.input'
+              className={styles.input}
               placeholder='Type...'
               type='text'
               onKeyDown={handleKeys}
               ref={this.inputRef}
             />
-            <span styleName='styles.cancel-button' onClick={toggle}>{t('Cancel')}</span>
-            <span styleName='styles.add-button' onClick={chooseCurrentItem}>{t('Add')}</span>
+            <span className={styles.cancelButton} onClick={toggle}>{t('Cancel')}</span>
+            <span className={styles.addButton} onClick={chooseCurrentItem}>{t('Add')}</span>
           </div>
           {!isEmpty(responsibilitySuggestions) && <div style={listWidth}>
             <KeyControlledItemList
@@ -452,7 +453,7 @@ class AddResponsibilityToRoleUntranslated extends Component {
       )
     } else {
       return (
-        <div styleName='styles.add-new' onClick={toggle}>
+        <div className={cx(styles.addNew)} onClick={toggle}>
           + {t('Add Responsibility to Role')}
         </div>
       )
@@ -536,7 +537,7 @@ export function RoleList ({ slug, fetchStewardSuggestions, addRoleToMember, sugg
       <div>
         <h4>Responsibilities</h4>
         {isCommonRole && (
-          <div styleName='styles.help-text'>{t('Common roles cannot have their responsibilities edited')}</div>
+          <div className={styles.help-text}>{t('Common roles cannot have their responsibilities edited')}</div>
         )}
         {responsibilitiesForRole.map(r =>
           <RemovableListItem

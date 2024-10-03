@@ -1,5 +1,5 @@
 import mixpanel from 'mixpanel-browser'
-import config, { isProduction, isTest } from 'config'
+import config, { isProduction, isTest } from 'config/index'
 
 if (!isTest) {
   mixpanel.init(config.mixpanel.token, { debug: !isProduction })

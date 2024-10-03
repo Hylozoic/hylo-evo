@@ -10,7 +10,7 @@ import PeopleMentions from './extensions/PeopleMentions'
 import TopicMentions from './extensions/TopicMentions'
 import HyloEditorMenuBar from './HyloEditorMenuBar'
 import 'tippy.js/dist/tippy.css'
-import './HyloEditor.scss'
+import classes from './HyloEditor.module.scss'
 
 const HyloEditor = React.forwardRef(function HyloEditor ({
   className,
@@ -198,7 +198,7 @@ const HyloEditor = React.forwardRef(function HyloEditor ({
             onClick={() => {
               onAddLink(selectedLink?.href, true)
             }}
-            styleName='addLinkPreviewButton'
+            className={classes.addLinkPreviewButton}
           >
             <VscPreview /> {t('Add Preview')}
           </span>

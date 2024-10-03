@@ -14,7 +14,8 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import Membership from 'components/Membership'
-import './UserGroupsTab.scss'
+import classes from './UserGroupsTab.module.scss'
+import cx from 'classnames'
 
 const { array, func, object, string } = PropTypes
 
@@ -43,12 +44,12 @@ class UserGroupsTab extends Component {
     if (!memberships || !affiliations) return <Loading />
 
     return (
-      <div styleName='container'>
-        <h1 styleName='title'>{t('Your affiliations with organizations')}</h1>
+      <div className={classes.container}>
+        <h1 className={classes.title}>{t('Your affiliations with organizations')}</h1>
 
-        <div styleName='description'>{t('This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.')}</div>
+        <div className={classes.description}>{t('This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.')}</div>
 
-        <h2 styleName='subhead'>{t('Hylo Groups')}</h2>
+        <h2 className={classes.subhead}>{t('Hylo Groups')}</h2>
         {action === LEAVE_GROUP && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {memberships.map((m, index) =>
           <Membership
@@ -59,7 +60,7 @@ class UserGroupsTab extends Component {
             rowStyle
           />)}
 
-        <h2 styleName='subhead'>{t('Other Affiliations')}</h2>
+        <h2 className={classes.subhead}>{t('Other Affiliations')}</h2>
         {action === DELETE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {affiliations && affiliations.items.length > 0 && affiliations.items.map((a, index) =>
           <Affiliation
@@ -73,8 +74,8 @@ class UserGroupsTab extends Component {
         { action === CREATE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
 
         {showAddAffiliations ? <AddAffiliation close={this.toggleAddAffiliations} save={this.saveAffiliation} /> : (
-          <div styleName='add-affiliation' onClick={this.toggleAddAffiliations}>
-            <div styleName='plus'>+</div>
+          <div className={classes.addAffiliation} onClick={this.toggleAddAffiliations}>
+            <div className={classes.plus}>+</div>
             <div>{t('Add new affiliation')}</div>
           </div>
         )}
@@ -161,13 +162,13 @@ export function AddAffiliation ({ close, save }) {
   const formatUrl = url => `${URL_PROTOCOL}${url}`
 
   return (
-    <div styleName='affiliation-form'>
-      <div styleName='header'>
+    <div className={classes.affiliationForm}>
+      <div className={classes.header}>
         <h3>{t('Add new affiliation')}</h3>
-        <div styleName='close' onClick={close}>x</div>
+        <div className={classes.close} onClick={close}>x</div>
       </div>
 
-      <div styleName='body'>
+      <div className={classes.body}>
 
         <div>
           <input
@@ -176,7 +177,7 @@ export function AddAffiliation ({ close, save }) {
             placeholder={t('Name of role')}
             value={role}
           />
-          <div styleName='chars'>{role.length}/{CHAR_LIMIT}</div>
+          <div className={classes.chars}>{role.length}/{CHAR_LIMIT}</div>
         </div>
 
         <Dropdown
@@ -191,7 +192,7 @@ export function AddAffiliation ({ close, save }) {
             onClick: () => setPreposition(p)
           }))}
           alignLeft
-          styleName='dropdown' />
+          className={classes.dropdown} />
 
         <div>
           <input
@@ -200,7 +201,7 @@ export function AddAffiliation ({ close, save }) {
             placeholder={t('Name of organization')}
             value={orgName}
           />
-          <div styleName='chars'>{orgName.length}/{CHAR_LIMIT}</div>
+          <div className={classes.chars}>{orgName.length}/{CHAR_LIMIT}</div>
         </div>
 
         <div>
@@ -212,7 +213,7 @@ export function AddAffiliation ({ close, save }) {
           />
         </div>
 
-        <div styleName={`save ${canSave ? '' : 'disabled'}`}>
+        <div className={cx(classes.save, { [classes.disabled]: !canSave })}>
           <span onClick={canSave ? () => save({ role, preposition, orgName, url }) : undefined}>{t('Add Affiliation')}</span>
         </div>
 
@@ -223,7 +224,7 @@ export function AddAffiliation ({ close, save }) {
 
 export function Message ({ errorMessage, successMessage, reset }) {
   return (
-    <div styleName={`message ${errorMessage ? 'error' : 'success'}`} onClick={reset}>{errorMessage || successMessage }</div>
+    <div className={cx(classes.message, { [classes.error]: errorMessage, [classes.success]: !errorMessage })} onClick={reset}>{errorMessage || successMessage }</div>
   )
 }
 export default withTranslation()(UserGroupsTab)

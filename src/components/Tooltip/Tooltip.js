@@ -1,24 +1,17 @@
+import cx from 'classnames'
 import React from 'react'
-import ReactTooltip from 'react-tooltip'
-import './Tooltip.scss'
+import { Tooltip as ReactTooltip } from 'react-tooltip'
+import classes from './Tooltip.module.scss'
 
 const Tooltip = (props) => {
-  const { id, className, delay, offset, position, getContent } = props
+  const { id, className, delay, offset, position, content } = props
   return (
     <ReactTooltip
       id={id}
-      effect='solid'
-      style='light'
-      border
-      getContent={getContent}
-      // :TODO: de-duplicate these colour values
-      textColor='#2A4059'
-      borderColor='#40A1DD'
-      backgroundColor='white'
-      offset={offset || { 'top': -2 }}
+      content={content}
       delayShow={delay || 500}
-      className={className}
-      styleName='tooltip'
+      offset={offset || { top: -2 }}
+      className={cx(classes.tooltip, className)}
       place={position}
     />
   )

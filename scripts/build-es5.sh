@@ -6,7 +6,7 @@ fi
 
 export NODE_ENV=production
 for dir in src scripts; do
-  ./node_modules/.bin/babel --config-file ./babel.config.js --env-name server $dir --out-dir es5/$dir
+  ./node_modules/.bin/babel --config-file ./babel.config.cjs --env-name server $dir --out-dir es5/$dir
 done
 
 for file in `find src -name "*.scss"`; do

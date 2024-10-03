@@ -6,7 +6,7 @@ import { bgImageStyle } from 'util/index'
 import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
 import Member from 'components/Member'
-import './PostPeopleDialog.scss'
+import classes from './PostPeopleDialog.module.scss'
 import { humanResponse } from 'store/models/EventInvitation'
 
 class PostPeopleDialog extends React.PureComponent {
@@ -47,16 +47,16 @@ class PostPeopleDialog extends React.PureComponent {
         showCancelButton={false}
         showSubmitButton={false}
         style={{ width: '100%', maxWidth: '620px' }}>
-        <div styleName='container'>
+        <div className={classes.container}>
           {/*
             Note: Can make memberDetails optional by adding a `withDetails` flag
             sending in `goToMember` and switchin the onClick on a `MemberRow` to
             go there instead of showing detail and making adding a conditional
             style to make width of members-list be 100% in that case.
           */}
-          <div styleName='members-list'>
+          <div className={classes.membersList}>
             {this.props.members.length > 7 && <TextInput
-              styleName='members-search-input'
+              className={classes.membersSearchInput}
               aria-label='members-search'
               autoFocus
               label='members-search'
@@ -85,14 +85,14 @@ function MemberRow ({ member, selected, onClick }) {
   const { name, avatarUrl, response } = member
 
   return (
-    <div styleName={cx('row', { selected })} onClick={onClick}>
-      <div styleName='col'>
-        <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
+    <div className={cx(classes.row, { [classes.selected]: selected })} onClick={onClick}>
+      <div className={classes.col}>
+        <div className={classes.avatar} style={bgImageStyle(avatarUrl)} />
       </div>
-      <div styleName='col'>
+      <div className={classes.col}>
         {name}
       </div>
-      {response && <div styleName='col response'>
+      {response && <div className={cx(classes.col, classes.response)}>
         {humanResponse(response)}
       </div>}
     </div>
@@ -101,8 +101,8 @@ function MemberRow ({ member, selected, onClick }) {
 
 function MemberDetail ({ member, currentGroup }) {
   return (
-    <div styleName='member-detail'>
-      <Member member={member} styleName='member' group={currentGroup} />
+    <div className={classes.memberDetail}>
+      <Member member={member} className={classes.member} group={currentGroup} />
     </div>
   )
 }

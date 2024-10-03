@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
 import getMyMemberships from 'store/selectors/getMyMemberships'
-import getGroupForCurrentRoute from './getGroupForCurrentRoute'
+import getGroupForSlug from 'store/selectors/getGroupForSlug'
 
 export const getMyGroupMembership = createSelector(
-  getGroupForCurrentRoute,
+  getGroupForSlug,
   getMyMemberships,
   (group, memberships) => {
     if (group && memberships.length > 0) {

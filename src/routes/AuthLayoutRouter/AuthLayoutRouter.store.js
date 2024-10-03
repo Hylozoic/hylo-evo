@@ -1,4 +1,4 @@
-import { LOCATION_CHANGE } from 'connected-react-router'
+import { LOCATION_CHANGE } from 'redux-first-history'
 import { pick } from 'lodash/fp'
 import rollbar from 'client/rollbar'
 import {
@@ -39,9 +39,9 @@ export default function reducer (state = initialState, action) {
     rollbar.configure({
       payload: {
         person: {
-          id: id,
+          id,
           username: name,
-          email: email
+          email
         }
       }
     })

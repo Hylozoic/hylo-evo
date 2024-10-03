@@ -5,17 +5,17 @@ import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 
 export const getChildGroups = ormCreateSelector(
   orm,
-  getGroupForCurrentRoute,
+  (state, group) => group,
   (session, group) => {
-    return group.childGroups.toModelArray().sort((a, b) => a.name.localeCompare(b.name))
+    return group.childGroups?.toModelArray().sort((a, b) => a.name.localeCompare(b.name)) || []
   }
 )
 
 export const getParentGroups = ormCreateSelector(
   orm,
-  getGroupForCurrentRoute,
+  (state, group) => group,
   (session, group) => {
-    return group.parentGroups.toModelArray().sort((a, b) => a.name.localeCompare(b.name))
+    return group.parentGroups?.toModelArray().sort((a, b) => a.name.localeCompare(b.name)) || []
   }
 )
 

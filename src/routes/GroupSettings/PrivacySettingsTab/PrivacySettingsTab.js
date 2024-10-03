@@ -20,8 +20,8 @@ import {
 } from 'store/models/Group'
 import SettingsSection from '../SettingsSection'
 
-import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
-import styles from './PrivacySettingsTab.scss' // eslint-disable-line no-unused-vars
+import general from '../GroupSettings.module.scss' // eslint-disable-line no-unused-vars
+import styles from './PrivacySettingsTab.module.scss' // eslint-disable-line no-unused-vars
 
 const { object } = PropTypes
 
@@ -104,10 +104,10 @@ class PrivacySettingsTab extends Component {
     const { name, type } = group
 
     return (
-      <div styleName='general.groupSettings'>
+      <div className={general.groupSettings}>
         <SettingsSection>
           <h3>{t('Visibility')}</h3>
-          <p styleName='general.detailText'>{t('Who is able to see')}{' '}<strong>{name}</strong>?</p>
+          <p className={general.detailText}>{t('Who is able to see')} <strong>{name}</strong>?</p>
           {Object.values(GROUP_VISIBILITY).map(visibilitySetting =>
             <VisibilitySettingRow
               key={visibilitySetting}
@@ -121,7 +121,7 @@ class PrivacySettingsTab extends Component {
 
         <SettingsSection>
           <h3>{t('Access')}</h3>
-          <p styleName='general.detailText'>{t('How can people become members of')}{' '}<strong>{name}</strong></p>
+          <p className={general.detailText}>{t('How can people become members of')} <strong>{name}</strong></p>
           {Object.values(GROUP_ACCESSIBILITY).map(accessSetting =>
             <AccessibilitySettingRow
               key={accessSetting}
@@ -139,17 +139,17 @@ class PrivacySettingsTab extends Component {
 
         <SettingsSection>
           <h3>{t('Join Questions')}</h3>
-          <div styleName={cx({ 'styles.groupQuestions': true, 'styles.on': settings?.askJoinQuestions })}>
-            <div styleName={cx({ 'general.switchContainer': true, 'general.on': askJoinQuestions })}>
+          <div className={cx(styles.groupQuestions, { [styles.on]: settings?.askJoinQuestions })}>
+            <div className={cx(general.switchContainer, { [general.on]: askJoinQuestions })}>
               <SwitchStyled
                 checked={askJoinQuestions}
                 onChange={() => this.updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
                 backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'}
               />
-              <span styleName='general.toggleDescription'>{t('Require people to answer questions when requesting to join this group')}</span>
-              <div styleName='general.onOff'>
-                <div styleName='general.off'>{t('OFF')}</div>
-                <div styleName='general.on'>{t('ON')}</div>
+              <span className={general.toggleDescription}>{t('Require people to answer questions when requesting to join this group')}</span>
+              <div className={general.onOff}>
+                <div className={general.off}>{t('OFF')}</div>
+                <div className={general.on}>{t('ON')}</div>
               </div>
             </div>
             <QuestionsForm questions={joinQuestions} save={this.updateSettingDirectly('joinQuestions', true)} disabled={!askJoinQuestions} />
@@ -158,11 +158,11 @@ class PrivacySettingsTab extends Component {
 
         <SettingsSection>
           <h3>{t('Prerequisite Groups')}</h3>
-          <p styleName='general.detailText'>{t('When you select a prerequisite group, people must join the selected groups before joining')}{' '}<strong>{name}</strong>.{' '}{t('Only parent groups can be added as prerequisite groups.')}</p>
-          <p styleName='styles.prerequisiteWarning'>
-            <strong styleName='styles.warning'>{t('Warning:')}</strong>{' '}{t('If you select a prerequisite group that has a visibility setting of')}
-            <strong><Icon name='Hidden' styleName='styles.prerequisiteIcon' />{' '}{t('Hidden')}</strong>{' '}{t('or')}
-            <strong><Icon name='Shield' styleName='styles.prerequisiteIcon' />{' '}{t('Protected')}</strong>,
+          <p className={general.detailText}>{t('When you select a prerequisite group, people must join the selected groups before joining')} <strong>{name}</strong>. {t('Only parent groups can be added as prerequisite groups.')}</p>
+          <p className={styles.prerequisiteWarning}>
+            <strong className={styles.warning}>{t('Warning:')}</strong> {t('If you select a prerequisite group that has a visibility setting of')}
+            <strong><Icon name='Hidden' className={styles.prerequisiteIcon} /> {t('Hidden')}</strong> {t('or')}
+            <strong><Icon name='Shield' className={styles.prerequisiteIcon} /> {t('Protected')}</strong>,
             {t('only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.')}
           </p>
           <GroupsSelector
@@ -175,18 +175,18 @@ class PrivacySettingsTab extends Component {
 
         <SettingsSection>
           <h3>{t('Group Access Questions')}</h3>
-          <p styleName='general.detailText'>{t('What questions are asked when a group requests to join this group?')}</p>
+          <p className={general.detailText}>{t('What questions are asked when a group requests to join this group?')}</p>
 
-          <div styleName={cx({ 'styles.groupQuestions': true, 'styles.on': askGroupToGroupJoinQuestions })}>
-            <div styleName={cx({ 'general.switchContainer': true, 'general.on': askGroupToGroupJoinQuestions })} >
+          <div className={cx(styles.groupQuestions, { [styles.on]: askGroupToGroupJoinQuestions })}>
+            <div className={cx(general.switchContainer, { [general.on]: askGroupToGroupJoinQuestions })}>
               <SwitchStyled
                 checked={askGroupToGroupJoinQuestions}
                 onChange={() => this.updateSettingDirectly('settings.askGroupToGroupJoinQuestions')(!askGroupToGroupJoinQuestions)}
                 backgroundColor={askGroupToGroupJoinQuestions ? '#0DC39F' : '#8B96A4'} />
-              <span styleName='general.toggleDescription'>{t('Require groups to answer questions when requesting to join this group')}</span>
-              <div styleName='general.onOff'>
-                <div styleName='general.off'>{t('OFF')}</div>
-                <div styleName='general.on'>{t('ON')}</div>
+              <span className={general.toggleDescription}>{t('Require groups to answer questions when requesting to join this group')}</span>
+              <div className={general.onOff}>
+                <div className={general.off}>{t('OFF')}</div>
+                <div className={general.on}>{t('ON')}</div>
               </div>
             </div>
             <QuestionsForm questions={groupToGroupJoinQuestions} save={this.updateSettingDirectly('groupToGroupJoinQuestions')} disabled={!askGroupToGroupJoinQuestions} />
@@ -197,26 +197,26 @@ class PrivacySettingsTab extends Component {
           ? (
             <SettingsSection>
               <h3>{t('Hide {{postType}} Data', { postType: startCase(type) })}</h3>
-              <p styleName='styles.dataDetail'>{t('If you don\'t want to display the detailed {{postType}} specific data on your group\'s profile', { postType: type })}</p>
-              <div styleName={cx({ 'general.switchContainer': true, 'general.on': hideExtensionData })}>
+              <p className={styles.dataDetail}>{t('If you don\'t want to display the detailed {{postType}} specific data on your group\'s profile', { postType: type })}</p>
+              <div className={cx(general.switchContainer, { [general.on]: hideExtensionData })}>
                 <SwitchStyled
                   checked={hideExtensionData}
                   onChange={() => this.updateSettingDirectly('settings.hideExtensionData')(hideExtensionData === undefined || hideExtensionData === null || !hideExtensionData)}
                   backgroundColor={hideExtensionData ? '#0DC39F' : '#8B96A4'}
                 />
-                <span styleName='general.toggleDescription'>{t('Hide {{postType}} data for this group', { postType: type })}</span>
-                <div styleName='general.onOff'>
-                  <div styleName='general.off'>{t('OFF')}</div>
-                  <div styleName='general.on'>{t('ON')}</div>
+                <span className={general.toggleDescription}>{t('Hide {{postType}} data for this group', { postType: type })}</span>
+                <div className={general.onOff}>
+                  <div className={general.off}>{t('OFF')}</div>
+                  <div className={general.on}>{t('ON')}</div>
                 </div>
               </div>
             </SettingsSection>
           )
           : ''}
 
-        <div styleName='general.saveChanges'>
-          <span styleName={changed ? 'general.settingChanged' : ''}>{changed ? t('Changes not saved') : t('Current settings up to date')}</span>
-          <Button label={t('Save Changes')} color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='general.save-button' />
+        <div className={general.saveChanges}>
+          <span className={cx({ [general.settingChanged]: changed })}>{changed ? t('Changes not saved') : t('Current settings up to date')}</span>
+          <Button label={t('Save Changes')} color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} className={general.saveButton} />
         </div>
       </div>
     )
@@ -225,13 +225,13 @@ class PrivacySettingsTab extends Component {
 
 function VisibilitySettingRow ({ currentSetting, forSetting, updateSetting, t }) {
   return (
-    <div styleName={'styles.privacySetting' + ' ' + cx({ 'styles.on': currentSetting === forSetting })}>
+    <div className={cx(styles.privacySetting, { [styles.on]: currentSetting === forSetting })}>
       <label>
         <input type='radio' name='Visibility' value={forSetting} onChange={updateSetting('visibility')} checked={currentSetting === forSetting} />
-        <Icon name={visibilityIcon(forSetting)} styleName='styles.settingIcon' />
-        <div styleName='styles.settingDescription'>
+        <Icon name={visibilityIcon(forSetting)} className={styles.settingIcon} />
+        <div className={styles.settingDescription}>
           <h4>{t(visibilityString(forSetting))}</h4>
-          <span styleName={cx('styles.privacy-option', { 'styles.disabled': currentSetting !== forSetting })}>{t(visibilityDescription(forSetting))}</span>
+          <span className={cx(styles.privacyOption, { [styles.disabled]: currentSetting !== forSetting })}>{t(visibilityDescription(forSetting))}</span>
         </div>
       </label>
     </div>
@@ -241,13 +241,13 @@ function VisibilitySettingRow ({ currentSetting, forSetting, updateSetting, t })
 function AccessibilitySettingRow ({ currentSetting, forSetting, updateSetting }) {
   const { t } = useTranslation()
   return (
-    <div styleName={'styles.privacySetting' + ' ' + cx({ 'styles.on': currentSetting === forSetting })}>
+    <div className={cx(styles.privacySetting, { [styles.on]: currentSetting === forSetting })}>
       <label>
         <input type='radio' name='accessibility' value={forSetting} onChange={updateSetting('accessibility')} checked={currentSetting === forSetting} />
-        <Icon name={accessibilityIcon(forSetting)} styleName='styles.settingIcon' />
-        <div styleName='styles.settingDescription'>
+        <Icon name={accessibilityIcon(forSetting)} className={styles.settingIcon} />
+        <div className={styles.settingDescription}>
           <h4>{t(accessibilityString(forSetting))}</h4>
-          <span styleName={cx('styles.privacy-option', { 'styles.disabled': currentSetting !== forSetting })}>{t(accessibilityDescription(forSetting))}</span>
+          <span className={cx(styles.privacyOption, { [styles.disabled]: currentSetting !== forSetting })}>{t(accessibilityDescription(forSetting))}</span>
         </div>
       </label>
     </div>
@@ -275,9 +275,9 @@ function QuestionsForm ({ disabled, questions, save }) {
     updateJoinQuestion(index)(event)
   }
 
-  return <div styleName='styles.questionList'>
-    {questions.map((q, i) => <div key={i} styleName='styles.question'>
-      {q.text ? <div styleName='styles.deleteInput'><Icon name='CircleEx' styleName='styles.close' onClick={clearField(i)} /></div> : <span styleName='styles.createInput'>+</span>}
+  return <div className={styles.questionList}>
+    {questions.map((q, i) => <div key={i} className={styles.question}>
+      {q.text ? <div className={styles.deleteInput}><Icon name='CircleEx' className={styles.close} onClick={clearField(i)} /></div> : <span className={styles.createInput}>+</span>}
       <input name='questions[]' disabled={disabled} value={q.text} placeholder={t('Add a new question')} onChange={updateJoinQuestion(i)} />
     </div>)}
   </div>

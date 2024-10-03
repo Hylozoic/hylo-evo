@@ -1,0 +1,18 @@
+.tooltip {
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 24px !important;
+  font-weight: bold;
+  background: $color-white;
+  color: $color-member;
+  border: 1px solid $color-picton-blue;
+  box-shadow: $box-shadow-tooltip;
+  z-index: 1000;
+}
+
+
+@media screen and (max-width: 500px) {
+  .tooltip {
+    display: none !important;
+  }
+}

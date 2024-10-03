@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
   const queryProps = { groupSlug: group.slug }
   const memberships = getMyMemberships(state, props)
   const joinRequests = getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)
-  const childGroups = getChildGroups(state, queryProps).map(g => {
+  const childGroups = getChildGroups(state, group).map(g => {
     g.memberStatus = memberships.find(m => m.group.id === g.id) ? 'member' : joinRequests.find(jr => jr.group.id === g.id) ? 'requested' : 'not'
     return g
   })

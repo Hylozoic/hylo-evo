@@ -13,7 +13,7 @@ import ScrollListener from 'components/ScrollListener'
 import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
 import { participantAttributes } from 'store/models/MessageThread'
 import Loading from 'components/Loading'
-import './ThreadList.scss'
+import classes from './ThreadList.module.scss'
 
 class ThreadList extends Component {
   static defaultProps = {
@@ -34,10 +34,10 @@ class ThreadList extends Component {
       t
     } = this.props
 
-    return <div styleName='thread-list' className={className}>
-      <div styleName='header'>
-        <div styleName='search'>
-          <div styleName='search-icon'>
+    return <div className={cx(classes.threadList, className)}>
+      <div className={classes.header}>
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
             <Icon name='Search' />
           </div>
           <TextInput
@@ -48,12 +48,12 @@ class ThreadList extends Component {
             noClearButton
           />
         </div>
-        <Link styleName='new-message' to='/messages/new'>
+        <Link className={classes.newMessage} to='/messages/new'>
           <span>{t('New')}</span>
-          <Icon name='Messages' styleName='messages-icon' />
+          <Icon name='Messages' className={classes.messagesIcon} />
         </Link>
       </div>
-      <ul styleName='list' id={'thread-list-list'}>
+      <ul className={classes.list} id={'thread-list-list'}>
         {!isEmpty(threads) && threads.map(t => {
           const messages = itemsToArray(toRefArray(t.messages))
           const isUnread = t.unreadCount > 0
@@ -72,9 +72,9 @@ class ThreadList extends Component {
         {threadsPending &&
           <Loading type='bottom' />}
         {!threadsPending && isEmpty(threads) && !threadSearch &&
-          <div styleName='no-conversations'>{t('You have no active messages')}</div>}
+          <div className={classes.noConversations}>{t('You have no active messages')}</div>}
         {!threadsPending && isEmpty(threads) && threadSearch &&
-          <div styleName='no-conversations'>{t('No messages found')}</div>}
+          <div className={classes.noConversations}>{t('No messages found')}</div>}
       </ul>
       <ScrollListener
         elementId={'thread-list-list'}
@@ -102,16 +102,16 @@ export function ThreadListItem ({
   const latestMessagePreview = TextHelpers.presentHTMLToText(latestMessage?.text, { truncate: MAX_THREAD_PREVIEW_LENGTH })
   const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
-  return <li styleName={cx({ 'list-item': true, 'unread-list-item': isUnread, 'active': active })}>
+  return <li className={cx(classes.listItem, { [classes.unreadListItem]: isUnread, [classes.active]: active })}>
     <Link to={`/messages/${id}`}>
-      {active && <div styleName='active-thread' />}
+      {active && <div className={classes.activeThread} />}
       <ThreadAvatars avatarUrls={avatarUrls} />
-      <div styleName='li-center-content'>
+      <div className={classes.liCenterContent}>
         <ThreadNames names={names} />
-        <div styleName='thread-message-text'>{latestMessagePreview}</div>
+        <div className={classes.threadMessageText}>{latestMessagePreview}</div>
       </div>
-      <div styleName='li-right-content'>
-        <div styleName='message-time'>{TextHelpers.humanDate(get('createdAt', latestMessage))}</div>
+      <div className={classes.liRightContent}>
+        <div className={classes.messageTime}>{TextHelpers.humanDate(get('createdAt', latestMessage))}</div>
         {unreadCount > 0 && <Badge number={unreadCount} expanded />}
       </div>
     </Link>
@@ -132,21 +132,21 @@ ThreadListItem.propTypes = {
 
 function ThreadAvatars ({ avatarUrls }) {
   const count = avatarUrls.length
-  const style = `avatar-${count < 4 ? count : 'more'}`
-  const plusStyle = `avatar-${count < 4 ? count : 'more'} ${count > 4 ? 'plus-count' : ''}`
-  return <div styleName='thread-avatars'>
+  const style = `avatar${count < 4 ? count : 'More'}`
+  const plusStyle = cx(`avatar${count < 4 ? count : 'More'}`, { [classes.plusCount]: count > 4 })
+  return <div className={classes.threadAvatars}>
     {(count === 1 || count === 2) && <RoundImage url={avatarUrls[0]} />}
-    {count === 2 && <RoundImage url={avatarUrls[1]} medium styleName={style} />}
-    {count > 2 && <RoundImage url={avatarUrls[0]} medium styleName={style} />}
-    {count > 2 && <RoundImage url={avatarUrls[1]} medium styleName={style} />}
-    {count > 2 && <RoundImage url={avatarUrls[2]} medium styleName={style} />}
-    {count === 4 && <RoundImage url={avatarUrls[3]} medium styleName={style} />}
-    {count > 4 && <div styleName={`${plusStyle}`}>+{count - 4}</div>}
+    {count === 2 && <RoundImage url={avatarUrls[1]} medium className={classes[style]} />}
+    {count > 2 && <RoundImage url={avatarUrls[0]} medium className={classes[style]} />}
+    {count > 2 && <RoundImage url={avatarUrls[1]} medium className={classes[style]} />}
+    {count > 2 && <RoundImage url={avatarUrls[2]} medium className={classes[style]} />}
+    {count === 4 && <RoundImage url={avatarUrls[3]} medium className={classes[style]} />}
+    {count > 4 && <div className={plusStyle}>+{count - 4}</div>}
   </div>
 }
 
 function ThreadNames ({ names }) {
-  return <div styleName='thread-names'>
+  return <div className={classes.threadNames}>
     {names}
   </div>
 }

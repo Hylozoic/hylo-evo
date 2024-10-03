@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Icon from 'components/Icon'
-import './SocialControl.scss'
+import classes from './SocialControl.module.scss'
 
 const { func, string } = PropTypes
 
@@ -77,7 +77,7 @@ class SocialControl extends Component {
 
     const linkButton = (
       <span
-        styleName='link-button'
+        className={classes.linkButton}
         onClick={linked ? () => this.handleUnlinkClick() : () => this.handleLinkClick()}>
         {linked ? t('Unlink') : t('Link')}
 
@@ -85,9 +85,9 @@ class SocialControl extends Component {
     )
 
     return (
-      <div styleName='control'>
-        <div styleName={cx('social-control-label')}>
-          {linked ? <Icon name='Complete' styleName='linkedIcon' /> : ''}
+      <div className={classes.control}>
+        <div className={cx(classes.socialControlLabel)}>
+          {linked ? <Icon name='Complete' className={classes.linkedIcon} /> : ''}
           {label}
           {linkButton}
         </div>

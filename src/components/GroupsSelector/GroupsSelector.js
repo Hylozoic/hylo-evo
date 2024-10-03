@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { differenceBy } from 'lodash'
 import TagInput from 'components/TagInput'
-import styles from './GroupsSelector.scss'
+import styles from './GroupsSelector.module.scss'
 import { withTranslation } from 'react-i18next'
 
 class GroupsSelector extends Component {

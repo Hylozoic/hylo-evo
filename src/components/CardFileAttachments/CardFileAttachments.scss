@@ -3,7 +3,7 @@
 }
 
 .file-attachments {
-  composes: cardPadding;
+  // composes: cardPadding;
   display: flex;
   flex-direction: column;
   padding-bottom: 15px;
@@ -34,12 +34,13 @@
 .file-name {
   @include font-regular;
   color: $color-caribbean-green;
-  &:hover {
-    color: $color-gossamer;
-  }
   font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  &:hover {
+    color: $color-gossamer;
+  }
 }
 
 @media screen and (max-width: 500px) {

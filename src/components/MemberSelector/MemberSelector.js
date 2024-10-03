@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TagInput from 'components/TagInput'
 import RoundImage from 'components/RoundImage'
-import styles from './MemberSelector.scss'
+import styles from './MemberSelector.module.scss'
 import { isEmpty, isEqual } from 'lodash/fp'
 import { withTranslation } from 'react-i18next'
 
@@ -61,9 +61,9 @@ class MemberSelector extends Component {
 export function Suggestion ({ item, handleChoice }) {
   const { id, name, avatarUrl } = item
   return <li key={id || 'blank'}>
-    <a onClick={event => handleChoice(item, event)} styleName='suggestionLink'>
-      <RoundImage url={avatarUrl} styleName='suggestionAvatar' small />
-      <div styleName='suggestionName'>{name}</div>
+    <a onClick={event => handleChoice(item, event)} className={classes.suggestionLink}>
+      <RoundImage url={avatarUrl} className={classes.suggestionAvatar} small />
+      <div className={classes.suggestionName}>{name}</div>
     </a>
   </li>
 }

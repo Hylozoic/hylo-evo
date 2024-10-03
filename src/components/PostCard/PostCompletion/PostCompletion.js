@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import './PostCompletion.scss'
+import classes from './PostCompletion.module.scss'
 import DropdownButton from 'components/DropdownButton'
 
 export default function PostCompletion ({ type, startTime, endTime, isFulfilled, fulfillPost, unfulfillPost }) {
@@ -41,7 +41,7 @@ export default function PostCompletion ({ type, startTime, endTime, isFulfilled,
   const prompt = promptOptions[type]
   const choices = messages[type]
 
-  return <div styleName='postCompletion'>
+  return <div className={classes.postCompletion}>
     <div>{prompt}</div>
     <DropdownButton label={label}
       choices={choices}

@@ -3,7 +3,7 @@ import { pickBy } from 'lodash/fp'
 import { WebViewMessageTypes } from 'hylo-shared'
 import { sendMessageToWebView } from 'util/webView'
 import HyloEditor from 'components/HyloEditor'
-import './HyloEditorMobile.scss'
+import classes from './HyloEditorMobile.module.scss'
 
 /*
 

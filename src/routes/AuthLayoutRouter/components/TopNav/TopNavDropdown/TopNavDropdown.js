@@ -1,52 +1,38 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import './TopNavDropdown.scss'
 import cx from 'classnames'
-import { position } from 'util/scrolling'
+import PropTypes from 'prop-types'
+import React, { useState, useRef } from 'react'
 import ErrorBoundary from 'components/ErrorBoundary'
+import { position } from 'util/scrolling'
 
-const { func, object, string } = PropTypes
+import classes from './TopNavDropdown.module.scss'
 
-export default class TopNavDropdown extends Component {
-  static propTypes = {
-    toggleChildren: object,
-    className: string,
-    header: object,
-    items: object,
-    onToggle: func
-  }
+const TopNavDropdown = React.forwardRef(({ toggleChildren, className, header, body, onToggle }, ref) => {
+  const [active, setActive] = useState(false)
+  const [neverOpened, setNeverOpened] = useState(true)
 
-  constructor (props) {
-    super(props)
-    this.state = { active: false, neverOpened: true }
-  }
-
-  toggle = newState => {
-    const active = newState || !this.state.active
-    this.setState({ active })
-    if (this.props.onToggle) this.props.onToggle(active)
-    if (this.state.neverOpened && active) {
-      this.setState({ neverOpened: false })
+  const toggle = (newState) => {
+    const newActive = newState ?? !active
+    setActive(newActive)
+    if (onToggle) onToggle(newActive)
+    if (neverOpened && newActive) {
+      setNeverOpened(false)
     }
   }
 
-  render () {
-    const { toggleChildren, className, header, body } = this.props
-    const { active } = this.state
+  const toggleRight = document.documentElement.clientWidth - position(ref.current).x
+  const triangleStyle = { right: toggleRight - 41 }
 
-    const toggleRight = document.documentElement.clientWidth - position(this.refs.toggle).x
-    const triangleStyle = { right: toggleRight - 41 }
-
-    return <div className={className}>
-      {active && <div styleName='backdrop' onClick={() => this.toggle(false)} />}
-      <a onClick={() => this.toggle()} ref='toggle'>
+  return (
+    <div className={className}>
+      {active && <div className={classes.backdrop} onClick={() => toggle(false)} />}
+      <a onClick={() => toggle()} ref={ref}>
         {toggleChildren}
       </a>
-      <div styleName={cx('wrapper', 'animateFadeInDown', { active })}>
-        <ul styleName='menu'>
-          <li styleName='triangle' style={triangleStyle} />
+      <div className={cx(classes.wrapper, classes.animateFadeInDown, { [classes.active]: active })}>
+        <ul className={classes.menu}>
+          <li className={classes.triangle} style={triangleStyle} />
           <ErrorBoundary>
-            <li styleName='header'>
+            <li className={classes.header}>
               {header}
             </li>
             {body}
@@ -54,5 +40,15 @@ export default class TopNavDropdown extends Component {
         </ul>
       </div>
     </div>
-  }
+  )
+})
+
+TopNavDropdown.propTypes = {
+  toggleChildren: PropTypes.object,
+  className: PropTypes.string,
+  header: PropTypes.object,
+  body: PropTypes.object,
+  onToggle: PropTypes.func
 }
+
+export default TopNavDropdown

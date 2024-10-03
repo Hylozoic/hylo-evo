@@ -19,15 +19,16 @@ import ClickCatcher from 'components/ClickCatcher'
 import HyloHTML from 'components/HyloHTML'
 import RoundImage from 'components/RoundImage'
 import { SuggestedSkills } from 'routes/GroupDetail/GroupDetail'
-import styles from './GroupWelcomeModal.scss'
+import classes from './GroupWelcomeModal.module.scss'
 
 export default function GroupWelcomeModal (props) {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
-  const currentGroup = useSelector(state => getGroupForCurrentRoute(state, props))
+  const location = useLocation()
+  const currentGroup = useSelector(state => getGroupForCurrentRoute(state, location))
   const group = presentGroup(currentGroup)
-  const currentMembership = useSelector(state => getMyGroupMembership(state, props))
+  const currentMembership = useSelector(state => getMyGroupMembership(state, location))
   const membershipAgreements = currentMembership?.agreements.toModelArray()
   const { agreementsAcceptedAt, joinQuestionsAnsweredAt } = currentMembership?.settings || {}
   const [page, setPage] = useState(1)
@@ -125,40 +126,40 @@ export default function GroupWelcomeModal (props) {
       in
       timeout={{ appear: 400, enter: 400, exit: 300 }}
     >
-      <div styleName='welcome-modal-wrapper' key='welcome-modal'>
-        <div styleName={`welcome-modal viewing-page-${page}`} className='welcome-modal'>
-          <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='banner'>
-            <div styleName='banner-content'>
+      <div className={classes.welcomeModalWrapper} key='welcome-modal'>
+        <div className={cx(classes.welcomeModal, classes[`viewingPage${page}`])}>
+          <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} className={classes.banner}>
+            <div className={classes.bannerContent}>
               <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} size='50px' square />
               <h2>{t('Welcome to {{group.name}}!', { group })}</h2>
-              {hasFirstPage && hasSecondPage ? <span styleName='page-number'>({page}/2)</span> : ''}
+              {hasFirstPage && hasSecondPage ? <span className={classes.pageNumber}>({page}/2)</span> : ''}
             </div>
-            <div styleName='fade' />
+            <div className={classes.fade} />
           </div>
-          <div styleName='welcome-content page-1'>
+          <div className={cx(classes.welcomeContent, classes.page1)}>
             {!isEmpty(group.purpose) &&
               <div>
                 <h2>{t('Our Purpose')}</h2>
                 <p>{group.purpose}</p>
               </div>}
             {group.agreements?.length > 0 && (
-              <div styleName={cx('agreements', 'welcome-section')}>
+              <div className={cx(classes.agreements, classes.welcomeSection)}>
                 <h2>{t('Our Agreements')}</h2>
                 {currentMembership?.settings.agreementsAcceptedAt && agreementsChanged
-                  ? <p styleName='agreements-changed'>{t('The agreements have changed since you last accepted them. Please review and accept them again.')}</p>
+                  ? <p className={classes.agreementsChanged}>{t('The agreements have changed since you last accepted them. Please review and accept them again.')}</p>
                   : null}
                 <ol>
                   {group.agreements.map((agreement, i) => {
                     return (
-                      <li styleName={cx('agreement', { 'border-bottom': group.agreements.length > 1 && i !== (group.agreements.length - 1) })} key={i}>
+                      <li className={cx(classes.agreement, { [classes.borderBottom]: group.agreements.length > 1 && i !== (group.agreements.length - 1) })} key={i}>
                         <h3>{agreement.title}</h3>
-                        <div styleName='agreement-description'>
+                        <div className={classes.agreementDescription}>
                           <ClickCatcher>
                             <HyloHTML element='p' html={TextHelpers.markdown(agreement.description)} />
                           </ClickCatcher>
                         </div>
                         <input
-                          styleName='i-agree'
+                          className={classes.iAgree}
                           type='checkbox'
                           id={'agreement' + agreement.id}
                           data-testid={'cbAgreement' + i}
@@ -166,7 +167,7 @@ export default function GroupWelcomeModal (props) {
                           onChange={handleCheckAgreement}
                           checked={currentAgreements[i] || false}
                         />
-                        <label htmlFor={'agreement' + agreement.id} styleName={cx('i-agree', { accepted: currentAgreements[i] })}>
+                        <label htmlFor={'agreement' + agreement.id} className={cx(classes.iAgree, { [classes.accepted]: currentAgreements[i] })}>
                           {t('I agree to the above')}
                         </label>
                       </li>
@@ -181,14 +182,14 @@ export default function GroupWelcomeModal (props) {
                       onChange={handleCheckAllAgreements}
                       checked={checkedAllAgreements}
                     />
-                    <label htmlFor='checkAllAgreements' styleName={cx({ accepted: checkedAllAgreements })}>
+                    <label htmlFor='checkAllAgreements' className={cx({ [classes.accepted]: checkedAllAgreements })}>
                       {t('I agree to all of the above')}
                     </label>
                   </div>}
               </div>
             )}
           </div>
-          <div styleName='welcome-content page-2'>
+          <div className={cx(classes.welcomeContent, classes.page2)}>
             {!isEmpty(group.purpose) &&
               <div>
                 <h2>{t('Our Purpose')}</h2>
@@ -198,19 +199,19 @@ export default function GroupWelcomeModal (props) {
             {group?.settings?.showSuggestedSkills && group.suggestedSkills?.length > 0 &&
               <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
 
-            {!joinQuestionsAnsweredAt && group.settings?.askJoinQuestions && questionAnswers?.length > 0 && <div styleName='questions-header'>{t('Please answer the following questions to enter')}</div>}
+            {!joinQuestionsAnsweredAt && group.settings?.askJoinQuestions && questionAnswers?.length > 0 && <div className={classes.questionsHeader}>{t('Please answer the following questions to enter')}</div>}
             {!joinQuestionsAnsweredAt && group.settings?.askJoinQuestions && questionAnswers && questionAnswers.map((q, index) => (
-              <div styleName='join-question' key={index}>
+              <div className={classes.joinQuestion} key={index}>
                 <h3>{q.text}</h3>
                 <textarea name={`question_${q.questionId}`} onChange={handleAnswerQuestion(index)} value={q.answer} placeholder={t('Type your answer here...')} />
               </div>)
             )}
           </div>
-          <div styleName='call-to-action'>
+          <div className={classes.callToAction}>
             {page === 2 && hasFirstPage && (
               <Button
                 color='purple'
-                className={styles['previous-button']}
+                className={classes.previousButton}
                 label={t('Previous')}
                 onClick={() => setPage(1)}
               />

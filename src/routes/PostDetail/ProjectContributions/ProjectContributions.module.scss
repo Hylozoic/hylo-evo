@@ -1,0 +1,41 @@
+.project-contributions {
+  width: 100%;
+  border-top: 1px solid $color-cape-cod-10;
+  padding: 10px 16px;
+}
+
+.project-contributions-total {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-top: 10px;
+}
+
+.amount-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.amount-label {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-right: 10px;
+}
+
+.cancel-button {
+  margin-left: 10px;
+}
+
+.success-notification {
+  color: white;
+  background-color: $color-mountain-meadow;
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.error-notification {
+  color: white;
+  background-color: $color-amaranth;
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}

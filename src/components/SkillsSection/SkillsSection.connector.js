@@ -1,4 +1,4 @@
-import { push } from 'connected-react-router'
+import { push } from "redux-first-history";
 import { connect } from 'react-redux'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getMe from 'store/selectors/getMe'

@@ -4,7 +4,7 @@ import { isEmpty, map } from 'lodash'
 import cx from 'classnames'
 import Pillbox from 'components/Pillbox'
 import Loading from 'components/Loading'
-import './SkillsSection.scss'
+import classes from './SkillsSection.module.scss'
 
 class SkillsSection extends Component {
   static defaultProps = {
@@ -50,7 +50,7 @@ class SkillsSection extends Component {
       skillSuggestions
     } = this.props
 
-    return <div styleName={cx('pill-container', 'expanded')}>
+    return <div className={cx(classes.pillContainer, classes.expanded)}>
       <Pillbox
         pills={map(skills, skill => ({ ...skill, label: skill.name }))}
         handleInputChange={this.handleInputChange}

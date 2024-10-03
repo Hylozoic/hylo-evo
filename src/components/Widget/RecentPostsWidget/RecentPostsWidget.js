@@ -7,7 +7,7 @@ import { bgImageStyle } from 'util/index'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { groupUrl, postUrl, createPostUrl } from 'util/navigation'
-import './RecentPostsWidget.scss'
+import classes from './RecentPostsWidget.module.scss'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
@@ -55,18 +55,18 @@ const RecentPostsWidget = ({ group, items, routeParams }) => {
   )
 
   return (
-    <div styleName='recent-posts'>
+    <div className={classes.recentPosts}>
       <Slider {...settings} onSwipe={handleSwiped}>
         {items.map(p => <RecentPostCard key={p.id} post={p} group={group} onClickCapture={handleOnItemClick} routeParams={routeParams} />)}
         <div>
-          <Link to={createPostUrl(routeParams)} styleName='post create-new'>
-            <div styleName='content'>
-              <div styleName='type'>{t('NO MORE RECENT ACTIVITY')}</div>
-              <div styleName='recent-posts-cta'>{t('+ New post')}</div>
+          <Link to={createPostUrl(routeParams)} className={cx(classes.post, classes.createNew)}>
+            <div className={classes.content}>
+              <div className={classes.type}>{t('NO MORE RECENT ACTIVITY')}</div>
+              <div className={classes.recentPostsCta}>{t('+ New post')}</div>
             </div>
           </Link>
         </div>
-        <div styleName='view-all'>
+        <div className={classes.viewAll}>
           <Link to={groupUrl(group.slug, 'stream')}>{t('View all')}</Link>
         </div>
       </Slider>
@@ -85,18 +85,21 @@ const RecentPostCard = ({ group, onClickCapture, post, routeParams }) => {
   }
   return (
     <div>
-      <Link to={postUrl(id, routeParams)} styleName={`post ${type}`} onClickCapture={onClickCapture}>
-        <div styleName='content'>
-          <div styleName='type'>{type}</div>
-          <div styleName='title'>{title}</div>
+      <Link to={postUrl(id, routeParams)} className={cx(classes.post, classes[type])} onClickCapture={onClickCapture}>
+        <div className={classes.content}>
+          <div className={classes.type}>{type}</div>
+          <div className={classes.title}>{title}</div>
         </div>
-        <div styleName='bg' style={bgImageStyle(postBackgroundImage)} />
-        <div styleName='meta'>
+        <div className={classes.bg} style={bgImageStyle(postBackgroundImage)} />
+        <div className={classes.meta}>
           <RoundImage url={creator.avatarUrl} medium withBorder={false} />
-          <Icon name='SpeechBubble' styleName='comments'><span styleName='commenters'>{commentersTotal}</span></Icon>
+          <Icon name='SpeechBubble' className={classes.comments}>
+            <span className={classes.commenters}>{commentersTotal}</span>
+          </Icon>
         </div>
       </Link>
     </div>
   )
 }
+
 export default RecentPostsWidget

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
+import { push } from "redux-first-history";
 import { personUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'

@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
-import { withRouter } from 'react-router-dom'
+import { push } from 'redux-first-history'
 import { get } from 'lodash/fp'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import { setConfirmBeforeClose } from './FullPageModal.store'
@@ -17,4 +16,4 @@ export const mapDispatchToProps = {
   setConfirmBeforeClose
 }
 
-export default component => withRouter(connect(mapStateToProps, mapDispatchToProps)(component))
+export default component => connect(mapStateToProps, mapDispatchToProps)(component)

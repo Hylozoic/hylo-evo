@@ -10,7 +10,7 @@ import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import RoundImage from 'components/RoundImage'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import styles from './MessageForm.scss'
+import styles from './MessageForm.module.scss'
 
 export default function MessageForm (props) {
   const [hasFocus, setHasFocus] = useState(false)
@@ -52,16 +52,14 @@ export default function MessageForm (props) {
   } = props
 
   if (pending) return <Loading />
-
   return <form
-    styleName='message-form'
-    className={cx({ className, [styles['has-focus']]: hasFocus })}
+    className={cx(styles.messageForm, className, { [styles.hasFocus]: hasFocus })}
     onSubmit={handleSubmit}
   >
-    <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
+    <RoundImage url={get('avatarUrl', currentUser)} className={styles.userImage} medium />
     <TextareaAutosize
       value={messageText}
-      styleName='message-textarea'
+      className={styles.messageTextarea}
       inputRef={formRef}
       minRows={1}
       maxRows={8}
@@ -70,8 +68,8 @@ export default function MessageForm (props) {
       onFocus={() => { setHasFocus(true); onFocus() }}
       onBlur={() => setHasFocus(false)}
       placeholder={placeholder} />
-    <button styleName='send-button'>
-      <Icon name='Reply' styleName='reply-icon' />
+    <button className={styles.sendButton}>
+      <Icon name='Reply' className={styles.replyIcon} />
     </button>
   </form>
 }

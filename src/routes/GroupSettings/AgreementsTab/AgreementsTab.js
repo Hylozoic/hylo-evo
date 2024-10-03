@@ -6,6 +6,7 @@ import React, { forwardRef, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 import Button from 'components/Button'
 import Icon, { IconWithRef } from 'components/Icon'
 import Loading from 'components/Loading'
@@ -14,8 +15,8 @@ import {
   updateGroupSettings
 } from '../GroupSettings.store'
 
-import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
-import styles from './AgreementsTab.scss' // eslint-disable-line no-unused-vars
+import classes from '../GroupSettings.module.scss'
+import styles from './AgreementsTab.module.scss'
 
 const { object } = PropTypes
 
@@ -110,9 +111,9 @@ function AgreementsTab (props) {
   const saveButtonContent = useCallback(() => {
     if (!changed) return { color: 'gray', style: '', text: t('Current settings up to date') }
     if (error) {
-      return { color: 'purple', style: 'general.settingIncorrect', text: error }
+      return { color: 'purple', style: classes.settingIncorrect, text: error }
     }
-    return { color: 'green', style: 'general.settingChanged', text: t('Changes not saved') }
+    return { color: 'green', style: classes.settingChanged, text: t('Changes not saved') }
   }, [changed, error])
 
   if (!group) return <Loading />
@@ -120,11 +121,10 @@ function AgreementsTab (props) {
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <SortableContext items={agreements} strategy={verticalListSortingStrategy}>
-
-        <div styleName='general.groupSettings'>
+        <div className={classes.groupSettings}>
           <h1>{t('Group Agreements')}</h1>
           <p>{t('groupAgreementsDescription')}</p>
-          <p styleName='styles.warning'>{t('groupAgreementsWarning')}</p>
+          <p className={styles.warning}>{t('groupAgreementsWarning')}</p>
           <div>
             {agreements.map((agreement, i) => (
               <AgreementRowDraggable
@@ -138,16 +138,21 @@ function AgreementsTab (props) {
               />
             ))}
           </div>
-          <div styleName='styles.add-button' onClick={addAgreement}>
+          <div className={styles.addButton} onClick={addAgreement}>
             <h4>{t('Add Agreement')}</h4>
-            <Icon name='Circle-Plus' styleName='styles.add-button-icon' />
+            <Icon name='Circle-Plus' className={styles.addButtonIcon} />
           </div>
 
           <br />
 
-          <div styleName='general.saveChanges'>
-            <span styleName={saveButtonContent().style}>{saveButtonContent().text}</span>
-            <Button label={t('Save Changes')} color={saveButtonContent().color} onClick={changed && !error ? save : null} className='save-button' styleName='general.save-button' />
+          <div className={classes.saveChanges}>
+            <span className={saveButtonContent().style}>{saveButtonContent().text}</span>
+            <Button
+              label={t('Save Changes')}
+              color={saveButtonContent().color}
+              onClick={changed && !error ? save : null}
+              className={classes.saveButton}
+            />
           </div>
         </div>
       </SortableContext>
@@ -236,23 +241,23 @@ const AgreementRow = forwardRef(({ children, ...props }, ref) => {
   const viewCount = parseInt(index) + 1
 
   return (
-    <div styleName='styles.agreement-row' ref={ref} style={style}>
-      <div styleName='styles.header'>
+    <div className={styles.agreementRow} ref={ref} style={style}>
+      <div className={styles.header}>
         <strong>{viewCount})</strong>
-        <div styleName='styles.controls'>
-          <IconWithRef name='Draggable' styleName='styles.drag-handle' {...listeners} {...attributes} ref={setActivatorNodeRef} />
-          <Icon name='Trash' onClick={onDelete} styleName='styles.delete-button' />
+        <div className={styles.controls}>
+          <IconWithRef name='Draggable' className={styles.dragHandle} {...listeners} {...attributes} ref={setActivatorNodeRef} />
+          <Icon name='Trash' onClick={onDelete} className={styles.deleteButton} />
         </div>
       </div>
       <SettingsControl
-        controlClass={styles['settings-control']}
+        controlClass={styles.settingsControl}
         label={t('Title')}
         onChange={onChange('title')}
         placeholder={exampleText(t)}
         value={title}
       />
       <SettingsControl
-        controlClass={styles['settings-control']}
+        controlClass={styles.settingsControl}
         label={t('Description')}
         onChange={onChange('description')}
         placeholder={t('Describe the agreement and what the group expects from its members')}

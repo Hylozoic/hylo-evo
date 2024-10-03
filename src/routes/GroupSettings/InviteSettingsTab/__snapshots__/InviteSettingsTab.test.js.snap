@@ -32,13 +32,13 @@ exports[`renders correctly 1`] = `
           }
         }
       >
-         
+
         Hylo
       </span>
-       
+
       with this link
       .
-       
+
       Click or press on it to copy it
       :
     </div>
@@ -53,8 +53,8 @@ exports[`renders correctly 1`] = `
           text="http://www.hylo.com/c/hylo/join/lalala"
         >
           <span
-            data-for="invite-link-tooltip"
-            data-tip="Click to Copy"
+            data-tooltip-id="invite-link-tooltip"
+            data-tooltip-content="Click to Copy"
           >
             http://www.hylo.com/c/hylo/join/lalala
             <Icon

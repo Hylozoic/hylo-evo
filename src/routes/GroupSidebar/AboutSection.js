@@ -6,7 +6,7 @@ import { TextHelpers } from 'hylo-shared'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloHTML from 'components/HyloHTML'
 import cx from 'classnames'
-import './GroupSidebar.scss'
+import classes from './GroupSidebar.module.scss'
 
 function AboutSection (props) {
   const { description, purpose, t } = props
@@ -26,9 +26,9 @@ function AboutSection (props) {
   if (!purpose && !description) return null
 
   return (
-    <div styleName='about-section'>
-      <div styleName={cx({ 'about-content': true, expanded })} ref={containerRef}>
-        {showExpandButton && !expanded && <div styleName='gradient' />}
+    <div className={classes.aboutSection}>
+      <div className={cx(classes.aboutContent, { [classes.expanded]: expanded })} ref={containerRef}>
+        {showExpandButton && !expanded && <div className={classes.gradient} />}
         {!isEmpty(purpose) &&
           <ClickCatcher>
             <h2>{t('Our Purpose')}</h2>
@@ -41,7 +41,7 @@ function AboutSection (props) {
           </ClickCatcher>}
       </div>
       {showExpandButton &&
-        <span styleName='expand-button' onClick={onClick}>
+        <span className={classes.expandButton} onClick={onClick}>
           {expanded ? t('Show Less') : t('Read More')}
         </span>}
     </div>

@@ -1,24 +1,24 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { PathHelpers, HYLO_URL_REGEX } from 'hylo-shared'
 
 export default function ClickCatcher ({ handleMouseOver, groupSlug = 'all', onClick, ...props }) {
-  const history = useHistory()
+  const navigate = useNavigate()
 
-  return React.createElement('span', { ...props, onClick: handleClick(history.push, groupSlug, onClick) })
+  return React.createElement('span', { ...props, onClick: handleClick(navigate, groupSlug, onClick) })
 }
 
-export const handleClick = (push, groupSlug, onClick) => event => {
+export const handleClick = (navigate, groupSlug, onClick) => event => {
   const element = event.target
 
   switch (element?.nodeName.toLowerCase()) {
     case 'span': {
       if (element.classList.contains('mention')) {
-        return push(PathHelpers.mentionPath(element.getAttribute('data-id'), groupSlug))
+        return navigate(PathHelpers.mentionPath(element.getAttribute('data-id'), groupSlug))
       }
 
       if (element.classList.contains('topic')) {
-        return push(PathHelpers.topicPath(element.getAttribute('data-id'), groupSlug))
+        return navigate(PathHelpers.topicPath(element.getAttribute('data-id'), groupSlug))
       }
 
       break
@@ -47,7 +47,7 @@ export const handleClick = (push, groupSlug, onClick) => event => {
         if (pathname) {
           event.preventDefault()
 
-          return push(pathname)
+          return navigate(pathname)
         }
 
         // default to external link

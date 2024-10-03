@@ -1,21 +1,21 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import './Topics.scss'
+import classes from './Topics.module.scss'
 
 export default function TopicsWidget ({ group = {} }) {
   const { t } = useTranslation()
 
   return (
     group.topics
-      ? <div styleName='groupTopics'>
-        <div styleName='groupSubtitle'>{t('Topics')}</div>
+      ? <div className={classes.groupTopics}>
+        <div className={classes.groupSubtitle}>{t('Topics')}</div>
         {group.topics.slice(0, 10).map(topic => {
           return (
             <span
               key={'topic_' + topic.id}
-              styleName='topicButton'
+              className={classes.topicButton}
             >
-              <span styleName='topicCount'>{topic.postsTotal}</span> #{topic.name}
+              <span className={classes.topicCount}>{topic.postsTotal}</span> #{topic.name}
             </span>
           )
         })}

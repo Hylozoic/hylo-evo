@@ -116,7 +116,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
 
   // All Groups stream w/ topics
   queriesToMatch.push({ context: 'all' })
-  for (let topic of topics) {
+  for (const topic of topics) {
     queriesToMatch.push(
       { context: 'all', topic: topic.id }
     )
@@ -163,7 +163,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
       )
     }
 
-    for (let topic of topics) {
+    for (const topic of topics) {
       queriesToMatch.push(
         // Add to the future posts in a topic (future because of order: 'asc')
         { context: 'groups', slug: group.slug, sortBy: 'id', order: 'asc', topic: topic.id, filter: 'chat', childPostInclusion: 'no' }
@@ -207,14 +207,14 @@ export function matchNewThreadIntoQueryResults (state, { id, type }) {
 }
 
 export function matchSubCommentsIntoQueryResults (state, { data }) {
-  const toplevelComments = get(`post.comments.items`, data)
+  const toplevelComments = get('post.comments.items', data)
 
   if (toplevelComments) {
     toplevelComments.forEach(comment => {
       state = updateIds(state,
         FETCH_CHILD_COMMENTS,
         { id: comment.id },
-        get(`childComments`, comment) || {}
+        get('childComments', comment) || {}
       )
     })
   }
@@ -225,27 +225,31 @@ export function matchSubCommentsIntoQueryResults (state, { data }) {
 function prependIdForCreate (state, type, params, id) {
   const key = buildKey(type, params)
   if (!state[key]) return state
-  return !state[key].ids.includes(id) ? {
-    ...state,
-    [key]: {
-      ids: [id].concat(state[key].ids),
-      total: (state[key].total || state[key].total === 0) && state[key].total + 1,
-      hasMore: state[key].hasMore
-    }
-  } : state
+  return !state[key].ids.includes(id)
+    ? {
+        ...state,
+        [key]: {
+          ids: [id].concat(state[key].ids),
+          total: (state[key].total || state[key].total === 0) && state[key].total + 1,
+          hasMore: state[key].hasMore
+        }
+      }
+    : state
 }
 
 function appendId (state, type, params, id) {
   const key = buildKey(type, params)
   if (!state[key]) return state
-  return !state[key].ids.includes(id) ? {
-    ...state,
-    [key]: {
-      ids: state[key].ids.concat(id),
-      total: (state[key].total || state[key].total === 0) && state[key].total + 1,
-      hasMore: state[key].hasMore
-    }
-  } : state
+  return !state[key].ids.includes(id)
+    ? {
+        ...state,
+        [key]: {
+          ids: state[key].ids.concat(id),
+          total: (state[key].total || state[key].total === 0) && state[key].total + 1,
+          hasMore: state[key].hasMore
+        }
+      }
+    : state
 }
 
 // If replace is false add new ids to the existing list, if true then replace list

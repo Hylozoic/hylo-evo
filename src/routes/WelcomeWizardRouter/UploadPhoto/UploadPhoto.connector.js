@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
-import { push, goBack } from 'connected-react-router'
+import { push, goBack } from 'redux-first-history'
 import updateUserSettings from 'store/actions/updateUserSettings'
 import { UPLOAD_ATTACHMENT } from 'store/constants'
 

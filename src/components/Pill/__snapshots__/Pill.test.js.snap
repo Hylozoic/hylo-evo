@@ -10,9 +10,9 @@ exports[`Pill renders 1`] = `
     onMouseLeave={[Function]}
   >
     <span
-      data-for="pill-label"
+      data-tooltip-id="pill-label"
       data-stylename="display-label"
-      data-tip="Click to Search"
+      data-tooltip-content="Click to Search"
       onClick={null}
     >
       mountain climbing
@@ -32,25 +32,25 @@ exports[`Pill renders when editable 1`] = `
     onMouseLeave={[Function]}
   >
     <span
-      data-for="pill-label"
+      data-tooltip-id="pill-label"
       data-stylename="display-label"
-      data-tip="Click to Search"
+      data-tooltip-content="Click to Search"
       onClick={null}
     >
       mountain climbing
     </span>
     <Icon
       data-stylename="remove-label"
-      dataTip="Double click to delete"
-      dataTipFor="pill-label"
+      tooltipContent="Double click to delete"
+      tooltipId="pill-label"
       name="Ex"
       onClick={[Function]}
     >
       <span
         className="icon-Ex"
-        data-for="pill-label"
+        data-tooltip-id="pill-label"
         data-stylename="icon"
-        data-tip="Double click to delete"
+        data-tooltip-content="Double click to delete"
         onClick={[Function]}
       />
     </Icon>

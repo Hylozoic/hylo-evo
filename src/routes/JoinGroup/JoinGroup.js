@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, Redirect } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { every, isEmpty } from 'lodash/fp'
 import { baseUrl, groupUrl } from 'util/navigation'
 import setReturnToPath from 'store/actions/setReturnToPath'
@@ -15,7 +15,7 @@ import Loading from 'components/Loading'
 export const SIGNUP_PATH = '/signup'
 
 export default function JoinGroup (props) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const signupComplete = useSelector(getSignupComplete)
   const [redirectTo, setRedirectTo] = useState()
@@ -58,12 +58,12 @@ export default function JoinGroup (props) {
         }
       } catch (error) {
         window.alert(t('Sorry, your invitation to this group is expired, has already been used, or is invalid. Please contact a group Host for another one.'))
-        history.push(baseUrl({}))
+        navigate(baseUrl({}))
       }
     })()
   }, [])
 
-  if (redirectTo) return <Redirect to={redirectTo} />
+  if (redirectTo) return <Navigate to={redirectTo} replace />
 
   return <Loading />
 }

@@ -8,7 +8,7 @@ export function participantAttributes (messageThread, currentUser, maxShown) {
   const currentUserId = get('id', currentUser)
   const participants = toRefArray(messageThread.participants)
   const filteredParticipants = filter(p => p.id !== currentUserId, participants)
-  var names, avatarUrls
+  let names, avatarUrls
 
   if (isEmpty(filteredParticipants)) {
     avatarUrls = [get('avatarUrl', currentUser)]

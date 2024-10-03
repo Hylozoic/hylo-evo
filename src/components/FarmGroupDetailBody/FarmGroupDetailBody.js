@@ -3,7 +3,7 @@ import { TextHelpers } from 'hylo-shared'
 import useEnsureCurrentGroup from 'hooks/useEnsureCurrentGroup'
 import useEnsurePosts from 'hooks/useEnsurePosts'
 import Widget from 'components/Widget'
-import './FarmGroupDetailBody.scss'
+import classes from './FarmGroupDetailBody.module.scss'
 import { getBio } from 'store/selectors/farmExtensionSelectors'
 
 export default function FarmGroupDetailBody ({
@@ -39,7 +39,7 @@ export default function FarmGroupDetailBody ({
 
   return (
     <>
-      <div styleName='farm-group-detail-body'>
+      <div className={classes.farmGroupDetailBody}>
         {widgets && widgets.map(widget =>
           <Widget
             {...widget}

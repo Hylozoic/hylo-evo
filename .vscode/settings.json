@@ -5,14 +5,13 @@
   "vscode-graphql.cacheSchemaFileForLookup": true,
   "vscode-graphql.showExecCodelens": true,
   "eslint.options": {
-    "overrideConfigFile": ".eslintrc.js"
+    "overrideConfigFile": "eslint.config.js"
   },
-  "standard.enableGlobally": true,
+  "standard.enableGlobally": false,
   "eslint.debug": false,
   "eslint.format.enable": true,
-  "eslint.packageManager": "yarn",
   "eslint.lintTask.enable": true,
-  "eslint.codeActionsOnSave.mode": "problems",
+  "eslint.codeActionsOnSave.mode": "all",
   "i18n-ally.localesPaths": [
     "public/locales"
   ],
@@ -31,4 +30,5 @@
     "A role must have a valid emoji and name to be updated"
   ],
   "i18n-ally.keystyle": "flat",
+  "standard.enable": false,
 }

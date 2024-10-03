@@ -1,6 +1,6 @@
 import { get } from 'lodash/fp'
-import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
-import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import groupViewPostsQueryFragment from '@graphql/fragments/groupViewPostsQueryFragment'
+import postsQueryFragment from '@graphql/fragments/postsQueryFragment'
 import { CONTEXT_MY, FETCH_POSTS } from 'store/constants'
 
 export default function fetchPosts ({

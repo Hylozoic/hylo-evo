@@ -1,9 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 const getClientEnvironment = require('./env')
 const paths = require('./paths')
@@ -42,6 +40,12 @@ module.exports = {
     extensions: ['.mjs', '.js', '.json', '.jsx'],
     alias: {
       'react-native': 'react-native-web'
+    },
+    fallback: {
+      fs: false,
+      net: false,
+      tls: false,
+      path: require.resolve('path-browserify')
     }
   },
   module: {
@@ -168,34 +172,28 @@ module.exports = {
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
     new webpack.DefinePlugin(env.stringified),
-    // This is necessary to emit hot updates (currently CSS only):
-    new webpack.HotModuleReplacementPlugin(),
-    // Watcher doesn't work well if you mistype casing in a path so we use
-    // a plugin that prints an error when you attempt to do this.
-    // See https://github.com/facebookincubator/create-react-app/issues/240
-    new CaseSensitivePathsPlugin(),
-    // If you require a missing module and then `npm install` it, you still have
-    // to restart the development server for Webpack to discover it. This plugin
-    // makes the discovery automatic so you don't have to restart.
-    // See https://github.com/facebookincubator/create-react-app/issues/186
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
     // To strip all locales except “en”
     new MomentLocalesPlugin(),
     // Required for hylo-shared package, but ideally would be handled by
     // the package build itself
-    new webpack.IgnorePlugin(/jsdom$/)
+    new webpack.IgnorePlugin({ resourceRegExp: /jsdom$/ })
   ],
-  // Some libraries import Node modules but don't use them in the browser.
-  // Tell Webpack to provide empty mocks for them so importing them works.
-  node: {
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
-  },
   // Turn off performance hints during development because we don't do any
   // splitting or minification in interest of speed. These warnings become
   // cumbersome.
   performance: {
     hints: false
+  },
+  // Add the following Webpack 5 specific configurations
+  target: 'web',
+  cache: {
+    type: 'filesystem',
+    buildDependencies: {
+      config: [__filename]
+    }
+  },
+  optimization: {
+    moduleIds: 'named',
+    chunkIds: 'named'
   }
 }

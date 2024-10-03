@@ -1,14 +1,19 @@
 import React from 'react'
 import Icon from '../Icon'
 import cx from 'classnames'
-import './component.scss'
+import classes from './component.module.scss'
 
 export default function BadgedIcon (props) {
   const { className, showBadge, green, ...rest } = props
-  const styleNames = cx({ green }, showBadge ? 'badge' : 'badge-hidden')
+  const badgeClass = cx(
+    { [classes.green]: green },
+    showBadge ? classes.badge : classes.badgeHidden
+  )
   return (
-    <Icon {...rest} green={green} className={className}>
-      <span styleName='badgeWrapper'><span styleName={styleNames} /></span>
+    <Icon {...rest} className={cx(className, { [classes.green]: green })}>
+      <span className={classes.badgeWrapper}>
+        <span className={badgeClass} />
+      </span>
     </Icon>
   )
 }

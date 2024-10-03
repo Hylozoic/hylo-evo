@@ -100,7 +100,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
       >
         <NavLink
           data-stylename="nav-link"
-          exact={true}
+          end={true}
           key="/settings"
           replace={true}
           to="/settings"
@@ -109,7 +109,7 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
         </NavLink>
         <NavLink
           data-stylename="nav-link"
-          exact={true}
+          end={true}
           key="/settings/groups"
           replace={true}
           to="/settings/groups"

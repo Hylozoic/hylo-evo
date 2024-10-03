@@ -1,42 +1,80 @@
 import cx from 'classnames'
-import { compact } from 'lodash/fp'
+import { compact, get } from 'lodash/fp'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useSelector, useDispatch } from 'react-redux'
+import { createSelector as ormCreateSelector } from 'redux-orm'
 import Icon from 'components/Icon'
-import { topicsUrl } from 'util/navigation'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
+import { toggleGroupMenu } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 import { GROUP_TYPES } from 'store/models/Group'
-import './Navigation.scss'
-import { CONTEXT_MY } from 'store/constants'
+import getGroupForSlug from 'store/selectors/getGroupForSlug'
+import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelationships'
+import getMe from 'store/selectors/getMe'
+import resetNewPostCount from 'store/actions/resetNewPostCount'
+import { CONTEXT_MY,FETCH_POSTS } from 'store/constants'
+import orm from 'store/models'
+import { makeDropQueryResults } from 'store/reducers/queryResults'
+import { topicsUrl, baseUrl, viewUrl } from 'util/navigation'
+
+import classes from './Navigation.module.scss'
+
+const getGroupMembership = ormCreateSelector(
+  orm,
+  getMe,
+  (state, { groupId }) => groupId,
+  (session, currentUser, id) => session.Membership.filter({ group: id, person: currentUser }).first()
+)
 
 export default function Navigation (props) {
   const {
-    badge,
     className,
-    clearBadge,
-    clearStream,
-    createPath,
     collapsed,
-    explorePath,
-    membersPath,
-    projectsPath,
-    proposalPath,
-    eventsPath,
-    group = {},
     groupId,
-    groupsPath,
-    hasRelatedGroups,
     hideTopics,
-    isGroupMenuOpen,
-    mapPath,
     mapView,
-    routeParams,
-    rootPath,
-    streamPath,
     toggleGroupMenu
   } = props
+
+  const dispatch = useDispatch()
+  const routeParams = useParams()
+  const location = useLocation()
+  const { t } = useTranslation()
+
+  const group = useSelector(state => getGroupForSlug(state, routeParams.groupSlug))
+  const rootPath = baseUrl({ ...routeParams, view: null })
+  const isAllOrPublicPath = ['/all', '/public'].includes(rootPath)
+
+  const badge = useSelector(state => {
+    if (group) {
+      const groupMembership = getGroupMembership(state, { groupId: group.id })
+      return get('newPostCount', groupMembership)
+    }
+    return null
+  })
+
+  const hasRelatedGroups = useSelector(state => {
+    if (group) {
+      const childGroups = getChildGroups(state, group)
+      const parentGroups = getParentGroups(state, group)
+      return childGroups.length > 0 || parentGroups.length > 0
+    }
+    return false
+  })
+
+  const isGroupMenuOpen = useSelector(state => get('AuthLayoutRouter.isGroupMenuOpen', state))
+  const streamFetchPostsParam = useSelector(state => get('Stream.fetchPostsParam', state))
+
+  const dropPostResults = makeDropQueryResults(FETCH_POSTS)
+
+  const clearStream = () => dispatch(dropPostResults(streamFetchPostsParam))
+  const clearBadge = () => {
+    if (badge && group) {
+      dispatch(resetNewPostCount(group.id, 'Membership'))
+    }
+  }
 
   const homeOnClick = () => {
     if (window.location.pathname === rootPath) {
@@ -45,11 +83,16 @@ export default function Navigation (props) {
     }
   }
 
-  const { t } = useTranslation()
+  const createPath = `${location.pathname}/create${location.search}`
+  const eventsPath = viewUrl('events', routeParams)
+  const explorePath = !isAllOrPublicPath && viewUrl('explore', routeParams)
+  const groupsPath = viewUrl('groups', routeParams)
+  const streamPath = viewUrl('stream', routeParams)
+  const mapPath = viewUrl('map', routeParams)
+  const membersPath = !isAllOrPublicPath && viewUrl('members', routeParams)
+  const projectsPath = viewUrl('projects', routeParams)
+  const proposalPath = viewUrl('proposals', routeParams)
 
-  // This should probably be normalized between
-  // store/models/Group/PUBLIC_CONTEXT_ID (public-context)
-  // and here and in Drawer, etc (public)
   const isPublic = routeParams.context === 'public'
   const isMyContext = routeParams.context === CONTEXT_MY
 
@@ -93,7 +136,7 @@ export default function Navigation (props) {
       label: group && group.type === GROUP_TYPES.farm ? t('Home') : t('Stream'),
       icon: group && group.type === GROUP_TYPES.farm ? 'Home' : 'Stream',
       to: rootPath,
-      badge: badge,
+      badge,
       handleClick: homeOnClick,
       exact: true
     },
@@ -145,15 +188,14 @@ export default function Navigation (props) {
     }))
   ])
 
-  const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
+  const collapserState = collapsed ? 'collapserCollapsed' : 'collapser'
   const canView = !group || group.memberCount !== 0
   const links = isMyContext ? myLinks : regularLinks
-
   return (
-    <div styleName={cx({ mapView }, collapserState, { showGroupMenu: isGroupMenuOpen })} className={className}>
-      <div styleName='navigation'>
+    <div className={cx(classes.container, { [classes.mapView]: mapView }, classes[collapserState], { [classes.showGroupMenu]: isGroupMenuOpen }, className)}>
+      <div className={classes.navigation}>
         {canView && (
-          <ul styleName='links' id='groupMenu'>
+          <ul className={classes.links} id='groupMenu'>
             {links.map((link, i) => (
               <NavLink
                 key={link.label + i}
@@ -161,9 +203,9 @@ export default function Navigation (props) {
                 {...link}
                 collapsed={collapsed}
                 onClick={link.handleClick}
-              />)
-            )}
-            <li styleName={cx('item', 'topicItem')}>
+              />
+            ))}
+            <li className={cx(classes.item, classes.topicItem)}>
               <Link to={topicsUrl(routeParams)}>
                 <Icon name='Topics' />
               </Link>
@@ -176,10 +218,11 @@ export default function Navigation (props) {
             backUrl={rootPath}
             routeParams={routeParams}
             groupId={groupId}
+            location={location}
           />
         )}
       </div>
-      <div styleName='closeBg' onClick={toggleGroupMenu} />
+      <div className={classes.closeBg} onClick={toggleGroupMenu} />
     </div>
   )
 }

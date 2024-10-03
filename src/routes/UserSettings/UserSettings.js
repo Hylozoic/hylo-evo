@@ -10,7 +10,7 @@ import PaymentSettingsTab from './PaymentSettingsTab/PaymentSettingsTab'
 import SavedSearchesTab from './SavedSearchesTab/SavedSearchesTab'
 import FullPageModal from 'routes/FullPageModal'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
-import './UserSettings.scss'
+import classes from './UserSettings.module.scss'
 import { withTranslation } from 'react-i18next'
 
 // NOTE: This area is also rendered and shared with the mobile app.

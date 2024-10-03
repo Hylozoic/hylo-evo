@@ -1,21 +1,21 @@
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { newMessageUrl } from 'util/navigation'
-import useRouter from 'hooks/useRouter'
 import useEnsureCurrentGroup from 'hooks/useEnsureCurrentGroup'
 import { getFarmOpportunities } from 'store/selectors/farmExtensionSelectors'
 import getMe from 'store/selectors/getMe'
 import Icon from 'components/Icon'
 
-import './OpportunitiesToCollaborate.scss'
+import classes from './OpportunitiesToCollaborate.module.scss'
 
 export default function OpportunitiesToCollaborateWidget () {
   const { group } = useEnsureCurrentGroup()
   const opportunities = getFarmOpportunities(group)
 
   return (
-    <div styleName='opportunities-to-collaborate-container'>
+    <div className={classes.opportunitiesToCollaborateContainer}>
       {opportunities && opportunities.length > 0 && opportunities.map((opportunity, index) => (
         <OpportunityToCollaborate group={group} opportunity={opportunity} key={index} />
       ))}
@@ -80,26 +80,25 @@ export function OpportunityToCollaborate ({ group, opportunity }) {
     animal_welfare: t('Animal welfare')
   }
   const currentUser = useSelector(state => getMe(state))
-  const { push } = useRouter()
-  const prompt = t(`Hi there {{groupName}}, I'd like to talk about {{prompt}}.`, { groupName: group.name, prompt: promptLookup[opportunity] })
+  const { navigate } = useNavigate()
+  const prompt = t('Hi there {{groupName}}, I\'d like to talk about {{prompt}}.', { groupName: group.name, prompt: promptLookup[opportunity] })
   const goToGroupStewardsMessage = useCallback(() => {
-    push(
+    navigate(
       `${newMessageUrl()}?participants=${group.stewards.map(m => m.id).join(',')}&prompt=${encodeURIComponent(prompt)}`
     )
   }, [group?.id, prompt])
-
   return (
-    <div styleName='collab-item' key={opportunity}>
-      <Icon styleName='collab-icon' blue name={determineIcon(opportunity)} />
-      <div styleName='collab-text-container'>
-        <div styleName='collab-title'>{collabTitle[opportunity]}</div>
-        <div styleName='collab-text'>{collabText(group)[opportunity]}</div>
+    <div className={classes.collabItem} key={opportunity}>
+      <Icon className={classes.collabIcon} blue name={determineIcon(opportunity)} />
+      <div className={classes.collabTextContainer}>
+        <div className={classes.collabTitle}>{collabTitle[opportunity]}</div>
+        <div className={classes.collabText}>{collabText(group)[opportunity]}</div>
       </div>
       {currentUser && (
         <Icon
           name='Messages'
           blue
-          styleName='collab-icon cursor-pointer'
+          className={cx(classes.collabIcon, classes.cursorPointer)}
           onClick={goToGroupStewardsMessage}
         />
       )}

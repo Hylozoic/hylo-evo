@@ -2,13 +2,13 @@ import React from 'react'
 import {
   RiArrowGoBackLine, RiArrowGoForwardLine, RiFormatClear
 } from 'react-icons/ri'
-import './HyloEditor.scss'
+import classes from './HyloEditor.module.scss'
 
 export default function HyloEditorBottomMenuBar ({ editor }) {
   if (!editor) return null
 
   return (
-    <div styleName='bottomMenuBar'>
+    <div className={classes.bottomMenuBar}>
       <button onClick={() => editor.chain().focus().undo().run()}>
         <RiArrowGoBackLine />
       </button>

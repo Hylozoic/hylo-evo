@@ -1,8 +1,9 @@
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { withTranslation } from 'react-i18next'
 import { each, values } from 'lodash'
-import './PeopleTyping.scss'
+import classes from './PeopleTyping.module.scss'
 const { string, object } = PropTypes
 
 // the amount to delay before deciding that someone is no longer typing
@@ -29,7 +30,7 @@ class PeopleTyping extends React.Component {
   render () {
     const { className, peopleTyping } = this.props
     const names = values(peopleTyping).map(v => v.name)
-    return <div styleName='typing' className={className}>
+    return <div className={cx(classes.typing, className)}>
       {names.length === 1 && <div>
         {names[0]} {this.props.t('is typing...')}
       </div>}

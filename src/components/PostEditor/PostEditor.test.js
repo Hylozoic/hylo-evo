@@ -29,7 +29,7 @@ describe('PostEditor', () => {
     }
     const wrapper = shallow(<ActionsBar {...props} t={string => string} />)
     expect(wrapper).toMatchSnapshot()
-    expect(wrapper.find('span[data-tip="Send Announcement"]')).toHaveLength(1)
+    expect(wrapper.find('span[data-tooltip-content="Send Announcement"]')).toHaveLength(1)
   })
 
   describe('for a new post', () => {

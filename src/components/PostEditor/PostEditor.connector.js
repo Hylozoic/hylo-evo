@@ -1,7 +1,7 @@
 import { get, isEmpty } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { push, replace } from 'connected-react-router'
+import { push, replace } from 'redux-first-history'
 import { postUrl } from 'util/navigation'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getRouteParam from 'store/selectors/getRouteParam'

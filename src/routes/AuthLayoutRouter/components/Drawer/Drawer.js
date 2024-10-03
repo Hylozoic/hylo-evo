@@ -1,6 +1,7 @@
+import cx from 'classnames'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation, useHistory } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { get } from 'lodash/fp'
 import { useDispatch, useSelector } from 'react-redux'
 import { bgImageStyle } from 'util/index'
@@ -14,16 +15,17 @@ import getMyGroups from 'store/selectors/getMyGroups'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
-import cx from 'classnames'
-import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import getMe from 'store/selectors/getMe'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 import { RESP_MANAGE_CONTENT } from 'store/constants'
 
+// import s from './Drawer.module.scss' // eslint-disable-line no-unused-vars
+import s from './Drawer.module.scss'
+
 const myPath = '/my'
 
 export default function Drawer (props) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const currentLocation = useLocation()
   const currentUser = useSelector(getMe)
@@ -76,7 +78,7 @@ export default function Drawer (props) {
   const toggleDrawer = () => dispatch(toggleDrawerAction())
 
   const goToCreateGroup = () => {
-    history.push(createGroupUrl(get('match.params', props)))
+    navigate(createGroupUrl(get('match.params', props)))
     return null
   }
 
@@ -89,43 +91,43 @@ export default function Drawer (props) {
   }
 
   return (
-    <div className={className} styleName='s.groupDrawer'>
-      <div styleName={cx('drawerHeader', { 's.currentGroup': group !== null })} style={bgImageStyle(bannerUrl)}>
-        <div styleName='drawerBanner'>
-          <div styleName='s.hyloLogoBar'>
+    <div className={cx(className, s.groupDrawer)}>
+      <div className={cx(s.drawerHeader, { [s.currentGroup]: group !== null })} style={bgImageStyle(bannerUrl)}>
+        <div className={s.drawerBanner}>
+          <div className={s.hyloLogoBar}>
             <img src='/hylo.svg' width='50px' height='36px' />
-            <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
+            <Icon name='Ex' className={s.closeDrawer} onClick={toggleDrawer} />
           </div>
           <Logo group={group} />
           {responsibilities.length !== 0 && !responsibilities.includes(RESP_MANAGE_CONTENT) && (
-            <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
-              <Icon name='Settings' styleName='s.settingsIcon' /> {t('Group Settings')}
+            <Link className={s.settingsLink} to={groupUrl(group.slug, 'settings')}>
+              <Icon name='Settings' className={s.settingsIcon} /> {t('Group Settings')}
             </Link>
           )}
         </div>
-        <div styleName='backgroundFade' />
+        <div className={s.backgroundFade} />
       </div>
       <div>
-        <ul styleName='s.groupsList'>
+        <ul className={s.groupsList}>
           <ContextRow currentLocation={currentLocation} group={myHome} explicitPath={myHome.explicitPath} />
         </ul>
-        <ul styleName='s.groupsList'>
-          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>{t('Public')}</li>
+        <ul className={s.groupsList}>
+          <li className={cx(s.sectionTitle, s.sectionTitleSeparator)}>{t('Public')}</li>
           {defaultContexts && defaultContexts.map(context =>
             <ContextRow currentLocation={currentLocation} group={context} key={context.id} explicitPath={context.explicitPath} />
           )}
         </ul>
-        <ul styleName='s.groupsList'>
-          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>{t('My Groups')}</li>
+        <ul className={s.groupsList}>
+          <li className={cx(s.sectionTitle, s.sectionTitleSeparator)}>{t('My Groups')}</li>
           <ContextRow currentLocation={currentLocation} group={allMyGroups} />
           {groups.map(group =>
             <ContextRow currentLocation={currentLocation} group={group} key={group.id} />
           )}
         </ul>
-        <div styleName='s.newGroup'>
+        <div className={s.newGroup}>
           <Button
             color='white'
-            styleName='s.newGroupBtn'
+            className={s.newGroupBtn}
             label={t('Start a Group')}
             onClick={goToCreateGroup}
           />
@@ -145,10 +147,10 @@ export function ContextRow ({
   const showBadge = newPostCount > 0
   const path = explicitPath || baseUrl({ context, groupSlug: slug })
   return (
-    <li styleName={cx('s.contextRow', { 's.currentContext': currentLocation?.pathname === path || (path.includes(myPath) && currentLocation?.pathname.includes(myPath)) })}>
-      <Link to={path} styleName='s.contextRowLink' title={name}>
-        <div styleName='s.contextRowAvatar' style={imageStyle} />
-        <span styleName='s.group-name'>{name}</span>
+    <li className={cx(s.contextRow, { [s.currentContext]: currentLocation?.pathname === path || (path.includes(myPath) && currentLocation?.pathname.includes(myPath)) })}>
+      <Link to={path} className={s.contextRowLink} title={name}>
+        <div className={s.contextRowAvatar} style={imageStyle} />
+        <span className={s.groupName}>{name}</span>
         {showBadge && <Badge expanded number={newPostCount} />}
       </Link>
     </li>
@@ -161,8 +163,8 @@ function Logo ({ group }) {
   const { slug, name, location, avatarUrl } = group
 
   return (
-    <Link styleName='s.currentGroup' to={groupUrl(slug)}>
-      <div styleName='s.avatar' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
+    <Link className={s.currentGroup} to={groupUrl(slug)}>
+      <div className={s.avatar} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
       <div className='drawer-inv-bd'>{name}</div>
       <div className='drawer-inv-sm'>{location}</div>
     </Link>

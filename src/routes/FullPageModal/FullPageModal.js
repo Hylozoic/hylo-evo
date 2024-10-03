@@ -1,9 +1,10 @@
+import cx from 'classnames'
 import React, { useState } from 'react'
-import styles from './FullPageModal.scss'
 import { NavLink, Route } from 'react-router-dom'
 import isWebView from 'util/webView'
 import Icon from 'components/Icon'
-import cx from 'classnames'
+
+import styles from './FullPageModal.module.scss'
 
 export default function FullPageModal ({
   confirmMessage, setConfirmBeforeClose, navigate, goToOnClose,
@@ -27,12 +28,11 @@ export default function FullPageModal ({
 
   if (isWebView()) {
     return (
-      <div styleName='modal--modal-settings-layout'>
+      <div className={styles.modalSettingsLayout}>
         {multipleTabs && content.map(tab => (
           <Route
             path={tab.path}
-            exact
-            render={tab.render ? tab.render : () => tab.component}
+            element={tab.render ? tab.render() : tab.component}
             key={tab.path}
           />
         ))}
@@ -41,38 +41,36 @@ export default function FullPageModal ({
     )
   } else {
     return (
-      <div styleName={cx('modal', { fullWidth })}>
-        <div styleName='content'>
-          <div styleName={cx('left-sidebar', { leftSideBarHidden })}>
-            <div styleName={cx('left-sidebar-fixed', { border: multipleTabs })}>
+      <div className={cx(styles.modal, { [styles.fullWidth]: fullWidth })}>
+        <div className={styles.content}>
+          <div className={cx(styles.leftSidebar, { [styles.leftSideBarHidden]: leftSideBarHidden })}>
+            <div className={cx(styles.leftSidebarFixed, { [styles.border]: multipleTabs })}>
               {multipleTabs && content.filter(tab => !!tab.name).map(tab => (
                 <NavLink
                   to={tab.path}
-                  exact
+                  end
                   replace
-                  activeClassName={styles.active}
-                  styleName='nav-link'
+                  className={({ isActive }) => cx("navLink", { [styles.active]: isActive })}
                   key={tab.path}>
                   {tab.name}
                 </NavLink>
               ))}
-              <Icon name='ArrowDown' styleName='arrowDown' />
+              <Icon name='ArrowDown' className={styles.arrowDown} />
             </div>
           </div>
           {multipleTabs && (
-            <div styleName='center narrow'>
+            <div className={cx(styles.center, styles.narrow)}>
               {content.map(tab =>
                 <Route
                   path={tab.path}
-                  exact
-                  render={tab.render ? tab.render : () => tab.component}
+                  element={tab.render ? tab.render() : tab.component}
                   key={tab.path}
                 />)}
             </div>
           )}
-          {!multipleTabs && <div styleName={cx('center', { narrow })}>{content || children}</div>}
-          <div styleName='right-sidebar'>
-            <div styleName='right-sidebar-inner'>
+          {!multipleTabs && <div className={cx(styles.center, { [styles.narrow]: narrow })}>{content || children}</div>}
+          <div className={styles.rightSidebar}>
+            <div className={styles.rightSidebarInner}>
               <CloseButton onClose={onClose} />
             </div>
           </div>
@@ -84,8 +82,8 @@ export default function FullPageModal ({
 
 export function CloseButton ({ onClose }) {
   return (
-    <div styleName='close-button' onClick={onClose}>
-      <Icon name='Ex' styleName='icon' />
+    <div className={styles.closeButton} onClick={onClose}>
+      <Icon name='Ex' className={styles.icon} />
     </div>
   )
 }

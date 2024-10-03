@@ -4,7 +4,7 @@ import React from 'react'
 
 import Icon from 'components/Icon'
 
-import './CheckBox.scss'
+import classes from './CheckBox.module.scss'
 
 const { bool, string, func } = PropTypes
 
@@ -12,14 +12,13 @@ export default function CheckBox ({ checked, onChange, className, label, labelCl
   const iconName = checked ? 'Checkmark' : 'Empty'
 
   return (
-    <label styleName='label' className={labelClass}>
+    <label className={cx(classes.label, labelClass)}>
       {labelLeft && label}
-      <Icon name={iconName} styleName={cx('icon', { 'label-left': labelLeft })} />
+      <Icon name={iconName} className={cx(classes.icon, { [classes.labelLeft]: labelLeft })} />
       {!noInput &&
         <input
           type='checkbox'
-          styleName='checkbox'
-          className={className}
+          className={cx(classes.checkbox, className)}
           checked={!!checked}
           onChange={e => onChange(e.target.checked)}
           disabled={disabled}

@@ -1,4 +1,4 @@
-import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
+import postFieldsFragment from '@graphql/fragments/postFieldsFragment'
 
 export default
 `mutation (

@@ -4,7 +4,7 @@ import Loading from 'components/Loading'
 import Button from 'components/Button'
 import fetch from 'isomorphic-fetch'
 import { getHost } from 'store/middleware/apiMiddleware'
-import './ExportDataTab.scss'
+import classes from './ExportDataTab.module.scss'
 
 export default function ExportDataTab (props) {
   const [clicked, setClicked] = useState(false)
@@ -27,8 +27,8 @@ export default function ExportDataTab (props) {
 
   return (
     <div>
-      <div styleName='title'>{t('Export Data')}</div>
-      <p styleName='help'>{t('This function exports all member data for this group as a CSV file for import into other software.')}</p>
+      <div className={classes.title}>{t('Export Data')}</div>
+      <p className={classes.help}>{t('This function exports all member data for this group as a CSV file for import into other software.')}</p>
       {status && <p>{status}</p>}
       <Button disabled={clicked} label={t('Export Members')} color='green' onClick={handleClick} />
     </div>)

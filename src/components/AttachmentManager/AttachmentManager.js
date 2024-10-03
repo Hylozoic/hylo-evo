@@ -11,7 +11,7 @@ import Loading from 'components/Loading'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import { bgImageStyle } from 'util/index'
 import { ID_FOR_NEW } from './AttachmentManager.store'
-import './AttachmentManager.scss'
+import classes from './AttachmentManager.module.scss'
 
 export const attachmentsObjectType = {
   id: PropTypes.string,
@@ -112,9 +112,9 @@ export function ImageManager (props) {
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <SortableContext items={images} strategy={horizontalListSortingStrategy}>
-        <div styleName='image-manager'>
-          {showLabel && <div styleName='section-label'>{t('Images')}</div>}
-          <div styleName='image-previews'>
+        <div className={classes.imageManager}>
+          {showLabel && <div className={classes.sectionLabel}>{t('Images')}</div>}
+          <div className={classes.imagePreviews}>
             {images.map((attachment, i) =>
               <ImagePreview
                 attachment={attachment}
@@ -122,14 +122,14 @@ export function ImageManager (props) {
                 index={i}
                 key={i}
               />)}
-            {showLoading && uploadAttachmentPending && <div styleName='add-image'><Loading /></div>}
+            {showLoading && uploadAttachmentPending && <div className={classes.addImage}><Loading /></div>}
             {showAddButton && (
               <UploadAttachmentButton
                 type={type}
                 id={id}
                 attachmentType='image'
                 onSuccess={attachment => addAttachment(type, id, attachment)}>
-                <div styleName='add-image'>+</div>
+                <div className={classes.addImage}>+</div>
               </UploadAttachmentButton>)}
           </div>
         </div>
@@ -164,9 +164,9 @@ export function ImagePreview (props) {
   }
 
   return (
-    <div styleName='image-preview' ref={setNodeRef} style={style}>
-      <Icon name='Ex' styleName='remove-image' onClick={removeImage} />
-      <div style={bgImageStyle(attachment.url)} styleName='image' {...listeners} {...attributes} />
+    <div className={classes.imagePreview} ref={setNodeRef} style={style}>
+      <Icon name='Ex' className={classes.removeImage} onClick={removeImage} />
+      <div style={bgImageStyle(attachment.url)} className={classes.image} {...listeners} {...attributes} />
     </div>
   )
 }
@@ -178,24 +178,24 @@ export function FileManager ({
   const { t } = useTranslation()
 
   return (
-    <div styleName='file-manager'>
-      {showLabel && <div styleName='section-label'>{t('Files')}</div>}
-      <div styleName='file-previews'>
+    <div className={classes.fileManager}>
+      {showLabel && <div className={classes.sectionLabel}>{t('Files')}</div>}
+      <div className={classes.filePreviews}>
         {attachments.map((attachment, i) =>
           <FilePreview
             attachment={attachment}
             removeFile={() => removeAttachment(type, id, attachment)}
             key={i} />)}
-        {showLoading && uploadAttachmentPending && <div styleName='loading-file'>{t('Loading...')}</div>}
+        {showLoading && uploadAttachmentPending && <div className={classes.loadingFile}>{t('Loading...')}</div>}
         {showAddButton && (
           <UploadAttachmentButton
             id={id}
             type={type}
             attachmentType='file'
             onSuccess={attachment => addAttachment(type, id, attachment)}
-            styleName='add-file-row'>
-            <div styleName='add-file'>
-              <span styleName='add-file-plus'>+</span> {t('Add File')}
+            className={classes.addFileRow}>
+            <div className={classes.addFile}>
+              <span className={classes.addFilePlus}>+</span> {t('Add File')}
             </div>
           </UploadAttachmentButton>)}
       </div>
@@ -206,11 +206,11 @@ export function FileManager ({
 export function FilePreview ({ attachment, removeFile, fileSize }) {
   const filename = path.basename(attachment.url)
   return (
-    <div styleName='file-preview'>
-      <Icon name='Document' styleName='icon-document' />
-      <div styleName='file-name'>{decodeURIComponent(filename)}</div>
-      {fileSize && <div styleName='file-size'>{fileSize}</div>}
-      <Icon name='Ex' styleName='remove-file' onClick={removeFile} />
+    <div className={classes.filePreview}>
+      <Icon name='Document' className={classes.iconDocument} />
+      <div className={classes.fileName}>{decodeURIComponent(filename)}</div>
+      {fileSize && <div className={classes.fileSize}>{fileSize}</div>}
+      <Icon name='Ex' className={classes.removeFile} onClick={removeFile} />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { runForceGraph } from './GroupNetworkMapGenerator'
-import styles from './GroupNetworkMap.scss'
+import styles from './GroupNetworkMap.module.scss'
 
 export default ({ networkData }) => {
   const linksData = networkData.links

@@ -1,10 +1,11 @@
+import cx from 'classnames'
+import { isEmpty, omit } from 'lodash/fp'
+import PropTypes from 'prop-types'
 import React from 'react'
 import { withTranslation } from 'react-i18next'
-import PropTypes from 'prop-types'
-import { isEmpty, omit } from 'lodash/fp'
-import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
-import './KeyControlledList.scss'
+
+import classes from './KeyControlledList.module.scss'
 
 const { array, func, object, bool, number } = PropTypes
 
@@ -124,9 +125,9 @@ class KeyControlledList extends React.Component {
           : element
       })
 
-    return <div styleName='keyListContainer'>
-      {tagType && tagType === 'groups' && <div styleName='keyListLabel'>{this.props.t('Groups')}</div>}
-      <ul {...omit(propsToOmit, props)} className={theme.items} styleName='keyList'>
+    return <div className={classes.keyListContainer}>
+      {tagType && tagType === 'groups' && <div className={classes.keyListLabel}>{this.props.t('Groups')}</div>}
+      <ul {...omit(propsToOmit, props)} className={cx(theme.items, classes.keyList)}>
         {this.childrenWithRefs}
       </ul>
     </div>

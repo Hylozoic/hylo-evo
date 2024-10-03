@@ -5,7 +5,7 @@ import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
 import Message from '../Message'
 import ClickCatcher from 'components/ClickCatcher'
-import './MessageSection.scss'
+import classes from './MessageSection.module.scss'
 
 // the maximum amount of time in minutes that can pass between messages to still
 // include them under the same avatar and timestamp
@@ -147,12 +147,12 @@ export default class MessageSection extends React.Component {
   render () {
     const { messages, pending, messageThread } = this.props
 
-    return <div styleName='messages-section'
+    return <div className={cx(classes.messagesSection)}
       ref={this.list}
       onScroll={this.handleScroll}>
       {pending && <Loading />}
       {!pending &&
-        <div styleName='messages-section-inner'>
+        <div className={cx(classes.messagesSectionInner)}>
           <ClickCatcher>
             {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
           </ClickCatcher>

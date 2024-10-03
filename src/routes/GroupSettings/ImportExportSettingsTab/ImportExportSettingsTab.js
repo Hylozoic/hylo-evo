@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
-import './ImportExportSettingsTab.scss'
+import classes from './ImportExportSettingsTab.module.scss'
 
 class ImportExportSettingsTab extends Component {
   importStart = () => {
@@ -14,10 +14,10 @@ class ImportExportSettingsTab extends Component {
     const { name } = group
 
     return <div>
-      <div styleName='header'>
-        <div styleName='title'>{t('Import Posts by CSV')}</div>
+      <div className={classes.header}>
+        <div className={classes.title}>{t('Import Posts by CSV')}</div>
       </div>
-      <div styleName='help'>
+      <div className={classes.help}>
         <b>{t('WARNING: This is a beta feature that at this time will not inform you of import errors, use at your own risk.')}</b>
         <br /><br />
         {t('You can select a CSV file to import posts into {{name}}. Posts will be created by you. The file must have columns with the following headers:', { name })}
@@ -33,14 +33,14 @@ class ImportExportSettingsTab extends Component {
           <li>{t('is_public: true or false')}</li>
         </ul>
       </div>
-      <div styleName='button-wrapper'>
+      <div className={classes.buttonWrapper}>
         <UploadAttachmentButton
           type='importPosts'
           id={group.id}
           attachmentType='csv'
           onSuccess={this.importStart}
         >
-          <div styleName='upload-button'>{t('Upload CSV')}</div>
+          <div className={classes.uploadButton}>{t('Upload CSV')}</div>
         </UploadAttachmentButton>
       </div>
     </div>

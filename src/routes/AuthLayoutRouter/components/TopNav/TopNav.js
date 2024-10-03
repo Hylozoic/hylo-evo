@@ -15,7 +15,8 @@ import { bgImageStyle } from 'util/index'
 import { hyloLogo, publicLogo } from 'util/assets'
 import { localeToFlagEmoji, localeLocalStorageSync } from 'util/locale'
 import { baseUrl, personUrl } from 'util/navigation'
-import styles from './TopNav.scss'
+
+import styles from './TopNav.module.scss'
 
 const MessagesDropdown = React.lazy(() => import('./MessagesDropdown'))
 const NotificationsDropdown = React.lazy(() => import('./NotificationsDropdown'))
@@ -46,46 +47,46 @@ export default function TopNav (props) {
   const { t } = useTranslation()
 
   return (
-    <div styleName='topNavWrapper' className={className} onClick={onClick}>
-      <div styleName={cx('topNav', { groupMenuOpen: isGroupMenuOpen })} ref={topNav}>
-        <div styleName='drawerToggle' id='toggleDrawer'>
-          <button styleName='drawerToggleButton' onClick={toggleDrawer}><Icon name='Hamburger' styleName='menuIcon' /></button>
-          {showMenuBadge && <Badge number='1' styleName='logoBadge' border />}
+    <div className={cx(styles.topNavWrapper, className)} onClick={onClick}>
+      <div className={cx(styles.topNav, { [styles.groupMenuOpen]: isGroupMenuOpen })} ref={topNav}>
+        <div className={styles.drawerToggle} id='toggleDrawer'>
+          <button className={styles.drawerToggleButton} onClick={toggleDrawer}><Icon name='Hamburger' className={styles.menuIcon} /></button>
+          {showMenuBadge && <Badge number='1' className={styles.logoBadge} border />}
         </div>
         <Link
           to={baseUrl(pick(['context', 'groupSlug'], routeParams))}
           onClick={toggleGroupMenu}
-          styleName={cx('current-context', { groupMenuOpen: isGroupMenuOpen })}
+          className={cx(styles.currentContext, { [styles.groupMenuOpen]: isGroupMenuOpen })}
           id='currentContext'
         >
           <Logo {...{ group, isPublic }} />
           <Title group={group} isPublic={isPublic} isMyHome={isMyHome} />
         </Link>
-        <div styleName='navIcons' id='personalSettings'>
+        <div className={styles.navIcons} id='personalSettings'>
           <Dropdown
-            styleName={cx('nav-menu', 'support-menu')}
+            className={cx(styles.navMenu, styles.supportMenu)}
             alignLeft
             toggleChildren={
               <Icon name='QuestionMark' />
             }
           >
-            <li><span styleName='hover-highlight' onClick={showIntercom}>{t('Feedback & Support')}</span></li>
-            <li><a href='https://hylozoic.gitbook.io/hylo/guides/hylo-user-guide' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('User Guide')}</a></li>
-            <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Terms & Privacy')}</a></li>
-            <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>{t('Download App')}</span></li>
-            <li><a href='https://opencollective.com/hylo' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Contribute to Hylo')}</a></li>
+            <li><span className={styles.hoverHighlight} onClick={showIntercom}>{t('Feedback & Support')}</span></li>
+            <li><a href='https://hylozoic.gitbook.io/hylo/guides/hylo-user-guide' target='_blank' rel='noreferrer' className={styles.hoverHighlight}>{t('User Guide')}</a></li>
+            <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' className={styles.hoverHighlight}>{t('Terms & Privacy')}</a></li>
+            <li><span className={cx(styles.hoverHighlight, styles[appStoreLinkClass])} onClick={downloadApp}>{t('Download App')}</span></li>
+            <li><a href='https://opencollective.com/hylo' target='_blank' rel='noreferrer' className={styles.hoverHighlight}>{t('Contribute to Hylo')}</a></li>
           </Dropdown>
-          <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
-          <Suspense fallback={<BadgedIcon name='Messages' styleName='icon' />}>
+          <Link to='/search'><Icon name='Search' className={styles.icon} /></Link>
+          <Suspense fallback={<BadgedIcon name='Messages' className={styles.icon} />}>
             <MessagesDropdown renderToggleChildren={showBadge =>
-              <BadgedIcon name='Messages' styleName='icon' showBadge={showBadge} />} />
+              <BadgedIcon name='Messages' className={styles.icon} showBadge={showBadge} />} />
           </Suspense>
-          <Suspense fallback={<BadgedIcon name='Notifications' styleName='icon' />}>
+          <Suspense fallback={<BadgedIcon name='Notifications' className={styles.icon} />}>
             <NotificationsDropdown renderToggleChildren={showBadge =>
-              <BadgedIcon name='Notifications' styleName='icon' showBadge={showBadge} />} />
+              <BadgedIcon name='Notifications' className={styles.icon} showBadge={showBadge} />} />
           </Suspense>
           <Dropdown
-            styleName={cx('nav-menu', 'user-menu')}
+            className={cx(styles.navMenu, styles.userMenu)}
             alignRight
             noOverflow
             toggleChildren={
@@ -93,14 +94,14 @@ export default function TopNav (props) {
             }
           >
             <li>
-              <Link styleName='hover-highlight' to={profileUrl}>
+              <Link className={styles.hoverHighlight} to={profileUrl}>
                 {t('Profile')}
               </Link>
             </li>
-            <li><Link styleName='hover-highlight' to='/settings'>{t('Settings')}</Link></li>
+            <li><Link className={styles.hoverHighlight} to='/settings'>{t('Settings')}</Link></li>
             <li>
               <Suspense fallback={<span>{t('Locale')} {localeFlag}</span>}>
-                <LocaleDropdown className={styles['locale-dropdown']} renderToggleChildren={<span styleName='locale'>{t('Locale')} {localeFlag}</span>} />
+                <LocaleDropdown className={styles.localeDropdown} renderToggleChildren={<span className={styles.locale}>{t('Locale')} {localeFlag}</span>} />
               </Suspense>
             </li>
             <li><a onClick={logout}>{t('Log out')}</a></li>
@@ -120,10 +121,10 @@ function Logo ({ group, isPublic }) {
   }
 
   return (
-    <span styleName='image' style={imageStyle}>
+    <span className={styles.image} style={imageStyle}>
       <span>
-        <Icon name='Home' styleName='homeLink' />
-        <Icon name='Ex' styleName='closeGroupMenu' />
+        <Icon name='Home' className={styles.homeLink} />
+        <Icon name='Ex' className={styles.closeGroupMenu} />
       </span>
     </span>
   )
@@ -141,9 +142,9 @@ function Title ({ group, isPublic, onClick, isMyHome }) {
   }
 
   return (
-    <div styleName='title'>
-      <div styleName='label'>{label}</div>
-      <div styleName='groupName'>{name}</div>
+    <div className={styles.title}>
+      <div className={styles.label}>{label}</div>
+      <div className={styles.groupName}>{name}</div>
     </div>
   )
 }

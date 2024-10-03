@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getSocket, socketUrl } from 'client/websockets'
+import { getSocket, socketUrl } from 'client/websockets.mjs'
 import { isEqual } from 'lodash'
 import rollbar from 'client/rollbar'
 

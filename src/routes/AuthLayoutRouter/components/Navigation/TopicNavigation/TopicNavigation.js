@@ -4,8 +4,8 @@ import cx from 'classnames'
 import { Link, NavLink } from 'react-router-dom'
 import Badge from 'components/Badge'
 import Icon from 'components/Icon'
-import badgeHoverStyles from '../../../../../components/Badge/component.scss'
-import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
+import badgeHoverStyles from '../../../../../components/Badge/component.module.scss'
+import styles from './TopicNavigation.module.scss'
 
 export default function TopicNavigation ({
   topics,
@@ -28,11 +28,11 @@ export default function TopicNavigation ({
   const { t } = useTranslation()
 
   return (
-    <div styleName={cx('s.topicNavigation', { 's.collapsed': collapsed })}>
-      <div styleName={cx('s.header', { 's.header-link': collapsed })} onClick={expand}>
+    <div className={cx(styles.topicNavigation, { [styles.collapsed]: collapsed })}>
+      <div className={cx(styles.header, { [styles.headerLink]: collapsed })} onClick={expand}>
         <Link to={seeAllUrl}>
-          <Icon name='Topics' styleName='s.icon' />
-          <span styleName='s.title'>{t('Topics')}</span>
+          <Icon name='Topics' className={styles.icon} />
+          <span className={styles.title}>{t('Topics')}</span>
         </Link>
       </div>
       <TopicsList
@@ -40,8 +40,8 @@ export default function TopicNavigation ({
         onClick={handleClearTopic}
         topics={topics}
       />
-      <div styleName='s.addTopic'>
-        <Link to={seeAllUrl} styleName='s.allTopics'>{t('All topics')}</Link>
+      <div className={styles.addTopic}>
+        <Link to={seeAllUrl} className={styles.allTopics}>{t('All topics')}</Link>
       </div>
     </div>
   )
@@ -49,22 +49,20 @@ export default function TopicNavigation ({
 
 export function TopicsList ({ topics, onClick, onClose }) {
   return (
-    <ul styleName='s.topics'>
+    <ul className={styles.topics}>
       {topics.map(topic => (
-        <li key={topic.name} styleName='s.topic' className={cx({ [s.pinned]: topic.visibility === 2 })}>
+        <li key={topic.name} className={cx(styles.topic, { [styles.pinned]: topic.visibility === 2 })}>
           <NavLink
-            className={badgeHoverStyles.parent}
-            styleName='s.topicLink'
+            className={({ isActive }) => cx(badgeHoverStyles.parent, styles.topicLink, { [styles.activeTopicNavLink]: isActive })}
             to={topic.url}
             onClick={() => onClick(topic)}
-            activeClassName='active-topic-nav-link'
           >
-            <span styleName='s.name'>#{topic.name}</span>
+            <span className={styles.name}>#{topic.name}</span>
             {topic.newPostCount > 0 && !topic.current &&
-              <Badge number={topic.newPostCount} styleName='s.badge' />}
-            {topic.visibility === 2 && <Icon name='Pin' styleName='s.pinIcon' />}
+              <Badge number={topic.newPostCount} className={styles.badge} />}
+            {topic.visibility === 2 && <Icon name='Pin' className={styles.pinIcon} />}
             {topic.current &&
-              <Icon name='Ex' styleName='s.closeIcon' onClick={onClose} />}
+              <Icon name='Ex' className={styles.closeIcon} onClick={onClose} />}
           </NavLink>
         </li>
       ))}

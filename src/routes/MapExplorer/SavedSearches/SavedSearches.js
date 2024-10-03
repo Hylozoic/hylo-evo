@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
+import { Tooltip } from 'react-tooltip'
 import { currentFilters, formatParams, formatParamPreview } from 'util/savedSearch'
 import Icon from 'components/Icon'
-import './SavedSearches.scss'
-import ReactTooltip from 'react-tooltip'
+
+import classes from './SavedSearches.module.scss'
 
 export default function SavedSearches (props) {
   const {
@@ -23,30 +23,30 @@ export default function SavedSearches (props) {
   const { t } = useTranslation()
 
   return (
-    <div styleName='container'>
-      <span styleName='triangle' style={triangleStyle}>&nbsp;</span>
-      <div styleName='innerContainer'>
-        <div styleName='title'>
+    <div className={classes.container}>
+      <span className={classes.triangle} style={triangleStyle}>&nbsp;</span>
+      <div className={classes.innerContainer}>
+        <div className={classes.title}>
           <span>
             <h2>{t('Save this view')}</h2>
             {t('Get updates about this map view')}</span>
-          <Icon name='Ex' styleName='close' onClick={toggle} />
+          <Icon name='Ex' className={classes.close} onClick={toggle} />
         </div>
 
-        <div styleName='searchName'>
-          <div styleName='searchBox'>
+        <div className={classes.searchName}>
+          <div className={classes.searchBox}>
             <input
               type='text'
               onChange={e => setName(e.target.value)}
               placeholder={t('Name this view')}
               value={name}
             />
-            <span styleName={`save ${canSave ? '' : 'disabled'}`} onClick={canSave ? () => saveSearch(name) : undefined}>{t('Save')}</span>
+            <span className={cx(classes.save, { [classes.disabled]: !canSave })} onClick={canSave ? () => saveSearch(name) : undefined}>{t('Save')}</span>
           </div>
-          <div styleName='filters'><Icon name='Info' styleName='info' /><span styleName='currentFilters'>{currentFilters(filters)}</span></div>
+          <div className={classes.filters}><Icon name='Info' className={classes.info} /><span className={classes.currentFilters}>{currentFilters(filters)}</span></div>
         </div>
 
-        <div styleName='savedViews'>
+        <div className={classes.savedViews}>
           <h2>{t('Saved Views')}</h2>
           {searches.map((search, index) => {
             return (<SavedSearch key={index} search={search} deleteSearch={deleteSearch} viewSavedSearch={viewSavedSearch} />)
@@ -60,25 +60,25 @@ export default function SavedSearches (props) {
 const SavedSearch = ({ deleteSearch, viewSavedSearch, search }) => {
   const { t } = useTranslation()
   return (
-    <div styleName='search'>
-      <div styleName='row'>
-        <div styleName='saved-name'>{search.name} {search.count && <span styleName='count'>{search.count}</span>} </div>
-        <div styleName='actions'>
-          <Icon name='Trash' styleName='delete' onClick={() => deleteSearch(search.id)} />
-          <div styleName='view' onClick={() => viewSavedSearch(search)}>{t('View')}</div>
+    <div className={classes.search}>
+      <div className={classes.row}>
+        <div className={classes.savedName}>{search.name} {search.count && <span className={classes.count}>{search.count}</span>} </div>
+        <div className={classes.actions}>
+          <Icon name='Trash' className={classes.delete} onClick={() => deleteSearch(search.id)} />
+          <div className={classes.view} onClick={() => viewSavedSearch(search)}>{t('View')}</div>
         </div>
       </div>
-      <div styleName='row filters' data-tip={formatParams(search)} data-for='params'>
-        <Icon name='Info' styleName='info' />
-        <span styleName='saved-filters'>
+      <div className={cx(classes.row, classes.filters)} data-tooltip-content={formatParams(search)} data-tooltip-id='params'>
+        <Icon name='Info' className={classes.info} />
+        <span className={classes.savedFilters}>
           <span>{formatParamPreview(search)}</span>
-          <ReactTooltip
+          <Tooltip
             place='right'
             id='params'
             effect='solid'
             multiline
             delayShow={200}
-            styleName='params'
+            className={classes.params}
           />
         </span>
       </div>

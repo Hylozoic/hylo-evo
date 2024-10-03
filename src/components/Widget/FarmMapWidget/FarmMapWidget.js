@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import cx from 'classnames'
 import { groupBy } from 'lodash'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Map from 'components/Map'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
-import useRouter from 'hooks/useRouter'
 
-import './FarmMap.scss'
+import classes from './FarmMap.module.scss'
 
 export default function FarmMapWidget ({ group, items }) {
   const coord = group.locationObject && group.locationObject.center && { lng: parseFloat(group.locationObject.center.lng), lat: parseFloat(group.locationObject.center.lat) }
@@ -20,7 +21,7 @@ export default function FarmMapWidget ({ group, items }) {
     pitch: 0,
     mapBoundingBox: null
   }
-  const { push } = useRouter()
+  const { navigate } = useNavigate()
   const [viewport, setViewport] = useState(defaultViewport)
   const [groupIconLayer, setGroupIconLayer] = useState(null)
   const [postsLayer, setPostsLayer] = useState([])
@@ -37,9 +38,9 @@ export default function FarmMapWidget ({ group, items }) {
 
   const onMapClick = (info) => {
     if (info.object && info.object.type === 'group') {
-      push(`/groups/${info.object.slug}`)
+      navigate(`/groups/${info.object.slug}`)
     } else if (info.object && info.object.id) {
-      push(`/groups/${info.object.slug}/post/${info.object.id}`)
+      navigate(`/groups/${info.object.slug}/post/${info.object.id}`)
     }
   }
 
@@ -58,7 +59,7 @@ export default function FarmMapWidget ({ group, items }) {
       }
 
       return (
-        <div styleName='postTip' className={type} style={{ left: pointerX + 15, top: pointerY }}>
+        <div className={cx(classes.postTip, type)} style={{ left: pointerX + 15, top: pointerY }}>
           {message}
         </div>
       )
@@ -100,7 +101,7 @@ export default function FarmMapWidget ({ group, items }) {
   }, [items, viewport])
 
   return (
-    <div styleName='farm-map-container'>
+    <div className={classes.farmMapContainer}>
       <Map
         hyloLayers={[groupIconLayer, postsLayer]}
         children={_renderTooltip()}

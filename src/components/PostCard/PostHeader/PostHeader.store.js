@@ -101,14 +101,15 @@ export const getGroup = ormCreateSelector(
 export function ormSessionReducer ({ Group, Post }, { type, meta }) {
   let post
   switch (type) {
-    case PIN_POST_PENDING:
+    case PIN_POST_PENDING: {
       post = Post.withId(meta.postId)
       // this line is to clear the selector memoization
       post.update({ _invalidate: (post._invalidate || 0) + 1 })
-      let postMembership = post.postMemberships.filter(p =>
+      const postMembership = post.postMemberships.filter(p =>
         Number(p.group) === Number(meta.groupId)).toModelArray()[0]
       postMembership && postMembership.update({ pinned: !postMembership.pinned })
       break
+    }
 
     case FULFILL_POST_PENDING:
       post = Post.withId(meta.postId)

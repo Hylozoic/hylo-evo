@@ -19,7 +19,7 @@ export function graphqlToString (unknownGraphql) {
 
 export function getHyloAPIEndpointURL () {
   return typeof window === 'undefined'
-    ? `${process.env.API_HOST}${HYLO_GRAPHQL_ENDPOINT_PATH}`
+    ? `${import.meta.env.VITE_API_HOST}${HYLO_GRAPHQL_ENDPOINT_PATH}`
     : `${window.location.origin}${HYLO_GRAPHQL_ENDPOINT_PATH}`
 }
 

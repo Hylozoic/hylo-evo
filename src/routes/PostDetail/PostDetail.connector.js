@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { get, find } from 'lodash/fp'
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { editPostUrl, removePostFromUrl } from 'util/navigation'
 import fetchPost from 'store/actions/fetchPost'
 import joinProject from 'store/actions/joinProject'
@@ -14,6 +14,8 @@ import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import getRouteParam from 'store/selectors/getRouteParam'
+
+// TODO remove
 
 export function mapStateToProps (state, props) {
   // match params

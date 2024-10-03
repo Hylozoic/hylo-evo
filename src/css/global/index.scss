@@ -1,15 +1,9 @@
-// NOTE: font-face declarations need to be outside
-//       of CSS Modules global calls.
-//       ref: https://github.com/css-modules/css-modules/issues/95
 @import './fonts';
+@import './bootstrap';
+@import './icons';
+@import '../typography';
+@import '../datepicker';
 
-:global {
-  @import './bootstrap';
-  @import './icons';
-  @import '../typography';
-  @import '../datepicker';
-
-  body {
-    overflow-x: hidden;
-  }
+body {
+  overflow-x: hidden;
 }

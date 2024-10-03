@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
 import cx from 'classnames'
+import React, { useState } from 'react'
 import Icon from 'components/Icon'
-import './Pill.scss'
+import classes from './Pill.module.scss'
 
 export default function Pill ({
   id,
@@ -25,34 +25,33 @@ export default function Pill ({
   const providedOnClick = onClick ? (e) => { e.stopPropagation(); e.preventDefault(); onClick(id, label) } : null
   const mouseOut = () => setRemoving(false)
   const pillStyles = cx(
-    'pill',
+    classes.pill,
     {
-      clickable: !!onClick,
-      removable: editable && onRemove,
-      removing: editable && onRemove && removing
+      [classes.clickable]: !!onClick,
+      [classes.removable]: editable && onRemove,
+      [classes.removing]: editable && onRemove && removing
     },
-    darkText ? 'dark-text' : 'gray-text'
+    darkText ? classes.darkText : classes.grayText
   )
 
   return (
     <div
-      styleName={pillStyles}
-      className={className}
+      className={cx(pillStyles, className)}
       onMouseLeave={mouseOut}
     >
       <span
-        data-tip='Click to Search'
-        data-for='pill-label'
-        styleName='display-label'
+        data-tooltip-content='Click to Search'
+        data-tooltip-id='pill-label'
+        className={classes.displayLabel}
         onClick={providedOnClick}
       >
         {label}
       </span>
       {editable &&
         <Icon
-          styleName='remove-label'
-          dataTip='Double click to delete'
-          dataTipFor='pill-label'
+          className={classes.removeLabel}
+          tooltipContent='Double click to delete'
+          tooltipId='pill-label'
           name='Ex'
           onClick={deletePill}
         />}

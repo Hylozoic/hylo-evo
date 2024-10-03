@@ -5,9 +5,19 @@ import { createSelector } from 'reselect'
 import { keyBy } from 'lodash'
 
 export function useGetJoinRequests () {
-  return useSelector(state => createSelector([getMyJoinRequests], (selection) => selection.filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)))
+  return useSelector(
+    createSelector(
+      getMyJoinRequests,
+      (joinRequests) => joinRequests.filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)
+    )
+  )
 }
 
 export function useKeyJoinRequestsByGroupId () {
-  return useSelector(state => createSelector([useGetJoinRequests], (selection) => keyBy(selection, 'group.id')))
+  return useSelector(
+    createSelector(
+      useGetJoinRequests,
+      (selection) => keyBy(selection, 'group.id')
+    )
+  )
 }

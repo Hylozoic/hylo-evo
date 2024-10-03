@@ -1,0 +1,22 @@
+.checkbox {
+  visibility: hidden;
+  width: 0;
+}
+
+.label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.label-left {
+  padding-left: 8px;
+}
+
+.icon {
+  color: $color-caribbean-green;
+  vertical-align: sub;
+  padding-right: 8px;
+  &:hover {
+    color: $color-gossamer;
+  }
+}

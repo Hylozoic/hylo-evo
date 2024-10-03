@@ -1,5 +1,5 @@
 import { get } from 'lodash/fp'
-import groupTopicsQueryFragment from 'graphql/fragments/groupTopicsQueryFragment'
+import groupTopicsQueryFragment from '@graphql/fragments/groupTopicsQueryFragment'
 
 export const FETCH_GROUP_TOPICS = 'FETCH_GROUP_TOPICS'
 

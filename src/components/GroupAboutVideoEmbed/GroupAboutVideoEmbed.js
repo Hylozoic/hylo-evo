@@ -1,19 +1,20 @@
+import cx from 'classnames'
 import React from 'react'
 import { trim } from 'lodash/fp'
 import ReactPlayer from 'react-player'
-import './GroupAboutVideoEmbed.scss'
+import classes from './GroupAboutVideoEmbed.module.scss'
 
 export default function GroupAboutVideoEmbed ({ uri, className }) {
   if (!uri || trim(uri).length === 0) return null
 
   return (
-    <div styleName='videoContainer' className={className}>
+    <div className={cx(classes.videoContainer, className)}>
       <ReactPlayer
         url={uri}
         controls
         width='100%'
         height='100%'
-        styleName='video'
+        className={classes.video}
       />
     </div>
   )

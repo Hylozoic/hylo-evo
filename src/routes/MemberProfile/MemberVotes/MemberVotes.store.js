@@ -2,7 +2,7 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
 import presentPost from 'store/presenters/presentPost'
-import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
+import postFieldsFragment from '@graphql/fragments/postFieldsFragment'
 import { FETCH_MEMBER_VOTES } from '../MemberProfile.store'
 
 export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery) { // TODO REACTIONS: switch this to reactions

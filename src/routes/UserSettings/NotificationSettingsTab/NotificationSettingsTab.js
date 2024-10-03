@@ -9,7 +9,7 @@ import Loading from 'components/Loading'
 import Select from 'components/Select'
 import { bgImageStyle } from 'util/index'
 
-import './NotificationSettingsTab.scss'
+import classes from './NotificationSettingsTab.module.scss'
 
 const allGroupsLogo = '/hylo-merkaba.png'
 
@@ -93,12 +93,12 @@ class NotificationSettingsTab extends Component {
     }
     return (
       <div>
-        <div styleName='title'><Icon name='Notifications' />{t('Notifications')}</div>
-        <div styleName='global-setting'>
-          <div styleName='prompt'>{t('How often would you like to receive email digests for new posts in your groups and saved searches?')}
+        <div className={classes.title}><Icon name='Notifications' />{t('Notifications')}</div>
+        <div className={classes.globalSetting}>
+          <div className={classes.prompt}>{t('How often would you like to receive email digests for new posts in your groups and saved searches?')}
           </div>
-          <div styleName='setting-select'>
-            <div styleName='select-explanation'>{t('Send me a digest')}</div>
+          <div className={classes.settingSelect}>
+            <div className={classes.selectExplanation}>{t('Send me a digest')}</div>
             <Select
               onChange={updateSetting('digestFrequency')}
               selected={settings.digestFrequency}
@@ -109,10 +109,10 @@ class NotificationSettingsTab extends Component {
               ]} />
           </div>
         </div>
-        <div styleName='global-setting'>
-          <div styleName='prompt'>{t('Would you like to receive a notification for each new post in your groups?')}
+        <div className={classes.globalSetting}>
+          <div className={classes.prompt}>{t('Would you like to receive a notification for each new post in your groups?')}
           </div>
-          <div styleName='setting-select'>
+          <div className={classes.settingSelect}>
             <Select
               onChange={updateSetting('postNotifications')}
               selected={settings.postNotifications}
@@ -123,13 +123,13 @@ class NotificationSettingsTab extends Component {
               ]} />
           </div>
         </div>
-        <div styleName='global-setting'>
-          <div styleName='prompt'>
+        <div className={classes.globalSetting}>
+          <div className={classes.prompt}>
             {t('How would you like to receive notifications about')}&nbsp;
             {t('new comments on posts you\'re following?')}
           </div>
-          <div styleName='setting-select'>
-            <div styleName='select-explanation'>{t('Notify me via')}</div>
+          <div className={classes.settingSelect}>
+            <div className={classes.selectExplanation}>{t('Notify me via')}</div>
 
             <Select
               onChange={updateSetting('commentNotifications')}
@@ -138,13 +138,13 @@ class NotificationSettingsTab extends Component {
           </div>
         </div>
         <div>
-          <div styleName='individual-groups'>{t('NOTIFICATIONS')}</div>
+          <div className={classes.individualGroups}>{t('NOTIFICATIONS')}</div>
 
           <MessageSettingsRow
             settings={messageSettings}
             updateMessageSettings={this.updateMessageSettings} />
 
-          <div styleName='individual-groups'>{t('GROUP NOTIFICATIONS')}</div>
+          <div className={classes.individualGroups}>{t('GROUP NOTIFICATIONS')}</div>
 
           <AllGroupsSettingsRow
             settings={allGroupsSettings}
@@ -155,8 +155,8 @@ class NotificationSettingsTab extends Component {
             updateMembershipSettings={changes => updateMembershipSettings(membership.group.id, changes)} />)}
         </div>
 
-        <div styleName='help'>
-          <p styleName='help-paragraph'>
+        <div className={classes.help}>
+          <p className={classes.helpParagraph}>
             {t('Download our')}{' '}<a href={iOSAppURL} rel='noreferrer' target='_blank'>iOS</a>
             {' '}{t('or')}{' '}
             <a href={androidAppURL} rel='noreferrer' target='_blank'>Android</a>
@@ -216,13 +216,13 @@ export class SettingsRow extends React.Component {
     const imageStyle = bgImageStyle(imageUrl)
 
     return (
-      <div styleName={cx('settingsRow')}>
-        <div styleName='nameRow'>
-          {iconName && <Icon name={iconName} styleName='avatarIcon' />}
-          {!iconName && <div styleName='groupAvatar' style={imageStyle} />}
-          <span styleName='name'>{name}</span>
+      <div className={classes.settingsRow}>
+        <div className={classes.nameRow}>
+          {iconName && <Icon name={iconName} className={classes.avatarIcon} />}
+          {!iconName && <div className={classes.groupAvatar} style={imageStyle} />}
+          <span className={classes.name}>{name}</span>
         </div>
-        <div styleName='iconRow'>
+        <div className={classes.iconRow}>
           <SettingsIcon settingKey='sendPushNotifications' name='PushNotification' settings={settings} update={update} />
           <SettingsIcon settingKey='sendEmail' name='EmailNotification' settings={settings} update={update} />
         </div>
@@ -237,13 +237,13 @@ export function SettingsIcon ({ settingKey, name, update, settings }) {
 
   return (
     <div
-      styleName={cx('setting-controls', { highlightIcon: settings[settingKey] })}
+      className={cx(classes.settingControls, { [classes.highlightIcon]: settings[settingKey] })}
       onClick={() => update({ [settingKey]: !settings[settingKey] })}
-      data-tip={`Turn ${name === 'EmailNotification' ? 'Email' : 'Mobile Push'} Notifications ${settings[settingKey] ? t('Off') : t('On')}`}
-      data-for='helpTip'
+      data-tooltip-content={`Turn ${name === 'EmailNotification' ? 'Email' : 'Mobile Push'} Notifications ${settings[settingKey] ? t('Off') : t('On')}`}
+      data-tooltip-id='helpTip'
     >
-      <Icon name={name} styleName={cx('icon', { highlightIcon: settings[settingKey] })} />
-      <span styleName='setting-status'>{t(settingStatus)}</span>
+      <Icon name={name} className={cx(classes.icon, { [classes.highlightIcon]: settings[settingKey] })} />
+      <span className={classes.settingStatus}>{t(settingStatus)}</span>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { LocationHelpers } from 'hylo-shared'
 import Highlight from 'components/Highlight'
 import cx from 'classnames'
 import Icon from 'components/Icon'
-import './PostTitle.scss'
+import classes from './PostTitle.module.scss'
 
 export default function PostTitle ({
   constrained,
@@ -20,8 +20,11 @@ export default function PostTitle ({
 
   return <Highlight {...highlightProps}>
     <React.Fragment>
-      <div onClick={onClick} styleName={cx('title', { constrained })} className='hdr-headline'>{title}</div>
-      {type !== 'event' && location && <div styleName={cx('headerLocation', { constrained })}><Icon name='Location' styleName='locationIcon' />{generalLocation}</div>}
+      <div onClick={onClick} className={cx(classes.title, { [classes.constrained]: constrained }, 'hdr-headline')}>{title}</div>
+      {type !== 'event' && location && <div className={cx(classes.headerLocation, { [classes.constrained]: constrained })}>
+        <Icon name='Location' className={classes.locationIcon} />
+        {generalLocation}
+      </div>}
     </React.Fragment>
   </Highlight>
 }

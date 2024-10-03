@@ -2,8 +2,7 @@ import { compact } from 'lodash'
 import { applyMiddleware, compose } from 'redux'
 import { createLogger } from 'redux-logger'
 import promiseMiddleware from 'redux-promise'
-import { routerMiddleware } from 'connected-react-router'
-import { isDev } from 'config'
+import { isDev } from 'config/index'
 import graphqlMiddleware from './graphqlMiddleware'
 import apiMiddleware from './apiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
@@ -12,9 +11,9 @@ import userBlockingMiddleware from './userBlockingMiddleware'
 import mixpanelMiddleware from './mixpanelMiddleware'
 import rollbarMiddleware from './rollbarMiddleware'
 
-export default function createMiddleware (history, req) {
+export default function createMiddleware (routerMiddleware, req) {
   const middleware = compact([
-    routerMiddleware(history),
+    routerMiddleware,
     graphqlMiddleware,
     apiMiddleware(req),
     optimisticMiddleware,
@@ -23,7 +22,7 @@ export default function createMiddleware (history, req) {
     userBlockingMiddleware,
     mixpanelMiddleware,
     rollbarMiddleware,
-    !req && isDev && createLogger({ collapsed: true })
+    isDev && createLogger({ collapsed: true })
   ])
 
   const composeFn = typeof __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined'

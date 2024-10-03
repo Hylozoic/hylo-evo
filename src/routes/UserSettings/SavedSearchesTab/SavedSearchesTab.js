@@ -1,19 +1,20 @@
 import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import ReactTooltip from 'react-tooltip'
+import { Tooltip } from 'react-tooltip'
 import isMobile from 'ismobilejs'
+import cx from 'classnames'
 import getMe from 'store/selectors/getMe'
 import { fetchSavedSearches, deleteSearch as deleteSearchAction } from '../UserSettings.store'
 import { FETCH_SAVED_SEARCHES } from 'store/constants'
 import { formatParams, generateViewParams } from 'util/savedSearch'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import './SavedSearchesTab.scss'
+import classes from './SavedSearchesTab.module.scss'
 
 export default function SavedSearchesTab () {
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
   const loading = useSelector(state => state.pending[FETCH_SAVED_SEARCHES])
@@ -22,7 +23,7 @@ export default function SavedSearchesTab () {
   const viewSavedSearch = useCallback(search => {
     const { mapPath } = generateViewParams(search)
     dispatch(viewSavedSearch(search))
-    history.push(mapPath)
+    navigate(mapPath)
     return null
   })
 
@@ -35,7 +36,7 @@ export default function SavedSearchesTab () {
 
   return (
     <div>
-      <div styleName='title'>{t('Saved Searches')}</div>
+      <div className={classes.title}>{t('Saved Searches')}</div>
       {searches.map(s =>
         <SearchControl
           key={s.id}
@@ -51,20 +52,24 @@ export default function SavedSearchesTab () {
 export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {
   const { t } = useTranslation()
   return (
-    <div styleName='search-control'>
-      <div styleName='row'>
-        <span styleName='name' onClick={() => viewSavedSearch(search)}>{search.name}</span>
-        <span data-tip={formatParams(search)} data-for='params'><Icon name='Info' styleName='params-icon' /></span>
+    <div className={classes.searchControl}>
+      <div className={classes.row}>
+        <span className={classes.name} onClick={() => viewSavedSearch(search)}>{search.name}</span>
+        <span data-tooltip-content={formatParams(search)} data-tooltip-id='params'>
+          <Icon name='Info' className={classes.paramsIcon} />
+        </span>
         {!isMobile.any && (
-          <ReactTooltip place='right'
+          <Tooltip
+            place='right'
             type='dark'
             id='params'
             effect='solid'
             multiline
             delayShow={200}
-            className='params' />
+            className='params'
+          />
         )}
-        <span onClick={() => deleteSearch(search.id)} styleName='delete-button'>{t('Delete')}</span>
+        <span onClick={() => deleteSearch(search.id)} className={classes.deleteButton}>{t('Delete')}</span>
       </div>
     </div>
   )

@@ -11,6 +11,8 @@ import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
 
+// XXX: remove this file
+
 export function mapStateToProps (state, props) {
   const routeParams = props.match.params
   const group = getGroupForCurrentRoute(state, props)
@@ -25,8 +27,8 @@ export function mapStateToProps (state, props) {
     // newPostCount.
     groupMembership = getGroupMembership(state, { groupId: group.id })
     badge = get('newPostCount', groupMembership)
-    const childGroups = getChildGroups(state, { groupSlug: group.slug })
-    const parentGroups = getParentGroups(state, { groupSlug: group.slug })
+    const childGroups = getChildGroups(state, group)
+    const parentGroups = getParentGroups(state, group)
     hasRelatedGroups = childGroups.length > 0 || parentGroups.length > 0
   }
 

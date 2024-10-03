@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import Button from 'components/Button'
-import './DeleteSettingsTab.scss'
+import classes from './DeleteSettingsTab.module.scss'
 
 class DeleteSettingsTab extends Component {
   deleteGroup = () => {
@@ -17,15 +17,15 @@ class DeleteSettingsTab extends Component {
     const { name } = group
 
     return (
-      <div styleName='container'>
-        <div styleName='title'>{this.props.t('Delete {{groupName}}', { groupName: name })}</div>
-        <div styleName='help'>
+      <div className={classes.container}>
+        <div className={classes.title}>{this.props.t('Delete {{groupName}}}, { groupName: name }')}</div>
+        <div className={classes.help}>
           {this.props.t('If you delete this group, it will no longer be visible to you or any of the members. All posts will also be deleted.')}
         </div>
         <Button
           label={this.props.t('Delete Group')}
           onClick={this.deleteGroup}
-          styleName='delete-button'
+          className={classes.deleteButton}
         />
       </div>
     )

@@ -3,7 +3,7 @@ import EmojiPicker from 'components/EmojiPicker'
 import EmojiPill from 'components/EmojiPill'
 import useReactionActions from 'hooks/useReactionActions'
 
-import './EmojiRow.scss'
+import classes from './EmojiRow.module.scss'
 
 export default function EmojiRow (props) {
   const {
@@ -36,7 +36,7 @@ export default function EmojiRow (props) {
   }, {})
   return (
     <div className={className} onClick={onClick}>
-      {entityReactions && <div styleName='footer-reactions'>
+      {entityReactions && <div className={classes.footerReactions}>
         {Object.values(usersReactions).map(reaction => (
           <EmojiPill
             onClick={currentUser ? reaction.loggedInUser ? handleRemoveReaction : handleReaction : null}

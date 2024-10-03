@@ -6,7 +6,7 @@ import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
 import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
-import './PostGridItem.scss'
+import classes from './PostGridItem.module.scss'
 
 export default function PostGridItem (props) {
   const {
@@ -40,52 +40,52 @@ export default function PostGridItem (props) {
   /* const startTimeMoment = Moment(post.startTime) */
 
   return (
-    <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
-      <div styleName='content-summary'>
+    <div className={cx(classes.postGridItemContainer, { [classes.unread]: unread, [classes.expanded]: expanded }, classes[attachmentType])} onClick={showDetails}>
+      <div className={classes.contentSummary}>
         {childPost &&
           <div
-            styleName='icon-container'
-            data-tip={t('Post from child group')}
-            data-for='childgroup-tt'
+            className={classes.iconContainer}
+            data-tooltip-content={t('Post from child group')}
+            data-tooltip-id='childgroup-tt'
           >
             <Icon
               name='Subgroup'
-              styleName='icon'
+              className={classes.icon}
             />
             <Tooltip
               delay={250}
               id='childgroup-tt'
             />
           </div>}
-        <h3 styleName={cx('title', { isFlagged: isFlagged && !post.clickthrough })}>{title}</h3>
+        <h3 className={cx(classes.title, { [classes.isFlagged]: isFlagged && !post.clickthrough })}>{title}</h3>
         {attachmentType === 'image'
-          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName={cx('first-image', { isFlagged: isFlagged && !post.clickthrough })} />
+          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} className={cx(classes.firstImage, { [classes.isFlagged]: isFlagged && !post.clickthrough })} />
           : attachmentType === 'file'
-            ? <div styleName='file-attachment'>
+            ? <div className={classes.fileAttachment}>
               {numAttachments > 1
-                ? <div styleName='attachment-number'>{numAttachments} attachments</div>
+                ? <div className={classes.attachmentNumber}>{numAttachments} attachments</div>
                 : ' '
               }
-              <Icon name='Document' styleName='file-icon' />
-              <div styleName='attachment-name'>{attachmentUrl.substring(firstAttachment.url.lastIndexOf('/') + 1)}</div>
+              <Icon name='Document' className={classes.fileIcon} />
+              <div className={classes.attachmentName}>{attachmentUrl.substring(firstAttachment.url.lastIndexOf('/') + 1)}</div>
             </div>
             : ' '
         }
-        {isFlagged && <Icon name='Flag' styleName='flagIcon' />}
+        {isFlagged && <Icon name='Flag' className={classes.flagIcon} />}
 
-        <HyloHTML styleName='details' html={details} />
-        <div styleName='grid-meta'>
-          <div styleName='grid-meta-row-1'>
-            <div styleName='type-author'>
-              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
+        <HyloHTML className={classes.details} html={details} />
+        <div className={classes.gridMeta}>
+          <div className={classes.gridMetaRow1}>
+            <div className={classes.typeAuthor}>
+              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} className={classes.avatar} tiny />
               {creator.name}
             </div>
-            <span styleName='timestamp'>
+            <span className={classes.timestamp}>
               {createdTimestampForGrid}
             </span>
           </div>
         </div>
-        <div styleName='grid-fade' />
+        <div className={classes.gridFade} />
       </div>
     </div>
   )

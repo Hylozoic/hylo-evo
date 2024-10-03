@@ -10,9 +10,10 @@ const CommentFieldsFragment = `
     avatarUrl
     groupRoles {
       items {
-         name
-         emoji
-         active
+        id
+        name
+        emoji
+        active
          groupId
          responsibilities {
           items {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import isWebView from 'util/webView'
 import { POST_TYPES } from 'store/models/Post'
 import Icon from 'components/Icon'
-import './CreateModal.scss'
+import classes from './CreateModal.module.scss'
 import { useTranslation } from 'react-i18next'
 
 const postTypes = Object.keys(POST_TYPES).filter(t => t !== 'chat')
@@ -30,7 +30,7 @@ export default function CreateModalChooser ({ location }) {
   t('Talk about whats important with others')
 
   return (
-    <div styleName='chooser'>
+    <div className={classes.chooser}>
       <h1>{hasLocation && t('New Post at this location:') + ' '}{t('What would you like to create?')}</h1>
       {postTypes.map(postType => {
         querystringParams.set('newPostType', postType)
@@ -42,12 +42,12 @@ export default function CreateModalChooser ({ location }) {
         return (
           <Link to={createPostForPostTypePath} key={postType}>
             <div>
-              <Icon name={iconName} styleName='postIcon' />
+              <Icon name={iconName} className={classes.postIcon} />
               <b>
-                <span styleName='postTypeName'>{t(postType)}</span>
-                <span styleName='postTypeDescription'>{t(POST_TYPES[postType].description)}</span>
+                <span className={classes.postTypeName}>{t(postType)}</span>
+                <span className={classes.postTypeDescription}>{t(POST_TYPES[postType].description)}</span>
               </b>
-              <span styleName='indicator' />
+              <span className={classes.indicator} />
             </div>
           </Link>
         )
@@ -56,12 +56,12 @@ export default function CreateModalChooser ({ location }) {
       {!isWebView() && (
         <Link to={`${location.pathname}/group`}>
           <div key='group'>
-            <Icon name='Groups' styleName='postIcon' />
+            <Icon name='Groups' className={classes.postIcon} />
             <b>
-              <span styleName='postTypeName'>{t('Group')}</span>
-              <span styleName='postTypeDescription'>{t('Create a new movement, network, community or group!')}</span>
+              <span className={classes.postTypeName}>{t('Group')}</span>
+              <span className={classes.postTypeDescription}>{t('Create a new movement, network, community or group!')}</span>
             </b>
-            <span styleName='indicator' />
+            <span className={classes.indicator} />
           </div>
         </Link>
       )}

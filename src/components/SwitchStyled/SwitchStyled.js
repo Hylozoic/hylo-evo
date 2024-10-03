@@ -1,25 +1,24 @@
 import React from 'react'
 import cx from 'classnames'
-import './SwitchStyled.scss'
+import classes from './SwitchStyled.module.scss'
 
-function SwitchStyled ({ onChange, checked, disabled, backgroundColor, name }) {
+function SwitchStyled ({
+  onChange = (checked, name) => { console.log(checked, name) },
+  checked = false,
+  disabled = false,
+  backgroundColor = '#ff44ff',
+  name
+}) {
   const handleToggle = () => {
     onChange(checked, name)
   }
   return (
-    <div styleName={cx('container', { containerDisabled: disabled })} onClick={disabled ? null : handleToggle}>
+    <div className={cx(classes.container, { [classes.containerDisabled]: disabled })} onClick={disabled ? null : handleToggle}>
       <input type='hidden' name={name} defaultChecked={checked} />
-      <span styleName={'track'} style={{ backgroundColor, opacity: checked ? 1 : 0.4 }} />
-      <span styleName={cx('button', { buttonChecked: checked })} />
+      <span className={classes.track} style={{ backgroundColor, opacity: checked ? 1 : 0.4 }} />
+      <span className={cx(classes.button, { [classes.buttonChecked]: checked })} />
     </div>
   )
-}
-
-SwitchStyled.defaultProps = {
-  checked: false,
-  disabled: false,
-  backgroundColor: '#ff44ff',
-  onChange: (checked, name) => { console.log(checked, name) }
 }
 
 export default SwitchStyled

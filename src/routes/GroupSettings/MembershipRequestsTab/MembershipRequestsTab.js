@@ -8,7 +8,7 @@ import Avatar from 'components/Avatar'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import styles from './MembershipRequestsTab.scss' // eslint-disable-line no-unused-vars
+import styles from './MembershipRequestsTab.module.scss' // eslint-disable-line no-unused-vars
 import { jollyAxolotl } from 'util/assets'
 
 const { array, func, object } = PropTypes
@@ -64,7 +64,7 @@ export function NoRequests ({ group, viewMembers }) {
   const { t } = useTranslation()
   return (
     <>
-      <div styleName='no-requests'>
+      <div className={classes.noRequests}>
         <img src={jollyAxolotl} />
         <br />
         <div>
@@ -75,7 +75,7 @@ export function NoRequests ({ group, viewMembers }) {
           <Button
             label={t('View Current Members')}
             onClick={viewMembers}
-            styleName='view-members'
+            className={classes.viewMembers}
           />
         )}
       </div>
@@ -88,12 +88,12 @@ export function NewRequests ({ accept, decline, group, joinRequests }) {
   return (
     <React.Fragment>
       <div>
-        <div styleName='header'>
+        <div className={classes.header}>
           <h2>{t('People want to join your group!')}</h2>
           {/* TODO: For later implementation
-          <span styleName='response-time'>Your average response time: 1 day</span> */}
+          <span className={classes.responseTime}>Your average response time: 1 day</span> */}
         </div>
-        <div styleName='request-list'>
+        <div className={classes.requestList}>
           {joinRequests.map(r => <JoinRequest
             key={r.id}
             accept={accept}
@@ -114,29 +114,29 @@ export function JoinRequest ({ accept, decline, group, request }) {
   const otherAnswers = questionAnswers.filter(qa => !group.joinQuestions.find(jq => jq.questionId === qa.question.id))
 
   return (
-    <div styleName='request'>
-      <div styleName='requestor'>
-        <Avatar avatarUrl={user.avatarUrl} url={personUrl(user.id)} styleName='requestorAvatar' />
-        <div styleName='requestorInfo'>
-          <div styleName='name'>{user.name}</div>
-          {user.skills.items.length > 0 ? <div styleName='skills'>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div> : <div>{user.location}</div>}
+    <div className={classes.request}>
+      <div className={classes.requestor}>
+        <Avatar avatarUrl={user.avatarUrl} url={personUrl(user.id)} className={classes.requestorAvatar} />
+        <div className={classes.requestorInfo}>
+          <div className={classes.name}>{user.name}</div>
+          {user.skills.items.length > 0 ? <div className={classes.skills}>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div> : <div>{user.location}</div>}
         </div>
       </div>
       {group.joinQuestions.map(q =>
-        <div styleName='answer' key={q.id}>
+        <div className={classes.answer} key={q.id}>
           <h3>{q.text}</h3>
           <p>{get('answer', questionAnswers.find(qa => qa.question.id === q.questionId)) || <i>{t('Not answered')}</i>}</p>
         </div>
       )}
       {otherAnswers.map(qa =>
-        <div styleName='answer' key={qa.question.id}>
+        <div className={classes.answer} key={qa.question.id}>
           <h3>{qa.question.text}</h3>
           <p>{qa.answer}</p>
         </div>
       )}
-      <div styleName='action-buttons'>
-        <div styleName='accept' onClick={() => accept(request.id)}><Icon name='Checkmark' styleName='icon-green' />{t('Welcome')}</div>
-        <div onClick={() => decline(request.id)}><Icon name='Ex' styleName='icon-red' />{t('Decline')}</div>
+      <div className={classes.actionButtons}>
+        <div className={cx(classes.accept, classes.iconGreen)} onClick={() => accept(request.id)}><Icon name='Checkmark' />{t('Welcome')}</div>
+        <div onClick={() => decline(request.id)}><Icon name='Ex' className={classes.iconRed} />{t('Decline')}</div>
       </div>
     </div>
   )

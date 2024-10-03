@@ -7,7 +7,7 @@ import PeopleInfo from '../PeopleInfo'
 import Tooltip from 'components/Tooltip'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
 
-import './PostFooter.scss'
+import classes from './PostFooter.module.scss'
 
 class PostFooter extends React.PureComponent {
   static propTypes= {
@@ -30,7 +30,7 @@ class PostFooter extends React.PureComponent {
     const tooltipId = 'postfooter-tt-' + postId
 
     return (
-      <div onClick={onClick} styleName={cx('footer', { constrained })}>
+      <div onClick={onClick} className={cx(classes.footer, { [classes.constrained]: constrained })}>
         <PeopleInfo constrained={constrained} people={commenters} peopleTotal={commentersTotal} excludePersonId={get('id', currentUser)} />
         <Tooltip
           delay={550}

@@ -6,7 +6,7 @@ import { bgImageStyle } from 'util/index'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import cx from 'classnames'
-import './LinkPreview.scss'
+import classes from './LinkPreview.module.scss'
 
 export default function LinkPreview ({ loading, featured: providedFeatured, ...props }) {
   const [isVideo, setIsVideo] = useState()
@@ -43,32 +43,32 @@ export default function LinkPreview ({ loading, featured: providedFeatured, ...p
 
   return (
     <>
-      <div styleName='container' className={className}>
+      <div className={cx(classes.container, className)}>
         {featured && (
-          <span styleName='featured'>
+          <span className={classes.featured}>
             <span><strong>{t('Featured:')}</strong> {t('This video will be full-width, displayed above the description, and playable.')}</span>
           </span>
         )}
-        <div styleName='link-preview'>
+        <div className={classes.linkPreview}>
           {imageUrl && (
-            <div style={imageStyle} styleName='image'>
+            <div style={imageStyle} className={classes.image}>
               {isVideo && !featured && (
-                <ImEnlarge styleName={cx('feature-button', { featured })} onClick={toggleFeatured} />
+                <ImEnlarge className={cx(classes.featureButton, { [classes.featured]: featured })} onClick={toggleFeatured} />
               )}
               {isVideo && featured && (
-                <ImShrink styleName={cx('feature-button', { featured })} onClick={toggleFeatured} />
+                <ImShrink className={cx(classes.featureButton, { [classes.featured]: featured })} onClick={toggleFeatured} />
               )}
             </div>
           )}
-          <div styleName='text'>
-            <div styleName='header'>
-              <span styleName='title'>{title}</span>
-              <span onClick={onClose} styleName='close'>
-                <Icon name='Ex' styleName='icon' />
+          <div className={classes.text}>
+            <div className={classes.header}>
+              <span className={classes.title}>{title}</span>
+              <span onClick={onClose} className={classes.close}>
+                <Icon name='Ex' className={classes.icon} />
               </span>
             </div>
-            <div styleName='description'>{description}</div>
-            <div styleName='domain'>{domain}</div>
+            <div className={classes.description}>{description}</div>
+            <div className={classes.domain}>{domain}</div>
           </div>
         </div>
       </div>

@@ -84,11 +84,12 @@ export function createTopic (topicName, groupId, isDefault = false, isSubscribin
 export default function reducer (state = {}, action) {
   const { meta, payload, type } = action
   switch (type) {
-    case CREATE_TOPIC:
+    case CREATE_TOPIC: {
       const topicName = get('data.createTopic.name', payload)
       // Once '#foo' is created, reset store['foo'], even if it wipes out checks
       // on the same topic for other groups... safer to start fresh.
       return omit(encodeURI(topicName), state)
+    }
 
     case FETCH_GROUP_TOPIC:
       return {

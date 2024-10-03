@@ -4,7 +4,7 @@ import Button from 'components/Button'
 import { inflectedTotal, bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER } from 'store/models/Group'
 
-import './TopicFeedHeader.scss'
+import classes from './TopicFeedHeader.module.scss'
 
 export default function TopicFeedHeader ({
   bannerUrl = DEFAULT_BANNER,
@@ -26,20 +26,20 @@ export default function TopicFeedHeader ({
   }
   followersTotal = followersTotal || 0
 
-  return <div styleName='topic-feed-header'>
-    <div style={bgImageStyle(bannerUrl)} styleName='image'>
-      <div styleName='topic-info'>
-        <div styleName='topic-name'>#{topicName}</div>
-        <div styleName='meta'>
-          <Icon name='Star' styleName='star-icon' />
+  return <div className={classes.topicFeedHeader}>
+    <div style={bgImageStyle(bannerUrl)} className={classes.image}>
+      <div className={classes.topicInfo}>
+        <div className={classes.topicName}>#{topicName}</div>
+        <div className={classes.meta}>
+          <Icon name='Star' className={classes.starIcon} />
           {inflectedTotal('subscriber', followersTotal)}
         </div>
       </div>
-      {toggleSubscribe && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
-        <Icon name='Star' styleName={iconStyle} />
-        <div styleName='subscribe-label'>{buttonText}</div>
+      {toggleSubscribe && <Button className={cx(classes[buttonStyle])} onClick={toggleSubscribe}>
+        <Icon name='Star' className={cx(classes[iconStyle])} />
+        <div className={classes.subscribeLabel}>{buttonText}</div>
       </Button>}
-      <div styleName='fade'><div styleName='fade2' /></div>
+      <div className={classes.fade}><div className={classes.fade2} /></div>
     </div>
   </div>
 }

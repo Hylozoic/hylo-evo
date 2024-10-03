@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React, { Component } from 'react'
 import { withTranslation, useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
@@ -11,7 +12,7 @@ import HyloHTML from 'components/HyloHTML'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import './GroupsWidget.scss'
+import classes from './GroupsWidget.module.scss'
 
 const { array, object } = PropTypes
 
@@ -44,17 +45,17 @@ class GroupsWidget extends Component {
     const { items = [], routeParams } = this.props
 
     return (
-      <div styleName='groups'>
+      <div className={classes.groups}>
         <Slider {...sliderSettings}>
           {items && items.map(group => <GroupCard key={group.id} group={group} routeParams={routeParams} />)}
-          <div styleName='createGroup'>
+          <div className={classes.createGroup}>
             <div>
               <Link to={createGroupUrl(routeParams)}>{this.props.t('+ Create Group')}</Link>
               {/* might have to make this conditional, to suit a wider range of uses */}
             </div>
           </div>
         </Slider>
-        <div styleName='groupBumper' />
+        <div className={classes.groupBumper} />
       </div>
     )
   }
@@ -63,26 +64,26 @@ class GroupsWidget extends Component {
 export function GroupCard ({ group, routeParams, className }) {
   const { t } = useTranslation()
   return (
-    <div styleName='group' className={className} key={group.id}>
+    <div className={cx(classes.group, className)} key={group.id}>
       <div>
-        <div styleName='content'>
-          <div styleName='group-avatar'><img src={group.avatarUrl || DEFAULT_AVATAR} /></div>
-          <div styleName='group-name'>{group.name}</div>
-          <div styleName='member-count'>{group.memberCount} {t('member', { count: group.memberCount })}</div>
-          <div styleName='group-description'>
+        <div className={classes.content}>
+          <div className={classes.groupAvatar}><img src={group.avatarUrl || DEFAULT_AVATAR} /></div>
+          <div className={classes.groupName}>{group.name}</div>
+          <div className={classes.memberCount}>{group.memberCount} {t('member', { count: group.memberCount })}</div>
+          <div className={classes.groupDescription}>
             <ClickCatcher>
               <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
             </ClickCatcher>
-            {group.description && group.description.length > 140 && <div styleName='descriptionFade' />}
+            {group.description && group.description.length > 140 && <div className={classes.descriptionFade} />}
           </div>
           {group.memberStatus === 'member'
-            ? <div styleName='is-member'><Link to={groupUrl(group.slug)}><span>{t('Member')}</span><span styleName='visit'>{t('Visit')}</span></Link></div>
+            ? <div className={classes.isMember}><Link to={groupUrl(group.slug)}><span>{t('Member')}</span><span className={classes.visit}>{t('Visit')}</span></Link></div>
             : group.memberStatus === 'requested'
-              ? <div styleName='isnt-member'><Link to={groupDetailUrl(group.slug, routeParams)}><span>{t('Pending')}</span><span styleName='visit'>{t('View')}</span></Link></div>
-              : <div styleName='isnt-member'><Link to={groupDetailUrl(group.slug, routeParams)}><span>{t('View')}</span><span styleName='visit'>{t('View')}</span></Link></div>}
+              ? <div className={classes.isntMember}><Link to={groupDetailUrl(group.slug, routeParams)}><span>{t('Pending')}</span><span className={classes.visit}>{t('View')}</span></Link></div>
+              : <div className={classes.isntMember}><Link to={groupDetailUrl(group.slug, routeParams)}><span>{t('View')}</span><span className={classes.visit}>{t('View')}</span></Link></div>}
         </div>
       </div>
-      <div styleName='background' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }} ><div styleName='fade' /></div>
+      <div className={cx(classes.background)} style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}><div className={classes.fade} /></div>
     </div>
   )
 }

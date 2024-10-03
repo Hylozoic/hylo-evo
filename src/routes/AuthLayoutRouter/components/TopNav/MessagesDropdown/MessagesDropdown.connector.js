@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
+import { push } from 'redux-first-history'
 import { messageThreadUrl } from 'util/navigation'
 import fetchThreads from 'store/actions/fetchThreads'
 import { getThreads } from 'routes/Messages/Messages.store'

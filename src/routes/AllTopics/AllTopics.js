@@ -1,131 +1,133 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useTranslation, withTranslation } from 'react-i18next'
-import { find } from 'lodash/fp'
-import { bool, arrayOf, func, number, shape, string, object } from 'prop-types'
-// import CreateTopic from 'components/CreateTopic'
+import { useTranslation } from 'react-i18next'
+import { debounce, find, get } from 'lodash/fp'
+import { useSelector, useDispatch } from 'react-redux'
 import { GroupCell } from 'components/GroupsList/GroupsList'
 import Dropdown from 'components/Dropdown'
 import FullPageModal from 'routes/FullPageModal'
 import Icon from 'components/Icon'
 import ScrollListener from 'components/ScrollListener'
 import TextInput from 'components/TextInput'
+import useRouterParams from 'hooks/useRouterParams'
 import { inflectedTotal } from 'util/index'
 import { topicUrl, baseUrl } from 'util/navigation'
-import './AllTopics.scss'
+import getGroupForSlug from 'store/selectors/getGroupForSlug'
+import isPendingFor from 'store/selectors/isPendingFor'
+import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
+import fetchTopics from 'store/actions/fetchTopics'
+import { FETCH_TOPICS } from 'store/constants'
+import {
+  setSort,
+  setSearch,
+  getTopics,
+  getHasMoreTopics,
+  getTotalTopics,
+  getSort,
+  getSearch,
+  deleteGroupTopic
+} from './AllTopics.store'
+import classes from './AllTopics.module.scss'
 
 const TOPIC_LIST_ID = 'topic-list'
 
-class AllTopics extends Component {
-  state = {
-    createTopicModalVisible: false
-  }
+function AllTopics (props) {
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  // const [createTopicModalVisible, setCreateTopicModalVisible] = useState(false)
+  const [totalTopicsCached, setTotalTopicsCached] = useState(null)
 
-  static propTypes = {
-    topics: arrayOf(shape({
-      id: string,
-      name: string.isRequired,
-      postsTotal: number,
-      followersTotal: number,
-      isSubscribed: bool
-    })),
-    group: object,
-    routeParams: object.isRequired,
-    totalTopics: number,
-    selectedSort: string,
-    setSort: func,
-    search: string,
-    setSearch: func,
-    toggleGroupTopicSubscribe: func.isRequired
+  const routeParams = useRouterParams()
+  const groupSlug = routeParams.groupSlug
+  const group = useSelector(state => getGroupForSlug(state, groupSlug))
+  const selectedSort = useSelector(getSort)
+  const search = useSelector(getSearch)
+  const fetchTopicsParams = {
+    groupSlug: routeParams.groupSlug,
+    sortBy: selectedSort,
+    autocomplete: search
   }
+  const topics = useSelector(state => getTopics(state, fetchTopicsParams))
+  const hasMore = useSelector(state => getHasMoreTopics(state, fetchTopicsParams))
+  const totalTopics = useSelector(state => getTotalTopics(state, fetchTopicsParams))
+  const fetchIsPending = useSelector(state => isPendingFor(FETCH_TOPICS, state))
 
-  componentDidMount () {
-    this.props.fetchTopics()
-    this.updateTopicsCache()
-  }
+  const fetchTopicsAction = debounce(250, () => dispatch(fetchTopics({ ...fetchTopicsParams, first: 20 })))
+  const fetchMoreTopics = debounce(250, () => !fetchIsPending && hasMore && dispatch(fetchTopics({ ...fetchTopicsParams, offset: get('length', topics, 0), first: 10 })))
 
-  componentWillUnmount () {
-    this.props.setSearch('')
-  }
+  useEffect(() => {
+    fetchTopicsAction()
+    updateTopicsCache()
+  }, [])
 
-  componentDidUpdate (prevProps) {
-    if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
-      this.updateTopicsCache()
+  useEffect(() => {
+    return () => {
+      dispatch(setSearch(''))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!totalTopicsCached && !totalTopics && totalTopics) {
+      updateTopicsCache()
     }
     if (
-      prevProps.selectedSort !== this.props.selectedSort ||
-      prevProps.search !== this.props.search ||
-      prevProps.routeParams.groupSlug !== this.props.routeParams.groupSlug
+      selectedSort !== props.selectedSort ||
+      search !== props.search ||
+      routeParams.groupSlug !== props.routeParams.groupSlug
     ) {
-      this.props.fetchTopics()
+      fetchTopicsAction()
+    }
+  }, [selectedSort, search, groupSlug, totalTopics])
+
+  const updateTopicsCache = () => {
+    setTotalTopicsCached(totalTopics)
+  }
+
+  const deleteGroupTopicHandler = (groupTopicId) => {
+    if (window.confirm(t('Are you sure you want to delete this groupTopic?'))) {
+      dispatch(deleteGroupTopic(groupTopicId))
     }
   }
 
-  // Caching totalTopics because the total returned in the queryset
-  // changes when there is a search term
-  updateTopicsCache = () => {
-    this.setState({ totalTopicsCached: this.props.totalTopics })
-  }
+  // const toggleTopicModal = () => setCreateTopicModalVisible(!createTopicModalVisible)
 
-  deleteGroupTopic (groupTopicId) {
-    if (window.confirm(this.props.t('Are you sure you want to delete this groupTopic?'))) {
-      this.props.deleteGroupTopic(groupTopicId)
-    }
-  }
-
-  toggleTopicModal = () =>
-    this.setState({
-      createTopicModalVisible: !this.state.createTopicModalVisible
-    })
-
-  render () {
-    const {
-      routeParams,
-      group,
-      topics,
-      search,
-      setSearch,
-      selectedSort,
-      setSort,
-      fetchMoreTopics,
-      fetchIsPending,
-      toggleGroupTopicSubscribe,
-      t
-    } = this.props
-    const { totalTopicsCached } = this.state
-    const all = t('All')
-
-    return (
-      <FullPageModal fullWidth goToOnClose={baseUrl({ ...routeParams, view: undefined })}>
-        <div styleName='all-topics'>
-          <div styleName='title'>{t('{{groupName}} Topics', { groupName: group ? group.name : all })}</div>
-          <div styleName='subtitle'>{t('{{totalTopicsCached}} Total Topics', { totalTopicsCached })}</div>
-          <div styleName='controls'>
-            <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending }} />
-          </div>
-          <div styleName='topic-list' id={TOPIC_LIST_ID}>
-            {topics.map(topic => (
-              <TopicListItem
-                key={topic.id}
-                singleGroup={group}
-                topic={topic}
-                routeParams={routeParams}
-                deleteItem={this.deleteGroupTopic}
-                toggleSubscribe={toggleGroupTopicSubscribe}
-              />
-            ))}
-            <ScrollListener
-              onBottom={() => fetchMoreTopics()}
-              elementId={TOPIC_LIST_ID}
-            />
-          </div>
+  const all = t('All')
+  return (
+    <FullPageModal fullWidth goToOnClose={baseUrl({ ...routeParams, view: undefined })}>
+      <div className={classes.allTopics}>
+        <div className={classes.title}>{t('{{groupName}} Topics', { groupName: group ? group.name : all })}</div>
+        <div className={classes.subtitle}>{t('{{totalTopicsCached}} Total Topics', { totalTopicsCached })}</div>
+        <div className={classes.controls}>
+          <SearchBar
+            search={search}
+            setSearch={(value) => dispatch(setSearch(value))}
+            selectedSort={selectedSort}
+            setSort={(value) => dispatch(setSort(value))}
+            fetchIsPending={fetchIsPending}
+          />
         </div>
-      </FullPageModal>
-    )
-  }
+        <div className={classes.topicList} id={TOPIC_LIST_ID}>
+          {topics.map(topic => (
+            <TopicListItem
+              key={topic.id}
+              singleGroup={group}
+              topic={topic}
+              routeParams={routeParams}
+              deleteItem={deleteGroupTopicHandler}
+              toggleSubscribe={(groupTopic) => dispatch(toggleGroupTopicSubscribe(groupTopic))}
+            />
+          ))}
+          <ScrollListener
+            onBottom={() => fetchMoreTopics()}
+            elementId={TOPIC_LIST_ID}
+          />
+        </div>
+      </div>
+    </FullPageModal>
+  )
 }
 
-export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPending }) {
+function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPending }) {
   const { t } = useTranslation()
   const sortOptions = [
     { id: 'name', label: t('Name') },
@@ -137,9 +139,9 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
   if (!selected) selected = sortOptions[0]
 
   return (
-    <div styleName='search-bar'>
+    <div className={classes.searchBar}>
       <TextInput
-        styleName='search-input'
+        className={classes.searchInput}
         value={search}
         placeholder={t('Search topics')}
         loading={fetchIsPending}
@@ -147,9 +149,9 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
         onChange={event => setSearch(event.target.value)}
       />
       <Dropdown
-        styleName='search-order'
+        className={classes.searchOrder}
         toggleChildren={(
-          <span styleName='search-sorter-label'>
+          <span className={classes.searchSorterLabel}>
             {selected.label}
             <Icon name='ArrowDown' />
           </span>
@@ -164,39 +166,36 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
   )
 }
 
-export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscribe }) {
+function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscribe }) {
   const { name, groupTopics, postsTotal, followersTotal } = topic
   const { t } = useTranslation()
   let groupTopicContent
 
   if (singleGroup) {
-    // Grab correct GroupTopic object
     const groupTopic = topic.groupTopics.find(ct => ct.group.id === singleGroup.id)
 
-    // Don't show hidden topics unless user is subscribed to it
-    if (!groupTopic || (!groupTopic.isSubscribed && groupTopic.visibility === 0)) return ''
+    if (!groupTopic || (!groupTopic.isSubscribed && groupTopic.visibility === 0)) return null
 
     groupTopicContent = (
-      <div styleName='topic-stats'>
+      <div className={classes.topicStats}>
         {inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)} •
         {toggleSubscribe && (
-          <span onClick={() => toggleSubscribe(groupTopic)} styleName='topic-subscribe'>
+          <span onClick={() => toggleSubscribe(groupTopic)} className={classes.topicSubscribe}>
             {groupTopic.isSubscribed ? t('Unsubscribe') : t('Subscribe')}
           </span>
         )}
       </div>
     )
   } else {
-    // Don't show hidden topics unless user is subscribed to it
     const visibleGroupTopics = groupTopics.filter(ct => ct.isSubscribed || ct.visibility !== 0)
-    if (visibleGroupTopics.length === 0) return ''
+    if (visibleGroupTopics.length === 0) return null
 
     groupTopicContent = visibleGroupTopics.map((ct, key) => (
       <GroupCell group={ct.group} key={key}>
-        <div styleName='topic-stats'>
+        <div className={classes.topicStats}>
           {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('subscriber', ct.followersTotal)} •
           {toggleSubscribe && (
-            <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
+            <span onClick={() => toggleSubscribe(ct)} className={classes.topicSubscribe}>
               {ct.isSubscribed ? t('Unsubscribe') : t('Subscribe')}
             </span>
           )}
@@ -207,10 +206,10 @@ export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscrib
   }
 
   return (
-    <div styleName='topic'>
-      <div styleName='groupsList'>
-        <Link styleName='topic-details' to={topicUrl(name, { ...routeParams, view: null })}>
-          <div styleName='topic-name'>#{name}</div>
+    <div className={classes.topic}>
+      <div className={classes.groupsList}>
+        <Link className={classes.topicDetails} to={topicUrl(name, { ...routeParams, view: null })}>
+          <div className={classes.topicName}>#{name}</div>
         </Link>
         {groupTopicContent}
       </div>
@@ -218,4 +217,4 @@ export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscrib
   )
 }
 
-export default withTranslation()(AllTopics)
+export default AllTopics

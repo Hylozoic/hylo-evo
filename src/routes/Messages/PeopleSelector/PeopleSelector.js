@@ -5,7 +5,7 @@ import { debounce, throttle } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
 import PeopleList from './PeopleList'
 import MatchingPeopleListItem from './MatchingPeopleListItem'
-import './PeopleSelector.scss'
+import classes from './PeopleSelector.module.scss'
 
 const invalidPersonName = /[^a-z '-]+/gi
 
@@ -100,10 +100,9 @@ export default function PeopleSelector (props) {
         return setPeopleSearch(null)
     }
   }
-
-  return <div styleName='thread-header' tabIndex='0'>
-    <div styleName='autocomplete-control'>
-      <span styleName='to'>{t('With:')}</span>
+  return <div className={cx(classes.threadHeader)} tabIndex='0'>
+    <div className={classes.autocompleteControl}>
+      <span className={classes.to}>{t('With:')}</span>
       {selectedPeople && selectedPeople.map(person =>
         <MatchingPeopleListItem
           avatarUrl={person.avatarUrl}
@@ -111,8 +110,9 @@ export default function PeopleSelector (props) {
           onClick={() => removePerson(person)}
           key={person.id} />
       )}
-      <div styleName='select-people'>
-        <input styleName='autocomplete'
+      <div className={classes.selectPeople}>
+        <input
+          className={classes.autocomplete}
           autoFocus
           ref={autocompleteInput}
           type='text'

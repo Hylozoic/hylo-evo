@@ -1,7 +1,7 @@
 import SocketListener from './SocketListener'
 import { mount } from 'enzyme'
 import React from 'react'
-import { getSocket, setSocket } from 'client/websockets'
+import { getSocket, setSocket } from 'client/websockets.mjs'
 
 var realSocket, mockSocket, listens
 

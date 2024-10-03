@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
-import './Button.scss'
+import classes from './Button.module.scss'
 
 const { string, bool, func, object, oneOfType, node } = PropTypes
 
@@ -23,19 +23,28 @@ export default function Button ({
   small,
   tabIndex = 0
 }) {
-  const buttonClassName = noDefaultStyles ? '' : 'button'
-  const styleName = cx(buttonClassName, color, { hover, active, narrow, small, disabled })
+  const combinedClassName = cx(
+    classes[color.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())],
+    {
+      [classes.button]: !noDefaultStyles,
+      [classes.hover]: hover,
+      [classes.active]: active,
+      [classes.narrow]: narrow,
+      [classes.small]: small,
+      [classes.disabled]: disabled
+    },
+    className
+  )
 
   return (
     <div
       role='button'
       tabIndex={tabIndex}
-      styleName={styleName}
+      className={combinedClassName}
       style={{ borderRadius }}
-      className={className}
       onClick={!disabled ? onClick : undefined}
-      data-tip={dataTip}
-      data-for={dataFor}
+      data-tooltip-content={dataTip}
+      data-tooltip-id={dataFor}
       data-testid={dataTestId}
     >
       {label || children}

@@ -1,7 +1,7 @@
 /* eslint-disable quote-props */
 import React from 'react'
 import { uniq } from 'lodash'
-import './NonAuthLayoutRouter.scss'
+import classes from './NonAuthLayoutRouter.module.scss'
 
 export function formatError (error, action, t) {
   if (!error) return
@@ -20,7 +20,7 @@ export function formatError (error, action, t) {
       }[option])))
 
     return (
-      <div styleName='error'>
+      <div className={classes.error}>
         {t('Your account has no password set.')} <a href='/reset-password'>{t('Set your password here.')}</a>
         {options[0] && (
           <span><br />{`${t('Or log in with')} `}{options.join(` ${t('or')} `)}.</span>
@@ -69,7 +69,7 @@ export function formatError (error, action, t) {
     return errors[err] || errors.default
   }
 
-  return <div styleName='error'>{errorMessages(error, t)}</div>
+  return <div className={classes.error}>{errorMessages(error, t)}</div>
 }
 
 // Used by Safari to make sure we have storage access when in an iFrame

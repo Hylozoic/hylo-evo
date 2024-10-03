@@ -5,7 +5,7 @@ import { EditorView } from 'prosemirror-view'
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { IoSend } from 'react-icons/io5'
-import ReactResizeDetector from 'react-resize-detector'
+import { useResizeDetector } from 'react-resize-detector'
 import { Virtuoso } from 'react-virtuoso'
 import AttachmentManager from 'components/AttachmentManager'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
@@ -21,8 +21,46 @@ import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import { MAX_POST_TOPICS } from 'util/constants'
 import isWebView from 'util/webView'
 import ChatPost from './ChatPost'
+import { useSelector, useDispatch } from 'react-redux'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { get, includes, isEmpty } from 'lodash/fp'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import {
+  addAttachment,
+  clearAttachments,
+  getAttachments
+} from 'components/AttachmentManager/AttachmentManager.store'
+import {
+  MODULE_NAME,
+  FETCH_LINK_PREVIEW,
+  pollingFetchLinkPreview,
+  removeLinkPreview,
+  clearLinkPreview,
+  getLinkPreview
+} from 'components/PostEditor/PostEditor.store'
+import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
+import createPost from 'store/actions/createPost'
+import fetchGroupTopic from 'store/actions/fetchGroupTopic'
+import fetchPosts from 'store/actions/fetchPosts'
+import fetchTopic from 'store/actions/fetchTopic'
+import respondToEvent from 'store/actions/respondToEvent'
+import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
+import updateGroupTopicLastReadPost from 'store/actions/updateGroupTopicLastReadPost'
+import updatePost from 'store/actions/updatePost'
+import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
+import orm from 'store/models'
+import presentPost from 'store/presenters/presentPost'
+import getGroupForSlug from 'store/selectors/getGroupForSlug'
+import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
+import getMe from 'store/selectors/getMe'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import { getHasMorePosts, getPostResults, getTotalPosts } from 'store/selectors/getPosts'
+import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
+import isPendingFor from 'store/selectors/isPendingFor'
+import { postUrl } from 'util/navigation'
 
-import styles from './ChatRoom.scss'
+import styles from './ChatRoom.module.scss'
 
 // Hack to fix focusing on editor after it unmounts/remounts
 EditorView.prototype.updateState = function updateState (state) {
@@ -44,39 +82,133 @@ function useEventCallback (fn) {
   return useCallback(() => (0, ref.current)(), [])
 }
 
-export default function ChatRoom (props) {
-  const {
-    addAttachment,
-    clearImageAttachments,
-    clearLinkPreview,
-    createPost,
-    currentPostIndex,
-    currentUser,
-    fetchLinkPreviewPending,
-    followersTotal,
-    groupTopic,
-    group,
-    linkPreview,
-    imageAttachments,
-    routeParams,
-    pending,
-    postsFuture,
-    postsPast,
-    totalPostsFuture,
-    totalPostsPast,
-    querystringParams,
-    removeLinkPreview,
-    respondToEvent,
-    selectedPostId,
-    showDetails,
-    topicLoading,
-    topic,
-    toggleGroupTopicSubscribe,
-    updateGroupTopicLastReadPost,
-    updatePost
-  } = props
+// Move this selector inside the component file
+const getPosts = ormCreateSelector(
+  orm,
+  getPostResults,
+  (session, results) => {
+    if (isEmpty(results)) return null
+    if (isEmpty(results.ids)) return []
+    return session.Post.all()
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(p => Number(p.id))
+      .toModelArray()
+      .map(p => presentPost(p))
+  }
+)
 
-  const { topicName, groupSlug } = routeParams
+const NUM_POSTS_TO_LOAD = 25
+
+export default function ChatRoom (props) {
+  const dispatch = useDispatch()
+  const params = useParams()
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const { groupSlug, topicName, context, view, postId: selectedPostId } = params
+
+  const currentUser = useSelector(getMe)
+  const group = useSelector(state => getGroupForSlug(state, groupSlug))
+  const groupTopic = useSelector(state => getGroupTopicForCurrentRoute(state, groupSlug, topicName))
+  const topic = useSelector(state => getTopicForCurrentRoute(state, topicName))
+  const topicLoading = useSelector(state => isPendingFor([FETCH_TOPIC, FETCH_GROUP_TOPIC], state))
+  const imageAttachments = useSelector(state => getAttachments(state, { type: 'post', id: 'new', attachmentType: 'image' }))
+  const linkPreview = useSelector(getLinkPreview)
+  const fetchLinkPreviewPending = useSelector(state => isPendingFor(FETCH_LINK_PREVIEW, state))
+  const pending = useSelector(state => state.pending[FETCH_POSTS])
+  const followersTotal = useMemo(() => get('followersTotal', groupSlug ? groupTopic : topic), [groupSlug, groupTopic, topic])
+  const querystringParams = useSelector(state => getQuerystringParam(['search', 'postId'], { location }))
+  const search = querystringParams?.search
+  const postIdToStartAt = querystringParams?.postId
+
+  const fetchPostsPastParams = useMemo(() => ({
+    childPostInclusion: 'no',
+    context,
+    cursor: parseInt(postIdToStartAt) + 1 || parseInt(groupTopic?.lastReadPostId) + 1,
+    filter: 'chat',
+    first: NUM_POSTS_TO_LOAD,
+    order: 'desc',
+    slug: groupSlug,
+    search,
+    sortBy: 'id',
+    topic: topic?.id
+  }), [context, postIdToStartAt, groupTopic?.lastReadPostId, groupSlug, search, topic?.id])
+
+  const fetchPostsFutureParams = useMemo(() => ({
+    childPostInclusion: 'no',
+    context,
+    cursor: postIdToStartAt || groupTopic?.lastReadPostId,
+    filter: 'chat',
+    first: NUM_POSTS_TO_LOAD,
+    order: 'asc',
+    slug: groupSlug,
+    search,
+    sortBy: 'id',
+    topic: topic?.id
+  }), [context, postIdToStartAt, groupTopic?.lastReadPostId, groupSlug, search, topic?.id])
+
+  const postsPast = useSelector(state => (postIdToStartAt || groupTopic?.lastReadPostId) ? getPosts(state, fetchPostsPastParams) : [])
+  const hasMorePostsPast = useSelector(state => getHasMorePosts(state, fetchPostsPastParams))
+  const totalPostsPast = useSelector(state => getTotalPosts(state, fetchPostsPastParams) || 0)
+  const currentPostIndex = totalPostsPast ? Math.min(Math.max(totalPostsPast - 2, 0), NUM_POSTS_TO_LOAD - 1) : 0
+
+  const postsFuture = useSelector(state => getPosts(state, fetchPostsFutureParams))
+  const hasMorePostsFuture = useSelector(state => getHasMorePosts(state, fetchPostsFutureParams))
+  const totalPostsFuture = useSelector(state => getTotalPosts(state, fetchPostsFutureParams) || 0)
+
+  // Convert mapDispatchToProps to useCallback hooks
+  const fetchPostsPast = useCallback((offset) => {
+    const { pending, hasMorePostsPast } = props
+    if (pending || hasMorePostsPast === false) return
+    setLoadingPast(true)
+    dispatch(fetchPosts({ offset, ...fetchPostsPastParams })).then(() => setLoadingPast(false))
+  }, [fetchPostsPastParams])
+
+  const fetchPostsFuture = useCallback((offset) => {
+    const { pending, hasMorePostsFuture } = props
+    if (pending || hasMorePostsFuture === false) return
+    setLoadingFuture(true)
+    dispatch(fetchPosts({ ...fetchPostsFutureParams, offset })).then(() => setLoadingFuture(false))
+  }, [fetchPostsFutureParams])
+
+  const fetchTopicAction = useCallback(() => {
+    if (groupSlug && topicName) {
+      return dispatch(fetchGroupTopic(topicName, groupSlug))
+    } else if (topicName) {
+      return dispatch(fetchTopic(topicName))
+    }
+  }, [dispatch, groupSlug, topicName])
+
+  const changeSearch = useCallback((search) => {
+    return dispatch(changeQuerystringParam({ location }, 'search', search, 'all'))
+  }, [dispatch, location])
+
+  const clearImageAttachments = useCallback(() => dispatch(clearAttachments('post', 'new', 'image')), [dispatch])
+
+  const pollingFetchLinkPreviewAction = useCallback(
+    fetchLinkPreviewPending
+      ? () => Promise.resolve()
+      : (url) => pollingFetchLinkPreview(dispatch, url),
+    [fetchLinkPreviewPending]
+  )
+
+  const respondToEventAction = useCallback((post) => (response) => dispatch(respondToEvent(post, response)), [dispatch])
+
+  const showDetails = useCallback((postId) => {
+    navigate(postUrl(postId, params, { ...location.state, ...querystringParams }))
+  }, [navigate, params, location.state, querystringParams])
+
+  const toggleGroupTopicSubscribeAction = useCallback((groupTopic) => dispatch(toggleGroupTopicSubscribe(groupTopic)), [dispatch])
+
+  const updateGroupTopicLastReadPostAction = useCallback((groupTopicId, postId) => dispatch(updateGroupTopicLastReadPost(groupTopicId, postId)), [dispatch])
+
+  const updatePostAction = useCallback((post) => dispatch(updatePost(post)), [dispatch])
+
+  const createPostAction = useCallback((post) => dispatch(createPost(post)), [dispatch])
+
+  const removeLinkPreviewAction = useCallback(() => dispatch(removeLinkPreview()), [dispatch])
+
+  const clearLinkPreviewAction = useCallback(() => dispatch(clearLinkPreview()), [dispatch])
 
   const emptyPost = useMemo(() => ({
     details: '',
@@ -126,22 +258,10 @@ export default function ChatRoom (props) {
   const cachedTotalPostsPast = useRef(false)
   const cachedTotalPostsFuture = useRef(false)
 
-  const fetchPostsPastLocal = useCallback((offset) => {
-    const { pending, hasMorePostsPast } = props
-    if (pending || hasMorePostsPast === false) return
-    setLoadingPast(true)
-    props.fetchPostsPast(offset).then(() => setLoadingPast(false))
-  }, [props.fetchPostsPast])
-
-  const fetchPostsFutureLocal = useCallback((offset) => {
-    const { pending, hasMorePostsFuture } = props
-    if (pending || hasMorePostsFuture === false) return
-    setLoadingFuture(true)
-    props.fetchPostsFuture(offset).then(() => setLoadingFuture(false))
-  }, [props.fetchPostsFuture])
-
   useEffect(() => {
     // New chat room loaded
+    console.log('ChatRoom useEffect basic')
+
     // Reset everything
     setFirstItemIndex(false)
     clearLinkPreview()
@@ -152,7 +272,7 @@ export default function ChatRoom (props) {
     postsTotal.current = false
 
     // Make sure GroupTopic is loaded
-    props.fetchTopic()
+    fetchTopicAction()
   }, [group?.id, topicName])
 
   useEffect(() => {
@@ -164,19 +284,30 @@ export default function ChatRoom (props) {
   }, [])
 
   useEffect(() => {
+    console.log('ChatRoom useEffect groupTopic')
     // New group topic
     if (groupTopic?.id) {
-      props.fetchPostsFuture(0)
+      fetchPostsFuture(0)
       if (groupTopic.lastReadPostId) {
-        props.fetchPostsPast(0)
+        fetchPostsPast(0)
       }
       // Reset last read post
       setLastReadPostId(groupTopic.lastReadPostId)
+    }
+
+    if (editorRef.current) {
+      setTimeout(() => {
+        // In case we unmounted really quick and its no longer here
+        if (editorRef.current) {
+          editorRef.current.focus()
+        }
+      }, 600)
     }
   }, [groupTopic?.id])
 
   // Do once after loading posts for the room to get things ready
   useEffect(() => {
+    console.log('ChatRoom useEffect postsPast and postsFuture')
     if (postsPast !== null && postsFuture !== null) {
       // Set this once and don't change it because if a bug on the backend
       // https://github.com/orgs/Hylozoic/projects/2/views/13?filterQuery=
@@ -201,6 +332,7 @@ export default function ChatRoom (props) {
   }, [postsPast, postsFuture])
 
   useEffect(() => {
+    console.log('ChatRoom useEffect totalPostsFuture')
     // If the total number of future posts changes updated it, unless its 0, because of bug on the server
     // Check if cachedTotalPostsPast is set because we want to make sure we have the correct final total past posts before updating postsTotal
     // https://github.com/Hylozoic/hylo-node/issues/901
@@ -208,26 +340,22 @@ export default function ChatRoom (props) {
       cachedTotalPostsFuture.current = totalPostsFuture
       postsTotal.current = totalPostsFuture + cachedTotalPostsPast.current
     }
+
+    // If scrolled to bottom and a new post comes in make sure to scroll down to see new post
+    if (atBottom && virtuoso.current) {
+      setTimeout(() => {
+        scrollToBottom()
+      }, 300)
+    }
   }, [totalPostsFuture])
 
   // Update first item index as we prepend posts when scrolling up, to stay scrolled to same post
   useEffect(() => {
+    console.log('ChatRoom useEffect firstItemIndex')
     if (postsPast?.length && firstItemIndex !== false) {
       setFirstItemIndex(postsTotal.current - (postsPast?.length || 0) - (postsFuture?.length || 0))
     }
   }, [postsPast?.length, firstItemIndex])
-
-  // Focus on chat box when entering the room
-  useEffect(() => {
-    if (editorRef.current) {
-      setTimeout(() => {
-        // In case we unmounted really quick and its no longer here
-        if (editorRef.current) {
-          editorRef.current.focus()
-        }
-      }, 600)
-    }
-  }, [groupTopic?.id])
 
   // When text is entered in a draft post set postInProgress to true
   const handleDetailsUpdate = (d) => {
@@ -245,7 +373,7 @@ export default function ChatRoom (props) {
   const handleAddLinkPreview = debounce(500, (url, force) => {
     const { linkPreview } = newPost
     if (linkPreview && !force) return
-    props.pollingFetchLinkPreview(url)
+    pollingFetchLinkPreviewAction(url)
   })
 
   // Have to wait for the link preview to load from the server before adding to the new post
@@ -270,15 +398,6 @@ export default function ChatRoom (props) {
     }
   }
 
-  // If scrolled to bottom and a new post comes in make sure to scroll down to see new post
-  useEffect(() => {
-    if (atBottom && virtuoso.current) {
-      setTimeout(() => {
-        scrollToBottom()
-      }, 300)
-    }
-  }, [totalPostsFuture])
-
   const scrollToBottom = useCallback(() => { // scrollToBottom is here but no scroll to index...
     if (virtuoso.current) {
       virtuoso.current.scrollToIndex(postsTotal.current)
@@ -291,6 +410,8 @@ export default function ChatRoom (props) {
       scrollToBottom()
     }
   }
+
+  const { height } = useResizeDetector({ handleWidth: false, targetRef: chatsRef, onResize: handleResizeChats })
 
   // Create a new chat post
   const postChatMessage = useEventCallback(async () => {
@@ -373,7 +494,7 @@ export default function ChatRoom (props) {
   if (topicLoading) return <Loading />
 
   return (
-    <div styleName={cx('container', { 'without-nav': withoutNav })}>
+    <div className={cx(styles.container, { [styles.withoutNav]: withoutNav })}>
       <Helmet>
         <title>#{topicName} | {group ? `${group.name} | ` : ''}Hylo</title>
       </Helmet>
@@ -393,74 +514,87 @@ export default function ChatRoom (props) {
         }
         topicName={topicName}
       />
-      <ReactResizeDetector handleWidth={false} handleHeight onResize={handleResizeChats}>{
-        ({ width, height }) => (
-          <div id='chats' styleName='stream-items-container' ref={chatsRef}>
-            {loadingPast && <div styleName='loading-container'><Loading /></div>}
-            {firstItemIndex !== false && postsForDisplay.length === 0
-              ? <NoPosts className={styles['no-posts']} />
-              : firstItemIndex === false
-                ? <Loading />
-                : <Virtuoso
-                  atBottomStateChange={(bottom) => {
-                    setAtBottom(bottom)
-                  }}
-                  endReached={() => fetchPostsFutureLocal(postsFuture.length)}
-                  data={postsForDisplay}
-                  firstItemIndex={firstItemIndex}
-                  initialTopMostItemIndex={currentPostIndex}
-                  increaseViewportBy={200}
-                  ref={virtuoso}
-                  startReached={() => fetchPostsPastLocal(postsPast.length)}
-                  style={{ height: '100%', width: '100%', marginTop: 'auto' }}
-                  totalCount={postsTotal.current}
-                  itemContent={(index, post) => {
-                    const expanded = selectedPostId === post.id
-                    const intersectionObserver = new window.IntersectionObserver(([entry]) => {
-                      if (entry.isIntersecting) {
-                        handlePostVisible(post.id)
-                      }
-                    }, {
-                      root: chatsRef.current,
-                      threshold: 0.7
-                    })
-                    return (
-                      <>
-                        {post.firstUnread && !post.displayDay ? <div styleName='firstUnread'><div styleName='divider' /><div styleName='newPost'>NEW</div></div> : ''}
-                        {post.firstUnread && post.displayDay ? <div styleName='unreadAndDay'><div styleName='divider' /><div styleName='newPost'>NEW</div><div styleName='day'>{post.displayDay}</div></div> : ''}
-                        {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='divider' /><div styleName='day'>{post.displayDay}</div></div> : ''}
-                        {post.type === 'chat'
-                          ? <ChatPost
-                            currentUser={currentUser}
-                            expanded={expanded}
-                            group={group}
-                            isHeader={post.header}
-                            key={post.id}
-                            index={index}
-                            intersectionObserver={intersectionObserver}
-                            post={post}
-                            showDetails={showDetails}
-                            updatePost={updatePost}
-                          />
-                          : <div styleName={cx({ 'card-item': true, expanded })}><PostCard
-                            expanded={expanded}
-                            key={post.id}
-                            intersectionObserver={intersectionObserver}
-                            post={post}
-                            querystringParams={querystringParams}
-                            respondToEvent={respondToEvent}
-                            routeParams={routeParams}
-                          /></div>}
-                      </>
-                    )
-                  }}
-                />}
-            {loadingFuture && <div styleName='loading-container bottom'><Loading /></div>}
-          </div>
-        )
-      }
-      </ReactResizeDetector>
-      <div styleName='post-chat-box'>
+      <div id='chats' className={styles.streamItemsContainer} ref={chatsRef}>
+        {loadingPast && <div className={styles.loadingContainer}><Loading /></div>}
+        {firstItemIndex !== false && postsForDisplay.length === 0
+          ? <NoPosts className={styles.noPosts} />
+          : firstItemIndex === false
+            ? <Loading />
+            : <Virtuoso
+              atBottomStateChange={(bottom) => {
+                setAtBottom(bottom)
+              }}
+              endReached={() => fetchPostsFuture(postsFuture.length)}
+              data={postsForDisplay}
+              firstItemIndex={firstItemIndex}
+              initialTopMostItemIndex={currentPostIndex}
+              increaseViewportBy={200}
+              ref={virtuoso}
+              startReached={() => fetchPostsPast(postsPast.length)}
+              style={{ height: '100%', width: '100%', marginTop: 'auto' }}
+              totalCount={postsTotal.current}
+              itemContent={(index, post) => {
+                const expanded = selectedPostId === post.id
+                const intersectionObserver = new window.IntersectionObserver(([entry]) => {
+                  if (entry.isIntersecting) {
+                    handlePostVisible(post.id)
+                  }
+                }, {
+                  root: chatsRef.current,
+                  threshold: 0.7
+                })
+                return (
+                  <>
+                    {post.firstUnread && !post.displayDay ? (
+                      <div className={styles.firstUnread}>
+                        <div className={styles.divider} />
+                        <div className={styles.newPost}>NEW</div>
+                      </div>
+                    ) : null}
+                    {post.firstUnread && post.displayDay ? (
+                      <div className={styles.unreadAndDay}>
+                        <div className={styles.divider} />
+                        <div className={styles.newPost}>NEW</div>
+                        <div className={styles.day}>{post.displayDay}</div>
+                      </div>
+                    ) : null}
+                    {post.displayDay && !post.firstUnread ? (
+                      <div className={styles.displayDay}>
+                        <div className={styles.divider} />
+                        <div className={styles.day}>{post.displayDay}</div>
+                      </div>
+                    ) : null}
+                    {post.type === 'chat'
+                      ? <ChatPost
+                        currentUser={currentUser}
+                        expanded={expanded}
+                        group={group}
+                        isHeader={post.header}
+                        key={post.id}
+                        index={index}
+                        intersectionObserver={intersectionObserver}
+                        post={post}
+                        showDetails={showDetails}
+                        updatePost={updatePost}
+                      />
+                      : <div className={cx(styles.cardItem, { [styles.expanded]: expanded })}>
+                        <PostCard
+                          expanded={expanded}
+                          key={post.id}
+                          intersectionObserver={intersectionObserver}
+                          post={post}
+                          querystringParams={querystringParams}
+                          respondToEvent={respondToEvent}
+                          routeParams={routeParams}
+                        />
+                      </div>}
+                  </>
+                )
+              }}
+            />}
+        {loadingFuture && <div className={styles.loadingContainerBottom}><Loading /></div>}
+      </div>
+      <div className={styles.postChatBox}>
         <HyloEditor
           contentHTML={newPost.details}
           groupIds={[group.id]}
@@ -474,11 +608,11 @@ export default function ChatRoom (props) {
           readOnly={pending}
           ref={editorRef}
           showMenu={!isWebView()}
-          styleName='editor'
+          className={styles.editor}
         />
         {(linkPreview || fetchLinkPreviewPending) && (
           <LinkPreview
-            className={styles['link-preview']}
+            className={styles.linkPreview}
             loading={fetchLinkPreviewPending}
             linkPreview={linkPreview}
             featured={newPost.linkPreviewFeatured}
@@ -494,10 +628,10 @@ export default function ChatRoom (props) {
           showLabel
           showLoading
         />
-        <div styleName='post-chat-box-footer'>
+        <div className={styles.postChatBoxFooter}>
           <UploadAttachmentButton
             type='post'
-            className={styles['upload-attachment']}
+            className={styles.uploadAttachment}
             id='new'
             attachmentType='image'
             onSuccess={(attachment) => addAttachment('post', 'new', attachment)}
@@ -505,14 +639,14 @@ export default function ChatRoom (props) {
           >
             <Icon
               name='AddImage'
-              styleName={cx('action-icon', { 'highlight-icon': imageAttachments && imageAttachments.length > 0 })}
+              className={cx(styles.actionIcon, { [styles.highlightIcon]: imageAttachments && imageAttachments.length > 0 })}
             />
           </UploadAttachmentButton>
           <Button
             borderRadius='6px'
             disabled={!postInProgress}
             onClick={postChatMessage}
-            styleName={cx('send-message-button', { disabled: !postInProgress })}
+            className={cx(styles.sendMessageButton, { [styles.disabled]: !postInProgress })}
           >
             <IoSend color='white' />
           </Button>

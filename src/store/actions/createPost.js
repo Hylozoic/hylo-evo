@@ -1,6 +1,6 @@
 import { get } from 'lodash/fp'
 import { TextHelpers, AnalyticsEvents } from 'hylo-shared'
-import createPostMutation from 'graphql/mutations/createPostMutation'
+import createPostMutation from '@graphql/mutations/createPostMutation'
 import { CREATE_POST } from 'store/constants'
 
 export default function createPost (postParams) {

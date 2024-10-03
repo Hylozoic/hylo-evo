@@ -1,13 +1,14 @@
+import cx from 'classnames'
 import { capitalize } from 'lodash/fp'
 import React from 'react'
 
-import './SimpleTabBar.scss'
+import classes from './SimpleTabBar.module.scss'
 
 export default function SimpleTabBar ({ currentTab, tabNames, selectTab }) {
-  return <ul styleName='tab-bar'>
+  return <ul className={classes.tabBar}>
     {tabNames.map(name =>
       <li key={name}
-        styleName={name === currentTab ? 'tab-active' : 'tab'}
+        className={cx(classes.tab, { [classes.tabActive]: name === currentTab })}
         onClick={() => selectTab(name)}>
         {capitalize(name)}
       </li>)}

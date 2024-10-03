@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { withTranslation } from 'react-i18next'
@@ -8,7 +9,7 @@ import Icon from 'components/Icon'
 import SkillLabel from 'components/SkillLabel'
 import { RESP_REMOVE_MEMBERS } from 'store/constants'
 
-import './Member.scss'
+import classes from './Member.module.scss'
 
 const { object, string, shape } = PropTypes
 
@@ -36,28 +37,28 @@ class Member extends React.Component {
     const { id, name, location, tagline, avatarUrl, skills } = member
 
     return (
-      <div styleName='member' className={className}>
+      <div className={cx(classes.member, className)}>
         {(currentUserResponsibilities.includes(RESP_REMOVE_MEMBERS)) &&
           <Dropdown
-            styleName='dropdown'
+            className={classes.dropdown}
             toggleChildren={<Icon name='More' />}
             items={[{ icon: 'Trash', label: t('Remove'), onClick: (e) => this.removeOnClick(e, id, name, removeMember) }]}
           />}
         <div onClick={goToPerson(id, group.slug)}>
-          <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
-          <div styleName='name'>{name}</div>
-          <div styleName='location'>{location}</div>
-          <div styleName='badgeRow'>
+          <div className={classes.avatar} style={bgImageStyle(avatarUrl)} />
+          <div className={classes.name}>{name}</div>
+          <div className={classes.location}>{location}</div>
+          <div className={classes.badgeRow}>
             {roles.map(role => (
               <BadgeEmoji key={role.id + role.common} expanded {...role} responsibilities={role.responsibilities} id={id} />
             ))}
           </div>
-          {skills && <div styleName='skills'>
+          {skills && <div className={classes.skills}>
             {skills.map((skill, index) =>
-              <SkillLabel key={index} styleName='skill'>{skill.name}</SkillLabel>
+              <SkillLabel key={index} className={classes.skill}>{skill.name}</SkillLabel>
             )}
           </div>}
-          <div styleName='tagline'>{tagline}</div>
+          <div className={classes.tagline}>{tagline}</div>
         </div>
       </div>
     )

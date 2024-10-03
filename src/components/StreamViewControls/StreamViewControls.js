@@ -1,21 +1,22 @@
+import cx from 'classnames'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import cx from 'classnames'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
 import { CONTEXT_MY } from 'store/constants'
 import { COLLECTION_SORT_OPTIONS, STREAM_SORT_OPTIONS } from 'util/constants'
-import './StreamViewControls.scss'
+
+import classes from './StreamViewControls.module.scss'
 
 const makeDropdown = (selected, options, onChange, t) => {
   t('Proposals')
   t('Moderation')
   return (
     <Dropdown
-      styleName='dropdown'
+      className={classes.dropdown}
       toggleChildren={
-        <span styleName='dropdown-label'>
+        <span className={classes.dropdownLabel}>
           <Icon name='ArrowDown' />
           {t(options.find(o => o.id === selected)?.label)}
         </span>
@@ -67,19 +68,19 @@ const StreamViewControls = (props) => {
   }
 
   return (
-    <div styleName={cx('stream-view-container', { 'search-active': searchActive || searchValue, extend: searchActive && searchValue })}>
-      <div styleName='stream-view-ctrls'>
-        <div styleName={cx('toggle', { active: searchActive })} onClick={handleSearchToggle}>
-          <Icon name='Search' styleName={cx('toggle-icon', { active: searchActive })} />
+    <div className={cx(classes.streamViewContainer, { [classes.searchActive]: searchActive || searchValue, [classes.extend]: searchActive && searchValue })}>
+      <div className={classes.streamViewCtrls}>
+        <div className={cx(classes.toggle, { [classes.active]: searchActive })} onClick={handleSearchToggle}>
+          <Icon name='Search' className={cx(classes.toggleIcon, { [classes.active]: searchActive })} />
         </div>
         {![CONTEXT_MY, 'all', 'public'].includes(context) &&
           <div
-            styleName={cx('toggle', 'margin-right', { active: childPostInclusion === 'yes' })}
+            className={cx(classes.toggle, classes.marginRight, { [classes.active]: childPostInclusion === 'yes' })}
             onClick={handleChildPostInclusion}
-            data-tip={childPostInclusion === 'yes' ? t('Hide posts from child groups you are a member of') : t('Show posts from child groups you are a member of')}
-            data-for='childgroup-toggle-tt'
+            data-tooltip-content={childPostInclusion === 'yes' ? t('Hide posts from child groups you are a member of') : t('Show posts from child groups you are a member of')}
+            data-tooltip-id='childgroup-toggle-tt'
           >
-            <Icon name='Subgroup' styleName={cx('toggle-icon', 'subgroup-icon', { active: childPostInclusion === 'yes' })} />
+            <Icon name='Subgroup' className={cx(classes.toggleIcon, classes.subgroupIcon, { [classes.active]: childPostInclusion === 'yes' })} />
           </div>
         }
         <Tooltip
@@ -87,37 +88,37 @@ const StreamViewControls = (props) => {
           id='childgroup-toggle-tt'
           position='bottom'
         />
-        <div styleName='view-mode'>
+        <div className={classes.viewMode}>
           <div
-            styleName={cx({ 'mode-active': viewMode === 'cards' })}
+            className={cx({ [classes.modeActive]: viewMode === 'cards' })}
             onClick={() => changeView('cards')}
-            data-tip={t('Card view')} data-for='stream-viewmode-tip'
+            data-tooltip-content={t('Card view')} data-tooltip-id='stream-viewmode-tip'
           >
             <Icon name='CardView' />
           </div>
 
           <div
-            styleName={cx({ 'mode-active': viewMode === 'list' })}
+            className={cx({ [classes.modeActive]: viewMode === 'list' })}
             onClick={() => changeView('list')}
-            data-tip={t('List view')} data-for='stream-viewmode-tip'
+            data-tooltip-content={t('List view')} data-tooltip-id='stream-viewmode-tip'
           >
             <Icon name='ListView' />
           </div>
 
           <div
-            styleName={cx({ 'mode-active': viewMode === 'bigGrid' })}
+            className={cx({ [classes.modeActive]: viewMode === 'bigGrid' })}
             onClick={() => changeView('bigGrid')}
-            data-tip={t('Large Grid')} data-for='stream-viewmode-tip'
+            data-tooltip-content={t('Large Grid')} data-tooltip-id='stream-viewmode-tip'
           >
-            <Icon name='GridView' styleName='grid-view-icon' />
+            <Icon name='GridView' className={classes.gridViewIcon} />
           </div>
 
           <div
-            styleName={cx({ 'mode-active': viewMode === 'grid' }, 'small-grid')}
+            className={cx({ [classes.modeActive]: viewMode === 'grid' }, classes.smallGrid)}
             onClick={() => changeView('grid')}
-            data-tip={t('Small Grid')} data-for='stream-viewmode-tip'
+            data-tooltip-content={t('Small Grid')} data-tooltip-id='stream-viewmode-tip'
           >
-            <Icon name='SmallGridView' styleName='grid-view-icon' />
+            <Icon name='SmallGridView' className={classes.gridViewIcon} />
           </div>
         </div>
         {makeDropdown(sortBy, customViewType === 'collection' ? COLLECTION_SORT_OPTIONS : STREAM_SORT_OPTIONS, changeSort, t)}
@@ -129,7 +130,7 @@ const StreamViewControls = (props) => {
         <div>
           <input
             autoFocus
-            styleName='search-box'
+            className={classes.searchBox}
             type='text'
             onChange={e => setSearchState(e.target.value)}
             onKeyUp={e => {
@@ -146,11 +147,11 @@ const StreamViewControls = (props) => {
         </div>}
       {searchValue &&
         <div
-          styleName='search-value'
+          className={classes.searchValue}
           onClick={() => changeSearch('')}
         >
           &quot;{searchValue}&quot;
-          <Icon name='Ex' styleName='text-ex' />
+          <Icon name='Ex' className={classes.textEx} />
         </div>}
     </div>
   )

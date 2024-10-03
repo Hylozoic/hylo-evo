@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
-import './component.scss'
+import classes from './component.module.scss'
 
 const { string, bool } = PropTypes
 
 export default function SkillLabel ({ children, label, color = 'dark', active, className }) {
-  let styleName = cx('label', color, { active })
-  return <div styleName={styleName} className={className}>
+  let labelClasses = cx(classes.label, classes[color], { [classes.active]: active })
+  return <div className={cx(labelClasses, className)}>
     {label || children}
   </div>
 }

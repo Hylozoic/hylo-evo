@@ -1,6 +1,8 @@
 // NOTE: This is linked in jest config under "setupFiles"
 // This is ran before every test file before the test environment is setup.
 
+global.IS_REACT_ACT_ENVIRONMENT = true
+
 global.graphql = jest.fn()
 
 const mockGeolocation = {

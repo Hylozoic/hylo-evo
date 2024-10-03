@@ -8,14 +8,14 @@ import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
 import ScrollListener from 'components/ScrollListener'
 import GroupCard from 'components/GroupCard'
-import useRouter from 'hooks/useRouter'
+import useRouterParams from 'hooks/useRouterParams'
 import useDebounce from 'hooks/useDebounce'
 import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
 import getMe from 'store/selectors/getMe'
 import { SORT_NAME, SORT_NEAREST, SORT_SIZE } from 'store/constants'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import { FARM_VIEW, FARM_TYPES, PRODUCT_CATEGORIES, MANAGEMENT_PLANS, FARM_CERTIFICATIONS } from 'util/constants'
-import './GroupSearch.scss'
+import classes from './GroupSearch.module.scss'
 
 const baseList = [{ value: '', label: 'All' }]
 
@@ -23,9 +23,9 @@ export default function GroupSearch ({ viewFilter }) {
   const currentUser = useSelector(state => getMe(state))
   const nearCoord = currentUser && currentUser.locationObject
     ? {
-      lng: parseFloat(currentUser.locationObject.center.lng),
-      lat: parseFloat(currentUser.locationObject.center.lat)
-    }
+        lng: parseFloat(currentUser.locationObject.center.lng),
+        lat: parseFloat(currentUser.locationObject.center.lat)
+      }
     : null
   const membershipGroupIds = currentUser ? currentUser.memberships.toModelArray().map(membership => membership.group.id) : []
   const [sortBy, setSortBy] = useState(SORT_NAME)
@@ -34,8 +34,8 @@ export default function GroupSearch ({ viewFilter }) {
   const [filterToggle, setFilterToggle] = useState(false)
   const [groupType, setGroupType] = useState(null)
   const debouncedSearchTerm = useDebounce(search, 500)
-  const { query } = useRouter()
-  const selectedGroupSlug = query.groupSlug
+  const routerParams = useRouterParams()
+  const selectedGroupSlug = routerParams.groupSlug
   const [farmQuery, setFarmQuery] = useState({ farmType: '', certOrManagementPlan: '', productCategories: '' })
   const {
     groups = [],
@@ -71,26 +71,26 @@ export default function GroupSearch ({ viewFilter }) {
 
   return (
     <>
-      <div styleName='group-search-view-ctrls'>
+      <div className={classes.groupSearchViewCtrls}>
         {viewFilter === FARM_VIEW
-          ? <div styleName='filter-container' onClick={() => setFilterToggle(!filterToggle)}>
-            <Icon name='Filter' green={filterToggle} styleName={cx({ 'filter-icon': true, 'filter-open': filterToggle })} />
-            <b styleName={cx({ 'filter-open': filterToggle })}>{t('Filters')}</b>
-            {filterToggle && <Icon name='Ex' styleName='remove-button' />}
+          ? <div className={classes.filterContainer} onClick={() => setFilterToggle(!filterToggle)}>
+            <Icon name='Filter' green={filterToggle} className={cx(classes.filterIcon, { [classes.filterOpen]: filterToggle })} />
+            <b className={cx({ [classes.filterOpen]: filterToggle })}>{t('Filters')}</b>
+            {filterToggle && <Icon name='Ex' className={classes.removeButton} />}
           </div>
           : <div id='div-left-intentionally-blank' />}
         {makeDropdown({ selected: sortBy, options: sortOptions(nearCoord), onChange: setSortBy, filterLabel: `${t('Sort by')}: `, t })}
       </div>
       {filterToggle && viewFilter === FARM_VIEW &&
-        <div styleName='filter-list'>
+        <div className={classes.filterList}>
           {makeDropdown({ selected: farmQuery.farmType, options: convertListValueKeyToId(baseList.concat(FARM_TYPES)), onChange: (value) => setFarmQuery({ ...farmQuery, farmType: value }), filterLabel: t('Farm Type: '), isFilter: true, t })}
           {makeDropdown({ selected: farmQuery.productCategories, options: convertListValueKeyToId(baseList.concat(PRODUCT_CATEGORIES)), onChange: (value) => setFarmQuery({ ...farmQuery, productCategories: value }), filterLabel: t('Operation: '), isFilter: true, t })}
           {makeDropdown({ selected: farmQuery.certOrManagementPlan, options: convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), onChange: (value) => setFarmQuery({ ...farmQuery, certOrManagementPlan: value }), filterLabel: t('Management Techniques: '), isFilter: true, t })}
         </div>}
-      <div styleName='search-input'>
+      <div className={classes.searchInput}>
         <div className='spacer' />
         <input
-          styleName='searchBox'
+          className={classes.searchBox}
           type='text'
           onChange={e => setSearch(e.target.value)}
           placeholder={t('Search groups by keyword')}
@@ -98,14 +98,14 @@ export default function GroupSearch ({ viewFilter }) {
         />
         <div className='spacer' />
       </div>
-      <div styleName='group-search-items'>
+      <div className={classes.groupSearchItems}>
         {!pending && groups.length === 0 ? <NoPosts message={t('No results for this search')} /> : ''}
         {groups.map(group => {
           const expanded = selectedGroupSlug === group.slug
           return (
             <GroupCard
               memberships={membershipGroupIds}
-              styleName={cx({ 'card-item': true, expanded })}
+              className={cx(classes.cardItem, { [classes.expanded]: expanded })}
               expanded={expanded}
               routeParams={query}
               group={group}
@@ -119,7 +119,7 @@ export default function GroupSearch ({ viewFilter }) {
         elementId={CENTER_COLUMN_ID}
       />
       {pending && <Loading />}
-      {(!hasMore && !!offset) && <div styleName='no-more-results'>{t('No more results')}</div>}
+      {(!hasMore && !!offset) && <div className={classes.noMoreResults}>{t('No more results')}</div>}
     </>
   )
 }
@@ -143,9 +143,9 @@ const makeDropdown = ({ selected, options, onChange, filterLabel = '', isFilter 
   return (
     <Dropdown
       alignRight={!isFilter}
-      styleName={cx({ 'dropdown': true, 'filter-dropdown': isFilter })}
+      className={cx(classes.dropdown, { [classes.filterDropdown]: isFilter })}
       toggleChildren={
-        <span styleName={isFilter ? 'filter-dropdown-label' : 'dropdown-label'}>
+        <span className={isFilter ? classes.filterDropdownLabel : classes.dropdownLabel}>
           {!isFilter && <Icon name='ArrowDown' />}
           {isFilter
             ? <div>{filterLabel}<b>{selectedLabel}</b></div>

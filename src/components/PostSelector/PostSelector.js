@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import { DndContext, DragOverlay } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -5,7 +6,7 @@ import update from 'immutability-helper'
 import { isEmpty } from 'lodash'
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import useInView from 'react-cool-inview'
+import { useInView } from 'react-cool-inview'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -15,7 +16,7 @@ import fetchPosts from 'store/actions/fetchPosts'
 import { FETCH_POSTS } from 'store/constants'
 import isPendingFor from 'store/selectors/isPendingFor'
 
-import './PostSelector.scss'
+import classes from './PostSelector.module.scss'
 
 const PAGE_SIZE = 10
 
@@ -59,7 +60,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
         context: 'groups',
         first: PAGE_SIZE,
         search: debouncedAutcomplete,
-        offset: offset,
+        offset,
         slug: group.slug,
         sortBy: 'created'
       }))
@@ -143,7 +144,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <SortableContext items={selectedPosts} strategy={verticalListSortingStrategy}>
         <div>
-          <div styleName='selectedPosts'>
+          <div className={classes.selectedPosts}>
             {selectedPosts.map((p, i) => (
               <SelectedPostDraggable
                 draggable={draggable}
@@ -155,7 +156,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
               />)
             )}
           </div>
-          <div styleName='search'>
+          <div className={classes.search}>
             <div>
               <input
                 ref={searchBoxRef}
@@ -168,9 +169,9 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
               />
             </div>
             {suggestionsOpen && (pending || !isEmpty(displaySuggestions)) &&
-              <div styleName='suggestionsWrapper'>
+              <div className={classes.suggestionsWrapper}>
                 {pending && <Loading />}
-                <ul styleName='suggestions'>
+                <ul className={classes.suggestions}>
                   {displaySuggestions.map((s, idx) => (
                     <Suggestion
                       key={s.id}
@@ -238,11 +239,11 @@ const SelectedPost = forwardRef(({ children, ...props }, ref) => {
   const { attributes, draggable, index, handleDelete, listeners, post, style } = props
 
   return (
-    <div styleName='selectedPost' ref={ref} style={style} {...attributes} {...listeners}>
-      <RoundImage url={post.creator.avatarUrl} styleName='selectedPostAvatar' small />
-      <span styleName='postTitle'>{post.title}</span>
-      <Icon name='Trash' onClick={handleDelete(post, index)} styleName='removePost selectedPostIcon' dataTip={t('Remove Post')} />
-      {draggable && <Icon name='Draggable' styleName='selectedPostIcon dragHandle' />}
+    <div className={classes.selectedPost} ref={ref} style={style} {...attributes} {...listeners}>
+      <RoundImage url={post.creator.avatarUrl} className={classes.selectedPostAvatar} small />
+      <span className={classes.postTitle}>{post.title}</span>
+      <Icon name='Trash' onClick={handleDelete(post, index)} className={cx(classes.removePost, classes.selectedPostIcon)} dataTip={t('Remove Post')} />
+      {draggable && <Icon name='Draggable' className={cx(classes.selectedPostIcon, classes.dragHandle)} />}
     </div>
   )
 })
@@ -250,10 +251,10 @@ const SelectedPost = forwardRef(({ children, ...props }, ref) => {
 function Suggestion ({ item, onSelect, observeRef }) {
   const { id, title, creator } = item
   return (
-    <li key={id || 'blank'} styleName='suggestion' ref={observeRef}>
-      <a onClick={event => onSelect(item, event)} styleName='suggestionLink'>
-        <RoundImage url={creator.avatarUrl} styleName='suggestionAvatar' small />
-        <div styleName='suggestionName'>{title}</div>
+    <li key={id || 'blank'} className={classes.suggestion} ref={observeRef}>
+      <a onClick={event => onSelect(item, event)} className={classes.suggestionLink}>
+        <RoundImage url={creator.avatarUrl} className={classes.suggestionAvatar} small />
+        <div className={classes.suggestionName}>{title}</div>
       </a>
     </li>
   )

@@ -6,7 +6,7 @@ import Loading from 'components/Loading'
 import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import WelcomeWizardModalFooter from '../WelcomeWizardModalFooter'
-import '../WelcomeWizard.scss'
+import classes from '../WelcomeWizard.module.scss'
 
 class UploadPhoto extends Component {
   constructor () {
@@ -45,23 +45,23 @@ class UploadPhoto extends Component {
     const currentAvatarUrl = this.getValue('avatarUrl')
 
     return (
-      <div styleName='flex-wrapper'>
-        <div styleName='panel'>
-          <span styleName='step-count'>{t('STEP 1/3')}</span>
+      <div className={classes.flexWrapper}>
+        <div className={classes.panel}>
+          <span className={classes.stepCount}>{t('STEP 1/3')}</span>
           <br />
-          <div styleName='center'>
-            <div styleName='uploadWrapper'>
+          <div className={classes.center}>
+            <div className={classes.uploadWrapper}>
               <UploadAttachmentButton
                 type='userAvatar'
                 id={currentUser.id}
                 onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}>
-                <div styleName='avatar' style={bgImageStyle(currentAvatarUrl)}>
-                  <Icon styleName='upload-icon' name={uploadImagePending ? 'Clock' : 'AddImage'} />
+                <div className={classes.avatar} style={bgImageStyle(currentAvatarUrl)}>
+                  <Icon className={classes.uploadIcon} name={uploadImagePending ? 'Clock' : 'AddImage'} />
                 </div>
               </UploadAttachmentButton>
             </div>
           </div>
-          <div styleName='instructions'>
+          <div className={classes.instructions}>
             <h3>{t('Upload a profile image')}</h3>
             <p>{t('Almost done setting up your profile! Click the above profile icon to upload a custom profile image. Your profile image will be visible when you post or comment in groups.')}</p>
           </div>

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import RoundImage from 'components/RoundImage'
 import cx from 'classnames'
-import './RoundImageRow.scss'
+import classes from './RoundImageRow.module.scss'
 
 const { array, string, bool } = PropTypes
 
@@ -43,10 +43,10 @@ export default function RoundImageRow ({
       tiny={tiny}
       overlaps={!vertical}
       overlapsVertical={vertical}
-      styleName='image'
+      className={classes.image}
       style={zIndexStyle(i)} />)
 
-  const plus = <div styleName={cx(!inline ? 'plus' : 'plus-inline', blue ? 'blue' : 'green')} key='plus' style={zIndexStyle(imageUrls.length)} >
+  const plus = <div className={cx(classes[!inline ? 'plus' : 'plusInline'], classes[blue ? 'blue' : 'green'])} key='plus' style={zIndexStyle(imageUrls.length)} >
     +{extra}
   </div>
 

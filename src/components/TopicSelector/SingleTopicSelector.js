@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import AsyncCreatableSelect from 'react-select/async-creatable'
-import styles from './TopicSelector.scss'
+import styles from './TopicSelector.module.scss'
 import { isEmpty, sortBy } from 'lodash/fp'
 import { Validators } from 'hylo-shared'
 import Icon from 'components/Icon'
@@ -93,7 +93,7 @@ class SingleTopicSelector extends Component {
         isOptionDisabled={option => option.__isNew__ && option.value.length < 3}
         formatOptionLabel={(item, { context, inputValue, selectValue }) => {
           if (context === 'value') {
-            return <div styleName='topicLabel'>#{item.label}</div>
+            return <div className={classes.topicLabel}>#{item.label}</div>
           }
           if (item.__isNew__) {
             return <div>{item.value.length < 3 ? t('Topics must be longer than 2 characters') : t('Create topic "{{item.value}}"', { item })}</div>
@@ -106,10 +106,10 @@ class SingleTopicSelector extends Component {
               : (count / 1000).toFixed(1) + 'k'
 
           return <div className={styles.item}>
-            <div styleName='menuTopicLabel'>#{name}</div>
-            <div styleName='suggestionMeta'>
-              <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} {t('subscribers')}</span>
-              <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} {t('posts')}</span>
+            <div className={classes.menuTopicLabel}>#{name}</div>
+            <div className={classes.suggestionMeta}>
+              <span className={classes.column}><Icon name='Star' className={classes.icon} />{formatCount(followersTotal)} {t('subscribers')}</span>
+              <span className={classes.column}><Icon name='Events' className={classes.icon} />{formatCount(postsTotal)} {t('posts')}</span>
             </div>
           </div>
         }}
