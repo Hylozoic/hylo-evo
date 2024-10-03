@@ -7,8 +7,9 @@
   "author": "Hylo <hello@hylo.com>",
   "engines": {
     "node": "20.15.1",
-    "yarn": "^1.2.0"
+    "yarn": "^3.6.4"
   },
+  "packageManager": "yarn@3.6.4",
   "type": "module",
   "browserslist": [
     "defaults"
