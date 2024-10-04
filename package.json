@@ -1,8 +1,9 @@
 {
+  "name": "hylo",
   "private": true,
   "workspaces": [
-    "apps/web",
-    "libs/shared"
+    "libs/*",
+    "apps/*"
   ],
   "engines": {
     "node": "20.15.1",
