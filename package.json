@@ -9,5 +9,8 @@
     "node": "20.15.1",
     "yarn": "^3.6.4"
   },
-  "packageManager": "yarn@3.6.4"
+  "packageManager": "yarn@3.6.4",
+  "scripts": {
+    "reset": "rm -rf node_modules **/node_modules .yarn **/.yarn **/yarn.lock yarn.lock && yarn install"
+  }
 }
