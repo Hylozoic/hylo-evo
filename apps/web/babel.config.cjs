@@ -6,19 +6,19 @@ module.exports = function (api) {
     api.cache(true)
   }
 
-  const reactCSSModulesPlugin = [
-    'react-css-modules',
-    {
-      // generateScopedName: sharedConfig.cssLoader.options.localIdentName,
-      filetypes: {
-        '.scss': 'postcss-scss'
-      },
-      exclude: 'node_modules',
-      searchPaths: [
-        'src'
-      ]
-    }
-  ]
+  // const reactCSSModulesPlugin = [
+  //   'react-css-modules',
+  //   {
+  //     // generateScopedName: sharedConfig.cssLoader.options.localIdentName,
+  //     filetypes: {
+  //       '.scss': 'postcss-scss'
+  //     },
+  //     exclude: 'node_modules',
+  //     searchPaths: [
+  //       'src'
+  //     ]
+  //   }
+  // ]
 
   return {
     presets: [
@@ -68,24 +68,24 @@ module.exports = function (api) {
       },
       development: {
         plugins: [
-          [
-            reactCSSModulesPlugin[0],
-            {
-              ...reactCSSModulesPlugin[1],
-              webpackHotModuleReloading: true
-            }
-          ]
+          // [
+          //   reactCSSModulesPlugin[0],
+          //   {
+          //     ...reactCSSModulesPlugin[1],
+          //     webpackHotModuleReloading: true
+          //   }
+          // ]
         ]
       },
       production: {
         plugins: [
-          reactCSSModulesPlugin
+          // reactCSSModulesPlugin
         ],
         compact: true
       },
       server: {
         plugins: [
-          reactCSSModulesPlugin
+          // reactCSSModulesPlugin
         ],
         compact: true
       }

@@ -2,10 +2,6 @@
   "name": "hylo-shared",
   "version": "5.2.5",
   "description": "Code shared across Hylo applications for consistency of results",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Hylozoic/hylo-shared.git"
-  },
   "license": "AGPL-1.0",
   "author": {
     "name": "Hylo Devs",
@@ -14,11 +10,13 @@
   },
   "source": "src/index.js",
   "exports": {
-    "require": "./dist/index.js",
-    "default": "./dist/index.modern.js"
+    ".": {
+      "import": "./dist/index.modern.mjs",
+      "require": "./dist/index.cjs"
+    }
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.module.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.modern.mjs",
   "unpkg": "./dist/index.umd.js",
   "scripts": {
     "build": "rm -fr dist/* && microbundle",

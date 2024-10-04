@@ -4775,6 +4775,273 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hylo/web@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@hylo/web@workspace:."
+  dependencies:
+    "@babel/cli": 7.25.6
+    "@babel/core": 7.25.2
+    "@babel/eslint-parser": ^7.25.1
+    "@babel/node": 7.25.0
+    "@babel/plugin-proposal-class-properties": ^7.18.6
+    "@babel/plugin-proposal-optional-chaining": ^7.21.0
+    "@babel/plugin-transform-runtime": ^7.25.4
+    "@babel/preset-env": 7.25.4
+    "@babel/preset-react": ^7.24.7
+    "@cfaester/enzyme-adapter-react-18": ^0.8.0
+    "@deck.gl/core": 9.0.31
+    "@deck.gl/extensions": ^9.0.0
+    "@deck.gl/geo-layers": 9.0.31
+    "@deck.gl/layers": 9.0.31
+    "@deck.gl/mesh-layers": 9.0.31
+    "@deck.gl/react": 9.0.31
+    "@dnd-kit/core": ^6.0.8
+    "@dnd-kit/sortable": ^7.0.2
+    "@emoji-mart/react": ^1.0.1
+    "@eslint/compat": ^1.1.1
+    "@eslint/eslintrc": ^3.1.0
+    "@eslint/js": ^9.10.0
+    "@faker-js/faker": ^6.0.0-alpha.5
+    "@loaders.gl/core": ^4.2.4
+    "@loaders.gl/loader-utils": ^4.2.4
+    "@luma.gl/core": ~9.0.0
+    "@luma.gl/engine": ~9.0.0
+    "@math.gl/web-mercator": ^4.1.0
+    "@playlyfe/gql": ^2.6.2
+    "@rollbar/react": ^0.12.0-beta
+    "@svgr/webpack": 8.1.0
+    "@testing-library/jest-dom": ^6.4.6
+    "@testing-library/react": ^16.0.0
+    "@testing-library/user-event": ^14.5.2
+    "@tiptap/extension-highlight": 2.0.4
+    "@tiptap/extension-link": 2.0.4
+    "@tiptap/extension-mention": 2.0.4
+    "@tiptap/extension-placeholder": 2.0.4
+    "@tiptap/pm": 2.0.4
+    "@tiptap/react": 2.0.4
+    "@tiptap/starter-kit": 2.0.4
+    "@tiptap/suggestion": 2.0.4
+    "@turf/area": ^7.1.0
+    "@turf/bbox": ^7.1.0
+    "@turf/bbox-polygon": ^7.1.0
+    "@turf/boolean-within": ^7.1.0
+    "@turf/center": ^7.1.0
+    "@turf/center-of-mass": ^7.1.0
+    "@turf/centroid": ^7.1.0
+    "@turf/combine": ^7.1.0
+    "@turf/helpers": ^7.1.0
+    "@types/glob": ^8.1.0
+    "@types/hoist-non-react-statics": ^3.3.5
+    "@types/react": ^18.3.5
+    "@types/react-css-modules": ^4.6.8
+    "@vitejs/plugin-react": ^4.3.1
+    ansi-styles: ^3.2.1
+    app-module-path: ^2.2.0
+    autoproxy: ^1.0.1
+    babel-core: 7.0.0-bridge.0
+    babel-jest: ^29.7.0
+    babel-loader: 9.1.3
+    babel-plugin-data-stylename: 0.1.1
+    babel-plugin-i18next-extract: ^0.10.0
+    babel-plugin-import-graphql: ^2.8.1
+    babel-plugin-inline-import: ^3.0.0
+    babel-plugin-lodash: ^3.3.4
+    babel-plugin-module-resolver: ^5.0.2
+    babel-plugin-named-asset-import: ^0.3.8
+    babel-preset-react-app: ^10.0.1
+    bfj: 6.1.1
+    bootstrap: 4.0.0-alpha.6
+    browserslist: ^4.23.3
+    case-sensitive-paths-webpack-plugin: 2.4.0
+    chalk: 2.3.0
+    cheerio: ^1.0.0
+    classnames: ^2.5.1
+    commander: ^2.9.0
+    compression: ^1.6.2
+    connect-history-api-fallback: 1.5.0
+    cookie-parser: ^1.4.6
+    cross-spawn: 5.1.0
+    css-loader: 7.1.2
+    css-minimizer-webpack-plugin: ^7.0.0
+    css-modules-require-hook: 4.2.1
+    css-select: ^3.1.2
+    d3: ^6.6.0
+    deep-diff: ^0.3.7
+    detect-port: 1.0.1
+    dotenv: 6.0.0
+    dotenv-safe: ^4.0.4
+    dotenv-webpack: ^8.1.0
+    emoji-mart: 5.2.2
+    enzyme: ^3.11.0
+    enzyme-to-json: ^3.6.2
+    eslint: ^9.10.0
+    eslint-config-prettier: ^9.1.0
+    eslint-config-standard: ^17.1.0
+    eslint-config-standard-jsx: ^11.0.0
+    eslint-config-standard-react: ^13.0.0
+    eslint-loader: 4.0.2
+    eslint-plugin-import: 2.30.0
+    eslint-plugin-jest: ^28.8.3
+    eslint-plugin-jsx: ^0.1.0
+    eslint-plugin-jsx-a11y: 6.10.0
+    eslint-plugin-n: ^17.10.2
+    eslint-plugin-node: ^11.1.0
+    eslint-plugin-promise: ^7.1.0
+    eslint-plugin-react: ^7.36.1
+    eslint-plugin-react-hooks: ^5.1.0-rc-206df66e-20240912
+    eslint-plugin-testing-library: ^6.3.0
+    express: ^4.15.5
+    file-loader: 6.2.0
+    filesize: 3.3.0
+    filestack-js: ^3.25.0
+    fs-extra: 7.0.1
+    global: ^4.3.2
+    globals: ^15.9.0
+    graphql: ^16.3.0
+    graphql-tag: ^2.12.6
+    gzip-size: 4.1.0
+    h3: ^2.0.0
+    history: ^5.3.0
+    html-webpack-plugin: ^5.6.0
+    http-proxy-middleware: 0.17.4
+    husky: ^7.0.4
+    hylo-shared: "*"
+    i18next: ^22.0.5
+    i18next-browser-languagedetector: ^7.0.1
+    i18next-http-backend: ^2.0.1
+    identity-obj-proxy: 3.0.0
+    immutability-helper: ^3.1.1
+    immutable: ~3.7.4
+    inflection: ^1.13.4
+    inquirer: ^4.0.1
+    ismobilejs: ^0.4.1
+    isomorphic-fetch: ^3.0.0
+    jest: ^29.7.0
+    jest-pnp-resolver: ^1.2.3
+    jest-resolve: ^29.7.0
+    jest-serializer-graphql: ^1.0.0
+    jest-transform-graphql: ^2.1.0
+    jest-watch-typeahead: ^2.2.2
+    json-loader: 0.5.7
+    lodash: ~4.17.21
+    lru-cache: ^4.1.1
+    mapbox-gl: ^3.7.0
+    mime: ^2.0.3
+    mini-css-extract-plugin: 2.9.1
+    mixpanel-browser: ^2.45.0
+    mock-fs: ^4.2.0
+    moment-locales-webpack-plugin: ^1.2.0
+    moment-timezone: ^0.5.45
+    msw: ^0.36.8
+    newrelic: ^7.0.2
+    normalize.css: ^7.0.0
+    object-assign: 4.1.1
+    optimize-css-assets-webpack-plugin: ^6.0.1
+    path-browserify: ^1.0.1
+    path-exists: 2.1.0
+    path-to-regexp: ^2.4.0
+    postcss: ^8.4.45
+    postcss-flexbugs-fixes: 5.0.2
+    postcss-loader: 8.1.1
+    postcss-preset-env: 10.0.3
+    postcss-safe-parser: ^7.0.0
+    postcss-scss: ^4.0.9
+    prettier: ^2.1.2
+    pretty-date: ^0.2.0
+    promise: 7.1.1
+    prop-types: ^15.6.0
+    pushstate-server: ^3.0.0
+    query-string: ^7.1.1
+    raf: ^3.4.1
+    react: ^18.3.0
+    react-app-polyfill: ^3.0.0
+    react-autocomplete: ^1.8.1
+    react-code-input: ^3.10.1
+    react-cookie-consent: ^9.0.0
+    react-cool-inview: ^3.0.1
+    react-copy-to-clipboard: ^5.1.0
+    react-datetime: ^3.2.0
+    react-dev-utils: ^12.0.1
+    react-div-100vh: ^0.7.0
+    react-dom: ^18.3.1
+    react-flip-move: ^3.0.5
+    react-helmet: ^6.1.0
+    react-i18next: ^15.0.2
+    react-icons: ^5.3.0
+    react-joyride: ^2.9.2
+    react-map-gl: ^7.1.7
+    react-map-gl-draw: ^1.0.4
+    react-multiline-clamp: ^2.0.0
+    react-player: ^2.16.0
+    react-redux: ^9.1.2
+    react-resize-detector: ^11.0.1
+    react-router: ^6.26.2
+    react-router-dom: ^6.26.2
+    react-select: ^5.8.0
+    react-slick: ^0.30.2
+    react-stripe-checkout: ^2.6.3
+    react-textarea-autosize: ^8.5.3
+    react-tooltip: ^5.28.0
+    react-transition-group: ^4.4.5
+    react-tsparticles: ^2.12.0
+    react-use-intercom: ^5.4.1
+    react-virtuoso: ^4.10.4
+    recursive-readdir: 2.2.2
+    redux: ^4.0.5
+    redux-first-history: ^5.2.0
+    redux-logger: ^3.0.6
+    redux-mock-store: ^1.5.4
+    redux-orm: ^0.16.2
+    redux-promise: ^0.6.0
+    redux-thunk: ^2.3.0
+    replacestream: ^4.0.3
+    request: ^2.83.0
+    reselect: ^3.0.1
+    resolve-url-loader: ^2.0.0
+    rollbar: ^2.26.4
+    root-path: ^0.2.1
+    sails.io.js: 1.2.1
+    sass: ^1.78.0
+    sass-loader: ^16.0.1
+    sass-resources-loader: ^2.2.5
+    scroll-into-view-if-needed: ^2.2.29
+    slick-carousel: ^1.8.1
+    socket.io-client: 4.7.5
+    standard: 17.1.2
+    standard-loader: ^7.0.0
+    streamifier: ^0.1.1
+    strip-ansi: 4.0.0
+    style-loader: 4.0.0
+    supercluster: ^7.0.0
+    terser-webpack-plugin: ^5.3.10
+    tether: ^1.4.0
+    timezone-mock: ^0.0.7
+    tippy.js: ^6.3.7
+    tlds: ^1.231.0
+    trunc-html: ^1.1.2
+    ts-loader: ^9.5.1
+    typescript: ^4.7.4
+    url-loader: 4.1.1
+    url-regex-safe: ^3.0.0
+    use-long-press: ^2.0.2
+    validator: ^13.7.0
+    velocity-react: ^1.3.3
+    vite: ^5.4.5
+    vite-css-modules: ^1.4.2
+    vite-plugin-eslint: ^1.8.1
+    vite-plugin-graphql-loader: ^4.0.4
+    vite-plugin-html: ^3.2.2
+    vite-plugin-svgr: ^4.2.0
+    webpack: ^5.94.0
+    webpack-bundle-analyzer: ^4.10.2
+    webpack-cli: ^5.1.4
+    webpack-dev-server: 5.1.0
+    webpack-manifest-plugin: ^5.0.0
+    whatwg-fetch: 2.0.3
+    xhr: ^2.5.0
+  languageName: unknown
+  linkType: soft
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -8653,16 +8920,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^4.11.4":
-  version: 4.11.8
-  resolution: "ajv@npm:4.11.8"
-  dependencies:
-    co: ^4.6.0
-    json-stable-stringify: ^1.0.1
-  checksum: 1a4fb38ebccc2ff3ab507d5507b133705d056f9db28cb00a59f0753a5f11e809d959b732edcd52c02fed628638ffb9486ee6bd13bf027400b5c9acf9c33e25f2
-  languageName: node
-  linkType: hard
-
 "ajv@npm:^6.12.2, ajv@npm:^6.12.3, ajv@npm:^6.12.4, ajv@npm:^6.12.5":
   version: 6.12.6
   resolution: "ajv@npm:6.12.6"
@@ -9449,34 +9706,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-react-css-modules@levity/babel-plugin-react-css-modules#ab83008":
-  version: 1.0.0
-  resolution: "babel-plugin-react-css-modules@https://github.com/levity/babel-plugin-react-css-modules.git#commit=ab83008694bf14fb82c3e09e2bee70077127506b"
-  dependencies:
-    ajv: ^4.11.4
-    babel-plugin-syntax-jsx: ^6.18.0
-    babel-types: ^6.19.0
-    generic-names: ^1.0.2
-    postcss: ^5.2.6
-    postcss-modules: ^0.6.2
-    postcss-modules-extract-imports: ^1.0.1
-    postcss-modules-local-by-default: ^1.1.1
-    postcss-modules-parser: ^1.1.0
-    postcss-modules-resolve-path: ^1.0.0
-    postcss-modules-scope: ^1.0.2
-    postcss-modules-values: ^1.2.2
-    postcss-nested: ^1.0.0
-  checksum: 82cc5ad2e10e705d0e035adf3a71410ea335fbab2d291752a90b1fddcb65d4bd9ab786b98d754335b49365134d2745233ba196cf24895fe0cae6749bb5a5d8c5
-  languageName: node
-  linkType: hard
-
-"babel-plugin-syntax-jsx@npm:^6.18.0":
-  version: 6.18.0
-  resolution: "babel-plugin-syntax-jsx@npm:6.18.0"
-  checksum: 0c7ce5b81d6cfc01a7dd7a76a9a8f090ee02ba5c890310f51217ef1a7e6163fb7848994bbc14fd560117892e82240df9c7157ad0764da67ca5f2afafb73a7d27
-  languageName: node
-  linkType: hard
-
 "babel-plugin-transform-react-remove-prop-types@npm:^0.4.24":
   version: 0.4.24
   resolution: "babel-plugin-transform-react-remove-prop-types@npm:0.4.24"
@@ -9552,25 +9781,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-runtime@npm:^6.20.0, babel-runtime@npm:^6.26.0":
+"babel-runtime@npm:^6.20.0":
   version: 6.26.0
   resolution: "babel-runtime@npm:6.26.0"
   dependencies:
     core-js: ^2.4.0
     regenerator-runtime: ^0.11.0
   checksum: 8aeade94665e67a73c1ccc10f6fd42ba0c689b980032b70929de7a6d9a12eb87ef51902733f8fefede35afea7a5c3ef7e916a64d503446c1eedc9e3284bd3d50
-  languageName: node
-  linkType: hard
-
-"babel-types@npm:^6.19.0":
-  version: 6.26.0
-  resolution: "babel-types@npm:6.26.0"
-  dependencies:
-    babel-runtime: ^6.26.0
-    esutils: ^2.0.2
-    lodash: ^4.17.4
-    to-fast-properties: ^1.0.3
-  checksum: d16b0fa86e9b0e4c2623be81d0a35679faff24dd2e43cde4ca58baf49f3e39415a011a889e6c2259ff09e1228e4c3a3db6449a62de59e80152fe1ce7398fde76
   languageName: node
   linkType: hard
 
@@ -11115,20 +11332,6 @@ __metadata:
     lightningcss:
       optional: true
   checksum: 4b7c25796a6f7d6ec07fafcf3d3b769bb09fbde676bdf58ad80b4a334268c01d507e05fa5ee8ddbd71dd3c9f28ce8c712b4d599cf1304753f52fe4453a514b3a
-  languageName: node
-  linkType: hard
-
-"css-modules-loader-core@npm:^1.0.1":
-  version: 1.1.0
-  resolution: "css-modules-loader-core@npm:1.1.0"
-  dependencies:
-    icss-replace-symbols: 1.1.0
-    postcss: 6.0.1
-    postcss-modules-extract-imports: 1.1.0
-    postcss-modules-local-by-default: 1.2.0
-    postcss-modules-scope: 1.1.0
-    postcss-modules-values: 1.3.0
-  checksum: e2d513cee6a407b46806e50b3eec9d9034355b6ee14f2f7303353ab0853b8dba9600cffc83ec46cebd3efd68fe2b2aa31808a1c906d043f1c405568fd484eaf5
   languageName: node
   linkType: hard
 
@@ -14692,7 +14895,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"generic-names@npm:^1.0.1, generic-names@npm:^1.0.2":
+"generic-names@npm:^1.0.1":
   version: 1.0.3
   resolution: "generic-names@npm:1.0.3"
   dependencies:
@@ -15720,277 +15923,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hylo-evo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "hylo-evo@workspace:."
-  dependencies:
-    "@babel/cli": 7.25.6
-    "@babel/core": 7.25.2
-    "@babel/eslint-parser": ^7.25.1
-    "@babel/node": 7.25.0
-    "@babel/plugin-proposal-class-properties": ^7.18.6
-    "@babel/plugin-proposal-optional-chaining": ^7.21.0
-    "@babel/plugin-transform-runtime": ^7.25.4
-    "@babel/preset-env": 7.25.4
-    "@babel/preset-react": ^7.24.7
-    "@cfaester/enzyme-adapter-react-18": ^0.8.0
-    "@deck.gl/core": 9.0.31
-    "@deck.gl/extensions": ^9.0.0
-    "@deck.gl/geo-layers": 9.0.31
-    "@deck.gl/layers": 9.0.31
-    "@deck.gl/mesh-layers": 9.0.31
-    "@deck.gl/react": 9.0.31
-    "@dnd-kit/core": ^6.0.8
-    "@dnd-kit/sortable": ^7.0.2
-    "@emoji-mart/react": ^1.0.1
-    "@eslint/compat": ^1.1.1
-    "@eslint/eslintrc": ^3.1.0
-    "@eslint/js": ^9.10.0
-    "@faker-js/faker": ^6.0.0-alpha.5
-    "@loaders.gl/core": ^4.2.4
-    "@loaders.gl/loader-utils": ^4.2.4
-    "@luma.gl/core": ~9.0.0
-    "@luma.gl/engine": ~9.0.0
-    "@math.gl/web-mercator": ^4.1.0
-    "@playlyfe/gql": ^2.6.2
-    "@rollbar/react": ^0.12.0-beta
-    "@svgr/webpack": 8.1.0
-    "@testing-library/jest-dom": ^6.4.6
-    "@testing-library/react": ^16.0.0
-    "@testing-library/user-event": ^14.5.2
-    "@tiptap/extension-highlight": 2.0.4
-    "@tiptap/extension-link": 2.0.4
-    "@tiptap/extension-mention": 2.0.4
-    "@tiptap/extension-placeholder": 2.0.4
-    "@tiptap/pm": 2.0.4
-    "@tiptap/react": 2.0.4
-    "@tiptap/starter-kit": 2.0.4
-    "@tiptap/suggestion": 2.0.4
-    "@turf/area": ^7.1.0
-    "@turf/bbox": ^7.1.0
-    "@turf/bbox-polygon": ^7.1.0
-    "@turf/boolean-within": ^7.1.0
-    "@turf/center": ^7.1.0
-    "@turf/center-of-mass": ^7.1.0
-    "@turf/centroid": ^7.1.0
-    "@turf/combine": ^7.1.0
-    "@turf/helpers": ^7.1.0
-    "@types/glob": ^8.1.0
-    "@types/hoist-non-react-statics": ^3.3.5
-    "@types/react": ^18.3.5
-    "@types/react-css-modules": ^4.6.8
-    "@vitejs/plugin-react": ^4.3.1
-    ansi-styles: ^3.2.1
-    app-module-path: ^2.2.0
-    autoproxy: ^1.0.1
-    babel-core: 7.0.0-bridge.0
-    babel-jest: ^29.7.0
-    babel-loader: 9.1.3
-    babel-plugin-data-stylename: 0.1.1
-    babel-plugin-i18next-extract: ^0.10.0
-    babel-plugin-import-graphql: ^2.8.1
-    babel-plugin-inline-import: ^3.0.0
-    babel-plugin-lodash: ^3.3.4
-    babel-plugin-module-resolver: ^5.0.2
-    babel-plugin-named-asset-import: ^0.3.8
-    babel-plugin-react-css-modules: "levity/babel-plugin-react-css-modules#ab83008"
-    babel-preset-react-app: ^10.0.1
-    bfj: 6.1.1
-    bootstrap: 4.0.0-alpha.6
-    browserslist: ^4.23.3
-    case-sensitive-paths-webpack-plugin: 2.4.0
-    chalk: 2.3.0
-    cheerio: ^1.0.0
-    classnames: ^2.5.1
-    commander: ^2.9.0
-    compression: ^1.6.2
-    connect-history-api-fallback: 1.5.0
-    cookie-parser: ^1.4.6
-    cross-spawn: 5.1.0
-    css-loader: 7.1.2
-    css-minimizer-webpack-plugin: ^7.0.0
-    css-modules-require-hook: 4.2.1
-    css-select: ^3.1.2
-    d3: ^6.6.0
-    deep-diff: ^0.3.7
-    detect-port: 1.0.1
-    dotenv: 6.0.0
-    dotenv-safe: ^4.0.4
-    dotenv-webpack: ^8.1.0
-    emoji-mart: 5.2.2
-    enzyme: ^3.11.0
-    enzyme-to-json: ^3.6.2
-    eslint: ^9.10.0
-    eslint-config-prettier: ^9.1.0
-    eslint-config-standard: ^17.1.0
-    eslint-config-standard-jsx: ^11.0.0
-    eslint-config-standard-react: ^13.0.0
-    eslint-loader: 4.0.2
-    eslint-plugin-import: 2.30.0
-    eslint-plugin-jest: ^28.8.3
-    eslint-plugin-jsx: ^0.1.0
-    eslint-plugin-jsx-a11y: 6.10.0
-    eslint-plugin-n: ^17.10.2
-    eslint-plugin-node: ^11.1.0
-    eslint-plugin-promise: ^7.1.0
-    eslint-plugin-react: ^7.36.1
-    eslint-plugin-react-hooks: ^5.1.0-rc-206df66e-20240912
-    eslint-plugin-testing-library: ^6.3.0
-    express: ^4.15.5
-    file-loader: 6.2.0
-    filesize: 3.3.0
-    filestack-js: ^3.25.0
-    fs-extra: 7.0.1
-    global: ^4.3.2
-    globals: ^15.9.0
-    graphql: ^16.3.0
-    graphql-tag: ^2.12.6
-    gzip-size: 4.1.0
-    h3: ^2.0.0
-    history: ^5.3.0
-    html-webpack-plugin: ^5.6.0
-    http-proxy-middleware: 0.17.4
-    husky: ^7.0.4
-    hylo-shared: 5.2.2
-    i18next: ^22.0.5
-    i18next-browser-languagedetector: ^7.0.1
-    i18next-http-backend: ^2.0.1
-    identity-obj-proxy: 3.0.0
-    immutability-helper: ^3.1.1
-    immutable: ~3.7.4
-    inflection: ^1.13.4
-    inquirer: ^4.0.1
-    ismobilejs: ^0.4.1
-    isomorphic-fetch: ^3.0.0
-    jest: ^29.7.0
-    jest-pnp-resolver: ^1.2.3
-    jest-resolve: ^29.7.0
-    jest-serializer-graphql: ^1.0.0
-    jest-transform-graphql: ^2.1.0
-    jest-watch-typeahead: ^2.2.2
-    json-loader: 0.5.7
-    lodash: ~4.17.21
-    lru-cache: ^4.1.1
-    mapbox-gl: ^3.7.0
-    mime: ^2.0.3
-    mini-css-extract-plugin: 2.9.1
-    mixpanel-browser: ^2.45.0
-    mock-fs: ^4.2.0
-    moment-locales-webpack-plugin: ^1.2.0
-    moment-timezone: ^0.5.45
-    msw: ^0.36.8
-    newrelic: ^7.0.2
-    normalize.css: ^7.0.0
-    object-assign: 4.1.1
-    optimize-css-assets-webpack-plugin: ^6.0.1
-    path-browserify: ^1.0.1
-    path-exists: 2.1.0
-    path-to-regexp: ^2.4.0
-    postcss: ^8.4.45
-    postcss-flexbugs-fixes: 5.0.2
-    postcss-loader: 8.1.1
-    postcss-preset-env: 10.0.3
-    postcss-safe-parser: ^7.0.0
-    postcss-scss: ^4.0.9
-    prettier: ^2.1.2
-    pretty-date: ^0.2.0
-    promise: 7.1.1
-    prop-types: ^15.6.0
-    pushstate-server: ^3.0.0
-    query-string: ^7.1.1
-    raf: ^3.4.1
-    react: ^18.3.0
-    react-app-polyfill: ^3.0.0
-    react-autocomplete: ^1.8.1
-    react-code-input: ^3.10.1
-    react-cookie-consent: ^9.0.0
-    react-cool-inview: ^3.0.1
-    react-copy-to-clipboard: ^5.1.0
-    react-datetime: ^3.2.0
-    react-dev-utils: ^12.0.1
-    react-div-100vh: ^0.7.0
-    react-dom: ^18.3.1
-    react-flip-move: ^3.0.5
-    react-helmet: ^6.1.0
-    react-i18next: ^15.0.2
-    react-icons: ^5.3.0
-    react-joyride: ^2.9.2
-    react-map-gl: ^7.1.7
-    react-map-gl-draw: ^1.0.4
-    react-multiline-clamp: ^2.0.0
-    react-player: ^2.16.0
-    react-redux: ^9.1.2
-    react-resize-detector: ^11.0.1
-    react-router: ^6.26.2
-    react-router-dom: ^6.26.2
-    react-select: ^5.8.0
-    react-slick: ^0.30.2
-    react-stripe-checkout: ^2.6.3
-    react-textarea-autosize: ^8.5.3
-    react-tooltip: ^5.28.0
-    react-transition-group: ^4.4.5
-    react-tsparticles: ^2.12.0
-    react-use-intercom: ^5.4.1
-    react-virtuoso: ^4.10.4
-    recursive-readdir: 2.2.2
-    redux: ^4.0.5
-    redux-first-history: ^5.2.0
-    redux-logger: ^3.0.6
-    redux-mock-store: ^1.5.4
-    redux-orm: ^0.16.2
-    redux-promise: ^0.6.0
-    redux-thunk: ^2.3.0
-    replacestream: ^4.0.3
-    request: ^2.83.0
-    reselect: ^3.0.1
-    resolve-url-loader: ^2.0.0
-    rollbar: ^2.26.4
-    root-path: ^0.2.1
-    sails.io.js: 1.2.1
-    sass: ^1.78.0
-    sass-loader: ^16.0.1
-    sass-resources-loader: ^2.2.5
-    scroll-into-view-if-needed: ^2.2.29
-    slick-carousel: ^1.8.1
-    socket.io-client: 4.7.5
-    standard: 17.1.2
-    standard-loader: ^7.0.0
-    streamifier: ^0.1.1
-    strip-ansi: 4.0.0
-    style-loader: 4.0.0
-    supercluster: ^7.0.0
-    terser-webpack-plugin: ^5.3.10
-    tether: ^1.4.0
-    timezone-mock: ^0.0.7
-    tippy.js: ^6.3.7
-    tlds: ^1.231.0
-    trunc-html: ^1.1.2
-    ts-loader: ^9.5.1
-    typescript: ^4.7.4
-    url-loader: 4.1.1
-    url-regex-safe: ^3.0.0
-    use-long-press: ^2.0.2
-    validator: ^13.7.0
-    velocity-react: ^1.3.3
-    vite: ^5.4.5
-    vite-css-modules: ^1.4.2
-    vite-plugin-eslint: ^1.8.1
-    vite-plugin-graphql-loader: ^4.0.4
-    vite-plugin-html: ^3.2.2
-    vite-plugin-svgr: ^4.2.0
-    webpack: ^5.94.0
-    webpack-bundle-analyzer: ^4.10.2
-    webpack-cli: ^5.1.4
-    webpack-dev-server: 5.1.0
-    webpack-manifest-plugin: ^5.0.0
-    whatwg-fetch: 2.0.3
-    xhr: ^2.5.0
-  languageName: unknown
-  linkType: soft
-
-"hylo-shared@npm:5.2.2":
-  version: 5.2.2
-  resolution: "hylo-shared@npm:5.2.2"
+"hylo-shared@npm:*":
+  version: 5.2.5
+  resolution: "hylo-shared@npm:5.2.5"
   dependencies:
     coordinate-parser: ^1.0.7
     html-to-text: ^8.1.0
@@ -16003,7 +15938,7 @@ __metadata:
     validator: ^13.7.0
   peerDependencies:
     moment-timezone: ^0.5.37
-  checksum: 4b4db6fb03aae3798494e8ff2c6b7e6c587fe894eb26e187673df0da8d46ba45ddae2f4d3065f5fca0b1e36f0ec736760fc0fb44b7ab8810a29bd2b337c178c0
+  checksum: c1b6ce7c94088073cdca76c90baeacae479172ac31faa3ccc288edfbf53a003b11eb8523e42c076b4c319ec7e11d522dd72b77215e525dc3bebb37def0903d86
   languageName: node
   linkType: hard
 
@@ -16068,7 +16003,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"icss-replace-symbols@npm:1.1.0, icss-replace-symbols@npm:^1.0.2, icss-replace-symbols@npm:^1.1.0":
+"icss-replace-symbols@npm:^1.0.2, icss-replace-symbols@npm:^1.1.0":
   version: 1.1.0
   resolution: "icss-replace-symbols@npm:1.1.0"
   checksum: 24575b2c2f7e762bfc6f4beee31be9ba98a01cad521b5aa9954090a5de2b5e1bf67814c17e22f9e51b7d798238db8215a173d6c2b4726ce634ce06b68ece8045
@@ -17884,7 +17819,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-stable-stringify@npm:^1.0.1, json-stable-stringify@npm:^1.0.2":
+"json-stable-stringify@npm:^1.0.2":
   version: 1.1.1
   resolution: "json-stable-stringify@npm:1.1.1"
   dependencies:
@@ -18609,7 +18544,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.10, lodash@npm:^4.17.15, lodash@npm:^4.17.2, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.4, lodash@npm:^4.17.5, lodash@npm:^4.3.0, lodash@npm:~4.17.21":
+"lodash@npm:^4.17.10, lodash@npm:^4.17.15, lodash@npm:^4.17.2, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.5, lodash@npm:^4.3.0, lodash@npm:~4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -21235,16 +21170,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-extract-imports@npm:1.1.0":
-  version: 1.1.0
-  resolution: "postcss-modules-extract-imports@npm:1.1.0"
-  dependencies:
-    postcss: ^6.0.1
-  checksum: 3dc9ed98509f654c1220bb8ec7489b30fa4441f2797eb5c894badfd6f4ab1b086f8002f59d47845d827a3f23a40400ba4c18959c7a3702285d4e5bfcfcd180d4
-  languageName: node
-  linkType: hard
-
-"postcss-modules-extract-imports@npm:^1.0.0, postcss-modules-extract-imports@npm:^1.0.1":
+"postcss-modules-extract-imports@npm:^1.0.0":
   version: 1.2.1
   resolution: "postcss-modules-extract-imports@npm:1.2.1"
   dependencies:
@@ -21262,7 +21188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-local-by-default@npm:1.2.0, postcss-modules-local-by-default@npm:^1.0.1, postcss-modules-local-by-default@npm:^1.1.1":
+"postcss-modules-local-by-default@npm:^1.0.1":
   version: 1.2.0
   resolution: "postcss-modules-local-by-default@npm:1.2.0"
   dependencies:
@@ -21309,16 +21235,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-resolve-path@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "postcss-modules-resolve-path@npm:1.0.0"
-  dependencies:
-    postcss: 5.0.10
-  checksum: 08bf348b675f1592eff4c68f4b3344dfdd8b6292f73fed9417259536ff82b1c3c2949bd82cfb534925d49143348692bb6e7fe956b29a042e05d13fb2003cadba
-  languageName: node
-  linkType: hard
-
-"postcss-modules-scope@npm:1.1.0, postcss-modules-scope@npm:^1.0.0, postcss-modules-scope@npm:^1.0.2":
+"postcss-modules-scope@npm:^1.0.0":
   version: 1.1.0
   resolution: "postcss-modules-scope@npm:1.1.0"
   dependencies:
@@ -21339,7 +21256,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-modules-values@npm:1.3.0, postcss-modules-values@npm:^1.1.1, postcss-modules-values@npm:^1.2.2":
+"postcss-modules-values@npm:^1.1.1":
   version: 1.3.0
   resolution: "postcss-modules-values@npm:1.3.0"
   dependencies:
@@ -21357,27 +21274,6 @@ __metadata:
   peerDependencies:
     postcss: ^8.1.0
   checksum: f7f2cdf14a575b60e919ad5ea52fed48da46fe80db2733318d71d523fc87db66c835814940d7d05b5746b0426e44661c707f09bdb83592c16aea06e859409db6
-  languageName: node
-  linkType: hard
-
-"postcss-modules@npm:^0.6.2":
-  version: 0.6.4
-  resolution: "postcss-modules@npm:0.6.4"
-  dependencies:
-    css-modules-loader-core: ^1.0.1
-    generic-names: ^1.0.2
-    postcss: ^5.2.8
-    string-hash: ^1.1.1
-  checksum: e066d5a2420e74eef6010a246d00ffcb31f2d103adcef572ee6c00832e24c7a4b192c8aaf43a103f4b1db7afb8ccf5194ee3134ac15581789b7a4eb72f39d447
-  languageName: node
-  linkType: hard
-
-"postcss-nested@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "postcss-nested@npm:1.0.1"
-  dependencies:
-    postcss: ^5.2.17
-  checksum: 6a973596db8910da74871f00822803a9b9ae9205eca2fd66e72e8d4dd8d8cc3d18ff45a5860630928f481879448bce6b6f635d9f122e6902b2c9b0cdce22f44c
   languageName: node
   linkType: hard
 
@@ -21904,29 +21800,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:5.0.10":
-  version: 5.0.10
-  resolution: "postcss@npm:5.0.10"
-  dependencies:
-    js-base64: ^2.1.9
-    source-map: ^0.5.1
-    supports-color: ^3.1.2
-  checksum: f457fbe0b123c0802a8f1a3098537348751b08e115c3b1835196f481da440de09c30f8d5a82a10ddc757097204966ebc3b2b39ec9237ba991a5db1630b1fa969
-  languageName: node
-  linkType: hard
-
-"postcss@npm:6.0.1":
-  version: 6.0.1
-  resolution: "postcss@npm:6.0.1"
-  dependencies:
-    chalk: ^1.1.3
-    source-map: ^0.5.6
-    supports-color: ^3.2.3
-  checksum: 2533d218b6c23dad42fffb98979f3fd2b98bbe11c923e3245ed8f83da9591c176a5de2403ad3ebaedea819f50d5f6c88c40d322265c59b6b10ed8a02c12fd4bc
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^5.0.10, postcss@npm:^5.2.17, postcss@npm:^5.2.6, postcss@npm:^5.2.8":
+"postcss@npm:^5.0.10":
   version: 5.2.18
   resolution: "postcss@npm:5.2.18"
   dependencies:
@@ -25005,7 +24879,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map@npm:^0.5.1, source-map@npm:^0.5.6, source-map@npm:^0.5.7":
+"source-map@npm:^0.5.6, source-map@npm:^0.5.7":
   version: 0.5.7
   resolution: "source-map@npm:0.5.7"
   checksum: 5dc2043b93d2f194142c7f38f74a24670cd7a0063acdaf4bf01d2964b402257ae843c2a8fa822ad5b71013b5fcafa55af7421383da919752f22ff488bc553f4d
@@ -25294,13 +25168,6 @@ __metadata:
   version: 0.2.1
   resolution: "string-convert@npm:0.2.1"
   checksum: 1098b1d8e3712c72d0a0b0b7f5c36c98af93e7660b5f0f14019e41bcefe55bfa79214d5e03e74d98a7334a0b9bf2b7f4c6889c8c24801aa2ae2f9ebe1d8a1ef9
-  languageName: node
-  linkType: hard
-
-"string-hash@npm:^1.1.1":
-  version: 1.1.3
-  resolution: "string-hash@npm:1.1.3"
-  checksum: 104b8667a5e0dc71bfcd29fee09cb88c6102e27bfb07c55f95535d90587d016731d52299380052e514266f4028a7a5172e0d9ac58e2f8f5001be61dc77c0754d
   languageName: node
   linkType: hard
 
@@ -25646,7 +25513,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supports-color@npm:^3.1.2, supports-color@npm:^3.2.3":
+"supports-color@npm:^3.2.3":
   version: 3.2.3
   resolution: "supports-color@npm:3.2.3"
   dependencies:
@@ -25956,13 +25823,6 @@ __metadata:
   version: 1.0.5
   resolution: "tmpl@npm:1.0.5"
   checksum: cd922d9b853c00fe414c5a774817be65b058d54a2d01ebb415840960406c669a0fc632f66df885e24cb022ec812739199ccbdb8d1164c3e513f85bfca5ab2873
-  languageName: node
-  linkType: hard
-
-"to-fast-properties@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "to-fast-properties@npm:1.0.3"
-  checksum: bd0abb58c4722851df63419de3f6d901d5118f0440d3f71293ed776dd363f2657edaaf2dc470e3f6b7b48eb84aa411193b60db8a4a552adac30de9516c5cc580
   languageName: node
   linkType: hard
 

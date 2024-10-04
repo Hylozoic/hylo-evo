@@ -1,5 +1,5 @@
 {
-  "name": "hylo-evo",
+  "name": "@hylo/web",
   "description": "Hylo Frontend",
   "version": "5.10.0",
   "private": true,
@@ -107,7 +107,6 @@
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-module-resolver": "^5.0.2",
     "babel-plugin-named-asset-import": "^0.3.8",
-    "babel-plugin-react-css-modules": "levity/babel-plugin-react-css-modules#ab83008",
     "babel-preset-react-app": "^10.0.1",
     "bfj": "6.1.1",
     "bootstrap": "4.0.0-alpha.6",
@@ -148,7 +147,7 @@
     "html-webpack-plugin": "^5.6.0",
     "http-proxy-middleware": "0.17.4",
     "husky": "^7.0.4",
-    "hylo-shared": "5.2.2",
+    "hylo-shared": "*",
     "i18next": "^22.0.5",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.0.1",
