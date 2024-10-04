@@ -92,9 +92,9 @@ $border-width: 1px !default;
 // ) !default;
 //
 // Core Bootstrap variables and mixins
-@import 'node_modules/bootstrap/scss/variables';
-@import 'node_modules/bootstrap/scss/mixins';
-@import 'node_modules/bootstrap/scss/custom';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/mixins';
+@import '../../node_modules/bootstrap/scss/custom';
 
 /*!
  * Bootstrap v4.0.0-alpha.6 (https://getbootstrap.com)
@@ -105,26 +105,26 @@ $border-width: 1px !default;
 
 // // NOTE: Moved to variables resource file to make globally available in CSS Modules
 // // Core variables and mixins
-// @import "node_modules/bootstrap/scss/variables";
-// @import "node_modules/bootstrap/scss/mixins";
-// @import "node_modules/bootstrap/scss/custom";
+// @import "../../node_modules/bootstrap/scss/variables";
+// @import "../../node_modules/bootstrap/scss/mixins";
+// @import "../../node_modules/bootstrap/scss/custom";
 
 // Reset and dependencies
-@import "node_modules/bootstrap/scss/normalize";
-@import "node_modules/bootstrap/scss/print";
+@import "../../node_modules/bootstrap/scss/normalize";
+@import "../../node_modules/bootstrap/scss/print";
 
 // Core CSS
-@import "node_modules/bootstrap/scss/reboot";
-// @import "node_modules/bootstrap/scss/type";
-// @import "node_modules/bootstrap/scss/images";
-// @import "node_modules/bootstrap/scss/code";
-// @import "node_modules/bootstrap/scss/grid";
-// @import "node_modules/bootstrap/scss/tables";
-// @import "node_modules/bootstrap/scss/forms";
-// @import "node_modules/bootstrap/scss/buttons";
+@import "../../node_modules/bootstrap/scss/reboot";
+// @import "../../node_modules/bootstrap/scss/type";
+// @import "../../node_modules/bootstrap/scss/images";
+// @import "../../node_modules/bootstrap/scss/code";
+// @import "../../node_modules/bootstrap/scss/grid";
+// @import "../../node_modules/bootstrap/scss/tables";
+// @import "../../node_modules/bootstrap/scss/forms";
+// @import "../../node_modules/bootstrap/scss/buttons";
 
 // Components
-// @import "node_modules/bootstrap/scss/card";
+// @import "../../node_modules/bootstrap/scss/card";
 
 // Utility classes
-// @import "node_modules/bootstrap/scss/utilities";
+// @import "../../node_modules/bootstrap/scss/utilities";
