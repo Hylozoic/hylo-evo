@@ -2,26 +2,11 @@
   "name": "hylo-shared",
   "version": "5.2.5",
   "description": "Code shared across Hylo applications for consistency of results",
-  "license": "AGPL-1.0",
-  "author": {
-    "name": "Hylo Devs",
-    "email": "dev@hylo.com",
-    "url": "https://hylo.com"
-  },
+  "private": true,
+  "type": "module",
   "source": "src/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/index.modern.mjs",
-      "require": "./dist/index.cjs"
-    }
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.modern.mjs",
-  "unpkg": "./dist/index.umd.js",
+  "main": "src/index.js",
   "scripts": {
-    "build": "rm -fr dist/* && microbundle",
-    "start": "rm -fr dist/* && microbundle watch",
-    "start:native": "concurrently 'yarn start' 'wml start'",
     "test": "jest"
   },
   "standard": {
@@ -65,9 +50,7 @@
     "concurrently": "^7.0.0",
     "eslint": "^8.8.0",
     "jest": "^27.5.0",
-    "microbundle": "^0.15.1",
     "moment-timezone": "^0.5.37",
-    "standard": "^16.0.4",
     "wml": "^0.0.83"
   }
 }

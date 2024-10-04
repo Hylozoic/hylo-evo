@@ -1,14 +1,16 @@
 {
   "name": "hylo",
-  "version": "1.0.0",
   "private": true,
   "workspaces": [
     "libs/*",
     "apps/*"
   ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": "20.15.1",
+    "yarn": "^3.6.4"
   },
-  "keywords": [],
-  "author": ""
+  "packageManager": "yarn@3.6.4",
+  "scripts": {
+    "reset": "rm -rf node_modules **/node_modules .yarn **/.yarn **/yarn.lock yarn.lock && yarn install"
+  }
 }
