@@ -1,0 +1,103 @@
+.cardPadding {
+  padding: 0px 10px;
+}
+
+.constrained.cardPadding {
+  padding: 0px 0px;
+}
+
+.body {
+  margin-bottom: 36px;
+}
+
+.smallMargin {
+  margin-bottom: 12px;
+}
+
+.title {
+  composes: cardPadding;
+  margin-bottom: 12px;
+}
+
+.constrained.title {
+  font-size: 14px;
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.details {
+  composes: cardPadding;
+  // Extract typography? This one is exactly half way between
+  // BDY-LT-LG and BDY-LT-SM
+  @include font-regular;
+  color: $color-rhino-60;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+
+.headerLocation {
+  display: block;
+  margin: -10px 0 10px 10px;
+  composes: timestamp from 'css/typography.scss';
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 50%;
+}
+
+.constrained.headerLocation {
+  display: none;
+}
+
+.locationIcon {
+  color: $color-rhino-40;
+  margin: 0 3px 0 0;
+  font-size: 12px;
+  top: 1px;
+}
+
+.file-attachments {
+  composes: cardPadding;
+  display: flex;
+  flex-direction: row;
+}
+
+.file-attachment {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  text-decoration: none;
+  &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+  }
+}
+
+.file-icon {
+  font-size: 20px;
+  color: $color-tree-poppy;
+  margin-right: 8px;
+}
+
+.file-name {
+  @include font-regular;
+  font-size: 12px;
+  max-width: 155px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $color-caribbean-green;
+  &:hover {
+    color: $color-gossamer;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .title {
+    margin-bottom: 5px;
+  }
+
+  .headerLocation {
+    margin: -5px 0 5px 5px;
+  }
+}

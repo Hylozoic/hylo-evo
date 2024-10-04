@@ -1,0 +1,303 @@
+// Hylo App
+
+// DEFINE ONLY VARIABLES IN THIS FILE, NO CSS
+// These variables are globally included and should not
+// be manually imported into any SASS file.
+
+// Spacing
+// One REM equals 16px in a typical browser environment, so,
+// 0.25 REM is equal to 4px, our current spacing and sizing base unit
+$space-base-unit: 0.25rem;
+$space-1x: $space-base-unit;
+$space-2x: $space-base-unit * 2;
+$space-3x: $space-base-unit * 3;
+$space-4x: $space-base-unit * 4; // 16px
+$space-5x: $space-base-unit * 5; // 20px
+$space-6x: $space-base-unit * 6; // 24px
+$space-7x: $space-base-unit * 7;
+$space-8x: $space-base-unit * 8;
+$space-9x: $space-base-unit * 9;
+$space-10x: $space-base-unit * 10;
+$space-11x: $space-base-unit * 11;
+$space-12x: $space-base-unit * 12;
+$space-13x: $space-base-unit * 13;
+$space-14x: $space-base-unit * 14;
+$space-15x: $space-base-unit * 15;
+$space-16x: $space-base-unit * 16;
+$space-17x: $space-base-unit * 17;
+$space-18x: $space-base-unit * 18;
+$space-20x: $space-base-unit * 20;
+
+// $space-sm: $space-3x;
+// $space-std: $space-8x;
+// $space-lg: $space-9x;
+// $space-xl: $space-10x;
+// $space-xxl: $space-18x;
+
+$topnav-height: 56px;
+$content-width: 80rem;
+$map-content-width: 90rem;
+$center-column-width: 47%;
+$center-column-full-width: calc(83% - 30px);
+$detail-column-width: 49%;
+$layout-spacing: 70px;
+$messages-header-height: 80px;
+$post-editor-width: 590px;
+$post-editor-height: 516px;
+$signup-modal-width: 880px;
+
+$messages-body-height: 420px;
+
+// Colors
+// For now standardized on using "Name that Color" naming:
+// http://chir.ag/projects/name-that-color http://chir.ag/projects/ntc/
+$color-rhino: #2C4059;
+$color-rhino-80: rgba($color-rhino, .8);
+$color-rhino-60: rgba($color-rhino, .6);
+$color-rhino-50: rgba($color-rhino, .5);
+$color-rhino-40: rgba($color-rhino, .4);
+$color-rhino-30: rgba($color-rhino, .3);
+$color-rhino-10: rgba($color-rhino, .1);
+$color-rhino-darker: #2C405A;
+$color-nepal: #8DABC4;
+$color-chambray: #315280;
+
+// Reactions
+$color-science-blue: rgba(0, 115, 216);
+
+// Grays
+$color-white: #FFFFFF;
+$color-white-80: rgba($color-white, .8);
+$color-white-60: rgba($color-white, .6);
+$color-white-50: rgba($color-white, .5);
+$color-black: rgba(35, 64, 91, 1.000);
+$color-black-10: rgba($color-black, .1);
+$color-black-30: rgba($color-black, .3);
+$color-black-50: rgba($color-black, .5);
+$color-black-60: rgba($color-black, .6);
+$color-black-80: rgba($color-black, .8);
+$color-regent: #808C9B;
+$color-regent-70: rgba($color-regent, .7);
+$color-athens-gray: #FAFBFC;
+$color-athens-gray-medium: #F1F2F4;
+$color-athens-gray-dark: #E1E5EA;
+$color-athens-gray-dark-50: rgba($color-athens-gray-dark, .5);
+$color-cloud-grey:#C0C5CD75;
+$color-ghost: #CCD1D7;
+$color-grey-filter-icon: #c4c4c4;
+$color-ghost-30: rgba($color-ghost, .3);
+$color-grey-keyline: #C0C5CD;
+$color-grey-header: rgba(#2A4059, .5);
+$color-grey-keyline-light: #E1E5E9;
+$color-cape-cod: #363D3C;
+$color-cape-cod-50: rgba($color-cape-cod, .5);
+$color-cape-cod-20: rgba($color-cape-cod, .2);
+$color-cape-cod-10: rgba($color-cape-cod, .1);
+$color-cape-cod-05: rgba($color-cape-cod, .05);
+$color-dove-gray-50: rgba(#717171, .5);
+$color-dove-gray-75: rgba(#717171, .75);
+$color-black-squeeze: #E5EEF5;
+$color-cod-gray-0: rgba(#161616, 0);
+$color-cod-gray-dark: #1C1C1C;
+$color-seashell: #F1F1F1;
+$color-catskill-white: #F9FAFC;
+$color-slate-gray-80: rgba(#67768A, .7);
+$color-saltpan: #FAFCFB;
+$color-loblolly: #BFC5CD;
+$color-box-shadow: rgba(0, 0, 0, 0.15);
+
+// post types
+
+$color-chats: rgba(95, 210, 255, 1);
+$color-chats-20: rgba(95, 210, 255, .2);
+$color-chats-30: rgba(95, 210, 255, .3);
+$color-chats-40: rgba(95, 210, 255, .4);
+$color-chats-50: rgba(95, 210, 255, .5);
+
+$color-discussions: rgba(0, 163, 227, 1);
+$color-discussions-20: rgba(0, 163, 227, .2);
+$color-discussions-30: rgba(0, 163, 227, .3);
+$color-discussions-40: rgba(0, 163, 227, .4);
+$color-discussions-50: rgba(0, 163, 227, .5);
+
+$color-members: rgba(201, 88, 172, 1);
+$color-members-20: rgba(201, 88, 172, .2);
+$color-members-30: rgba(201, 88, 172, .3);
+$color-members-40: rgba(201, 88, 172, .4);
+$color-members-50: rgba(201, 88, 172, .5);
+
+$color-proposals: rgba(102, 75, 165, 1);
+$color-proposals-20: rgba(102, 75, 165, .2);
+$color-proposals-30: rgba(102, 75, 165, .3);
+$color-proposals-40: rgba(102, 75, 165, .4);
+$color-proposals-50: rgba(102, 75, 165, .5);
+
+$color-requests: rgba(0, 199, 157, 1);
+$color-requests-20: rgba(0, 199, 157, .2);
+$color-requests-30: rgba(0, 199, 157, .3);
+$color-requests-40: rgba(0, 199, 157, .4);
+$color-requests-50: rgba(0, 199, 157, .5);
+
+$color-offers: rgba(0, 199, 157, 1);
+$color-offers-20: rgba(0, 199, 157, .2);
+$color-offers-30: rgba(0, 199, 157, .3);
+$color-offers-40: rgba(0, 199, 157, .4);
+$color-offers-50: rgba(0, 199, 157, .5);
+
+$color-resources: rgba(255, 212, 3, 1);
+$color-resources-20: rgba(255, 212, 3, .2);
+$color-resources-30: rgba(255, 212, 3, .3);
+$color-resources-40: rgba(255, 212, 3, .4);
+$color-resources-50: rgba(255, 212, 3, .5);
+
+$color-projects: rgba(252, 128, 0, 1);
+$color-projects-20: rgba(252, 128, 0, .2);
+$color-projects-30: rgba(252, 128, 0, .3);
+$color-projects-40: rgba(252, 128, 0, .4);
+$color-projects-50: rgba(252, 128, 0, .5);
+
+$color-events: rgba(254, 72, 80, 1);
+$color-events-20: rgba(254, 72, 80, .2);
+$color-events-30: rgba(254, 72, 80, .3);
+$color-events-40: rgba(254, 72, 80, .4);
+$color-events-50: rgba(254, 72, 80, .5);
+
+$color-caribbean-green: #0DC39F;
+$color-caribbean-green-70: rgba($color-caribbean-green, 0.7);
+$color-caribbean-green-50: rgba($color-caribbean-green, 0.5);
+$color-caribbean-green-20: rgba($color-caribbean-green, 0.2);
+
+$color-medium-purple: #9883E5;
+$color-medium-purple-50: rgba($color-medium-purple, .5);
+
+$color-fuchsia-pink: #BB60A8;
+$color-fuchsia-pink-50: rgba($color-fuchsia-pink, .5);;
+
+$color-picton-blue: #40A1DD;
+$color-picton-blue-50: rgba($color-picton-blue, .5);
+$color-picton-dark: #3078a5;
+
+$color-ultramarine: #0074D8;
+
+
+$color-persimmon: #FE6848;
+$color-persimmon-50: rgba($color-persimmon, .5);;
+
+// Resources
+$color-mango-yellow: #FDD549;
+$color-mango-yellow-15: rgba($color-mango-yellow, 0.15);
+$color-mango-yellow-50: rgba($color-mango-yellow, 0.5);
+
+$color-iceberg: #CFF3EC;
+$color-moon-raker: #EAE6FA;
+$color-prim: #F1DFEE;
+$color-link-water: #D9ECF8;
+$color-peach-schnapps: #FFE1DA;
+
+$color-mountain-meadow: #23CC80;
+$color-amaranth: #EE4266; // this is a good one for error text
+$color-yellow-orange: #FFB949;
+
+$color-maroon-flush: #B62544;
+
+$color-alto: #DCDCDC;
+$color-polar: #F0FCF9;
+$color-ziggurat: #BDE0DC;
+$color-gossamer: #0A9682;
+
+$shadow-color: rgba(42, 64, 89, 0.3);
+
+$color-tree-poppy: #FF9D21;
+
+$light-border: 1px solid $color-cape-cod-10;
+
+$color-pale-pink: #FFD6DF;
+
+// Text
+$color-pickled-bluewood: #303F57;
+
+// Member
+$color-member: #2A4059;
+
+// Shadows
+$box-shadow-default: 0px 4px 15px $color-box-shadow;
+$box-shadow-tooltip: 0px 3px 6px rgba(90, 90, 90, 0.05);
+
+// badges
+$color-badge: #d1f3e9;
+$color-badge-border: #77d6c0;
+$color-badge-special: #ffe8c8;
+$color-badge-special-border: #ffd192;
+
+// Fonts
+@mixin font-regular {
+  font-family: 'Circular Book', sans-serif;
+  font-weight: normal;
+}
+
+@mixin font-medium {
+  font-family: 'Circular Medium', sans-serif;
+  font-weight: normal;
+}
+
+@mixin font-bold {
+  font-family: 'Circular bold', sans-serif;
+}
+
+// Utilities
+@mixin image($width: 32px, $height: false) {
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  width: $width;
+  height: $height or $width;
+}
+
+/* handling long lines */
+@mixin word-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-word-break: break-all;
+  hyphens: auto;
+}
+
+@mixin is-top-triangle($color: $color-athens-gray, $border-color: $color-athens-gray, $side-length: 7px) {
+  display: block;
+  position: absolute;
+  left: 50%;
+  width: $side-length * 2 !important;
+  height: $side-length * 2 !important;
+  margin-left: -$side-length;
+  top: -$side-length;
+  border-top: 1px solid $border-color !important;
+  border-left: 1px solid $border-color !important;
+  border-bottom: 0 !important;
+  border-right: 0 !important;
+  background-color: $color;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+}
+
+// set up a div whose height will always be $percent of its width
+// e.g. http://jsfiddle.net/B8FU8/2441/
+// via: http://stackoverflow.com/questions/5445491/height-equal-to-dynamic-width-css-fluid-layout
+@mixin fluid-height($percent) {
+  display: inline-block;
+  position: relative;
+
+  > div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    margin-top: $percent;
+  }
+}

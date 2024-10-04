@@ -1,0 +1,275 @@
+$comment-left-margin: 35px;
+$comment-row-padding: 25px;
+
+.comment {
+  padding: 0px 10px;
+  margin-bottom: 20px;
+
+  > div {
+    padding-bottom: 0;
+  }
+ }
+
+.selected-comment {
+  border: 1px solid #fdd549;
+  border-radius: 5px;
+  background-color: rgba(253, 213, 73, .4);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.avatar {
+  margin-right: 5px;
+
+  div {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+.commentActions {
+  width: auto;
+  height: 100%;
+  align-content: center;
+  position: absolute;
+  top: -16px;
+  right: 0;
+  height: 32px;
+  background-color: rgba(255,255,255,1);
+  border-radius: 30px;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
+  display: none;
+  :first-child {
+    border-radius: 15px 0 0 15px;
+  }
+  :last-child {
+    border-radius: 0 15px 15px 0px !important;
+  }
+}
+
+.userName {
+  composes: userName from 'components/PostCard/PostHeader/PostHeader.module.scss';
+  margin-right: 7px;
+}
+
+.commented {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.upperRight {
+  margin-left: auto;
+  position: relative;
+}
+
+.commentAction:first-child {
+  border-radius: 15px 0 0 15px;
+}
+
+.commentAction:last-child {
+  border-radius: 0 15px 15px 0;
+}
+
+.commentAction {
+  display: inline-block;
+  cursor: pointer;
+  width: 36px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 3px 4px;
+
+  &:hover {
+    background: $color-picton-blue;
+    [class^="icon-"], [class*=" icon-"] {
+      color: $color-white;
+    }
+  }
+}
+
+.timestamp {
+  composes: timestamp from 'css/typography.scss';
+  margin-right: 10px;
+}
+
+.commentContainer {
+  position: relative;
+}
+
+.commentContainer:hover .commentActions {
+  display: flex;
+}
+
+.dropdown {
+  > div {
+    left: initial;
+    right: 0;
+  }
+}
+
+.cancelIcon {
+  color: $color-amaranth;
+  position: absolute;
+  top: 24px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.cancelIcon:hover {
+  cursor: pointer;
+}
+
+.text {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  margin-left: $comment-left-margin;
+
+  strong {
+    color: rgba(66, 94, 114, 1.0);
+  }
+}
+
+.editing {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  margin-left: $comment-left-margin;
+  padding: 10px;
+  border-radius: 0.5rem;
+  border: 1px solid $color-cape-cod-10;
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.reply {
+  composes: text-button from 'css/typography.scss';
+  margin-bottom: 20px;
+  &:hover {
+    //hack to get the icon to change on hover
+    .icon {
+      color: $color-gossamer;
+    }
+  }
+}
+
+.emojis {
+  margin-left: 35px;
+}
+
+.noEmojis {
+  display: none;
+}
+
+.emojis.hiddenReactions {
+  margin-left: 0;
+
+  &:hover {
+    background: $color-picton-blue;
+  }
+
+  &:hover > div > div:last-child div span {
+    color: white;
+  }
+}
+
+.hiddenReactions > div > div {
+  display: none;
+}
+
+.hiddenReactions > div {
+  padding-bottom: 0;
+}
+
+.hiddenReactions > div > div:last-child {
+  display: block;
+  width: auto;
+}
+
+
+.more-wrap {
+  margin-left: -25px; // offsets internal margin of ShowMore component
+}
+
+.imageLink {
+  display: block;
+  margin-left: 69px;
+}
+
+.images {
+  display: flex;
+  padding-top: 0px;
+  margin-left: $comment-left-margin;
+  width: 70%;
+  margin-bottom: 10px;
+  border-radius: 20px;
+
+  > div {
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
+  }
+}
+
+.files {
+  display: flex;
+  margin-left: $comment-left-margin;
+  padding-bottom: 0;
+}
+
+.replybox {
+  margin-left: 33px;
+}
+
+.subreply {
+    margin-left: 30px;
+    margin-top: 15px;
+}
+
+@media screen and (max-width: 600px) {
+  .comment {
+    padding: 0 10px;
+  }
+
+  .avatar {
+    margin-right: 10px;
+  }
+
+  .text {
+    margin-left: 40px;
+  }
+}
+
+.edited {
+  font-size: 11px;
+  color: rgba(44, 64, 89, 0.4);
+  font-style: italic;
+}
+
+@media screen and (max-width: 425px) {
+  .comment {
+    padding: 0 8px;
+  }
+
+  .files {
+    padding: 0px;
+  }
+
+  .avatar div {
+    height: 25px;
+    width: 25px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  .text {
+    margin-left: 34px;
+  }
+
+  .emojis > div {
+    padding-bottom: 0;
+  }
+}
+

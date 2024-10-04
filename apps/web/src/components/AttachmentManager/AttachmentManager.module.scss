@@ -1,0 +1,148 @@
+// mixins
+.attachment-manager {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 20px 0px;
+  border-top: solid 1px $color-ghost-30;
+}
+
+.remove-button {
+  border-radius: 50%;
+  color: white;
+  background-color: $color-rhino;
+  font-size: 12px;
+  padding: 1px;
+  border: 1px solid white;
+  background-clip: padding-box;
+  cursor: pointer;
+}
+
+// ImageManager
+.section-label {
+  composes: section-label from 'components/PostEditor/PostEditor.module.scss';
+}
+
+.image-manager {
+  composes: attachment-manager;
+}
+
+.image-previews {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.image-box {
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
+.image-preview {
+  composes: image-box;
+  position: relative;
+  cursor: move;
+}
+
+.image {
+  composes: image-box;
+  background-size: cover;
+  background-position: center;
+  padding: 8px;
+}
+
+.remove-image {
+  composes: remove-button;
+  position: absolute;
+  top: -7px;
+  right: -7px;
+}
+
+.drag-preview {
+  width: 84px;
+  height: 84px;
+}
+
+.add-image {
+  composes: image-box;
+  padding-top: 16px;
+  text-align: center;
+  border: 2px dashed $color-loblolly;
+  font-size: 40px;
+  color: $color-rhino-30;
+  cursor: pointer;
+}
+
+// FileManager
+
+.file-manager {
+  composes: attachment-manager;
+}
+
+.file-previews {
+
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.icon-file {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.icon-document {
+  composes: icon-file;
+  color: $color-tree-poppy;
+}
+
+.icon-download {
+  composes: icon-file;
+  color: $color-picton-blue;
+}
+
+.file-name {
+  composes: caption-drk-lg from 'css/typography.scss';
+  margin-right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-size {
+  color: $color-ghost;
+  @include font-regular;
+  font-size: 12px;
+  width: 70px;
+}
+
+.remove-file {
+  composes: remove-button;
+}
+
+.add-file-row {
+  margin-top: 12px;
+}
+
+.add-file {
+  composes: add-image;
+  padding-top: 0px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.add-file-plus {
+  font-size: 17px;
+  margin-right: 4px;
+}
+
+.loading-file {
+  composes: add-file;
+  margin-top: 12px;
+  padding-top: 3px;
+}

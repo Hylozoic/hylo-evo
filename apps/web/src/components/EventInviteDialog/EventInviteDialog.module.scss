@@ -1,0 +1,84 @@
+$avatar-size: 20px;
+
+.container {
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inviteSuggestions {
+  height: 240px;
+  overflow-y: auto;
+}
+
+.alreadyInvitedLabel {
+  composes: bdy-lt-lg from 'css/typography.scss';
+  margin-top: 10px;
+}
+
+.alreadyInvited {
+  height: 240px;
+  overflow-y: auto;
+}
+
+.row {
+  display: flex;
+  align-items: left;
+  border-bottom: solid 1px $color-cape-cod-10;
+  width: 100%;
+  cursor: pointer;
+  &.selected {
+    color: $color-rhino;
+    background-color: $color-seashell;
+  }
+}
+
+.col {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 5px;
+}
+
+.response {
+  margin-left: auto;
+  font-size: 12px;
+}
+
+.check {
+  margin-left: auto;
+}
+
+.avatar {
+  @include image($avatar-size);
+  border-radius: calc($avatar-size / 2);
+}
+
+.inviteButton {
+  margin-top: auto;
+  margin-left: auto;
+}
+
+// Search
+.search {
+  margin-bottom: 10px;
+}
+
+// TextInput Theme
+.wrapper {
+  flex: 1;
+  border: none;
+  padding: none;
+}
+
+.input {
+  color: $color-rhino;
+  font-size: 34px;
+  &::placeholder {
+    color: $color-rhino-30;
+  }
+}
+
+.clear {
+  font-size: 18px;
+}

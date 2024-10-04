@@ -1,0 +1,34 @@
+{
+  "jest.jestCommandLine": "yarn test",
+  "gitlens.showWelcomeOnInstall": false,
+  "gitlens.showWhatsNewAfterUpgrades": false,
+  "vscode-graphql.cacheSchemaFileForLookup": true,
+  "vscode-graphql.showExecCodelens": true,
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.js"
+  },
+  "standard.enableGlobally": false,
+  "eslint.debug": false,
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.codeActionsOnSave.mode": "all",
+  "i18n-ally.localesPaths": [
+    "public/locales"
+  ],
+  "i18n-ally.enabledFrameworks": [
+    "react",
+    "i18next",
+    "general"
+  ],
+  "i18n-ally.namespace": true,
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.displayLanguage": "en",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.disablePathParsing": true,
+  "i18n-ally.pathMatcher": "{locale}.json",
+  "i18n-ally.extract.ignored": [
+    "A role must have a valid emoji and name to be updated"
+  ],
+  "i18n-ally.keystyle": "flat",
+  "standard.enable": false,
+}

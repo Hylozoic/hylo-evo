@@ -1,0 +1,1002 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopicsLine matches last snapshot 1`] = `
+<div
+  data-stylename="topicsLine newLineForTopics"
+>
+  <Link
+    data-stylename="topic"
+    key="one"
+    to="/groups/hay/topics/one"
+  >
+    #
+    one
+  </Link>
+  <Link
+    data-stylename="topic"
+    key="two"
+    to="/groups/hay/topics/two"
+  >
+    #
+    two
+  </Link>
+</div>
+`;
+
+exports[`matches announcement snapshot 1`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-tooltip-id="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-for="dateTip-undefined"
+            data-stylename="timestamp"
+          />
+          <span
+            data-stylename="announcementSection"
+          >
+            <span
+              data-stylename="announcementSpacer"
+            >
+              •
+            </span>
+            <span
+              data-tooltip-id="announcement-tt"
+              data-tooltip-content="Announcement"
+            >
+              <Icon
+                data-stylename="announcementIcon"
+                name="Announcement"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "CopyLink",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip-undefined"
+    position="left"
+  />
+</div>
+`;
+
+exports[`matches announcement snapshot 2`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-tooltip-id="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-for="dateTip-undefined"
+            data-stylename="timestamp"
+          />
+          <span
+            data-stylename="announcementSection"
+          >
+            <span
+              data-stylename="announcementSpacer"
+            >
+              •
+            </span>
+            <span
+              data-tooltip-id="announcement-tt"
+              data-tooltip-content="Announcement"
+            >
+              <Icon
+                data-stylename="announcementIcon"
+                name="Announcement"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "CopyLink",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip-undefined"
+    position="left"
+  />
+</div>
+`;
+
+exports[`matches announcement snapshot 3`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-tooltip-id="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-for="dateTip-undefined"
+            data-stylename="timestamp"
+          />
+          <span
+            data-stylename="announcementSection"
+          >
+            <span
+              data-stylename="announcementSpacer"
+            >
+              •
+            </span>
+            <span
+              data-tooltip-id="announcement-tt"
+              data-tooltip-content="Announcement"
+            >
+              <Icon
+                data-stylename="announcementIcon"
+                name="Announcement"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Edit",
+                "label": "Edit",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "CopyLink",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "Duplicate",
+                "label": "Duplicate",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip-undefined"
+    position="left"
+  />
+</div>
+`;
+
+exports[`matches snapshot 1`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-tooltip-id="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="badgeRow"
+        >
+          <Badge
+            common={true}
+            expanded={true}
+            key="2"
+            responsibilities={
+              Array [
+                "Administration",
+              ]
+            }
+            title="Coordinator"
+          />
+        </div>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-for="dateTip-undefined"
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "CopyLink",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip-undefined"
+    position="left"
+  />
+</div>
+`;
+
+exports[`matches snapshot 2`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-tooltip-id="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="badgeRow"
+        >
+          <Badge
+            common={true}
+            expanded={true}
+            key="2"
+            responsibilities={
+              Array [
+                "Administration",
+              ]
+            }
+            title="Coordinator"
+          />
+        </div>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-for="dateTip-undefined"
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "CopyLink",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip-undefined"
+    position="left"
+  />
+</div>
+`;
+
+exports[`matches snapshot 3`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-tooltip-id="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="badgeRow"
+        >
+          <Badge
+            common={true}
+            expanded={true}
+            key="2"
+            responsibilities={
+              Array [
+                "Administration",
+              ]
+            }
+            title="Coordinator"
+          />
+        </div>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-for="dateTip-undefined"
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Edit",
+                "label": "Edit",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "CopyLink",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "Duplicate",
+                "label": "Duplicate",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip-undefined"
+    position="left"
+  />
+</div>
+`;
+
+exports[`renders human readable dates 1`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-tooltip-id="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-for="dateTip-undefined"
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "CopyLink",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  >
+    <div
+      data-stylename="timeWindow"
+    >
+      Started: {{from}} / Ends: {{endTime}}
+    </div>
+  </div>
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip-undefined"
+    position="left"
+  />
+</div>
+`;
+
+exports[`renders human readable dates 2`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-tooltip-id="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-for="dateTip-undefined"
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "CopyLink",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  >
+    <div
+      data-stylename="timeWindow"
+    >
+      Started: {{from}} / Ends: {{endTime}}
+    </div>
+  </div>
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip-undefined"
+    position="left"
+  />
+</div>
+`;
+
+exports[`renders human readable dates 3`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-tooltip-id="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-for="dateTip-undefined"
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Tooltip
+          delay={250}
+          id="flag-tt"
+        />
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "CopyLink",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  >
+    <div
+      data-stylename="timeWindow"
+    >
+      Ended: {{endTime}}
+    </div>
+  </div>
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+  <Tooltip
+    delay={550}
+    id="dateTip-undefined"
+    position="left"
+  />
+</div>
+`;

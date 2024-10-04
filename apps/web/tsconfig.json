@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "jsx": "react",
+    "checkJs": false,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "@/*": ["./src/*"]
+    },
+    "outDir": "build",
+    "types": ["node", "glob", "hoist-non-react-statics"]
+  },
+  "exclude": [
+    "node_modules",
+    "es5",
+    "build"
+  ]
+}

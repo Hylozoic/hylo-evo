@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pill renders 1`] = `
+<Pill
+  id={1}
+  label="mountain climbing"
+>
+  <div
+    data-stylename="pill gray-text"
+    onMouseLeave={[Function]}
+  >
+    <span
+      data-tooltip-id="pill-label"
+      data-stylename="display-label"
+      data-tooltip-content="Click to Search"
+      onClick={null}
+    >
+      mountain climbing
+    </span>
+  </div>
+</Pill>
+`;
+
+exports[`Pill renders when editable 1`] = `
+<Pill
+  editable={true}
+  id={1}
+  label="mountain climbing"
+>
+  <div
+    data-stylename="pill gray-text"
+    onMouseLeave={[Function]}
+  >
+    <span
+      data-tooltip-id="pill-label"
+      data-stylename="display-label"
+      data-tooltip-content="Click to Search"
+      onClick={null}
+    >
+      mountain climbing
+    </span>
+    <Icon
+      data-stylename="remove-label"
+      tooltipContent="Double click to delete"
+      tooltipId="pill-label"
+      name="Ex"
+      onClick={[Function]}
+    >
+      <span
+        className="icon-Ex"
+        data-tooltip-id="pill-label"
+        data-stylename="icon"
+        data-tooltip-content="Double click to delete"
+        onClick={[Function]}
+      />
+    </Icon>
+  </div>
+</Pill>
+`;

@@ -1,0 +1,142 @@
+$search-width: 266px;
+
+.root {
+  position: relative;
+}
+
+.adding-root {
+  z-index: 10;
+  background-color: white;
+}
+
+.add-btn {
+  composes: label from 'components/SkillLabel/component.module.scss';
+  cursor: pointer;
+  border: 1px solid $color-caribbean-green;
+  color: $color-caribbean-green;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.search-wrapper {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
+
+  .search {
+    background: none;
+    max-width: 100%;
+    min-width: $search-width;
+    padding: 0;
+    border: 0;
+    outline: none;
+    color: rgba(44, 64, 89, 0.8);
+    font-size: 15px;
+    line-height: 24px;
+    height: 24px;
+    flex-grow: 1;
+    font-size: 14px;
+
+    &::placeholder {
+      color: $color-ghost;
+    }
+
+    &::-ms-clear {
+      display: none;
+    }
+  }
+
+  .close-icon {
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+    display: inline-block;
+    vertical-align: middle;
+    outline: 0;
+    cursor: pointer;
+  }
+
+  .close-icon:after {
+    content: '\00d7';
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-color: $color-ghost;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    font-weight: normal;
+    font-size: 11px;
+    box-shadow: 0 0 2px $color-slate-gray-80;
+    cursor: pointer;
+  }
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+@media screen and (min-width: 30em) {
+  .suggestions {
+    width: $search-width;
+  }
+}
+
+.suggestions {
+  margin: -1px 0;
+  padding: 0;
+  list-style: none;
+  background: white;
+  border: 1px solid #D1D1D1;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion {
+  a {
+    color: $color-caribbean-green;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 8px;
+    display: block;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: #eee;
+  }
+
+  .disabled {
+    opacity: 0.5;
+    cursor: auto;
+  }
+}
+
+.suggestion-active {
+  background: #b7cfe0;
+}
+
+.pill-container {
+  position: relative;
+}
+
+.enter {
+  opacity: 0.01;
+}
+
+.enter.enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+
+.exit {
+  opacity: 1;
+}
+
+.exit.exit-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

@@ -1,0 +1,184 @@
+$about-height: 160px;
+
+// GroupSidebar
+.group-sidebar::-webkit-scrollbar {
+  background-color:transparent;
+  width: 5px;
+  border-radius: 5px;
+}
+
+.group-sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(200,200,200,.5   );
+  outline: none;
+  border-radius: 3px;
+}
+
+.group-sidebar {
+  padding: 20px 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: auto;
+}
+
+// AboutSection
+
+.about-section {
+  margin-top: $space-3x;
+  margin-bottom: $space-3x;
+}
+
+.header {
+  composes: bdy-drk-lg from 'css/typography.scss';
+  margin-bottom: $space-1x;
+}
+
+.about-content {
+  composes: caption-lt-lg from 'css/typography.scss';
+  max-height: $about-height;
+  overflow: hidden;
+  position: relative;
+  margin-top: $space-3x;
+  margin-bottom: 5px;
+}
+
+.gradient {
+  position: absolute;
+  background-image: linear-gradient(0, rgba(246, 247, 248, 1.0), rgba(255,255,255,0) 50%, rgba(255,255,255,0));
+  height: calc($about-height - 10px);
+  width: 100%;
+  bottom: 0;
+}
+
+.about-content.expanded {
+  max-height: none;
+
+  .gradient {
+    display: none;
+  }
+}
+
+.expand-button {
+  composes: text-button from 'css/typography.scss';
+}
+
+// SettingsLink
+
+.settings-link {
+  display: block;
+  margin-bottom: 20px;
+  composes: text-button from 'css/typography.scss';
+  height: 40px;
+  line-height: 40px;
+  border-radius: 30px;
+  color: rgba(12, 195, 159, 1.0);
+  border: none;
+  display: inline-block;
+  font-size: 14px;
+  padding: 0 15px;
+  box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
+  background-color: rgba(255, 255, 255, 1);
+  transition: all .25s ease;
+  margin-right: 8px;
+
+  .settings-icon {
+    margin-right: 5px;
+    font-size: 18px;
+    color: rgba(37, 195, 159, 1.00);
+    position: relative;
+    top: 3px;
+    transition: all .25s ease;
+  }
+
+  .invite-icon {
+    color: rgba(12, 195, 159, 1.0);
+    font-size: 18px;
+    position: relative;
+    transition: all .25s ease;
+    top: 2px;
+  }
+
+  &:hover {
+    background-color: rgba(12, 195, 159, 1.0);
+  }
+
+  &:hover, &:hover .settings-icon, &:hover .invite-icon {
+    color: rgba(255, 255, 255, 1);
+  }
+}
+
+// MemberSection
+
+.member-section {
+
+}
+
+.members-link {
+  &:hover {
+    text-decoration: none;
+    .header {
+      color: $color-rhino;
+    }
+    .members-total {
+      color: $color-gossamer;
+    }
+  }
+}
+
+.images-and-count {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.image-row {
+  display: inline-block;
+  margin-right: $space-2x;
+}
+
+.members-total {
+  composes: text-button from 'css/typography.scss';
+  &:hover {
+    cursor: default;
+  }
+}
+
+.invite-link {
+  /* empty */
+}
+
+// GroupLeaderSection
+
+.leader-section {
+  /* empty */
+}
+
+.leader-header {
+  margin-bottom: $space-2x;
+}
+
+// GroupLeader
+
+.leader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.leader-image {
+  margin-right: $space-2x;
+}
+
+.leader-name {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  font-size: 16px;
+  &:hover {
+    color: $color-rhino-80;
+    text-decoration: none;
+  }
+}
+
+.badges {
+  display: flex;
+  margin-left: 4px;
+  grid-gap: 2px;
+}

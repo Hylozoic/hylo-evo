@@ -1,0 +1,808 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Comment displays image attachments 1`] = `
+<div
+  data-stylename="commentContainer selected-comment"
+>
+  <div
+    data-stylename="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-stylename="avatar"
+      url="/groups/foo/members/1"
+    />
+    <Link
+      data-stylename="userName"
+      to="/groups/foo/members/1"
+    >
+      Joe Smith
+    </Link>
+    <span
+      data-for="dateTip-undefined"
+      data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
+    >
+      commented just now
+    </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <div
+        data-stylename="commentActions"
+      >
+        <div
+          data-tooltip-id="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tooltip-content="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          comment={
+            Object {
+              "attachments": Array [
+                Object {
+                  "attachmentType": "image",
+                  "url": "foo.png",
+                },
+              ],
+              "childComments": Array [],
+              "createdAt": 2023-07-23T16:30:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <CardImageAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ]
+      }
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ]
+      }
+      data-stylename="files"
+    />
+  </div>
+  <ClickCatcher
+    groupSlug="foo"
+  >
+    <HyloHTML
+      data-stylename="text"
+      html="<p>text of the comment</p>"
+    />
+  </ClickCatcher>
+  <EmojiRow
+    className="undefined"
+    comment={
+      Object {
+        "attachments": Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ],
+        "childComments": Array [],
+        "createdAt": 2023-07-23T16:30:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
+    currentUser={
+      Object {
+        "id": 2,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
+<div
+  data-stylename="commentContainer selected-comment"
+>
+  <div
+    data-stylename="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-stylename="avatar"
+      url="/groups/foo/members/1"
+    />
+    <Link
+      data-stylename="userName"
+      to="/groups/foo/members/1"
+    >
+      Joe Smith
+    </Link>
+    <span
+      data-for="dateTip-undefined"
+      data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
+    >
+      commented just now
+    </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <div
+        data-stylename="commentActions"
+      >
+        <div
+          data-tooltip-id="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tooltip-content="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Edit"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Edit"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Trash"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Trash"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-07-23T16:30:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
+          currentUser={
+            Object {
+              "id": 1,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <ClickCatcher
+    groupSlug="foo"
+  >
+    <HyloHTML
+      data-stylename="text"
+      html="<p>text of the comment</p>"
+    />
+  </ClickCatcher>
+  <EmojiRow
+    className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-07-23T16:30:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
+    currentUser={
+      Object {
+        "id": 1,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Comment displays the remove menu when removeComment is defined 1`] = `
+<div
+  data-stylename="commentContainer selected-comment"
+>
+  <div
+    data-stylename="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-stylename="avatar"
+      url="/groups/foo/members/1"
+    />
+    <Link
+      data-stylename="userName"
+      to="/groups/foo/members/1"
+    >
+      Joe Smith
+    </Link>
+    <span
+      data-for="dateTip-undefined"
+      data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
+    >
+      commented just now
+    </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <div
+        data-stylename="commentActions"
+      >
+        <div
+          data-tooltip-id="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tooltip-content="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Trash"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Trash"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-07-23T16:30:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <ClickCatcher
+    groupSlug="foo"
+  >
+    <HyloHTML
+      data-stylename="text"
+      html="<p>text of the comment</p>"
+    />
+  </ClickCatcher>
+  <EmojiRow
+    className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-07-23T16:30:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
+    currentUser={
+      Object {
+        "id": 2,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Comment does not display the delete menu when deleteComment is not defined 1`] = `
+<div
+  data-stylename="commentContainer selected-comment"
+>
+  <div
+    data-stylename="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-stylename="avatar"
+      url="/groups/foo/members/1"
+    />
+    <Link
+      data-stylename="userName"
+      to="/groups/foo/members/1"
+    >
+      Joe Smith
+    </Link>
+    <span
+      data-for="dateTip-undefined"
+      data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
+    >
+      commented just now
+    </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <div
+        data-stylename="commentActions"
+      >
+        <div
+          data-tooltip-id="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tooltip-content="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-07-23T16:30:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <ClickCatcher
+    groupSlug="foo"
+  >
+    <HyloHTML
+      data-stylename="text"
+      html="<p>text of the comment</p>"
+    />
+  </ClickCatcher>
+  <EmojiRow
+    className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-07-23T16:30:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
+    currentUser={
+      Object {
+        "id": 2,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Comment does not display the remove menu when removeComment is not defined 1`] = `
+<div
+  data-stylename="commentContainer selected-comment"
+>
+  <div
+    data-stylename="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-stylename="avatar"
+      url="/groups/foo/members/1"
+    />
+    <Link
+      data-stylename="userName"
+      to="/groups/foo/members/1"
+    >
+      Joe Smith
+    </Link>
+    <span
+      data-for="dateTip-undefined"
+      data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
+    >
+      commented just now
+    </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <div
+        data-stylename="commentActions"
+      >
+        <div
+          data-tooltip-id="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tooltip-content="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Edit"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Edit"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Trash"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Trash"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-07-23T16:30:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
+          currentUser={
+            Object {
+              "id": 1,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <ClickCatcher
+    groupSlug="foo"
+  >
+    <HyloHTML
+      data-stylename="text"
+      html="<p>text of the comment</p>"
+    />
+  </ClickCatcher>
+  <EmojiRow
+    className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-07-23T16:30:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
+    currentUser={
+      Object {
+        "id": 1,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Comment renders correctly 1`] = `
+<div
+  data-stylename="commentContainer selected-comment"
+>
+  <div
+    data-stylename="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-stylename="avatar"
+      url="/groups/foo/members/1"
+    />
+    <Link
+      data-stylename="userName"
+      to="/groups/foo/members/1"
+    >
+      Joe Smith
+    </Link>
+    <span
+      data-for="dateTip-undefined"
+      data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
+    >
+      commented just now
+    </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <div
+        data-stylename="commentActions"
+      >
+        <div
+          data-tooltip-id="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tooltip-content="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-07-23T16:30:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <ClickCatcher
+    groupSlug="foo"
+  >
+    <HyloHTML
+      data-stylename="text"
+      html="<p>text of the comment</p>"
+    />
+  </ClickCatcher>
+  <EmojiRow
+    className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-07-23T16:30:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
+    currentUser={
+      Object {
+        "id": 2,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Comment renders correctly when editing 1`] = `
+<div
+  data-stylename="commentContainer selected-comment"
+>
+  <div
+    data-stylename="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-stylename="avatar"
+      url="/groups/foo/members/1"
+    />
+    <Link
+      data-stylename="userName"
+      to="/groups/foo/members/1"
+    >
+      Joe Smith
+    </Link>
+    <span
+      data-for="dateTip-undefined"
+      data-stylename="timestamp"
+      data-tip="Sun, Jul 23, 2023 4:30 PM"
+    >
+      commented just now
+    </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <Icon
+        data-stylename="cancelIcon"
+        name="Ex"
+        onClick={[Function]}
+      />
+      <div
+        data-stylename="commentActions"
+      >
+        <div
+          data-tooltip-id="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tooltip-content="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-07-23T16:30:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <ForwardRef(HyloEditor)
+    contentHTML="<p>text of the comment</p>"
+    data-stylename="editing"
+    onEnter={[Function]}
+    onEscape={[Function]}
+  />
+</div>
+`;

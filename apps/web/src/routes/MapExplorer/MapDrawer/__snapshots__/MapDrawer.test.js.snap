@@ -1,0 +1,442 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MapDrawer renders correctly (with min props) 1`] = `
+<div
+  data-stylename="container"
+  id="mapDrawerWrapper"
+>
+  <div
+    data-stylename="header"
+  >
+    <input
+      data-stylename="searchBox"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyUp={[Function]}
+      placeholder="Filter by topics and keywords"
+      type="text"
+      value=""
+    />
+    <Icon
+      name="Funnel"
+    />
+    <div
+      data-stylename="currentFilters"
+    />
+    <TabBar
+      currentTab="Posts"
+      pendingPostsDrawer={false}
+      selectTab={[Function]}
+      tabs={
+        Object {
+          "Groups": 0,
+          "Members": 0,
+          "Posts": 0,
+        }
+      }
+    />
+  </div>
+  <div
+    data-stylename="contentWrapper"
+  >
+    <div
+      data-stylename="postsHeader"
+    >
+      <span
+        data-tooltip-id="childgroup-toggle-tt"
+        data-tooltip-content="Show posts from child groups"
+        onClick={[Function]}
+      >
+        <Icon
+          className=""
+          name="Subgroup"
+        />
+      </span>
+      <Tooltip
+        delay={250}
+        id="childgroup-toggle-tt"
+        position="bottom"
+      />
+      <span>
+        Sort posts by:
+      </span>
+      <Dropdown
+        alignRight={true}
+        data-stylename="sorter"
+        items={
+          Array [
+            Object {
+              "label": "Latest activity",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Post Date",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Popular",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <span
+            data-stylename="sorter-label"
+          >
+            Latest activity
+            <Icon
+              name="ArrowDown"
+            />
+          </span>
+        }
+      />
+    </div>
+    <div
+      data-stylename="contentListContainer"
+      id="contentList"
+    />
+    <ScrollListener
+      elementId="mapDrawerWrapper"
+      onBottom={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`MapDrawer renders correctly with lots of stuff 1`] = `
+<div
+  data-stylename="container"
+  id="mapDrawerWrapper"
+>
+  <div
+    data-stylename="header"
+  >
+    <input
+      data-stylename="searchBox"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyUp={[Function]}
+      placeholder="Filter by topics and keywords"
+      type="text"
+      value=""
+    />
+    <Icon
+      name="Funnel"
+    />
+    <div
+      data-stylename="currentFilters"
+    >
+      <div
+        data-stylename="currentSearchText"
+        onClick={[Function]}
+      >
+        "
+        hello
+        "
+        <Icon
+          name="Ex"
+        />
+      </div>
+      <span
+        data-stylename="topicButton"
+        key="filter_topic_food"
+        onClick={[Function]}
+      >
+        <span
+          data-stylename="topicCount"
+        />
+         #
+        food
+
+        <Icon
+          name="Ex"
+        />
+      </span>
+    </div>
+    <TabBar
+      currentTab="Posts"
+      pendingPostsDrawer={false}
+      selectTab={[Function]}
+      tabs={
+        Object {
+          "Groups": 1,
+          "Members": 1,
+          "Posts": 0,
+        }
+      }
+    />
+  </div>
+  <div
+    data-stylename="contentWrapper"
+  >
+    <div
+      data-stylename="postsHeader"
+    >
+      <span
+        data-tooltip-id="childgroup-toggle-tt"
+        data-tooltip-content="Show posts from child groups"
+        onClick={[Function]}
+      >
+        <Icon
+          className=""
+          name="Subgroup"
+        />
+      </span>
+      <Tooltip
+        delay={250}
+        id="childgroup-toggle-tt"
+        position="bottom"
+      />
+      <span>
+        Sort posts by:
+      </span>
+      <Dropdown
+        alignRight={true}
+        data-stylename="sorter"
+        items={
+          Array [
+            Object {
+              "label": "Latest activity",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Post Date",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Popular",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <span
+            data-stylename="sorter-label"
+          >
+            Post Date
+            <Icon
+              name="ArrowDown"
+            />
+          </span>
+        }
+      />
+    </div>
+    <div
+      data-stylename="contentListContainer"
+      id="contentList"
+    >
+      <Connect(PostCard)
+        constrained={true}
+        data-stylename="contentCard"
+        expanded={false}
+        key="1"
+        post={
+          Object {
+            "id": 1,
+            "title": "Post",
+            "type": "request",
+          }
+        }
+        querystringParams={Object {}}
+        routeParams={
+          Object {
+            "context": "groups",
+            "slug": "group one",
+          }
+        }
+      />
+    </div>
+    <ScrollListener
+      elementId="mapDrawerWrapper"
+      onBottom={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`MapDrawer searching updates map filters 1`] = `
+<div
+  data-stylename="container"
+  id="mapDrawerWrapper"
+>
+  <div
+    data-stylename="header"
+  >
+    <input
+      data-stylename="searchBox"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyUp={[Function]}
+      placeholder="Filter by topics and keywords"
+      type="text"
+      value=""
+    />
+    <Icon
+      name="Funnel"
+    />
+    <div
+      data-stylename="searchFilters"
+    >
+      <span
+        data-stylename="topicButton"
+        key="choose_topic_DOAs"
+        onMouseDown={[Function]}
+      >
+        <span
+          data-stylename="topicCount"
+        />
+
+        DOAs
+      </span>
+    </div>
+    <div
+      data-stylename="currentFilters"
+    />
+    <TabBar
+      currentTab="Posts"
+      pendingPostsDrawer={false}
+      selectTab={[Function]}
+      tabs={
+        Object {
+          "Groups": 0,
+          "Members": 0,
+          "Posts": 0,
+        }
+      }
+    />
+  </div>
+  <div
+    data-stylename="contentWrapper"
+  >
+    <div
+      data-stylename="postsHeader"
+    >
+      <span
+        data-tooltip-id="childgroup-toggle-tt"
+        data-tooltip-content="Show posts from child groups"
+        onClick={[Function]}
+      >
+        <Icon
+          className=""
+          name="Subgroup"
+        />
+      </span>
+      <Tooltip
+        delay={250}
+        id="childgroup-toggle-tt"
+        position="bottom"
+      />
+      <span>
+        Sort posts by:
+      </span>
+      <Dropdown
+        alignRight={true}
+        data-stylename="sorter"
+        items={
+          Array [
+            Object {
+              "label": "Latest activity",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Post Date",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Popular",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <span
+            data-stylename="sorter-label"
+          >
+            Latest activity
+            <Icon
+              name="ArrowDown"
+            />
+          </span>
+        }
+      />
+    </div>
+    <div
+      data-stylename="contentListContainer"
+      id="contentList"
+    />
+    <ScrollListener
+      elementId="mapDrawerWrapper"
+      onBottom={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`TabBar renders tabs 1`] = `
+<ul
+  data-stylename="tab-bar"
+>
+  <li
+    data-stylename="tab-active"
+    key="Posts"
+    onClick={[Function]}
+  >
+    Posts
+
+    <span
+      data-stylename="tabCount"
+    >
+      1
+    </span>
+  </li>
+  <li
+    data-stylename="tab"
+    key="Groups"
+    onClick={[Function]}
+  >
+    Groups
+
+    <span
+      data-stylename="tabCount"
+    >
+      2
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`TabBar renders tabs 2`] = `
+<ul
+  data-stylename="tab-bar"
+>
+  <li
+    data-stylename="tab-active"
+    key="Posts"
+    onClick={[Function]}
+  >
+    Posts
+
+    <span
+      data-stylename="tabCount"
+    >
+      1
+    </span>
+  </li>
+  <li
+    data-stylename="tab"
+    key="Groups"
+    onClick={[Function]}
+  >
+    Groups
+
+    <span
+      data-stylename="tabCount"
+    >
+      2
+    </span>
+  </li>
+</ul>
+`;
